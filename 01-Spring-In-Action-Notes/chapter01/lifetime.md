@@ -1,4 +1,6 @@
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
 
 # Bean的生命周期
 
@@ -16,6 +18,4 @@ bean从装在的Spring上下文中的一个典型生命周期过程：
 8. 如果bean实现了BeanPostProcessor接口，Spring将调用它们的postProcessAfterInitialization\(\)方法
 9. 此时，bean已经准备就绪，可以被应用程序使用了，它们将一直驻留在应用上下文中，直至应用上下文被销毁
 10. 如果bean实现了DisposableBean接口，Spring将调用它的destory\(\)接口方法，通用，如果bean使用destory-method声明了销毁方法，也会被调用。
-
-[返回目录](/README.md)
 
