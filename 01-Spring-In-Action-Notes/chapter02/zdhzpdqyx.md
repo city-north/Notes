@@ -1,4 +1,7 @@
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
+
 
 # 处理自动化装配的歧义性
 
@@ -88,3 +91,6 @@ public Dessert iceCream(){
 
 
 
+[返回根目录](/README.md)
+
+[返回目录](../README.md)

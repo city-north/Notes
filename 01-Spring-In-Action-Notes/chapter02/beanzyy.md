@@ -1,4 +1,7 @@
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
+
 
 # bean的作用域
 
@@ -103,5 +106,7 @@ proxyMode属性被设置成了ScopedProxyMode.INTERFACES,这表明这个代理�
 </bean>
 ```
 
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
 

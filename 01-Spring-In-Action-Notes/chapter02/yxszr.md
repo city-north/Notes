@@ -1,4 +1,7 @@
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
+
 
 # 运行时注入
 
@@ -266,5 +269,8 @@ T(java.lang.Math).random()
 
 
 
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
+
 

@@ -1,4 +1,6 @@
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
 
 # 总结
 
@@ -6,5 +8,6 @@ AOP是面向对象编程的一个强大补充，通过AspectJ，我们现在可�
 
 Spring提供了一个AOP框架，让我们把切面插入到方法执行的周围。
 
-[返回目录](/README.md)
+[返回根目录](/README.md)
 
+[返回目录](../README.md)

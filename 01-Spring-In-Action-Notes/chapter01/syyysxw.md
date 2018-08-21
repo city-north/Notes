@@ -1,4 +1,6 @@
-[返回目录](/README.md)
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
 
 # 使用应用上下文
 
@@ -44,5 +46,7 @@ com.springinaction.knights.config.KnightConfig.class)
 
 加载完上下文后，使用上下文的getBean\(\)方法从Spring容器中获取bean
 
-[返回目录](/README.md)
 
+[返回根目录](/README.md)
+
+[返回目录](../README.md)
