@@ -6,7 +6,7 @@
 
 bean从装在的Spring上下文中的一个典型生命周期过程：
 
-![](/assets/import01.png)
+![](../assets/import01.png)
 
 1. Spring对bean进行实例化
 2. Spring将值和bean的引用注入到bean对应的属性中。
