@@ -4,17 +4,17 @@
 
 
 
-![](/assets/import27.png)
+![](../assets/import27.png)
 
 ## 隐式数据类型转换
 
 Oracle自动完成数据类型的转换。
 
-![](/assets/import28.png)
+![](../assets/import28.png)
 
 ## 显示数据类型转换
 
-![](/assets/import29.png)
+![](../assets/import29.png)
 
 ## TO\_CHAR函数对日期的转换
 
@@ -22,11 +22,11 @@ Oracle自动完成数据类型的转换。
 TO_CHAR(date,'format_model')
 ```
 
-![](/assets/import30.png)
+![](../assets/import30.png)
 
 ## TO\_CHAR函数对数字的转换
 
-![](/assets/import31.png)
+![](../assets/import31.png)
 
 ## TO\__NUMBER 和 TO_\_DATE函数
 

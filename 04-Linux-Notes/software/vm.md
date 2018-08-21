@@ -5,15 +5,15 @@
 * 打开vm&gt;编辑&gt;虚拟网络编辑器
 * 查看NAT设置
 
-![](/assets/5464.png)
+![](../assets/5464.png)
 
 * 查看NAT配置，记住网关和子网
 
-![](/assets/123t.png)
+![](../assets/123t.png)
 
 * 设置windows
 
-![](/assets/12332.png)
+![](../assets/12332.png)
 
 * 设置Linux  /etc/sysconfig/network-scripts  中的ifcfg-eno.XXX文件，每个人的可能不一样
 

@@ -2,7 +2,7 @@
 
 # 条件控制语句
 
-![](/assets/import37.png)
+![](../assets/import37.png)
 
 ```
 rem PL/SQL Developer Test Script

@@ -23,9 +23,11 @@ inventory.sort(comparing(Apple::getWeight));
 
 方法引用可以被看做仅仅调用特定方法的Lambda的一种快捷写法。
 
-其核心思想：如果一个Lambda代表的只是“直接调用这个方法”，那最好还是用名称来调用它，而不是去描述如何调用它。
+其核心思想：如果一个Lambda代表的只是“直接调用这个方法”，那最好还是用名称
+来调用它，而不是去描述如何调用它。
 
-事实上，方法引用就是让你根据已有的方法实现来创建Lambda表达式。但是，显式地指明方法的名称，你的代码的可读性会更好。
+事实上，方法引用就是让你根据已有的方法实现来创建
+Lambda表达式。但是，显式地指明方法的名称，你的代码的可读性会更好。
 
 ## 方法引用是如何工作的
 
@@ -35,9 +37,10 @@ inventory.sort(comparing(Apple::getWeight));
 
 Apple::getWeight 就是引用了 Apple 类中定义的方法 getWeight 。请记住，不需要括号，因为
 
-你没有实际调用这个方法。方法引用就是Lambda表达式 \(Apple a\) -&gt; a.getWeight\(\) 的快捷写法。
+你没有实际调用这个方法。方法引用就是Lambda表达式 \(Apple a\) -&gt; a.getWeight\(\) 的快捷
+写法。
 
-![](/assets/import08.png)
+![](../assets/import08.png)
 
 [返回目录](#)
 

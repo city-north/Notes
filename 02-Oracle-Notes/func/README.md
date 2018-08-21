@@ -4,11 +4,11 @@
 
 * 什么是SQL的函数
 
-![](/assets/import14.png)
+![](../assets/import14.png)
 
 * 函数的类型
   * [单行函数](/func/single.md)
   * 多行函数
 
-![](/assets/import15.png)
+![](../assets/import15.png)
 

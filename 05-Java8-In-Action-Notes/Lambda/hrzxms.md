@@ -16,7 +16,7 @@ public static String processFile() throws IOException {
 
 可以看到，打开资源相关代码，清理结束代码是围绕则任务展开的：
 
-![](/assets/import03.png)
+![](../assets/import03.png)
 
 ## 第一步：分析为什么要将行为参数化
 
@@ -62,7 +62,7 @@ String twoLine = processFile((BufferedReader br) -> br.readLine() + br.readLine(
 
 一共分为四步，就可以**利用函数式接口来传递Lambda**
 
-![](/assets/import04.png)
+![](../assets/import04.png)
 
 [返回目录](#)
 

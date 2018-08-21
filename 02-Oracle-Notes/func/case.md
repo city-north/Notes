@@ -7,11 +7,11 @@
 
 ## CASE表达式
 
-## ![](/assets/import32.png)
+## ![](../assets/import32.png)
 
 ## DECODE函数
 
-![](/assets/import33.png)
+![](../assets/import33.png)
 
 ## 条件表达式实例
 

@@ -44,7 +44,7 @@ EXCEPTION
 END;
 ```
 
-## ![](/assets/import40.png)例子
+## ![](../assets/import40.png)例子
 
 ```
 CREATE TABLE CUSTOMERS( 

@@ -156,7 +156,7 @@ END;
 /
 ```
 
-![](/assets/import35.png)
+![](../assets/import35.png)
 
 ## 带有参数的游标
 

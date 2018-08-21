@@ -101,5 +101,5 @@ END;
 
 当上述代码在SQLPlus提示符下执行时，它会产生以下结果 -
 
-![](/assets/import39.png)
+![](../assets/import39.png)
 

@@ -20,7 +20,7 @@ group by deptno;
 
 不能正常运行
 
-![](/assets/import34.png)
+![](../assets/import34.png)
 
 
 

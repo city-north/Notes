@@ -44,7 +44,7 @@ PL/SQL procedure successfully completed.
 
 分界符（Deliniter）是对PL/SQL有特殊意义的符号（单字符或者字符序列）。它们用来将标识符相互分割开，表4.1列出了PL/SQL中的可以使用的分界符
 
-![](/assets/import36.png)
+![](../assets/import36.png)
 
 
 

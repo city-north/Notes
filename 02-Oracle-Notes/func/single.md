@@ -2,9 +2,9 @@
 
 # 单行函数
 
-## ![](/assets/import16.png)字符函数
+## ![](../assets/import16.png)字符函数
 
-### ![](/assets/import17.png)Upper & Lower & initcap
+### ![](../assets/import17.png)Upper & Lower & initcap
 
 dual 是虚拟表
 

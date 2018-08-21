@@ -5,15 +5,15 @@
 * 使用where语句过滤
 * 比较运算符
 
-![](/assets/import11.png)
+![](../assets/import11.png)
 
 * 其他比较运算符
 
-![](/assets/import12.png)
+![](../assets/import12.png)
 
 * 逻辑运算符
 
-![](/assets/import13.png)
+![](../assets/import13.png)
 
 ## 排序中的空值问题
 

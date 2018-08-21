@@ -21,7 +21,7 @@ Lambda的类型是从使用Lambda的**上下文**推断出来的。
 List<Apple> heavierThan150g = filter(inventory,(Apple a) -> a.getWeight() > 150);
 ```
 
-![](/assets/import07.png)
+![](../assets/import07.png)
 
 接受一个Apple 返回一个boolean：
 

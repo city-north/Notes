@@ -35,7 +35,7 @@ Comparator<Apple> byWeight = new Comparator<Apple>() {
 
 Java8之后
 
-![](/assets/import01.png)
+![](../assets/import01.png)
 
 ```
 Comparator<Apple> byWeight =(Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight());
@@ -47,7 +47,7 @@ Comparator<Apple> byWeight =(Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.
 * 箭头—把参数列表与Lambda主体分隔开
 * Lambda主体—比较两个Apple的重量，表达式就是Lambda的返回值
 
-![](/assets/import02.png)
+![](../assets/import02.png)
 
 ```
 布尔表达式  
