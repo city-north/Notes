@@ -30,6 +30,27 @@ Spring学习笔记
   * [Thymeleaf视图解析器](./chapter05/03.md)
 * SpringSecurity
   * [SpringSecurity简介](./chapter06/01.md)
+* Spring Framework Reference
+  * Core
+    * [IoC容器](./reference/01.md)
+
+    * [资源](./reference/02.md)
+
+    * [校验，数据绑定，类型转换](./reference/03.md)
+
+    * [SpEL](./reference/04.md)
+
+    * [面向切面编程](./reference/05.md)
+
+    * [AOP APIs](./reference/06.md)
+
+    * [空指针安全](./reference/07.md)
+
+    * [数据缓冲器与编解码器](./reference/08.md)
+
+    * [附录](./reference/09.md)
+
+      
 
 #### 
 
