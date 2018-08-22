@@ -32,23 +32,23 @@ Spring学习笔记
   * [SpringSecurity简介](./chapter06/01.md)
 * Spring Framework Reference
   * Core
-    * [IoC容器](./reference/01.md)
+    * [IoC容器](./reference/core/01.md)
 
-    * [资源](./reference/02.md)
+    * [资源](./reference/core/02.md)
 
-    * [校验，数据绑定，类型转换](./reference/03.md)
+    * [校验，数据绑定，类型转换](./reference/core/03.md)
 
-    * [SpEL](./reference/04.md)
+    * [SpEL](./reference/core/04.md)
 
-    * [面向切面编程](./reference/05.md)
+    * [面向切面编程](./reference/core/05.md)
 
-    * [AOP APIs](./reference/06.md)
+    * [AOP APIs](./reference/core/06.md)
 
-    * [空指针安全](./reference/07.md)
+    * [空指针安全](./reference/core/07.md)
 
-    * [数据缓冲器与编解码器](./reference/08.md)
+    * [数据缓冲器与编解码器](./reference/core/08.md)
 
-    * [附录](./reference/09.md)
+    * [附录](./reference/core/09.md)
 
       
 
