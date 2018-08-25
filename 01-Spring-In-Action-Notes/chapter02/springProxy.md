@@ -22,7 +22,7 @@ Spring整合了JDK代理（**优先使用**）和cglib代理（**无接口时使
 * 真实对象
 * 代理对象
 
-![](/assets/import03.png)
+![](../assets/import03.png)
 
 共同接口
 
