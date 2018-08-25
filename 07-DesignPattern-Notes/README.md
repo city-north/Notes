@@ -33,18 +33,18 @@
   * [享元模式（Flyweight Pattern）](./StructuralPatterns/FWP.md)
   * [代理模式（Proxy Pattern）](./StructuralPatterns/PP.md)
 * [行为型模式](./BehavioralPatterns/README.md)（Behavioral Patterns）
-  * 责任链模式
-  * 命令模式
-  * 解释器模式
-  * 迭代器模式
-  * 中介者模式
-  * 备忘录模式
-  * 观察者模式
-  * 状态模式
+  * [责任链模式（Chain of Respinsibility Pattern）](./BehavioralPatterns/CORP.md)
+  * [命令模式（Command Pattern）](./BehavioralPatterns/CP.md)  
+  * [解释器模式（Interpreter Pattern）](./BehavioralPatterns/IP.md) 
+  * [迭代器模式（Iterator Pattern）](./BehavioralPatterns/ITP.md)
+  * [中介者模式（Mediator Pattern）](./BehavioralPatterns/MP.md) 
+  *  [备忘录模式（Memento Pattern）](./BehavioralPatterns/MEP.md)   
+  * [观察者模式（Observer Pattern）](./BehavioralPatterns/OP.md) 
+  * [状态模式（State Pattern）](./BehavioralPatterns/SP.md) 
   * 空对象模式
-  * 策略模式
-  * 模板模式
-  * 访问者模式
+  * [策略模式（Strategy Pattern）](./BehavioralPatterns/SP.md) 
+  *  [模板方法模式（Template Method Pattern）](./BehavioralPatterns/TMP.md)
+  * |[访问者模式（Vistor Pattern）](./BehavioralPatterns/VP.md)   
 * J2EE模式
   * MVC模式
   * 业务代表模式
