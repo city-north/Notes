@@ -1,0 +1,23 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+*.class
+**/out
+overlays/
+
+# Mac
+.DS_Store
+
+# Maven
+**/target
+**/*.log
+**/*.tmp
+**/*.class
+
+07-DesignPattern-Notes/code/target/

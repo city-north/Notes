@@ -169,6 +169,18 @@ public class Test {
 
 - 如果存在循环依赖，系统将有可能崩溃
 
+
+
+# 监听器模式
+
+![img](assets/8129c489-e633-332b-934b-f1d02da88cd1.png)
+
+
+
+
+
+
+
 [返回根目录](/README.md)
 
 [返回目录](../README.md)
