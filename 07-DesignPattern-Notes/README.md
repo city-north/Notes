@@ -41,7 +41,7 @@
   *  [备忘录模式（Memento Pattern）](./BehavioralPatterns/MEP.md)   
   * [观察者模式（Observer Pattern）](./BehavioralPatterns/OP.md) 
   * [状态模式（State Pattern）](./BehavioralPatterns/SP.md) 
-  * [空对象模式（Null Object Pattern）](./NOP.md)
+  * [空对象模式（Null Object Pattern）](./BehavioralPatterns/NOP.md)
   * [策略模式（Strategy Pattern）](./BehavioralPatterns/SP.md) 
   *  [模板方法模式（Template Method Pattern）](./BehavioralPatterns/TMP.md)
   * [访问者模式（Vistor Pattern）](./BehavioralPatterns/VP.md)   
