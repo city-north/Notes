@@ -32,7 +32,7 @@
   * [外观模式（Facade Pattern）](./StructuralPatterns/FP.md)
   * [享元模式（Flyweight Pattern）](./StructuralPatterns/FWP.md)
   * [代理模式（Proxy Pattern）](./StructuralPatterns/PP.md)
-* [行为型模式](./BehavioralPatterns/README.md)（Behavioral Patterns）
+* [行为型模式（Behavioral Patterns）](./BehavioralPatterns/README.md)
   * [责任链模式（Chain of Respinsibility Pattern）](./BehavioralPatterns/CORP.md)
   * [命令模式（Command Pattern）](./BehavioralPatterns/CP.md)  
   * [解释器模式（Interpreter Pattern）](./BehavioralPatterns/IP.md) 
@@ -50,7 +50,7 @@
   * 业务代表模式
   * 组合实体模式
   * 数据访问对象模式
-  * 前段控制器模式
+  * 前端控制器模式
   * 拦截过滤器模式
   * 服务定位器模式
   * 传输对象模式
