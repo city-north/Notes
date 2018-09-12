@@ -19,5 +19,7 @@ overlays/
 **/*.log
 **/*.tmp
 **/*.class
+**/.idea/
 
 07-DesignPattern-Notes/code/target/
+06-Concurrency-Notes/code/.idea/
