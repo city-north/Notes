@@ -1,4 +1,4 @@
-[返回Oracle安装](/oracle11g.md)
+[返回Oracle安装](./oracle11g.md)
 
 # 交换空间（Swap Space）
 
