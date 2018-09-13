@@ -19,7 +19,7 @@ grep MemTotal /proc/meminfo
 * 硬盘：
   * 企业版安装需要4.29G和1.7G的数据文件,
   * tmp目录下至少1g空闲内存
-* [交换内存（_swap space_）要求](/software/swapSpace.md)
+* [交换内存（_swap space_）要求](./software/swapSpace.md)
 
 ## 前期准备
 
@@ -31,7 +31,7 @@ grep MemTotal /proc/meminfo
 
 * 官方快速安装文档
 
-  * [Oracle Database 11g Quick Installation Guide.pdf](/assets/Oracle Database 11g Quick Installation Guide.pdf)
+  * [Oracle Database 11g Quick Installation Guide.pdf](../assets/Oracle Database 11g Quick Installation Guide.pdf)
 
 * 安装基础package\(32位可忽略\)
 
