@@ -19,7 +19,7 @@ grep MemTotal /proc/meminfo
 * 硬盘：
   * 企业版安装需要4.29G和1.7G的数据文件,
   * tmp目录下至少1g空闲内存
-* [交换内存（_swap space_）要求](./software/swapSpace.md)
+* [交换内存（_swap space_）要求](./swapSpace.md)
 
 ## 前期准备
 
