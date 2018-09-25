@@ -46,14 +46,14 @@
   *  [模板方法模式（Template Method Pattern）](./BehavioralPatterns/TMP.md)
   * [访问者模式（Vistor Pattern）](./BehavioralPatterns/VP.md)   
 * J2EE模式
-  * MVC模式
-  * 业务代表模式
-  * 组合实体模式
-  * 数据访问对象模式
-  * 前端控制器模式
-  * 拦截过滤器模式
-  * 服务定位器模式
-  * 传输对象模式
+  * [MVC模式](./J2EE/01.md)
+  * [业务代表模式](./J2EE/02.md)
+  * [组合实体模式](./J2EE/03.md)
+  * [数据访问对象模式](./J2EE/04.md)
+  * [前端控制器模式](./J2EE/05.md)
+  * [拦截过滤器模式](./J2EE/06.md)
+  * [服务定位器模式](./J2EE/07.md)
+  * [传输对象模式](./J2EE/08.md)
 
 
 

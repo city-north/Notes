@@ -1,5 +1,7 @@
 # 学习笔记
 
+[计划](./PLAN.md)
+
 1. [Spring 实战笔记](/01-Spring-In-Action-Notes/README.md)
 2. [Oracle学习笔记](/02-Oracle-Notes/README.md)
 3. [Maven实战笔记](/03-Maven-In-Action-Notes/README.md)
