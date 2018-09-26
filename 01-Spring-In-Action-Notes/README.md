@@ -29,10 +29,13 @@ Spring学习笔记
   * [理解视图解析](./chapter05/02.md)
   * [Thymeleaf视图解析器](./chapter05/03.md)
 * SpringSecurity
+
   * [SpringSecurity简介](./chapter06/01.md)
 * Spring Framework Reference
   * Core
     * [IoC容器](./reference/core/01.md)
+      * [Bean Scopes](./reference/core/01-05.md)
+      * [1.6 定义Bean的本质](./reference/core/01-06.md)
 
     * [资源](./reference/core/02.md)
 
@@ -50,9 +53,8 @@ Spring学习笔记
 
     * [附录](./reference/core/09.md)
 
-      
 
-#### 
+
 
 
 
