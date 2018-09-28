@@ -36,6 +36,7 @@ Spring学习笔记
     * [IoC容器](./reference/core/01.md)
       * [Bean Scopes](./reference/core/01-05.md)
       * [1.6 定义Bean的本质](./reference/core/01-06.md)
+      * [1.8 拓展容器](./reference/core/01-08.md)
 
     * [资源](./reference/core/02.md)
 
