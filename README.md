@@ -1,5 +1,9 @@
 # 学习笔记
 
+# 重要通知
+
+**本仓库已经不再维护，请访问[eccto.cn](https://www.eccto.cn) 获取更新。**
+
 [计划](./PLAN.md)
 
 1. [Spring 实战笔记](/01-Spring-In-Action-Notes/README.md)
