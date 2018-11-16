@@ -2,7 +2,7 @@
 
 # 重要通知
 
-**本仓库已经不再维护，请访问[eccto.cn](https://www.eccto.cn) 获取更新。**
+**本仓库已经不再维护，请访问[eccto.cn](http://www.eccto.cn) 获取更新。**
 
 [计划](./PLAN.md)
 
