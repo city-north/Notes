@@ -1,6 +1,11 @@
 # Linux-Notes
 
 Linux学习笔记
+# 重要通知
+
+**本仓库已经不再维护，请访问[eccto.cn](https://www.eccto.cn) 获取更新。**
+
+
 
 [返回根目录](/README.md)
 
