@@ -1,6 +1,6 @@
 # HashSet
 
-HashSet底层维护了一个HashMap.基于HashMap实现,这个HashMap的value是一个空的Object，不在赘述.
+`HashSet`底层维护了一个`HashMap`.基于`HashMap`实现,这个`HashMap`的`value`是一个空的`Object`，不在赘述.
 
 ## 值得注意的是
 
