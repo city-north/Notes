@@ -47,3 +47,9 @@ static final int MIN_TREEIFY_CAPACITY = 64;
 ```
 
 ![img](https://img-blog.csdn.net/20161126224434590)
+
+
+
+## HashMap线程非安全的原因
+
+Put方法导致多线程数据不一致
