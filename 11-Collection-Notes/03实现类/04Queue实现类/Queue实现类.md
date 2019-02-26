@@ -1,6 +1,6 @@
 # Queue实现类
 
-​	队列集合主要用于保存要处理的元素，提供插入删除等方法，它是一个有序的对象列表，其使用仅限于在列表末尾插入元素并从头开始删除元素列表。遵循FIFO原则。
+	队列集合主要用于保存要处理的元素，提供插入删除等方法，它是一个有序的对象列表，其使用仅限于在列表末尾插入元素并从头开始删除元素列表。遵循FIFO原则。
 
 
 
@@ -22,8 +22,6 @@ The `java.util.concurrent`包包含一组同步Queue接口和类， [`BlockingQu
 - [`DelayQueue`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/DelayQueue.html) —  一个基于时间的定时队列（堆实现）
 - [`SynchronousQueue`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/SynchronousQueue.html) — 使用“blockingqueue”接口的简单集合机制
 
-在JDK7中，
-
-In JDK 7, [`TransferQueue`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TransferQueue.html) 是一个特殊的 `BlockingQueue` ，在添加一个元素时，可选是否等待（阻塞），当其他线程咋横在检索元素，它有一个实现类i
+In JDK 7, [`TransferQueue`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TransferQueue.html) 是一个特殊的 `BlockingQueue` ，在添加一个元素时，可选是否等待（阻塞），当其他线程咋横在检索元素，它有一个实现类
 
 - [`LinkedTransferQueue`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/LinkedTransferQueue.html) — 一个无界的 `TransferQueue` （基于 linked nodes）
