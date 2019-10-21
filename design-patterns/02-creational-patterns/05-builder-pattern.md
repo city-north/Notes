@@ -1,5 +1,11 @@
 # 建造者设计模式（Builder Pattern）
 
+## 定义
+
+>  构造者模式：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示
+
+## 
+
 [笔记参考于](https://blog.csdn.net/carson_ho/article/details/54910597)
 
 ## UML
@@ -7,8 +13,6 @@
 ![](assets/20160325111451193.png)
 
 如果你需要将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示的意图时，使用构造者模式
-
-构造者模式：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示
 
 ## 角色
 
@@ -21,9 +25,7 @@
 
 1. 指挥者（Director）直接和客户（Client）进行需求沟通； 
 2. 沟通后指挥者将客户创建产品的需求划分为各个部件的建造请求（Builder）；
-3. 将各个部件的建造请求委派到具体的建造者（ConcreteBuilder）； 
-4. 各个具体建造者负责进行产品部件的构建；  
-5. 最终构建成具体产品（Product）。 
+3. 
 
 
 
@@ -159,75 +161,127 @@ person.setDesc("测试使用JavaBeans模式");
 幸运的是，还有第三种替代方法，既能保证像重叠构造器模式那样的安全性，也能保证像JavaBeans模式那么好的可读性。这就是Builder模式的一种形式，不直接生成想要的对象，而是让客户端利用所有必要的参数调用构造器（或者静态工厂），得到一个builder对象。然后客户端在builder对象上调用类似于setter的方法，来设置每个相关的可选参数。最后，客户端调用无参的builder方法来生成不可变的对象。这个builder是它构建类的静态成员类。下面就是它的示例：
 
 ```java
+package cn.eccto.study.designpattens.creationalpatterns.builderpattern;
+
 /**
- * 使用Builder模式
+ * <p>
+ *      Builder 模式
+ * </p>
  */
 public class Person {
-    //必要参数
-    private final int id;
-    private final String name;
-    //可选参数
-    private final int age;
-    private final String sex;
-    private final String phone;
-    private final String address;
-    private final String desc;
+    private int id;
+    private String name;
+    private int age;
+    private String sex;
+    private String phone;
+    private String address;
+    private String desc;
 
-    private Person(Builder builder) {
-        this.id = builder.id;
-        this.name = builder.name;
-        this.age = builder.age;
-        this.sex = builder.sex;
-        this.phone = builder.phone;
-        this.address = builder.address;
-        this.desc = builder.desc;
-    }
 
-    public static class Builder {
-        //必要参数
-        private final int id;
-        private final String name;
-        //可选参数
-        private int age;
-        private String sex;
-        private String phone;
-        private String address;
-        private String desc;
+    public static class PersonBuilder {
+        private Person person;
 
-        public Builder(int id, String name) {
-            this.id = id;
-            this.name = name;
+        public PersonBuilder(Person person) {
+            this.person = person;
         }
 
-        public Builder age(int val) {
-            this.age = val;
+        public PersonBuilder(int id, String name) {
+            person.setId(id);
+            person.setName(name);
+        }
+
+        public PersonBuilder age(int val) {
+            person.setAge(val);
             return this;
         }
 
-        public Builder sex(String val) {
-            this.sex = val;
+        public PersonBuilder sex(String val) {
+            person.setSex(val);
             return this;
         }
 
-        public Builder phone(String val) {
-            this.phone = val;
+        public PersonBuilder phone(String val) {
+            person.setPhone(val);
             return this;
         }
 
-        public Builder address(String val) {
-            this.address = val;
+        public PersonBuilder address(String val) {
+            person.setAddress(val);
             return this;
         }
 
-        public Builder desc(String val) {
-            this.desc = val;
+        public PersonBuilder desc(String val) {
+            person.setDesc(val);
             return this;
         }
 
         public Person build() {
-            return new Person(this);
+            return person;
         }
     }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    private static PersonBuilder builder() {
+        return new PersonBuilder(new Person());
+    }
+
+
 }
 ```
 
@@ -240,9 +294,11 @@ public class Person {
 public class Test {
 
     public static void main(String[] args) {
-        Person person = new Person.Builder(1, "张三")
-                .age(18).sex("男").desc("测试使用builder模式").build();
-        System.out.println(person.toString());
+        PersonBuilder builder = Person.builder();
+        Person build = builder.address("123")
+                .age(12)
+                .desc("!23")
+                .build();
     }
 }
 ```
