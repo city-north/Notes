@@ -4,26 +4,27 @@
 
 #### 目录
 
-* [设计模式设计原则](./01-design-principles/README.md)
+* [设计模式设计原则](01-design-principles/README.md)
   
-  * [单一职责原则（Single Responsibility Principle,SRP）](./01-design-principles/01-single-responsibility-principle.md)
-  * [开闭原则(Open-Closed Principle,OPC)](./01-design-principles/02-open-closed-principle.md)
-  * [里氏代换原则 (Liskov Substitution Principle,LSP](./01-design-principles/03-Liskov-substitution-principle.md)
-  * [依赖倒转原则(Dependancy Inversion Principle,DIP)](./01-design-principles/04-dependence-inversion-principle.md)
-  * [接口隔离原则(Interface Segregation Principle,ISP)](./01-design-principles/05-interface-segregation-principle.md)
-  * [合成复用原则(Composite Reuse Principle,CRP)](./01-design-principles/06-composite-reuse-principle.md)
-  * [迪米特法则((Law of Demeter)](./01-design-principles/07-law-of-demeter.md)
+  * [单一职责原则（Single Responsibility Principle,SRP）](01-design-principles/01-single-responsibility-principle.md)
+  * [开闭原则(Open-Closed Principle,OPC)](01-design-principles/02-open-closed-principle.md)
+  * [里氏代换原则 (Liskov Substitution Principle,LSP](01-design-principles/03-Liskov-substitution-principle.md)
+  * [依赖倒转原则(Dependancy Inversion Principle,DIP)](01-design-principles/04-dependence-inversion-principle.md)
+  * [接口隔离原则(Interface Segregation Principle,ISP)](01-design-principles/05-interface-segregation-principle.md)
+  * [合成复用原则(Composite Reuse Principle,CRP)](01-design-principles/06-composite-reuse-principle.md)
+  * [迪米特法则((Law of Demeter)](01-design-principles/07-law-of-demeter.md)
   
-* [创建型模式（Creational Patterns）](./CreationalPatterns/README.md)
+* [创建型模式（Creational Patterns）](02-creational-patterns/README.md)
   
-  * [简单工厂模式(Simple Factory Pattern)](./CreationalPatterns/SFP.md)
-  * [工厂方法模式(Factory Method Pattern)](./CreationalPatterns/FMP.md)
-  * [抽象工厂模式(Abastact Factory Pattern)](./CreationalPatterns/AFP.md)
-  * [单例模式(Singleton Pattern)](./CreationalPatterns/SP.md)
-  * [建造者模式(Builder Pattern)](./CreationalPatterns/BP.md)
-  * [原型模式(Prototype Pattern)](./CreationalPatterns/PP.md)
+  * [简单工厂模式(Simple Factory Pattern)](02-creational-patterns/01-simple-factory-pattern.md)
+  * [工厂方法模式(Factory Method Pattern)](02-creational-patterns/02-factory-method-pattern.md)
+  * [抽象工厂模式(Abastact Factory Pattern)](02-creational-patterns/03-abstract-factory-pattern.md)
+  * [单例模式(Singleton Pattern)](02-creational-patterns/04-singleton-pattern.md)
+  * [建造者模式(Builder Pattern)](02-creational-patterns/05-builder-pattern.md)
+  * [原型模式(Prototype Pattern)](02-creational-patterns/06-prototype-pattern.md)
   
 * [结构型模式（Structural Patterns）](./StructuralPatterns/README.md)
+  
   * [适配器模式（Adapter Pattern）](./StructuralPatterns/AP.md)
   * [桥接模式（Bridge Pattern）](./StructuralPatterns/BP.md)
   * [过滤器模式（ Filter /Criteria Pattern）](./StructuralPatterns/FCP.md) 
