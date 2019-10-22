@@ -1,6 +1,6 @@
 # Core 目录
 
-- 01-the-ioc-container (Spring Ioc 容器)
+- [01-the-ioc-container](01-the-ioc-container/README.md)  (Spring Ioc 容器)
 
 - 02-resources(资源)
 
