@@ -49,8 +49,6 @@ IoC 又叫依赖注入,对象声明他们的依赖,然后容器帮他们注入�
 ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", "daos.xml");
 ```
 
-
-
 ### 组合两个 xml 文件
 
 ```
@@ -64,4 +62,29 @@ ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", 
 </beans>
 ```
 
-### 
+### 使用容器
+
+`ApplicationContext`接口是一个高级工厂接口,保存了注册的 bean 以及这些 bean 的依赖,通过方法`T getBean(String name, Class<T> requiredType)` 来获取bean 的实例 
+
+```java
+// create and configure beans
+ApplicationContext context = new ClassPathXmlApplicationContext("services.xml", "daos.xml");
+
+// retrieve configured instance
+PetStoreService service = context.getBean("petStore", PetStoreService.class);
+
+// use configured instance
+List<String> userList = service.getUsernameList();
+```
+
+或者使用:`XmlBeanDefinitionReader`读取配置文件
+
+```
+GenericApplicationContext context = new GenericApplicationContext();
+new XmlBeanDefinitionReader(context).loadBeanDefinitions("services.xml", "daos.xml");
+context.refresh();
+```
+
+### 值得注意的是
+
+- 虽然`ApplicationContext`接口提供了获取 bean 的接口,但是尽量不要在代码中使用,为了不依赖 Spring API
