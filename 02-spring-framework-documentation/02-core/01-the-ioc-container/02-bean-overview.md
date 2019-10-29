@@ -1,4 +1,4 @@
-# Bean overview
+# Bean 概览
 
 上节提到的元数据文件,配置一个 bean,告诉容器这个 bean 应该如何组装, Spring 将 bean 的配置抽象为`BeanDefinition`
 
