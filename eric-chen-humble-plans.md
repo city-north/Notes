@@ -7,4 +7,5 @@
 | 3    | Spring Boot Documentation       |            |            |
 | 4    | Effective Java                  |            |            |
 | 5    | Spring Cloud Documentation      |            |            |
+| 6    | Java                            |            |            |
 

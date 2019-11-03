@@ -154,3 +154,94 @@ Spring 中有很多内置的实现类:
 | `StringTrimmerEditor`     | Property editor that trims strings. Optionally allows transforming an empty string into a `null` value. NOT registered by default — must be user-registered. |
 | `URLEditor`               | Can resolve a string representation of a URL to an actual `URL` object. By default, registered by `BeanWrapperImpl`. |
 
+Spring使用`java.beans.PropertyEditorManager`为可能需要的属性编辑器设置搜索路径,这个搜索路径也包含了`sun.bean.editors`(包含`PropertyEditor`实现类的`Font``Color`类型和其他大部分基础类型)
+
+![image-20191031191650898](assets/image-20191031191650898.png)
+
+#### 值得注意的是
+
+- 标准 JavaBean 的的基础设置自动发现`PropertyEditor`相关类,不需要你手动注册
+
+- 一般如果你在下面相同的目录结构加上一个类,并有另外一个类等于`Editor`后缀结尾,例如
+
+```
+om
+  chank
+    pop
+      Something
+      SomethingEditor // the PropertyEditor for the Something class
+```
+
+- 标准的`BeanInfo` JavaBean 机制,下面的例子使用 `BeanInfo`机制注册一个或者多个`PropertyEditor`相关类实例
+
+```
+com
+  chank
+    pop
+      Something
+      SomethingBeanInfo // the BeanInfo for the Something class
+```
+
+下面的例子告诉你如果,`SomethingBeanInfo`类关联的 `CustomNumberEditor` .一个 `SomeThing`类的`age`属性
+
+```java
+public class SomethingBeanInfo extends SimpleBeanInfo {
+
+    public PropertyDescriptor[] getPropertyDescriptors() {
+        try {
+            final PropertyEditor numberPE = new CustomNumberEditor(Integer.class, true);
+            PropertyDescriptor ageDescriptor = new PropertyDescriptor("age", Something.class) {
+                public PropertyEditor createPropertyEditor(Object bean) {
+                    return numberPE;
+                };
+            };
+            return new PropertyDescriptor[] { ageDescriptor };
+        }
+        catch (IntrospectionException ex) {
+            throw new Error(ex.toString());
+        }
+    }
+}
+```
+
+## 注册一个自定义的`PropertyEditor`实现类
+
+## 使用`PropertyEditorRegistrar`
+
+Spring 容器另外一个注册属性编辑器的机制是使用`PropertyEditorRegistrar`
+
+- 这个接口的应用场景是如果你需要在不同的场景使用相同的一组属性编辑器
+- `PropertyEditorRegistrar`和接口`PropertyEditorRegistry`接口结合(`BeanWrapper`和`DataBinder`都实现了这个接口)
+
+创建一个 `PropertyEditorRegistrar` 实现类:
+
+```java
+package com.foo.editors.spring;
+
+public final class CustomPropertyEditorRegistrar implements PropertyEditorRegistrar {
+
+    public void registerCustomEditors(PropertyEditorRegistry registry) {
+
+        // it is expected that new PropertyEditor instances are created
+        registry.registerCustomEditor(ExoticType.class, new ExoticTypeEditor());
+
+        // you could register as many custom property editors as are required here...
+    }
+}
+```
+
+也可以查看`org.springframework.beans.support.ResourceEditorRegistrar`,它是一个`PropertyEditorRegistrar`实现类
+
+```xml
+<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+    <property name="propertyEditorRegistrars">
+        <list>
+            <ref bean="customPropertyEditorRegistrar"/>
+        </list>
+    </property>
+</bean>
+
+<bean id="customPropertyEditorRegistrar"
+    class="com.foo.editors.spring.CustomPropertyEditorRegistrar"/>
+```
+
