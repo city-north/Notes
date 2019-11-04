@@ -22,6 +22,10 @@ spring 特色的类型转换
 
 spring 特色的属性格式化
 
+-  [05-spring-field-formatting(anno).md](05-spring-field-formatting(anno).md) 
+
+spring 特色的属性格式化(基于注解)
+
 -  [06-config-global-date-and-time-format.md](06-config-global-date-and-time-format.md) 
 
 配置一个全局日期和事件类型
