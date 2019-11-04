@@ -3,8 +3,96 @@
 Spring 核心模块提供两种方法校验 bean 的合法性:
 
 - 使用 Spring 校验机制,通过实现`org.springframework.validation.Validator`接口
-
 - 使用JSR 349/303 注解的校验  [Java EE Bean validation tutorial](https://www.logicbig.com/tutorials/java-ee-tutorial/bean-validation.html)
+
+
+
+## JSR-303 bean 校验 API
+
+Spring 全面支持 Bean Validation API, 它包含了对 JSR-303和 JSR-349 Bean 校验的全面支持,你可以在你的 sping 应用中随时注入`javax.validation.ValidatorFactory`和`javax.validation.Validator`.
+
+下面实例显示了一个 JSR-303 注解标注的校验方式
+
+```java
+public class PersonForm {
+
+    @NotNull
+    @Size(max=64)
+    private String name;
+
+    @Min(0)
+    private int age;
+}
+```
+
+当JSR-303验证器验证该类的实例时，将强制执行这些约束。
+
+你可以将检验器集成到你的项目中
+
+你可以使用`LocalValidatorFactoryBean`配置成 Spring 默认的 校验器,如下:
+
+```xml
+<bean id="validator"
+    class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+```
+
+例子中的代码,使用了默认的引导机制,听了 JSR-303 或者 JSR-349 的提供者,例如`Hibernate Validator`,我们可以在代码中注入校验器:
+
+```java
+import javax.validation.Validator;
+
+@Service
+public class MyService {
+
+    @Autowired
+    private Validator validator;
+}
+```
+
+如果你需要 Spring 校验 API ,那么你可以注入另一个`org.springframework.validation.Validator`
+
+```java
+import org.springframework.validation.Validator;
+
+@Service
+public class MyService {
+
+    @Autowired
+    private Validator validator;
+}
+```
+
+## 配置自定义约束(Configurating Custom Constraints )
+
+自定义约束的方式:
+
+- 自定义`Validator`实现`javax.validation.ConstraintValidator`
+
+- 使用`@Constraint`,其中数据`validatedBy`属性设置为自定义 `Validator`
+
+```java
+import javax.validation.ConstraintValidator;
+
+public class MyConstraintValidator implements ConstraintValidator<MyConstraint,String> {
+
+    @Autowired;
+    private Foo aDependency;
+
+    // ...
+}
+```
+
+
+
+```java
+@Target({ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy=MyConstraintValidator.class)
+public @interface MyConstraint {
+}
+```
+
+
 
 ## 例子
 
@@ -233,6 +321,5 @@ public class Order {
         this.price = price;
     }
 }
-
 ```
 
