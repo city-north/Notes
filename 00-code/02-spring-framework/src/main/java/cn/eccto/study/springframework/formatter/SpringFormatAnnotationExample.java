@@ -1,6 +1,6 @@
-package cn.eccto.study.spring_framework.formatter;
+package cn.eccto.study.springframework.formatter;
 
-import cn.eccto.study.spring_framework.formatter.info.Order;
+import cn.eccto.study.springframework.formatter.info.Order;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.format.datetime.DateTimeFormatAnnotationFormatterFactory;
 import org.springframework.format.number.NumberFormatAnnotationFormatterFactory;

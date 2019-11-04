@@ -1,6 +1,6 @@
-package cn.eccto.study.spring_framework.formatter;
+package cn.eccto.study.springframework.formatter;
 
-import cn.eccto.study.spring_framework.formatter.info.*;
+import cn.eccto.study.springframework.formatter.info.*;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.format.Formatter;
 import org.springframework.format.support.DefaultFormattingConversionService;

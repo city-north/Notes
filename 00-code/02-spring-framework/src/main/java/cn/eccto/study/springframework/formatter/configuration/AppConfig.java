@@ -1,4 +1,4 @@
-package cn.eccto.study.spring_framework.formatter.configuration;
+package cn.eccto.study.springframework.formatter.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

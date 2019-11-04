@@ -1,4 +1,4 @@
-package cn.eccto.study.spring_framework.formatter;
+package cn.eccto.study.springframework.formatter;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.format.support.FormattingConversionService;

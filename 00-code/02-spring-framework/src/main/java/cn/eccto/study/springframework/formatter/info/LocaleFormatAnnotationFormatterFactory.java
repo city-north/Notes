@@ -1,4 +1,4 @@
-package cn.eccto.study.spring_framework.formatter.info;
+package cn.eccto.study.springframework.formatter.info;
 
 import org.springframework.format.AnnotationFormatterFactory;
 import org.springframework.format.Formatter;

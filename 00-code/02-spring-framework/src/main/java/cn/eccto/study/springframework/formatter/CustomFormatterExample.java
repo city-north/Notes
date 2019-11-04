@@ -1,4 +1,4 @@
-package cn.eccto.study.spring_framework.formatter;
+package cn.eccto.study.springframework.formatter;
 
 import org.springframework.core.convert.ConversionService;
 import org.springframework.format.Formatter;
