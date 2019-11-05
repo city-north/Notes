@@ -93,7 +93,7 @@ xml配置：
 
 ### 值得注意的是
 
-** Spring容器允许一个`BeanPostProcesso ` 读取配置元数据，并可能在容器实例化除`BeanFactoryPostProcessor`之外的任何bean之前更改它。除了`BeanFactoryPostProcessor`本身，容器允许它在任何bean初始化之前修改它**
+**Spring容器允许一个`BeanPostProcesso ` 读取配置元数据，并可能在容器实例化除`BeanFactoryPostProcessor`之外的任何bean之前更改它。除了`BeanFactoryPostProcessor`本身，容器允许它在任何bean初始化之前修改它**
 
 你可以配置多个`BeanFactoryPostProcessors`然后通过实现接口`Ordered `并设置order属性的方式来配置执行优先顺序
 

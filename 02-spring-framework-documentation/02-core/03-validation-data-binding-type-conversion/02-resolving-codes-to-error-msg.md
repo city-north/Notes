@@ -28,3 +28,4 @@ public class PersonValidator implements Validator {
 
 - `MessageCodesResolver`决定了`Errors`接口中的注册的错误 Code
 - 默认情况下会使用实现类`DefaultMessageCodesResolver`
+

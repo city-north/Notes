@@ -11,14 +11,10 @@
 
 ## Spring 简介
 
-Spring makes it easy to create Java enterprise applications. It provides everything you need to embrace the Java language in an enterprise environment, with support for Groovy and Kotlin as alternative languages on the JVM, and with the flexibility to create many kinds of architectures depending on an application’s needs. As of Spring Framework 5.1, Spring requires JDK 8+ (Java SE 8+) and provides out-of-the-box support for JDK 11 LTS. Java SE 8 update 60 is suggested as the minimum patch release for Java 8, but it is generally recommended to use a recent patch release.
-
 - Spring 致力于让 Java 企业级应用的构建更加简单
 - 支持 Groovy 和 Kotlin
 - Spring 5.1 以上 版本需要 JDK8+,支持 JDK 11 LTS
 - 建议最低 Java8 update 60 以上版本
-
-Spring supports a wide range of application scenarios. In a large enterprise, applications often exist for a long time and have to run on a JDK and application server whose upgrade cycle is beyond developer control. Others may run as a single jar with the server embedded, possibly in a cloud environment. Yet others may be standalone applications (such as batch or integration workloads) that do not need a server.
 
 Spring 支持广泛的应用场景:
 
@@ -26,9 +22,28 @@ Spring 支持广泛的应用场景:
 - 又有一些应用作为单个 jar 文件内嵌到服务器中执行
 - 也有一些应用作为独立的应用(例如批处理或集成工作负载),不需要一个服务器
 
-Spring is open source. It has a large and active community that provides continuous feedback based on a diverse range of real-world use cases. This has helped Spring to successfully evolve over a very long time.
+Spring 优势:
 
 - 开源
 - 社区活跃
 - 基于生产环境实例的反馈
 
+## 什么是 Spring 框架
+
+[原文连接](https://www.logicbig.com/tutorials/spring-framework/spring-core/quick-start.html)
+
+![img](assets/di-explained.png)
+
+1. **DI (Dependency Injection) :** 依赖注入,服务的实现类实例会被注入到目标对象的变量/属性上去(这里的属性/变量最好是用这个接口类型进行声明),通过构造器注入或者是 Setter 方法注入而不是这个目标对象主动创建他们,因此,这种方法激活了 POJO 对象可以被用在不同环境,不同实现类的场景
+
+   
+
+2. **IOC (Inversion of Control) container:** 在应用的具体操作中,框架代码调用应用代码获取信息而不是应用直接调用框架代码,因此,控制是反转的,一个 IoC 的例子是模板模式的子类,SpringIoc 提供一系列方法
+
+   
+
+3. **AOP (Aspect-Oriented Programming) :** 面向切面编程,这允许通过向应用程序代码中添加行为(方面)来分离横切关注点，而不是将应用程序涉及到那些关注点本身。这使得应用程序能够模块化，而不是将不同的关注点混合到一个地方。例如事务管理、日志记录等。
+
+   
+
+4. **Lightweight Alternative to Java EE :** Spring是使用POJO构建企业应用程序的轻量级解决方案。它可以用于servlet容器(例如Tomcat服务器)，并且不需要应用服务器。
