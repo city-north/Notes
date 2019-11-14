@@ -1,5 +1,11 @@
 # 注入点使用 `@Lazy`
 
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其中代码仅用于学习笔记,不用于商业用途
+
+
+
 始于 Spring 4.3 , `@Lazy`可以在注入点使用,意味着
 
 - `@Lazy` 和`@Autowired`还有`@Inject`和`@Resource`一起使用

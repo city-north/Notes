@@ -1,6 +1,10 @@
 # Bean 的自动装配 (Beans Auto-wiring)
 
-[原文地址](https://www.logicbig.com/tutorials/spring-framework/spring-core/auto-wiring.html)
+> 版权声明
+>
+> 此篇文章参考于logicbig,[原文地址](https://www.logicbig.com/tutorials/spring-framework/spring-core/auto-wiring.html),引用其中代码仅用于学习笔记,不用于商业用途
+
+
 
 Spring容器可以隐式地自动装配依赖项。我们可以使用@Bean注释指定自动装配模式(默认模式除外)。
 

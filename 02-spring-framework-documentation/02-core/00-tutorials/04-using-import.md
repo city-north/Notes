@@ -1,5 +1,9 @@
 # Using Import
 
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其中代码仅用于学习笔记,不用于商业用途
+
 [原文地址](https://www.logicbig.com/tutorials/spring-framework/spring-core/using-import.html)
 
 上一章中我们知道:

@@ -1,5 +1,7 @@
 # Bean Scope (Bean 的作用域)
 
+ [快速实战:14-bean-scopes.md](../00-tutorials/14-bean-scopes.md) 
+
 Spring 中Bean 的作用域:
 
 | Scope                                                        | Description                                                  |

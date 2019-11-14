@@ -1,6 +1,10 @@
 # Spring 概念以及例子
 
-[原文链接](https://www.logicbig.com/tutorials/spring-framework/spring-core/quick-start.html)
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其中代码仅用于学习笔记,不用于商业用途
+
+[原文链接]()
 
 ![di-explained](assets/di-explained-20191105222038104.png)
 

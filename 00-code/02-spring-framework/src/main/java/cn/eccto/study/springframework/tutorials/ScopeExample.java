@@ -1,55 +1,18 @@
-# 隐式构造器注入(implicit constructor injection)
+package cn.eccto.study.springframework.tutorials;
 
-> 版权声明
->
-> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其文字/代码/图片仅用于学习笔记,不用于商业用途
+import cn.eccto.study.springframework.tutorials.scope.Config;
+import cn.eccto.study.springframework.tutorials.scope.UserInfo;
+import cn.eccto.study.springframework.tutorials.scope.UserRegistrationBean;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-Spring 4.3 以后,如果在构造方法中指定额 `bean`,没有必要去添加`@Autowired` 注解
+import java.util.Map;
+import java.util.Scanner;
 
-#### 客户端
-
-可以看到没有使用`@Autowired`注解
-
-```java
-@Component
-public class OrderServiceClient {
-
-    private OrderService orderService;
-
-    //@Autowired is no longer required in Spring 4.3 and later.
-    public OrderServiceClient (OrderService orderService) {
-        this.orderService = orderService;
-    }
-
-    public void showPendingOrderDetails () {
-        System.out.println(orderService.getOrderDetails("100"));
-    }
-}
-```
-
-#### 实现类
-
-```java
-@Service
-public class OrderServiceImpl implements OrderService {
-    @Override
-    public String getOrderDetails(String orderId) {
-        return "Order details from impl 1, for order id=" + orderId;
-    }
-}
-```
-
-#### 接口
-
-```java
-public interface OrderService {
-    String getOrderDetails(String orderId);
-}
-```
-
-#### 测试类
-
-```java
+/**
+ * description
+ *
+ * @author qiang.chen04@hand-china.com 2019/11/14 15:05
+ */
 public class ScopeExample {
     private static Scanner scanner = new Scanner(System.in);
 
@@ -102,6 +65,3 @@ public class ScopeExample {
 
     }
 }
-
-```
-

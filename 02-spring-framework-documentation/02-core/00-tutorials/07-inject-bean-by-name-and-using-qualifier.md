@@ -1,5 +1,9 @@
 # 使用`@Qualifier`注入 bean
 
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其中代码仅用于学习笔记,不用于商业用途
+
 [原文地址](https://www.logicbig.com/tutorials/spring-framework/spring-core/inject-bean-by-name.html)
 
 在下列情况下,需要为 bean 指定一个唯一的名称:

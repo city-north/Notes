@@ -1,5 +1,9 @@
 # 配置元数据
 
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其中代码仅用于学习笔记,不用于商业用途
+
 [原文地址](https://www.logicbig.com/tutorials/spring-framework/spring-core/configuration-metadata.html)
 
 1. **XML-based Configuration :**基于 XML 的配置方式,所有的配置都配置在一个或者多个 xml 文件中,这种配置方式是比较冗长的配置方式,当项目需要大量的 xml 文件配置的时候,非常难以管理这些 xml
