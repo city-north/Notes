@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author EricChen 2019/11/04 18:40
  */
-public class GlobalFormaterConfigExample {
+class GlobalFormaterConfigExample {
     public static void main(String[] args) {
 //        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("springframework/global-formatter-config-test.xml");

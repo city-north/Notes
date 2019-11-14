@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @author EricChen 2019/11/05 22:23
  */
 @Configuration
-public class QuickStartExample {
+class QuickStartExample {
     @Bean
     public HelloWorldService createHelloWorldService() {
         return new HelloWorldServiceImpl();

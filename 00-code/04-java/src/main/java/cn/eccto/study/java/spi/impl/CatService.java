@@ -7,7 +7,7 @@ import cn.eccto.study.java.spi.MyService;
  *
  * @author EricChen 2019/11/03 21:05
  */
-public class CatService implements MyService {
+class CatService implements MyService {
 
     @Override
     public void service() {

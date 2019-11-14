@@ -18,7 +18,7 @@ import java.util.StringJoiner;
  *
  * @author EricChen 2019/11/04 15:16
  */
-public class CustomFormatterExample {
+class CustomFormatterExample {
     public static void main(String[] args) {
         DefaultFormattingConversionService service =
                 new DefaultFormattingConversionService();

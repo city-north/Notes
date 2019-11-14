@@ -9,7 +9,7 @@ import java.util.ServiceLoader;
  *
  * @author EricChen 2019/11/03 21:08
  */
-public class SpiServiceExample {
+class SpiServiceExample {
 
     public static void main(String[] args) {
         ServiceLoader<MyService> shouts = ServiceLoader.load(MyService.class);

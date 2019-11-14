@@ -12,7 +12,7 @@ import java.time.LocalDate;
  *
  * @author EricChen 2019/11/04 15:05
  */
-public class DefaultFormattingConversionServiceExample {
+class DefaultFormattingConversionServiceExample {
     public static void main(String[] args) {
         ConversionService service =
                 new DefaultFormattingConversionService();

@@ -14,7 +14,7 @@ import org.springframework.validation.DataBinder;
  *
  * @author EricChen 2019/11/04 15:29
  */
-public class SpringFormatAnnotationExample {
+class SpringFormatAnnotationExample {
 
 
     public static void main(String[] args) {
