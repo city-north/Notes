@@ -1,5 +1,9 @@
 # ResourceLoader
 
+相关实战
+
+-  [40-resource-injection.md](../00-tutorials/05-resource-handling/40-resource-injection.md) 
+
 这个接口的实现类用来创建一个 `Resource`
 
 ```java
@@ -54,3 +58,7 @@ Resource template = ctx.getResource("some/resource/path/myTemplate.txt");
 | file:      | `file:///data/config.xml`        | Loaded as a `URL` from the filesystem. See also [`FileSystemResource`Caveats](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/core.html#resources-filesystemresource-caveats). |
 | http:      | `https://myserver/logo.png`      | Loaded as a `URL`.                                           |
 | (none)     | `/data/config.xml`               | Depends on the underlying `ApplicationContext`.              |
+
+
+
+## 
