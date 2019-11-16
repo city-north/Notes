@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 17:13
+ * @author EricChen 2019/11/14 17:13
  */
 @Component
 public class OrderServiceClient {

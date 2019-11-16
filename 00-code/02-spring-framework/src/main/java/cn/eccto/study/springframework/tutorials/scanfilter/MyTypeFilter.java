@@ -11,7 +11,7 @@ import java.util.Arrays;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 16:48
+ * @author EricChen 2019/11/14 16:48
  */
 public class MyTypeFilter implements TypeFilter {
     private static final String RunnableName = Runnable.class.getName();

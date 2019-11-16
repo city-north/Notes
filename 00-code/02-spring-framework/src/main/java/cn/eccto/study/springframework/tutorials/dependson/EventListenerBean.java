@@ -3,7 +3,7 @@ package cn.eccto.study.springframework.tutorials.dependson;
 /**
  * 事件监听 bean
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 14:24
+ * @author EricChen 2019/11/14 14:24
  */
 public class EventListenerBean {
     private void initialize() {

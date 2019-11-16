@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 17:16
+ * @author EricChen 2019/11/14 17:16
  */
 @Configuration
 @ComponentScan({"cn.eccto.study.springframework.tutorials.implicit"})

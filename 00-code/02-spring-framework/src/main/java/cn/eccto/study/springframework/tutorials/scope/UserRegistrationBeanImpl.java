@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 15:04
+ * @author EricChen 2019/11/14 15:04
  */
 public class UserRegistrationBeanImpl implements UserRegistrationBean {
 

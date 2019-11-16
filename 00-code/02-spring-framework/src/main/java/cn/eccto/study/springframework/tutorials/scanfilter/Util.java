@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 16:09
+ * @author EricChen 2019/11/14 16:09
  */
 public class Util {
     public static void printBeanNames(ApplicationContext context) {

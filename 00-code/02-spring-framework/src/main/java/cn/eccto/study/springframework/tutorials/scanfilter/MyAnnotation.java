@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 16:08
+ * @author EricChen 2019/11/14 16:08
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

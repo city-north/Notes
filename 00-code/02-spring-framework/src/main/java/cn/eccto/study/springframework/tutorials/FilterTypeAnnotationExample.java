@@ -11,7 +11,7 @@ import org.springframework.context.annotation.FilterType;
 /**
  * 指定不使用标准的 filter ,并引入自定义注解 {@link MyAnnotation}
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 16:07
+ * @author EricChen 2019/11/14 16:07
  */
 @Configuration
 @ComponentScan(useDefaultFilters = false,

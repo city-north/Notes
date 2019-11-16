@@ -5,7 +5,7 @@ import javax.annotation.PostConstruct;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 15:03
+ * @author EricChen 2019/11/14 15:03
  */
 public class RegistrationServiceImpl implements RegistrationService {
 

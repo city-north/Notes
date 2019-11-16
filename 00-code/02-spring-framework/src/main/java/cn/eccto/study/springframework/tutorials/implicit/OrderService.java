@@ -3,7 +3,7 @@ package cn.eccto.study.springframework.tutorials.implicit;
 /**
  * description
  *
- * @author qiang.chen04@hand-china.com 2019/11/14 17:14
+ * @author EricChen 2019/11/14 17:14
  */
 public interface OrderService {
     String getOrderDetails(String orderId);
