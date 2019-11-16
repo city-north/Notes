@@ -1,7 +1,5 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.lazy;
 
-import cn.eccto.study.springframework.tutorials.lazy.AlwaysBeingUsedBean;
-import cn.eccto.study.springframework.tutorials.lazy.RarelyUsedBean;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,9 @@
 # ObjectProvider 支持 Java 8函数式编程 
 
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其文字/代码/图片仅用于学习笔记,不用于商业用途
+
 Spring 5.0 以后,`ObjectProvider` 接口支持`java.util.function`回调
 
 ```java

@@ -1,6 +1,5 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.implicit;
 
-import cn.eccto.study.springframework.tutorials.implicit.OrderServiceClient;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

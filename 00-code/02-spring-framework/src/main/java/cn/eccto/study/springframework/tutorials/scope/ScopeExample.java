@@ -1,4 +1,4 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.scope;
 
 import cn.eccto.study.springframework.tutorials.scope.Config;
 import cn.eccto.study.springframework.tutorials.scope.UserInfo;

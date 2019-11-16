@@ -1,7 +1,5 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.lifecycle;
 
-import cn.eccto.study.springframework.tutorials.lifecycle.MyBean;
-import cn.eccto.study.springframework.tutorials.lifecycle.OtherBean;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;

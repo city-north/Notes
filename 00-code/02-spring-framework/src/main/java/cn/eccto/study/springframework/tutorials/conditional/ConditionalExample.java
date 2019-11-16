@@ -1,4 +1,4 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.conditional;
 
 import cn.eccto.study.springframework.formatter.configuration.AppConfig;
 import cn.eccto.study.springframework.tutorials.conditional.ConditionalConfiguration;

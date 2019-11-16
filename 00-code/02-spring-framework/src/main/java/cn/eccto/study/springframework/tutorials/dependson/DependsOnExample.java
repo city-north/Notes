@@ -1,7 +1,5 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.dependson;
 
-import cn.eccto.study.springframework.tutorials.dependson.EventListenerBean;
-import cn.eccto.study.springframework.tutorials.dependson.EventPublisherBean;
 import org.springframework.context.annotation.*;
 
 /**

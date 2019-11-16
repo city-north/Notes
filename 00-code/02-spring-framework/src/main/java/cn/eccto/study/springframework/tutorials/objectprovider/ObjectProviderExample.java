@@ -1,7 +1,5 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.objectprovider;
 
-import cn.eccto.study.springframework.tutorials.objectprovider.ExampleBean;
-import cn.eccto.study.springframework.tutorials.objectprovider.ExampleBean2;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;

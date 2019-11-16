@@ -1,5 +1,9 @@
 # Spring中的 Stream 支持 (ObjectProvider)
 
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其文字/代码/图片仅用于学习笔记,不用于商业用途
+
 这个方法返回一个所有bean 实例的匹配的序列流.没有顺序(基于注册顺序)
 
 ```java

@@ -1,5 +1,11 @@
 # 将一个 Prototype Bean 注入到 Singleton Bean
 
+> 版权声明
+>
+> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其文字/代码/图片仅用于学习笔记,不用于商业用途
+
+为了**解决更小作用域 Bean 注入问题**
+
 如果相同 Scope 的 bean 被组合在一起没有问题,例如，一个单例bean A 被注入到另一个单例bean B中，但是如果bean A的作用域更窄，比如`prototype`作用域，那么就有问题了。
 
 为了理解这个问题,我们可以看个例子,两个 bean 分别是

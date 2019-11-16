@@ -1,8 +1,5 @@
-package cn.eccto.study.springframework.tutorials;
+package cn.eccto.study.springframework.tutorials.quick;
 
-import cn.eccto.study.springframework.tutorials.quick.HelloWorldService;
-import cn.eccto.study.springframework.tutorials.quick.HelloWorldServiceClient;
-import cn.eccto.study.springframework.tutorials.quick.HelloWorldServiceImpl;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
