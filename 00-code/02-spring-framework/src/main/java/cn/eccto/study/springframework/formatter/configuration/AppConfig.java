@@ -12,7 +12,7 @@ import org.springframework.format.support.FormattingConversionService;
  * Java配置方式注册全局的日期转换格式
  *
  *
- * @author EricChen 2019/11/04 18:32
+ * @author EricChen 2019/11/04 20:32
  */
 @Configuration
 public class AppConfig {

@@ -122,6 +122,8 @@ Float salary = (Float) company.getPropertyValue("managingDirector.salary");
 
 ## 内置的`PropertyEditor`实现类
 
+教程笔记 [44-property-editors.md](../00-tutorials/07-data-binding-validation-conversion-and-formatting/44-property-editors.md) 
+
 Spring使用了`PropertyEditor`去将 `Object` 转化为 `String`,用不同于对象本身的方式表示属性是很方便的.
 
 例如

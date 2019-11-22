@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * description
  *
- * @author EricChen2019/11/16 15:58
+ * @author EricChen2019/11/16 20:58
  */
 @Component
 class MySingletonBean {

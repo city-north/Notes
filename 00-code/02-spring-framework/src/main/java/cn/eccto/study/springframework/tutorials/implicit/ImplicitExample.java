@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * description
  *
- * @author EricChen 2019/11/14 17:16
+ * @author EricChen 2019/11/14 20:16
  */
 @Configuration
 @ComponentScan({"cn.eccto.study.springframework.tutorials.implicit"})

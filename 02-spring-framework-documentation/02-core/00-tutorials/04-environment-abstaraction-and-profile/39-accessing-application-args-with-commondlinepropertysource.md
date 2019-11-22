@@ -40,7 +40,7 @@ myProp2 => testVal2
 
 我们可以看出它输出了我们在运行命令时指定的两个参数
 
-## 不使用Spring context 的情况下使用SimpleCommandLinePropertySource
+## 使用Spring context 的情况下使用SimpleCommandLinePropertySource
 
 ```java
 /**

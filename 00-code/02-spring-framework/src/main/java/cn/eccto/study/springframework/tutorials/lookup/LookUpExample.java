@@ -7,7 +7,7 @@ import org.springframework.context.annotation.*;
  * 使用 {@link org.springframework.beans.factory.annotation.Lookup} 注解完成在一个 Singleton bean 中
  * 获取一个 Prototype 类型的 bean
  *
- * @author EricChen2019/11/16 16:00
+ * @author EricChen2019/11/16 20:00
  */
 @Configuration
 @ComponentScan(basePackageClasses = MySingletonBean.class)

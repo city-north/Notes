@@ -10,7 +10,7 @@ import java.util.Date;
  * 1. Java 配置方式
  * 2. xml 方式
  *
- * @author EricChen 2019/11/04 18:40
+ * @author EricChen 2019/11/04 20:40
  */
 class GlobalFormaterConfigExample {
     public static void main(String[] args) {

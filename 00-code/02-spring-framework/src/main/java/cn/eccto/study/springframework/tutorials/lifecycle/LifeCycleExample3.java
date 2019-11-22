@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * description
  *
- * @author EricChen 2019/11/14 12:27
+ * @author EricChen 2019/11/14 20:27
  */
 @Configuration
 class LifeCycleExample3 {

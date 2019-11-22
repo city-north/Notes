@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Lazy;
 /**
  * description
  *
- * @author EricChen 2019/11/14 12:36
+ * @author EricChen 2019/11/14 20:36
  */
 @Configuration
 public class LazyInitExample {

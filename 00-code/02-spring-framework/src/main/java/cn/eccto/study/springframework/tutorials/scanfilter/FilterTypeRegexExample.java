@@ -9,7 +9,7 @@ import org.springframework.context.annotation.FilterType;
 /**
  * description
  *
- * @author EricChen 2019/11/14 16:25
+ * @author EricChen 2019/11/14 20:25
  */
 @Configuration
 @ComponentScan(basePackages = "cn.eccto.study.springframework.tutorials.scanfilter"

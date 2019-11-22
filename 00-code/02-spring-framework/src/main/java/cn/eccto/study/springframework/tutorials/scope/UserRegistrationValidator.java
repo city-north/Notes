@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * description
  *
- * @author EricChen 2019/11/14 15:04
+ * @author EricChen 2019/11/14 20:04
  */
 public class UserRegistrationValidator {
 

@@ -10,7 +10,7 @@ import org.springframework.core.annotation.Order;
 /**
  * description
  *
- * @author EricChen 2019/11/15 14:19
+ * @author EricChen 2019/11/15 20:19
  */
 @Configuration
 public class ObjectProviderStreamExample {

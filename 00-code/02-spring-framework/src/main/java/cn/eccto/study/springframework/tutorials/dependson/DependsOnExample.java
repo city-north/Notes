@@ -5,7 +5,7 @@ import org.springframework.context.annotation.*;
 /**
  * <code>@DependsOn</code>注解使用
  *
- * @author EricChen 2019/11/14 14:24
+ * @author EricChen 2019/11/14 20:24
  */
 @Configuration
 @ComponentScan("cn.eccto.study.springframework.tutorials.dependson")

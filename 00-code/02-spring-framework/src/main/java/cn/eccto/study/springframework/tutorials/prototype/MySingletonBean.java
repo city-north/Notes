@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * description
  *
- * @author EricChen 2019/11/15 16:13
+ * @author EricChen 2019/11/15 20:13
  */
 public class MySingletonBean {
 

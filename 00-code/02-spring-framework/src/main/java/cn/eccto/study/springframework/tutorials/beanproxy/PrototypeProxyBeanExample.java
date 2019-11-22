@@ -9,7 +9,7 @@ import org.springframework.context.annotation.*;
 /**
  * description
  *
- * @author EricChen 2019/11/16 16:20
+ * @author EricChen 2019/11/16 20:20
  */
 @Configuration
 public class PrototypeProxyBeanExample {

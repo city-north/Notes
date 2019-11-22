@@ -91,6 +91,8 @@ Spring 提供了一个`ReloadableResourceBundleMessageSource`,这个变体支持
 
 ## 标准和自定义事件
 
+实战参考笔记 [42-standard-and-custom-events.md](../00-tutorials/06-standard-and-custom-events/42-standard-and-custom-events.md) 
+
 Spring `ApplicationContext`中的事件处理主要涉及到两个接口,使用的是标准的观察者模式
 
 - `ApplicationListener`,实现此接口的 bean 在事件触发后会接到通知

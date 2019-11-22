@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 /**
  * 事件管理器
  *
- * @author EricChen 2019/11/14 14:25
+ * @author EricChen 2019/11/14 20:25
  */
 public class EventManager {
     private final List<Consumer<String>> listeners = new ArrayList<>();

@@ -1,5 +1,7 @@
 # 使用 Spring 的`Validator`接口进行数据校验
 
+ 快速实战入口[46-spring-validation.md](../00-tutorials/07-data-binding-validation-conversion-and-formatting/46-spring-validation.md) 
+
 Spring 提供了一个`Validator`接口对对象进行校验,`Validator`接口
 
 例如我们想校验下面的实体类:
