@@ -1,12 +1,21 @@
-# 方法校验
+package cn.eccto.study.springframework.tutorials.methodValidation;
 
-method validation
+import cn.eccto.study.springframework.formatter.configuration.AppConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
-根据Java Bean验证规范，如果方法验证产生非空的约束违反集合，那么`javax.validation`应该抛出`ConstraintViolationException`来包装违规。规范本身没有提供任何抛出此异常的实现，相反，它详细描述了与侦听框架(如Spring)集成后应该遵循的行为。该规范提供了API，帮助手动执行方法和构造函数的验证(查看这个和这个示例)。
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
-方法验证可以通过注册`MethodValidationPostProcessor`集成到Spring应用程序中。所有包含要验证的方法的目标类也应该注册为bean，并且应该使用Spring特定的注释`@ validate`进行注释。
-
-```java
 /**
  * 方法校验
  *
@@ -97,33 +106,3 @@ public class MethodValidationExample {
         }
     }
 }
-
-```
-
-```java
-/**
- * description
- *
- * @author EricChen 2019/11/22 22:56
- */
-@Validated
-@Component
-public class ReportTask {
-    public @Pattern(regexp = "[0-3]") String createReport(@NotNull @Size(min = 3, max = 20) String name,
-                                                          @NotNull @FutureOrPresent LocalDateTime startDate) {
-        return "-1";
-    }
-}
-```
-
-```java
-@Component
-@Validated
-public class UserTask {
-
-    public void registerUser(@NotNull @Valid MethodValidationExample.User user){
-        System.out.println("registering user: "+ user);
-    }
-}
-```
-
