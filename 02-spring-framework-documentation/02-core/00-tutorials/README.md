@@ -48,13 +48,13 @@
 -  [43-manipulating-java-beans.md](07-data-binding-validation-conversion-and-formatting/43-manipulating-java-beans.md) 对 Java Bean 的操纵
 -  [44-property-editors.md](07-data-binding-validation-conversion-and-formatting/44-property-editors.md) Spring 是如何使用 JavaBeans API 来将文本转化成 Object,创建一个自定义的 Editor,如何使用 Spring 默认的 property editors
 -  [45-core-data-binding.md](07-data-binding-validation-conversion-and-formatting/45-core-data-binding.md) 什么是DataBinder, DataBinder 和 BeanWrapper 的区别
--  [46-spring-validation.md](07-data-binding-validation-conversion-and-formatting/46-spring-validation.md) 
--  [47-message-codes-created-by-messageCodesResolver.md](07-data-binding-validation-conversion-and-formatting/47-message-codes-created-by-messageCodesResolver.md) 
--  [48-creating-custom-validation-constraint-anno.md](07-data-binding-validation-conversion-and-formatting/48-creating-custom-validation-constraint-anno.md) 
--  [49-method-validation.md](07-data-binding-validation-conversion-and-formatting/49-method-validation.md) 
--  [50-conversion-service.md](07-data-binding-validation-conversion-and-formatting/50-conversion-service.md) 
--  [51-field-formatting.md](07-data-binding-validation-conversion-and-formatting/51-field-formatting.md) 
--  [52-anno-driven-formatting.md](07-data-binding-validation-conversion-and-formatting/52-anno-driven-formatting.md) 
+-  [46-spring-validation.md](07-data-binding-validation-conversion-and-formatting/46-spring-validation.md) Spring core 级别的不同校验 bean 方式
+-  [47-message-codes-created-by-messageCodesResolver.md](07-data-binding-validation-conversion-and-formatting/47-message-codes-created-by-messageCodesResolver.md) 理解 MessageCodesResolver 如何解析message code
+-  [48-creating-custom-validation-constraint-anno.md](07-data-binding-validation-conversion-and-formatting/48-creating-custom-validation-constraint-anno.md) Spring Core 创建常量注解 
+-  [49-method-validation.md](07-data-binding-validation-conversion-and-formatting/49-method-validation.md)方法校验 
+-  [50-conversion-service.md](07-data-binding-validation-conversion-and-formatting/50-conversion-service.md) Spring ConversionService 进行通用类型转换,创建 converters 的不同方式,使用 带有DataBinder 的 DataBinder
+-  [51-field-formatting.md](07-data-binding-validation-conversion-and-formatting/51-field-formatting.md) Spring 解析格式化字符串
+-  [52-anno-driven-formatting.md](07-data-binding-validation-conversion-and-formatting/52-anno-driven-formatting.md) 基于注解的格式化
 -  [53-task-execution.md](08-task-execution-and-scheduling/53-task-execution.md) 
 -  [54-task-scheduling.md](08-task-execution-and-scheduling/54-task-scheduling.md) 
 -  [55-asyn-execution-using-async.md](08-task-execution-and-scheduling/55-asyn-execution-using-async.md) 

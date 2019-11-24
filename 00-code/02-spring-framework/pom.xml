@@ -54,5 +54,9 @@
             <artifactId>javax.el</artifactId>
             <version>3.0.1-b09</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
     </dependencies>
 </project>
