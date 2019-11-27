@@ -1,21 +1,22 @@
-# 使用 DefferrdImportSelector
+# 使用 Import选择进行@Configuration 类的选择
 
-接口`DefferrdImportSelector`继承`ImportSelector`
+@Import annotation  可以用来导入其他@COnfiguration 类的同时,也可以配置一个 `ImportSelector`来用编程的方式选择配置文件,基于选择条件
 
-配置文件类直接注册
 
-与导入的类相比，配置类直接在应用程序上下文中注册。这意味着
 
-- 将使用在主配置中配置的类型为T的bean，而不是导入配置中的类型为T的bean。这也适用于`ImportSelector`。
+## 实例
 
-- 在处理完所有其他配置bean之后应用`DeferredImportSelector`。
-
-## 代码示例
+自定义`ImportSelector`实现类完成对配置文件的选择
 
 ```java
-public class ImportSelectorOrderExample {
+/**
+ * 示例: 使用 @Import 注解导入 Selector 选择器
+ *
+ * @author EricChen 2019/11/27 22:10
+ */
+public class ImportSelectorExample {
     public static void main (String[] args) {
-        System.setProperty("myProp", "someValue");
+        System.setProperty("myProp", "1");
         ApplicationContext context = new AnnotationConfigApplicationContext(MainConfig.class);
         ClientBean bean = context.getBean(ClientBean.class);
         bean.doSomething();
@@ -30,11 +31,6 @@ public class ImportSelectorOrderExample {
             return new ClientBean();
         }
 
-        @Bean
-        AppBean appBean () {
-            return new AppBean("from main config ");
-        }
-
     }
 
     public static class ClientBean {
@@ -44,14 +40,16 @@ public class ImportSelectorOrderExample {
         public void doSomething () {
             System.out.println(appBean.getMessage());
         }
+
     }
+
 
     public static class MyImportSelector implements ImportSelector {
 
         @Override
         public String[] selectImports (AnnotationMetadata importingClassMetadata) {
             String prop = System.getProperty("myProp");
-            if ("someValue".equals(prop)) {
+            if ("1".equals(prop)) {
                 return new String[]{MyConfig1.class.getName()};
             } else {
                 return new String[]{MyConfig2.class.getName()};
@@ -87,67 +85,59 @@ public class ImportSelectorOrderExample {
         }
     }
 }
-```
-
-```
-from main config
 
 ```
 
-使用的是主配置类里的声明
-
-## Configuration order with DeferredImportSelector
+自定义注解完成对配置文件的选择
 
 ```java
 /**
- * Configuration order with DeferredImportSelector
+ * 示例: 使用自定义注解的方式,导入选择器
+ * 自定义注解上要表名@Import 注解
  *
- * @author EricChen 2019/11/27 22:28
+ * @author EricChen 2019/11/27 22:17
  */
-public class DeferredImportSelectorExample {
+public class ImportSelectorWithAnnotationExample {
 
-    public static void main (String[] args) {
-        System.setProperty("myProp", "someValue");
-
-        ApplicationContext context = new AnnotationConfigApplicationContext(
-                        MainConfig.class);
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(MainConfig.class);
         ClientBean bean = context.getBean(ClientBean.class);
         bean.doSomething();
     }
 
     @Configuration
-    @Import(MyImportSelector.class)
+    @EnableSomeModule("someValue")
     public static class MainConfig {
-
         @Bean
-        ClientBean clientBean () {
+        ClientBean clientBean() {
             return new ClientBean();
         }
-
-        @Bean
-        AppBean appBean () {
-            return new AppBean("from main config");
-        }
-
     }
 
     public static class ClientBean {
         @Autowired
         private AppBean appBean;
 
-        public void doSomething () {
+        public void doSomething() {
             System.out.println(appBean.getMessage());
         }
+    }
 
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    @Import(MyImportSelector.class)
+    public @interface EnableSomeModule {
+        String value() default "";
     }
 
 
-    public static class MyImportSelector implements DeferredImportSelector {
+    public static class MyImportSelector implements ImportSelector {
 
         @Override
-        public String[] selectImports (AnnotationMetadata importingClassMetadata) {
-            String prop = System.getProperty("myProp");
-            if ("someValue".equals(prop)) {
+        public String[] selectImports(AnnotationMetadata importingClassMetadata) {
+            AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableSomeModule.class.getName(), false));
+            String value = attributes.getString("value");
+            if ("someValue".equals(value)) {
                 return new String[]{MyConfig1.class.getName()};
             } else {
                 return new String[]{MyConfig2.class.getName()};
@@ -158,11 +148,11 @@ public class DeferredImportSelectorExample {
     public static class AppBean {
         private String message;
 
-        public AppBean (String message) {
+        public AppBean(String message) {
             this.message = message;
         }
 
-        public String getMessage () {
+        public String getMessage() {
             return message;
         }
     }
@@ -170,7 +160,7 @@ public class DeferredImportSelectorExample {
     @Configuration
     public static class MyConfig1 {
         @Bean
-        AppBean appBean () {
+        AppBean appBean() {
             return new AppBean("from config 1");
         }
     }
@@ -178,17 +168,11 @@ public class DeferredImportSelectorExample {
     @Configuration
     public static class MyConfig2 {
         @Bean
-        AppBean appBean () {
+        AppBean appBean() {
             return new AppBean("from config 2");
         }
     }
 }
-```
-
-```java
-
-from config 1
 
 ```
 
-从上面的例子可以看出,使用的是DeferredImportSelector实现类选择的配置文件
