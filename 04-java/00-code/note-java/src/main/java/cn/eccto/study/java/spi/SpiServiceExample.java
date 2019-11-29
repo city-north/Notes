@@ -1,6 +1,4 @@
-package cn.eccto.study.java;
-
-import cn.eccto.study.java.spi.MyService;
+package cn.eccto.study.java.spi;
 
 import java.util.ServiceLoader;
 
@@ -9,7 +7,7 @@ import java.util.ServiceLoader;
  *
  * @author EricChen 2019/11/03 21:08
  */
-class SpiServiceExample {
+public class SpiServiceExample {
 
     public static void main(String[] args) {
         ServiceLoader<MyService> shouts = ServiceLoader.load(MyService.class);

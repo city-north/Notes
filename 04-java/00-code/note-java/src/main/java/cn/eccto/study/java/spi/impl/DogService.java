@@ -7,7 +7,7 @@ import cn.eccto.study.java.spi.MyService;
  *
  * @author EricChen 2019/11/03 21:05
  */
-class DogService implements MyService {
+public class DogService implements MyService {
 
     @Override
     public void service() {
