@@ -15,7 +15,7 @@ import java.text.NumberFormat;
  * @author EricChen 2019/11/21 20:57
  */
 public class XmlSpringCustomEditorExample {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         ApplicationContext context = new
                 ClassPathXmlApplicationContext("tutorials/propertyeditor/spring-config2.xml");
         MyBean bean = context.getBean(MyBean.class);
@@ -25,23 +25,23 @@ public class XmlSpringCustomEditorExample {
     public static class MyBean {
         private Double price;
 
-        public Double getPrice () {
+        public Double getPrice() {
             return price;
         }
 
-        public void setPrice (Double price) {
+        public void setPrice(Double price) {
             this.price = price;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "MyBean{" + "price=" + price + '}';
         }
     }
 
     public static class MyCustomBeanRegistrar implements PropertyEditorRegistrar {
         @Override
-        public void registerCustomEditors (PropertyEditorRegistry registry) {
+        public void registerCustomEditors(PropertyEditorRegistry registry) {
             NumberFormat numberFormat = new DecimalFormat("##,###.00");
             registry.registerCustomEditor(java.lang.Double.class,
                     new CustomNumberEditor(java.lang.Double.class,

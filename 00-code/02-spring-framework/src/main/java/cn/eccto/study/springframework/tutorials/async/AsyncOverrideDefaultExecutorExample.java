@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.async;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,13 +10,14 @@ import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 /**
  * description
  *
  * @author EricChen 2019/11/24 17:13
  */
 public class AsyncOverrideDefaultExecutorExample {
-    public static void main (String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(
                         MyConfig.class);
@@ -32,12 +34,12 @@ public class AsyncOverrideDefaultExecutorExample {
     @Configuration
     public static class MyConfig {
         @Bean
-        public MyBean myBean () {
+        public MyBean myBean() {
             return new MyBean();
         }
 
         @Bean
-        public TaskExecutor taskExecutor () {
+        public TaskExecutor taskExecutor() {
             return new ConcurrentTaskExecutor(
                     Executors.newFixedThreadPool(3));
         }
@@ -46,7 +48,7 @@ public class AsyncOverrideDefaultExecutorExample {
     private static class MyBean {
 
         @Async
-        public void runTask () {
+        public void runTask() {
             System.out.printf("Running task  thread: %s%n",
                     Thread.currentThread().getName());
         }

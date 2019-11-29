@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
  * @author EricChen 2019/11/24 16:41
  */
 public class ConcurrentTaskSchedulerExample {
-    public static void main (String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         ConcurrentTaskScheduler s = new ConcurrentTaskScheduler(Executors.newScheduledThreadPool(5));
         for (int i = 0; i < 10; i++) {
             final int finalI = i;

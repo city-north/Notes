@@ -3,6 +3,7 @@ package cn.eccto.study.springframework.tutorials.beanproxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Provider;
+
 /**
  * description
  *

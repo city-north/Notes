@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.schedule;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +18,11 @@ import java.time.LocalTime;
 public class ScheduledMethodArgExample {
 
     @Bean
-    public MyBean myBean () {
+    public MyBean myBean() {
         return new MyBean();
     }
-    public static void main (String[] args) {
+
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(ScheduledMethodArgExample.class);
 
@@ -33,11 +35,10 @@ public class ScheduledMethodArgExample {
     }
 
 
-
     private static class MyBean {
 
         @Scheduled
-        public String runTask (String message) {
+        public String runTask(String message) {
             System.out.printf("task thread: %s, time: %s%n",
                     Thread.currentThread().getName(),
                     LocalTime.now());

@@ -17,7 +17,7 @@ public class XmlUserCustomEditorExample {
     public static class CustomPhoneEditor extends PropertyEditorSupport {
 
         @Override
-        public void setAsText (String text) throws IllegalArgumentException {
+        public void setAsText(String text) throws IllegalArgumentException {
             String[] split = text.split("[|]");
             if (split.length != 2) {
                 throw new IllegalArgumentException(
@@ -36,7 +36,7 @@ public class XmlUserCustomEditorExample {
         }
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         ApplicationContext context = new
                 ClassPathXmlApplicationContext("tutorials/propertyeditor/spring-config.xml");
         Customer bean = context.getBean(Customer.class);
@@ -44,29 +44,28 @@ public class XmlUserCustomEditorExample {
     }
 
 
-
     public static class Customer {
         private String customerName;
         private Phone phone;
 
-        public String getCustomerName () {
+        public String getCustomerName() {
             return customerName;
         }
 
-        public void setCustomerName (String customerName) {
+        public void setCustomerName(String customerName) {
             this.customerName = customerName;
         }
 
-        public Phone getPhone () {
+        public Phone getPhone() {
             return phone;
         }
 
-        public void setPhone (Phone phone) {
+        public void setPhone(Phone phone) {
             this.phone = phone;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "Customer{" +
                     "customerName='" + customerName + '\'' +
                     ", phone=" + phone +
@@ -78,24 +77,24 @@ public class XmlUserCustomEditorExample {
         private String phoneNumber;
         private PhoneType phoneType;
 
-        public String getPhoneNumber () {
+        public String getPhoneNumber() {
             return phoneNumber;
         }
 
-        public void setPhoneNumber (String phoneNumber) {
+        public void setPhoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
         }
 
-        public PhoneType getPhoneType () {
+        public PhoneType getPhoneType() {
             return phoneType;
         }
 
-        public void setPhoneType (PhoneType phoneType) {
+        public void setPhoneType(PhoneType phoneType) {
             this.phoneType = phoneType;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "Phone{" +
                     "phoneNumber='" + phoneNumber + '\'' +
                     ", phoneType=" + phoneType +

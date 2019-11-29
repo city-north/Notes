@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanExprExample {
     @Bean
-    public MyBean myBean () {
+    public MyBean myBean() {
         return new MyBean();
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(BeanExprExample.class);
         context.getBean(MyBean.class)
@@ -28,7 +28,7 @@ public class BeanExprExample {
         @Value("#{systemProperties['user.home']}")
         private String userHome;
 
-        public void showProp () {
+        public void showProp() {
             System.out.println(userHome);
         }
     }

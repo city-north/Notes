@@ -17,9 +17,10 @@ import org.springframework.core.env.SimpleCommandLinePropertySource;
 public class CmdSourceExample2 {
 
     @Bean
-    public MyBean myBean1(){
+    public MyBean myBean1() {
         return new MyBean();
     }
+
     public static void main(String[] args) {
 
         PropertySource theSource = new SimpleCommandLinePropertySource(args);

@@ -14,12 +14,12 @@ public class PrototypeJDKProxyBeanExample {
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE,
             proxyMode = ScopedProxyMode.INTERFACES)
-    public MyPrototypeBean prototypeBean () {
+    public MyPrototypeBean prototypeBean() {
         return new MyPrototypeBean();
     }
 
     @Bean
-    public MySingletonBean singletonBean () {
+    public MySingletonBean singletonBean() {
         return new MySingletonBean();
     }
 

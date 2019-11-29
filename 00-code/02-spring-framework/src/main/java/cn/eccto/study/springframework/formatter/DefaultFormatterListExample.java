@@ -9,7 +9,7 @@ import org.springframework.format.support.DefaultFormattingConversionService;
  * @author EricChen 2019/11/04 20:09
  */
 class DefaultFormatterListExample {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         ConversionService service =
                 new DefaultFormattingConversionService();

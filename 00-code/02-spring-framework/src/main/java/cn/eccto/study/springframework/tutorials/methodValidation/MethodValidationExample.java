@@ -36,7 +36,6 @@ public class MethodValidationExample {
     }
 
 
-
     public static void main(String[] args) {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(MethodValidationExample.class);

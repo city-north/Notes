@@ -19,6 +19,7 @@ import java.util.Locale;
  * 1. 准备客户端 {@link ClientBean}, 实例 bean {@link Order}
  * 2. 自定义 {@link OrderValidator} 实现 Spring 的接口 {@link Validator}
  * 3. 在客户端 {@link ClientBean} 中写校验方法 {@link ClientBean#validateOrder},通过messageSource 获取配置文件中配置的错误信息
+ *
  * @author EricChen 2019/11/21 20:53
  */
 public class ValidatorExample {

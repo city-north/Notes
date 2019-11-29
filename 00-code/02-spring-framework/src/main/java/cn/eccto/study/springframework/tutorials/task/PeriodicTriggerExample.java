@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author EricChen 2019/11/24 16:35
  */
 public class PeriodicTriggerExample {
-    public static void main (String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         ThreadPoolTaskScheduler s = new ThreadPoolTaskScheduler();
         s.setPoolSize(5);
         s.initialize();
@@ -25,7 +25,7 @@ public class PeriodicTriggerExample {
         s.getScheduledThreadPoolExecutor().shutdownNow();
     }
 
-    public static Runnable getTask () {
+    public static Runnable getTask() {
         return () -> System.out.printf("Task: %s, Time: %s:%n",
                 Thread.currentThread().getName(),
                 LocalTime.now());

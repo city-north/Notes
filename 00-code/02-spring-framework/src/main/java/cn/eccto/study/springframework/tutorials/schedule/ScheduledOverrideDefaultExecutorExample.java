@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.schedule;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ import java.util.concurrent.Executors;
  */
 public class ScheduledOverrideDefaultExecutorExample {
 
-    public static void main (String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(
                         MyConfig.class);
@@ -38,12 +39,12 @@ public class ScheduledOverrideDefaultExecutorExample {
     @Configuration
     public static class MyConfig {
         @Bean
-        public MyBean myBean () {
+        public MyBean myBean() {
             return new MyBean();
         }
 
         @Bean
-        public TaskScheduler taskExecutor () {
+        public TaskScheduler taskExecutor() {
             return new ConcurrentTaskScheduler(
                     Executors.newScheduledThreadPool(3));
         }
@@ -52,7 +53,7 @@ public class ScheduledOverrideDefaultExecutorExample {
     private static class MyBean {
 
         @Scheduled(fixedDelay = 1000)
-        public void runTask () {
+        public void runTask() {
             System.out.printf("task thread: %s, time: %s%n",
                     Thread.currentThread().getName(),
                     LocalTime.now());

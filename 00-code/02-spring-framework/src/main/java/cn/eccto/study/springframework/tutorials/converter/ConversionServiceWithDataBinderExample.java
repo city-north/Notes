@@ -8,13 +8,14 @@ import org.springframework.validation.DataBinder;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
 /**
  * ConversionServiceWithDataBinderExample
  *
  * @author EricChen 2019/11/24 14:20
  */
 public class ConversionServiceWithDataBinderExample {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         //  将当前时间设置进入
         MutablePropertyValues mpv = new MutablePropertyValues();
@@ -38,16 +39,16 @@ public class ConversionServiceWithDataBinderExample {
     private static class MyObject {
         private LocalDateTime date;
 
-        public LocalDateTime getDate () {
+        public LocalDateTime getDate() {
             return date;
         }
 
-        public void setDate (LocalDateTime date) {
+        public void setDate(LocalDateTime date) {
             this.date = date;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "MyObject{" +
                     "date=" + date +
                     '}';
@@ -57,7 +58,7 @@ public class ConversionServiceWithDataBinderExample {
     private static class DateToLocalDateTimeConverter implements Converter<Date, LocalDateTime> {
 
         @Override
-        public LocalDateTime convert (Date source) {
+        public LocalDateTime convert(Date source) {
             return LocalDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault());
         }
     }

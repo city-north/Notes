@@ -11,7 +11,7 @@ import java.time.LocalTime;
  * @author EricChen 2019/11/24 16:36
  */
 public class CronTriggerExample {
-    public static void main (String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println("Program starts at : " + LocalTime.now());
         ThreadPoolTaskScheduler s = new ThreadPoolTaskScheduler();
         s.setPoolSize(5);
@@ -23,7 +23,7 @@ public class CronTriggerExample {
         s.getScheduledThreadPoolExecutor().shutdown();
     }
 
-    public static Runnable getTask () {
+    public static Runnable getTask() {
         return () -> System.out.printf("Task: %s, Time: %s:%n",
                 Thread.currentThread().getName(),
                 LocalTime.now());

@@ -16,7 +16,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @PropertySource("classpath:tutorials/properties/app.properties")
 public class BeanValueExample {
     @Bean
-    public MyBean myBean () {
+    public MyBean myBean() {
         return new MyBean();
     }
 
@@ -25,7 +25,7 @@ public class BeanValueExample {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(BeanValueExample.class);
         context.getBean(MyBean.class).showProp();
@@ -36,7 +36,7 @@ public class BeanValueExample {
         private String str;
 
 
-        public void showProp () {
+        public void showProp() {
             System.out.println(str);
         }
     }

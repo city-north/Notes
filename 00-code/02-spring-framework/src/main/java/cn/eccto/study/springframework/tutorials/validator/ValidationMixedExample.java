@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -22,13 +23,13 @@ import java.util.Map;
  * 1. 准备客户端 {@link ValidationMixedExample.ClientBean}, 实例 bean {@link ValidationMixedExample.Order}
  * 2. 自定义 {@link ValidationMixedExample.OrderValidator} 实现 Spring 的接口 {@link Validator}
  * 3. 书写通用的校验方式 {@link GenericValidator} 获取所有 Spring 中注册的校验器实例,并循环找到符合要求的校验器进行校验
+ *
  * @author EricChen 2019/11/21 20:53
  */
 public class ValidationMixedExample {
 
 
-
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
         ClientBean clientBean = context.getBean(ClientBean.class);
         clientBean.processOrder();
@@ -39,12 +40,12 @@ public class ValidationMixedExample {
     public static class Config {
 
         @Bean
-        public ClientBean clientBean () {
+        public ClientBean clientBean() {
             return new ClientBean();
         }
 
         @Bean
-        public Order order () {
+        public Order order() {
             Order order = new Order();
             //  order.setPrice(BigDecimal.TEN);
             //  order.setDate(new Date(System.currentTimeMillis() + 100000));
@@ -53,17 +54,17 @@ public class ValidationMixedExample {
         }
 
         @Bean
-        public org.springframework.validation.Validator validatorFactory () {
+        public org.springframework.validation.Validator validatorFactory() {
             return new LocalValidatorFactoryBean();
         }
 
         @Bean
-        public OrderValidator orderValidator () {
+        public OrderValidator orderValidator() {
             return new OrderValidator();
         }
 
         @Bean
-        public GenericValidator genericValidator () {
+        public GenericValidator genericValidator() {
             return new GenericValidator();
         }
     }
@@ -76,13 +77,13 @@ public class ValidationMixedExample {
         @Autowired
         private GenericValidator genericValidator;
 
-        private void processOrder () {
+        private void processOrder() {
             if (genericValidator.validateObject(order)) {
                 System.out.println("processing " + order);
             }
         }
 
-        public Order getOrder () {
+        public Order getOrder() {
             return order;
         }
     }
@@ -99,32 +100,32 @@ public class ValidationMixedExample {
 
         String customerId;
 
-        public void setDate (Date date) {
+        public void setDate(Date date) {
             this.date = date;
         }
 
-        public void setPrice (BigDecimal price) {
+        public void setPrice(BigDecimal price) {
             this.price = price;
         }
 
-        public Date getDate () {
+        public Date getDate() {
             return date;
         }
 
-        public BigDecimal getPrice () {
+        public BigDecimal getPrice() {
             return price;
         }
 
-        public String getCustomerId () {
+        public String getCustomerId() {
             return customerId;
         }
 
-        public void setCustomerId (String customerId) {
+        public void setCustomerId(String customerId) {
             this.customerId = customerId;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "Order{ date=" + date + ", price=" + price +
                     ", customerId='" + customerId + "'}";
         }
@@ -133,12 +134,12 @@ public class ValidationMixedExample {
     private static class OrderValidator implements org.springframework.validation.Validator {
 
         @Override
-        public boolean supports (Class<?> clazz) {
+        public boolean supports(Class<?> clazz) {
             return Order.class == clazz;
         }
 
         @Override
-        public void validate (Object target, Errors errors) {
+        public void validate(Object target, Errors errors) {
             ValidationUtils.rejectIfEmpty(errors,
                     "customerId", "customerId.empty");
 
@@ -153,7 +154,7 @@ public class ValidationMixedExample {
             }
         }
 
-        private Customer getCustomerById (String customerId) {
+        private Customer getCustomerById(String customerId) {
             //just for test returning null..
             // otherwise we have to use a backend data service here
             return null;
@@ -173,7 +174,7 @@ public class ValidationMixedExample {
          * validate any object given that the corresponding
          * validator is register as bean.
          */
-        public boolean validateObject (Object objectToValidate) {
+        public boolean validateObject(Object objectToValidate) {
 
             Map<String, Validator> validatorMap = context.getBeansOfType(Validator.class);
             if (validatorMap == null) {
@@ -198,7 +199,7 @@ public class ValidationMixedExample {
                         new Object[]{objectToValidate.getClass().
                                 getSimpleName()},
                         Locale.US));
-                        bindingResult.getAllErrors()
+                bindingResult.getAllErrors()
                         .stream()
                         .map(e -> messageSource.getMessage(e,
                                 Locale.US))

@@ -30,7 +30,7 @@ public class CustomConverterExample {
     }
 
     @Bean
-    public ConversionService conversionService () {
+    public ConversionService conversionService() {
         DefaultConversionService service = new DefaultConversionService();
         service.addConverter(new DateToLocalDateTimeConverter());
         service.addConverter(new DateToLocalStringConverter());

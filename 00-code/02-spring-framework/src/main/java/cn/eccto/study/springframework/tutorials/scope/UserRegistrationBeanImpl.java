@@ -21,17 +21,17 @@ public class UserRegistrationBeanImpl implements UserRegistrationBean {
     private UserInfo userInfo;
 
     @PostConstruct
-    private void initialize () {
+    private void initialize() {
         System.out.println("initializing: " + System.identityHashCode(this));
     }
 
     @Override
-    public void setUserInfo (UserInfo userInfo) {
+    public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
     }
 
     @Override
-    public Map<String, String> validate () {
+    public Map<String, String> validate() {
         if (userInfo == null) {
             throw new RuntimeException("UserInfo must be set before calling validate method");
         }
@@ -52,7 +52,7 @@ public class UserRegistrationBeanImpl implements UserRegistrationBean {
     }
 
     @Override
-    public void register () {
+    public void register() {
         registrationService.register(userInfo);
     }
 }

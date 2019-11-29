@@ -5,5 +5,5 @@ package cn.eccto.study.springframework.tutorials.scanfilter;
  *
  * @author EricChen 2019/11/14 20:12
  */
-public class MyBean4 extends MyBean3{
+public class MyBean4 extends MyBean3 {
 }

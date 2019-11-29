@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 class MySingletonBean {
 
-    public void showMessage(){
+    public void showMessage() {
         MyPrototypeBean bean = getPrototypeBean();
-        System.out.println("Hi, the time is "+bean.getDateTime());
+        System.out.println("Hi, the time is " + bean.getDateTime());
     }
 
     @Lookup
-    public MyPrototypeBean getPrototypeBean(){
+    public MyPrototypeBean getPrototypeBean() {
         //spring will override this method
         return null;
     }

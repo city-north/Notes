@@ -13,10 +13,11 @@ import java.util.Locale;
 /**
  * Spring 校验机制实例,
  * 使用 {@link ValidationUtils#invokeValidator}方法调用一个自定义的 Validator
+ *
  * @author EricChen 2019/11/21 20:53
  */
 public class ValidatorExample2 {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         ResourceBundleMessageSource messageSource =
                 new ResourceBundleMessageSource();
@@ -35,24 +36,24 @@ public class ValidatorExample2 {
         private LocalDate date;
         private BigDecimal price;
 
-        public void setDate (LocalDate date) {
+        public void setDate(LocalDate date) {
             this.date = date;
         }
 
-        public void setPrice (BigDecimal price) {
+        public void setPrice(BigDecimal price) {
             this.price = price;
         }
 
-        public LocalDate getDate () {
+        public LocalDate getDate() {
             return date;
         }
 
-        public BigDecimal getPrice () {
+        public BigDecimal getPrice() {
             return price;
         }
 
         @Override
-        public String toString () {
+        public String toString() {
             return "Order{'date='" + date + "', price=" + price + '}';
         }
     }
@@ -63,12 +64,12 @@ public class ValidatorExample2 {
     private static class OrderValidator implements Validator {
 
         @Override
-        public boolean supports (Class<?> clazz) {
+        public boolean supports(Class<?> clazz) {
             return Order.class == clazz;
         }
 
         @Override
-        public void validate (Object target, Errors errors) {
+        public void validate(Object target, Errors errors) {
             ValidationUtils.rejectIfEmpty(errors, "date", "date.empty");
             ValidationUtils.rejectIfEmpty(errors, "price", "price.empty");
             Order order = (Order) target;

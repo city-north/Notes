@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.async;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
 /**
  * 在 Async 方法后返回 Future 对象
  *
@@ -17,11 +19,11 @@ import java.util.concurrent.ExecutionException;
 public class AsyncReturningFutureExample {
 
     @Bean
-    public MyBean myBean () {
+    public MyBean myBean() {
         return new MyBean();
     }
 
-    public static void main (String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AsyncReturningFutureExample.class);
         MyBean bean = context.getBean(MyBean.class);
         System.out.printf("calling MyBean#runTask() thread: %s%n", Thread.currentThread().getName());
@@ -30,17 +32,16 @@ public class AsyncReturningFutureExample {
     }
 
 
-
     private static class MyBean {
 
         @Async
-        public CompletableFuture<String> runTask () {
+        public CompletableFuture<String> runTask() {
             System.out.printf("Running task  thread: %s%n",
                     Thread.currentThread().getName());
 
             CompletableFuture<String> future = new CompletableFuture<String>() {
                 @Override
-                public String get () throws InterruptedException, ExecutionException {
+                public String get() throws InterruptedException, ExecutionException {
                     return " task result";
                 }
             };

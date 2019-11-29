@@ -15,7 +15,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 @PropertySource("classpath:tutorials/properties/app.properties")
 public class PropertySourceExample {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(PropertySourceExample.class);
         ConfigurableEnvironment env = context.getEnvironment();

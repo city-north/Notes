@@ -21,19 +21,19 @@ import java.util.concurrent.Future;
 @Configuration
 public class AsyncTaskExecutorExample {
     @Bean
-    MyBean myBean () {
+    MyBean myBean() {
         return new MyBean();
     }
 
     @Bean
-    AsyncTaskExecutor taskExecutor () {
+    AsyncTaskExecutor taskExecutor() {
         SimpleAsyncTaskExecutor t = new SimpleAsyncTaskExecutor();
         //设置同时线程数
         t.setConcurrencyLimit(100);
         return t;
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(AsyncTaskExecutorExample.class);
         MyBean bean = context.getBean(MyBean.class);
@@ -44,7 +44,7 @@ public class AsyncTaskExecutorExample {
         @Autowired
         private AsyncTaskExecutor executor;
 
-        public void runTasks () throws Exception {
+        public void runTasks() throws Exception {
             List<Future<?>> futureList = new ArrayList<>();
 
             for (int i = 0; i < 122; i++) {
@@ -57,7 +57,7 @@ public class AsyncTaskExecutorExample {
             }
         }
 
-        private Callable<String> getTask (int i) {
+        private Callable<String> getTask(int i) {
             return () -> {
                 System.out.printf("running task %d. Thread: %s%n",
                         i,

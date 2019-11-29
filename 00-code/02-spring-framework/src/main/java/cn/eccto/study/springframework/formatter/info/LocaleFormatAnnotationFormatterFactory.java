@@ -24,24 +24,24 @@ public class LocaleFormatAnnotationFormatterFactory implements
         AnnotationFormatterFactory<LocaleFormat> {
 
     @Override
-    public Set<Class<?>> getFieldTypes () {
+    public Set<Class<?>> getFieldTypes() {
         return new HashSet<>(Arrays.asList(Locale.class));
     }
 
     @Override
-    public Printer<?> getPrinter (LocaleFormat annotation,
-                                  Class<?> fieldType) {
+    public Printer<?> getPrinter(LocaleFormat annotation,
+                                 Class<?> fieldType) {
         return getLocaleFormatter(annotation, fieldType);
     }
 
     @Override
-    public Parser<?> getParser (LocaleFormat annotation,
-                                Class<?> fieldType) {
+    public Parser<?> getParser(LocaleFormat annotation,
+                               Class<?> fieldType) {
         return getLocaleFormatter(annotation, fieldType);
     }
 
-    private Formatter<?> getLocaleFormatter (LocaleFormat annotation,
-                                             Class<?> fieldType) {
+    private Formatter<?> getLocaleFormatter(LocaleFormat annotation,
+                                            Class<?> fieldType) {
         LocaleFormatter lf = new LocaleFormatter();
         lf.setLocaleStyle(annotation.style());
         return lf;

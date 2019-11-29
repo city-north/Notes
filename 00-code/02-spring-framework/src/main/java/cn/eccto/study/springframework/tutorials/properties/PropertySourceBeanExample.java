@@ -16,11 +16,11 @@ import org.springframework.core.env.Environment;
 @PropertySource("classpath:tutorials/properties/app.properties")
 public class PropertySourceBeanExample {
     @Bean
-    public MyBean myBean () {
+    public MyBean myBean() {
         return new MyBean();
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(
                         PropertySourceBeanExample.class);
@@ -32,7 +32,7 @@ public class PropertySourceBeanExample {
         @Autowired
         Environment env;
 
-        public void showProp () {
+        public void showProp() {
             System.out.println(env.getProperty("some-strProp"));
         }
     }

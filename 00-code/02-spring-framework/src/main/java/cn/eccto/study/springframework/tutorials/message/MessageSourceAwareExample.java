@@ -17,12 +17,12 @@ import java.util.Locale;
 @Configuration
 public class MessageSourceAwareExample {
     @Bean
-    public MyBean myBean () {
+    public MyBean myBean() {
         return new MyBean();
     }
 
     @Bean
-    public MessageSource messageSource () {
+    public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages/messages");
         messageSource.setDefaultEncoding("utf-8");
@@ -32,13 +32,13 @@ public class MessageSourceAwareExample {
     public static class MyBean implements MessageSourceAware {
         private MessageSource messageSource;
 
-        public void doSomething () {
+        public void doSomething() {
             System.out.println(messageSource.getMessage("app.name", new Object[]{"Joe"},
                     Locale.SIMPLIFIED_CHINESE));
         }
 
         @Override
-        public void setMessageSource (MessageSource messageSource) {
+        public void setMessageSource(MessageSource messageSource) {
             this.messageSource = messageSource;
 
         }

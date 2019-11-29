@@ -11,7 +11,7 @@
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
         <property name="propertyEditorRegistrars">
             <list>
-                <bean class="cn.eccto.study.springframework.tutorials.propertyeditor.XmlSpringCustomEditorExample.MyCustomBeanRegistrar" />
+                <bean class="cn.eccto.study.springframework.tutorials.propertyeditor.XmlSpringCustomEditorExample.MyCustomBeanRegistrar"/>
             </list>
         </property>
     </bean>

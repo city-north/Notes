@@ -16,14 +16,14 @@ public class UserRegistrationValidator {
     private static final Pattern VALID_PASSWORD_PATTERN =
             Pattern.compile("^[a-zA-Z0-9]{6,}$");
 
-    public String validateEmail(String email){
+    public String validateEmail(String email) {
         if (!VALID_EMAIL_PATTERN.matcher(email).matches()) {
             return "Not a valid email: " + email;
         }
         return null;
     }
 
-    public String validatePassword(String password){
+    public String validatePassword(String password) {
         if (!VALID_PASSWORD_PATTERN.matcher(password).matches()) {
             return "Not a valid password. The password should  be alphanumeric and " +
                     "at least 6 characters long ";

@@ -39,6 +39,7 @@ public class ObjectProviderStreamExample {
 
     /**
      * 测试 Stream 迭代器
+     *
      * @param context 上下文
      */
     private static void forEachRemaining(AnnotationConfigApplicationContext context) {
@@ -48,6 +49,7 @@ public class ObjectProviderStreamExample {
 
     /**
      * 测试排序后的 Stream
+     *
      * @param context 上下文
      */
     private static void orderedStream(AnnotationConfigApplicationContext context) {

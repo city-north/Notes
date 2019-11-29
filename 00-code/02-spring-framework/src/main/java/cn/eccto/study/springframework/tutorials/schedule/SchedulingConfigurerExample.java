@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.schedule;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -14,7 +15,7 @@ import java.time.LocalTime;
  */
 public class SchedulingConfigurerExample {
 
-    public static void main (String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(
                         MyConfig.class);
@@ -30,9 +31,9 @@ public class SchedulingConfigurerExample {
     public static class MyConfig implements SchedulingConfigurer {
 
         @Override
-        public void configureTasks (ScheduledTaskRegistrar taskRegistrar) {
+        public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
             taskRegistrar.addFixedDelayTask(() -> {
-                System.out.println("Running task : "+ LocalTime.now());
+                System.out.println("Running task : " + LocalTime.now());
             }, 500);
         }
     }

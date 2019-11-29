@@ -12,7 +12,7 @@ import org.springframework.core.task.TaskExecutor;
 public class TaskExecutorStandAloneExample {
     public static void main(String[] args) {
         TaskExecutor executor = new SimpleAsyncTaskExecutor();
-        executor.execute(()-> {
+        executor.execute(() -> {
             System.out.println("running task in thread: " +
                     Thread.currentThread()
                             .getName());

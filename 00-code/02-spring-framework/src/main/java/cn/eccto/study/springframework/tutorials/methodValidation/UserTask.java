@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Validated
 public class UserTask {
 
-    public void registerUser(@NotNull @Valid MethodValidationExample.User user){
-        System.out.println("registering user: "+ user);
+    public void registerUser(@NotNull @Valid MethodValidationExample.User user) {
+        System.out.println("registering user: " + user);
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan({"cn.eccto.study.springframework.tutorials.implicit"})
 public class ImplicitExample {
 
-    public static void main (String... strings) {
+    public static void main(String... strings) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(ImplicitExample.class);
         OrderServiceClient bean = context.getBean(OrderServiceClient.class);

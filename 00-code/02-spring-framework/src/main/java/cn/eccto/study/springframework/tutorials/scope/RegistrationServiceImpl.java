@@ -19,6 +19,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public void register(UserInfo userInfo) {
         //in real app we should pass userInfo to DAO to create user in Database
-        System.out.println("User has been registered successfully: "+userInfo);
+        System.out.println("User has been registered successfully: " + userInfo);
     }
 }

@@ -15,7 +15,7 @@ public class ThreadPoolTaskSchedulerExample {
         scheduler.setPoolSize(5);
         scheduler.initialize();
 
-        for(int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
 //            每1000ms 执行一次
             scheduler.scheduleAtFixedRate(() -> System.out.printf("Task: %s, Time: %s:%n", Thread.currentThread().getName(), LocalTime.now()), 1000);
 

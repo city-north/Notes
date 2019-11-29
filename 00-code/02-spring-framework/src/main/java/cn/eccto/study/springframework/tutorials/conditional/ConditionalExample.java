@@ -22,7 +22,7 @@ public class ConditionalExample {
     }
 
 
-    public static void runApp (Locale locale) {
+    public static void runApp(Locale locale) {
 
         Locale.setDefault(locale);
 

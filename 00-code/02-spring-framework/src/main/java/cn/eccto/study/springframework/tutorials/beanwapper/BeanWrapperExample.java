@@ -11,7 +11,7 @@ import java.util.Currency;
  * @author EricChen 2019/11/21 20:30
  */
 public class BeanWrapperExample {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         BeanWrapperImpl wrapper = new BeanWrapperImpl();
         PropertyEditor editor = wrapper.getDefaultEditor(Currency.class);
         editor.setAsText("MYR");

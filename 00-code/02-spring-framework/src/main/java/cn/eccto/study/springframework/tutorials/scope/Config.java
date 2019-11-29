@@ -14,18 +14,18 @@ import org.springframework.context.annotation.Scope;
 public class Config {
 
     @Bean
-    public UserRegistrationValidator validator () {
+    public UserRegistrationValidator validator() {
         return new UserRegistrationValidator();
     }
 
     @Bean
-    public RegistrationService registrationService () {
+    public RegistrationService registrationService() {
         return new RegistrationServiceImpl();
     }
 
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     @Bean
-    public UserRegistrationBean userRegistrationBean () {
+    public UserRegistrationBean userRegistrationBean() {
         return new UserRegistrationBeanImpl();
     }
 }

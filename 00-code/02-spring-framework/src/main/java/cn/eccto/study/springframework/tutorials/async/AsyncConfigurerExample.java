@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.async;
+
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ import java.util.concurrent.Executors;
  * @author EricChen 2019/11/24 17:12
  */
 public class AsyncConfigurerExample {
-    public static void main (String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
         MyBean bean = context.getBean(MyBean.class);
         System.out.printf("calling MyBean#runTask() thread: %s%n", Thread.currentThread().getName());
@@ -33,18 +34,18 @@ public class AsyncConfigurerExample {
     @Configuration
     public static class MyConfig implements AsyncConfigurer {
         @Bean
-        public MyBean myBean () {
+        public MyBean myBean() {
             return new MyBean();
         }
 
         @Bean("taskExecutor")
         @Override
-        public Executor getAsyncExecutor () {
+        public Executor getAsyncExecutor() {
             return new ConcurrentTaskExecutor(Executors.newFixedThreadPool(3));
         }
 
         @Override
-        public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler () {
+        public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
             return (throwable, method, objects) -> System.out.println("-- exception handler -- " + throwable);
         }
     }
@@ -52,7 +53,7 @@ public class AsyncConfigurerExample {
     private static class MyBean {
 
         @Async
-        public void runTask () {
+        public void runTask() {
             System.out.printf("Running task  thread: %s%n",
                     Thread.currentThread().getName());
             throw new RuntimeException("test exception");

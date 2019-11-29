@@ -55,18 +55,18 @@
 -  [50-conversion-service.md](07-data-binding-validation-conversion-and-formatting/50-conversion-service.md) Spring ConversionService 进行通用类型转换,创建 converters 的不同方式,使用 带有DataBinder 的 DataBinder
 -  [51-field-formatting.md](07-data-binding-validation-conversion-and-formatting/51-field-formatting.md) Spring 解析格式化字符串
 -  [52-anno-driven-formatting.md](07-data-binding-validation-conversion-and-formatting/52-anno-driven-formatting.md) 基于注解的格式化
--  [53-task-execution.md](08-task-execution-and-scheduling/53-task-execution.md) 
--  [54-task-scheduling.md](08-task-execution-and-scheduling/54-task-scheduling.md) 
--  [55-asyn-execution-using-async.md](08-task-execution-and-scheduling/55-asyn-execution-using-async.md) 
--  [56-task-scheduling-using-scheduled.md](08-task-execution-and-scheduling/56-task-scheduling-using-scheduled.md) 
--  [57-dynamically-register-beans.md](09-programmatic-bean-registration/57-dynamically-register-beans.md) 
--  [58-beanDefinitionCustomizer.md](09-programmatic-bean-registration/58-beanDefinitionCustomizer.md) 
--  [59-configuration-selection-by-using-importSelector.md](09-programmatic-bean-registration/59-configuration-selection-by-using-importSelector.md) 
--  [60-using-deferredimportSelector.md](10-advance-configuration/60-using-deferredimportSelector.md) 
--  [61-using-importBean-Definition-Registrar.md](10-advance-configuration/61-using-importBean-Definition-Registrar.md) 
--  [62-understanding-aliasFor-anno.md](10-advance-configuration/62-understanding-aliasFor-anno.md) 
--  [63-spring-core-logging-support.md](11-logging-support/63-spring-core-logging-support.md) 
--  [64-logging-in-log4j.md](11-logging-support/64-logging-in-log4j.md) 
--  [65-logging-in-log4j2.md](11-logging-support/65-logging-in-log4j2.md) 
--  [65-logging-in-SLF4j-and-logback.md](11-logging-support/65-logging-in-SLF4j-and-logback.md) 
+-  [53-task-execution.md](08-task-execution-and-scheduling/53-task-execution.md)  任务执行
+-  [54-task-scheduling.md](08-task-execution-and-scheduling/54-task-scheduling.md) 任务计划
+-  [55-asyn-execution-using-async.md](08-task-execution-and-scheduling/55-asyn-execution-using-async.md) 异步执行任务
+-  [56-task-scheduling-using-scheduled.md](08-task-execution-and-scheduling/56-task-scheduling-using-scheduled.md) 任务计划
+-  [57-dynamically-register-beans.md](09-programmatic-bean-registration/57-dynamically-register-beans.md)  使用 BeanFactory 和 Bean Definition 动态注册对象成为 SpringBean
+-  [58-beanDefinitionCustomizer.md](09-programmatic-bean-registration/58-beanDefinitionCustomizer.md) 使用 Spring5 BeanDefinitionCustomizer 和 GenericApplicationContext 的新方法
+-  [59-configuration-selection-by-using-importSelector.md](09-programmatic-bean-registration/59-configuration-selection-by-using-importSelector.md) 如何编程方式使用 ImportSelector 接口导入
+-  [60-using-deferredimportSelector.md](10-advance-configuration/60-using-deferredimportSelector.md) 使用 DeferredImportSelector 和 ImportSelector的区别
+-  [61-using-importBean-Definition-Registrar.md](10-advance-configuration/61-using-importBean-Definition-Registrar.md)  使用ImportBeanDefinitionRegistrar 和 import动态注册 bean
+-  [62-understanding-aliasFor-anno.md](10-advance-configuration/62-understanding-aliasFor-anno.md)  认识@AliasFor 注解
+-  [63-spring-core-logging-support.md](11-logging-support/63-spring-core-logging-support.md)  Spring 日志支持,默认日志
+-  [64-logging-in-log4j.md](11-logging-support/64-logging-in-log4j.md)  如何在运行时使用 Log4j
+-  [65-logging-in-log4j2.md](11-logging-support/65-logging-in-log4j2.md)  如何在运行时使用 Log4j2
+-  [65-logging-in-SLF4j-and-logback.md](11-logging-support/65-logging-in-SLF4j-and-logback.md) Spring + Logback
 

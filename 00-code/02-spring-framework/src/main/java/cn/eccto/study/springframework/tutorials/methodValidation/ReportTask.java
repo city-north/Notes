@@ -17,8 +17,9 @@ import java.time.LocalDateTime;
 @Validated
 @Component
 public class ReportTask {
-    public @Pattern(regexp = "[0-3]") String createReport(@NotNull @Size(min = 3, max = 20) String name,
-                                                          @NotNull @FutureOrPresent LocalDateTime startDate) {
+    public @Pattern(regexp = "[0-3]")
+    String createReport(@NotNull @Size(min = 3, max = 20) String name,
+                        @NotNull @FutureOrPresent LocalDateTime startDate) {
         return "-1";
     }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
  * @author EricChen 2019/11/16 21:12
  */
 public class DefaultSystemSourcesExample {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext();
         ConfigurableEnvironment env = context.getEnvironment();

@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.task;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -12,13 +13,14 @@ import java.time.LocalTime;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 /**
  * description
  *
  * @author EricChen 2019/11/24 16:44
  */
 public class DefaultManagedTaskSchedulerExample {
-    public static void main (String[] args) throws NamingException, InterruptedException {
+    public static void main(String[] args) throws NamingException, InterruptedException {
 //        //binding the scheduler manually,shi
 //        // In JEE compliant server environment this will be
 //        // provided by the server product
@@ -47,12 +49,12 @@ public class DefaultManagedTaskSchedulerExample {
     public static class MyConfig {
 
         @Bean
-        TaskScheduler taskScheduler () {
+        TaskScheduler taskScheduler() {
             return new DefaultManagedTaskScheduler();
         }
 
         @Bean
-        MyBean myBean () {
+        MyBean myBean() {
             return new MyBean();
         }
     }
@@ -61,7 +63,7 @@ public class DefaultManagedTaskSchedulerExample {
         @Autowired
         TaskScheduler taskScheduler;
 
-        public void runTask () {
+        public void runTask() {
             taskScheduler.scheduleWithFixedDelay((Runnable) () -> {
                 System.out.println("running " + LocalTime.now());
             }, 1000L);

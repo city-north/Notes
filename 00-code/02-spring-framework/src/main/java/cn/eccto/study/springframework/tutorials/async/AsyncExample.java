@@ -8,10 +8,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 异步使用简单实例
+ *
  * @author EricChen 2019/11/24 16:51
  */
 public class AsyncExample {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
         MyBean bean = context.getBean(MyBean.class);
         System.out.printf("calling async method from thread: %s%n", Thread.currentThread().getName());
@@ -22,7 +23,7 @@ public class AsyncExample {
     @Configuration
     public static class MyConfig {
         @Bean
-        public MyBean myBean () {
+        public MyBean myBean() {
             return new MyBean();
         }
     }
@@ -30,7 +31,7 @@ public class AsyncExample {
     private static class MyBean {
 
         @Async
-        public void runTask () {
+        public void runTask() {
             System.out.printf("Running task  thread: %s%n", Thread.currentThread().getName());
         }
     }

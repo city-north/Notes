@@ -11,8 +11,8 @@ import java.util.Set;
 /**
  * 条件通用转换器代码实例
  *
- * @see GenericConverterExample 示例的另一种方式
  * @author EricChen 2019/11/22 23:19
+ * @see GenericConverterExample 示例的另一种方式
  */
 public class ConditionalGenericConverterExample {
 

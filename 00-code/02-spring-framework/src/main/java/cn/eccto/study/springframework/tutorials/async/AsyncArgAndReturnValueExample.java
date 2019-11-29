@@ -16,11 +16,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class AsyncArgAndReturnValueExample {
 
     @Bean
-    public MyBean myBean () {
+    public MyBean myBean() {
         return new MyBean();
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AsyncArgAndReturnValueExample.class);
         MyBean bean = context.getBean(MyBean.class);
         System.out.printf("calling MyBean#runTask() thread: %s%n", Thread.currentThread().getName());
@@ -30,10 +30,9 @@ public class AsyncArgAndReturnValueExample {
     }
 
 
-
     private static class MyBean {
         @Async
-        public String runTask (String message) {
+        public String runTask(String message) {
             System.out.printf("Running task  thread: %s%n", Thread.currentThread().getName());
             System.out.printf("message: %s%n", message);
             System.out.println("task ends");

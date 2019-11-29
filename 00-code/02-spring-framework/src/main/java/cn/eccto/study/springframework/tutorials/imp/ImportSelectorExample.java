@@ -11,7 +11,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author EricChen 2019/11/27 22:10
  */
 public class ImportSelectorExample {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         System.setProperty("myProp", "1");
         ApplicationContext context = new AnnotationConfigApplicationContext(MainConfig.class);
         ClientBean bean = context.getBean(ClientBean.class);
@@ -23,7 +23,7 @@ public class ImportSelectorExample {
     public static class MainConfig {
 
         @Bean
-        ClientBean clientBean () {
+        ClientBean clientBean() {
             return new ClientBean();
         }
 
@@ -33,7 +33,7 @@ public class ImportSelectorExample {
         @Autowired
         private AppBean appBean;
 
-        public void doSomething () {
+        public void doSomething() {
             System.out.println(appBean.getMessage());
         }
 
@@ -43,7 +43,7 @@ public class ImportSelectorExample {
     public static class MyImportSelector implements ImportSelector {
 
         @Override
-        public String[] selectImports (AnnotationMetadata importingClassMetadata) {
+        public String[] selectImports(AnnotationMetadata importingClassMetadata) {
             String prop = System.getProperty("myProp");
             if ("1".equals(prop)) {
                 return new String[]{MyConfig1.class.getName()};
@@ -56,11 +56,11 @@ public class ImportSelectorExample {
     public static class AppBean {
         private String message;
 
-        public AppBean (String message) {
+        public AppBean(String message) {
             this.message = message;
         }
 
-        public String getMessage () {
+        public String getMessage() {
             return message;
         }
     }
@@ -68,7 +68,7 @@ public class ImportSelectorExample {
     @Configuration
     public static class MyConfig1 {
         @Bean
-        AppBean appBean () {
+        AppBean appBean() {
             return new AppBean("from config 1");
         }
     }
@@ -76,7 +76,7 @@ public class ImportSelectorExample {
     @Configuration
     public static class MyConfig2 {
         @Bean
-        AppBean appBean () {
+        AppBean appBean() {
             return new AppBean("from config 2");
         }
     }

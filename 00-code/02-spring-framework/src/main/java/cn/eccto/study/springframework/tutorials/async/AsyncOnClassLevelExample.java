@@ -1,9 +1,11 @@
 package cn.eccto.study.springframework.tutorials.async;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
+
 /**
  * description
  *
@@ -12,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class AsyncOnClassLevelExample {
 
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(
                         MyConfig.class);
@@ -27,7 +29,7 @@ public class AsyncOnClassLevelExample {
     @Configuration
     public static class MyConfig {
         @Bean
-        public MyBean myBean () {
+        public MyBean myBean() {
             return new MyBean();
         }
     }
@@ -35,12 +37,12 @@ public class AsyncOnClassLevelExample {
     @Async
     private static class MyBean {
 
-        public void runTask1 () {
+        public void runTask1() {
             System.out.printf("runTask1  thread: %s%n",
                     Thread.currentThread().getName());
         }
 
-        public void runTask2 () {
+        public void runTask2() {
             System.out.printf("runTask2  thread: %s%n",
                     Thread.currentThread().getName());
         }

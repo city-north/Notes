@@ -1,4 +1,5 @@
 package cn.eccto.study.springframework.tutorials.schedule;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ import java.time.LocalTime;
  */
 public class ScheduledExample {
 
-    public static void main (String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(
                         MyConfig.class);
@@ -34,7 +35,7 @@ public class ScheduledExample {
     @Configuration
     public static class MyConfig {
         @Bean
-        public MyBean myBean () {
+        public MyBean myBean() {
             return new MyBean();
         }
     }
@@ -42,8 +43,8 @@ public class ScheduledExample {
     private static class MyBean {
 
         @Scheduled(fixedRate = 1000)
-        public void runTask () {
-            System.out.printf("Running scheduled task " + " thread: %s, time: %s%n", Thread.currentThread().getName(),LocalTime.now());
+        public void runTask() {
+            System.out.printf("Running scheduled task " + " thread: %s, time: %s%n", Thread.currentThread().getName(), LocalTime.now());
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

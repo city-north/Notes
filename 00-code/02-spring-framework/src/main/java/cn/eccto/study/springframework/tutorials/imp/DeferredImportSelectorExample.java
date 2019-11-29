@@ -12,11 +12,11 @@ import org.springframework.core.type.AnnotationMetadata;
  */
 public class DeferredImportSelectorExample {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         System.setProperty("myProp", "someValue");
 
         ApplicationContext context = new AnnotationConfigApplicationContext(
-                        MainConfig.class);
+                MainConfig.class);
         ClientBean bean = context.getBean(ClientBean.class);
         bean.doSomething();
     }
@@ -26,12 +26,12 @@ public class DeferredImportSelectorExample {
     public static class MainConfig {
 
         @Bean
-        ClientBean clientBean () {
+        ClientBean clientBean() {
             return new ClientBean();
         }
 
         @Bean
-        AppBean appBean () {
+        AppBean appBean() {
             return new AppBean("from main config");
         }
 
@@ -41,7 +41,7 @@ public class DeferredImportSelectorExample {
         @Autowired
         private AppBean appBean;
 
-        public void doSomething () {
+        public void doSomething() {
             System.out.println(appBean.getMessage());
         }
 
@@ -51,7 +51,7 @@ public class DeferredImportSelectorExample {
     public static class MyImportSelector implements DeferredImportSelector {
 
         @Override
-        public String[] selectImports (AnnotationMetadata importingClassMetadata) {
+        public String[] selectImports(AnnotationMetadata importingClassMetadata) {
             String prop = System.getProperty("myProp");
             if ("someValue".equals(prop)) {
                 return new String[]{MyConfig1.class.getName()};
@@ -64,11 +64,11 @@ public class DeferredImportSelectorExample {
     public static class AppBean {
         private String message;
 
-        public AppBean (String message) {
+        public AppBean(String message) {
             this.message = message;
         }
 
-        public String getMessage () {
+        public String getMessage() {
             return message;
         }
     }
@@ -76,7 +76,7 @@ public class DeferredImportSelectorExample {
     @Configuration
     public static class MyConfig1 {
         @Bean
-        AppBean appBean () {
+        AppBean appBean() {
             return new AppBean("from config 1");
         }
     }
@@ -84,7 +84,7 @@ public class DeferredImportSelectorExample {
     @Configuration
     public static class MyConfig2 {
         @Bean
-        AppBean appBean () {
+        AppBean appBean() {
             return new AppBean("from config 2");
         }
     }

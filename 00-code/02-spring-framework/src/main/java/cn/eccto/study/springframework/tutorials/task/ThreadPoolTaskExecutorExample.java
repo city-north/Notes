@@ -15,7 +15,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  */
 @Configuration
 public class ThreadPoolTaskExecutorExample {
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(ThreadPoolTaskExecutorExample.class);
         MyBean bean = context.getBean(MyBean.class);
@@ -23,13 +23,14 @@ public class ThreadPoolTaskExecutorExample {
         ThreadPoolTaskExecutor t = context.getBean(ThreadPoolTaskExecutor.class);
         t.shutdown();
     }
+
     @Bean
-    MyBean myBean () {
+    MyBean myBean() {
         return new MyBean();
     }
 
     @Bean
-    TaskExecutor taskExecutor () {
+    TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor t = new ThreadPoolTaskExecutor();
         t.setCorePoolSize(10);
         t.setMaxPoolSize(100);
@@ -44,13 +45,13 @@ public class ThreadPoolTaskExecutorExample {
         @Autowired
         private TaskExecutor executor;
 
-        public void runTasks (){
+        public void runTasks() {
             for (int i = 0; i < 100; i++) {
                 executor.execute(getTask(i));
             }
         }
 
-        private Runnable getTask (int i)  {
+        private Runnable getTask(int i) {
             return () -> {
                 System.out.printf("running task %d. Thread: %s%n", i, Thread.currentThread().getName());
             };

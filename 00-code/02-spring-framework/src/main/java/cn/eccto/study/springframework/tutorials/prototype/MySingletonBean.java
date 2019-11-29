@@ -12,8 +12,8 @@ public class MySingletonBean {
     @Autowired
     private MyPrototypeBean prototypeBean;
 
-    public void showMessage(){
-        System.out.println("Hi, the time is "+prototypeBean.getDateTime());
+    public void showMessage() {
+        System.out.println("Hi, the time is " + prototypeBean.getDateTime());
     }
 
     public MyPrototypeBean getPrototypeBean() {
