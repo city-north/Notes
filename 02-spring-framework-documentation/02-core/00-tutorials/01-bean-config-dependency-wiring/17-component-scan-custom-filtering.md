@@ -73,7 +73,7 @@ public @interface ComponentScan {
 
 指定标注注解`@MyAnnotation`的类,扫描成 bean
 
- [源码](../../../00-code/02-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials/FilterTypeAnnotationExample.java) 
+ [源码](../../../00-code/notes-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials/FilterTypeAnnotationExample.java) 
 
 首先声明一个注解
 

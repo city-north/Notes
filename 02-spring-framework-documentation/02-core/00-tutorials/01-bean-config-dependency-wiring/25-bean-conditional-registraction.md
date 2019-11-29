@@ -76,7 +76,7 @@ class ProfileCondition implements Condition {
 
 ## 实例
 
- [代码实例](../../../../00-code/02-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials/ConditionalExample.java) 
+ [代码实例](../../../00-code/notes-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials/ConditionalExample.java) 
 
 #### 编写自己的 Condictional 类
 

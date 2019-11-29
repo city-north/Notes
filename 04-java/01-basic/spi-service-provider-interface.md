@@ -41,7 +41,7 @@ SL4J 加载不同提供商的日志实现类
 
 ## 代码 
 
- [源码](../../00-code/04-java/src/main/java/cn/eccto/study/java) 
+ [源码](../00-code/note-java/src/main/java/cn/eccto/study/java) 
 
 SPI 接口
 

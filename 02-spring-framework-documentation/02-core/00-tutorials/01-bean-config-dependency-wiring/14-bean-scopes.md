@@ -25,7 +25,7 @@ Bean的Scope决定了 这个 bean 在这个容器内的生命周期,两个核心
 
 ## 代码 
 
- [00-code](../../../../00-code/02-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials/dependson)
+ [00-code](../../../00-code/notes-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials/dependson)
 
 ```java
 public class ScopeExample {

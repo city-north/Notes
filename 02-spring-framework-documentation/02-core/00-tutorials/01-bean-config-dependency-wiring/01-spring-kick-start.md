@@ -19,4 +19,4 @@
 
 ## Example
 
- [tutorials](../../../../00-code/02-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials) 
+ [tutorials](../../../00-code/notes-spring-framework/src/main/java/cn/eccto/study/springframework/tutorials) 
