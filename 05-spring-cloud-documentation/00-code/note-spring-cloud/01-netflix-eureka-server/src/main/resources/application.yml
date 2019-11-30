@@ -1,0 +1,22 @@
+server:
+  port: 8000
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+    metadata-map:
+      VERSION: 1.0.0
+  client:
+    # 检索服务选项，注册中心不需要检索服务 ,false表示自己不从Eureka服务中获取注册信息
+    fetch-registry: ${EUREKA_CLIENT_FETCH_REGISTRY:false}
+    # 注册中心将自己作为客户端来尝试注册自己，注册中心集群环境下需开启此配置,false表示不将自已注册到Eureka服务中
+    register-with-eureka: ${EUREKA_CLIENT_REGISTER_WITH_EUREKA:false}
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://study.eccto.cn:8000/eureka}
+    registryFetchIntervalSeconds: 10
+    disable-delta: true
+  server:
+    evictionIntervalTimerInMs: 4000
+    # 禁用自我保护模式
+    enable-self-preservation: ${EUREKA_SERVER_ENABLE_SELF_PRESERVATION:false}
