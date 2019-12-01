@@ -27,6 +27,7 @@ A dynamic directory that enables client side load balancing and smart routing
 支持客户端负载平衡和智能路由的动态目录
 
 -   [01-netflix-eureka.md](05-spring-cloud-netflix/01-netflix-eureka.md) 
+-  [02-netfilix-eureka-client.md](05-spring-cloud-netflix/02-netfilix-eureka-client.md) 
 
 #### **Circuit Breaker**
 

@@ -17,6 +17,6 @@ eureka:
       SERVICE_VERSION_CODE: ${HZERO_SERVICE_VERSION_CODE:DEFAULT}
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_DEFAULT_ZONE:http://study.eccto.cn:8001/eureka}
+      defaultZone: http://study.eccto.cn:8001/eureka
     registryFetchIntervalSeconds: 10
     disable-delta: true
