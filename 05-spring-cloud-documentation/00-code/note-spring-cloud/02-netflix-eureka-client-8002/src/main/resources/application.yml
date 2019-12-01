@@ -2,7 +2,7 @@ spring:
   application:
     name: eureka-client-01
 server:
-  port: 8081
+  port: 8002
 eureka:
   instance:
     preferIpAddress: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
@@ -17,6 +17,6 @@ eureka:
       SERVICE_VERSION_CODE: ${HZERO_SERVICE_VERSION_CODE:DEFAULT}
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_DEFAULT_ZONE:http://study.eccto.cn:8000/eureka}
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://study.eccto.cn:8001/eureka}
     registryFetchIntervalSeconds: 10
     disable-delta: true
