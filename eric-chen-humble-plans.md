@@ -10,11 +10,11 @@
 
 ## Spring Framework
 
-|      | Name                                                         | Start      | End  |
-| ---- | ------------------------------------------------------------ | ---------- | ---- |
-| 1    | [Spring Framework Core](02-spring-framework-documentation/02-core/README.md) | 2019-10-21 | rq   |
-| 2    | Spring Framework Testing                                     |            |      |
-| 3    | Spring Framework Data Access                                 |            |      |
+|      | Name                                                         | Start      | End        |
+| ---- | ------------------------------------------------------------ | ---------- | ---------- |
+| 1    | [Spring Framework Core](02-spring-framework-documentation/02-core/README.md) | 2019-10-21 | 2019-12-01 |
+| 2    | Spring Framework Testing                                     |            |            |
+| 3    | Spring Framework Data Access                                 |            |            |
 
 ## Spring Boot
 
