@@ -1,10 +1,16 @@
-# 注册一个自定义的`ConfigurableWebBindingInitializer` 为 bean
+package cn.eccto.study.sb.webbindinginitializer;
 
-在 SpringMVC 中,我们通过直接拓展`WebMvcConfigurationSupport`使用自定义的`ConfigurableWebBindingInitializer`(example [here](https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/custom-web-binding-initializer.html)).
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 
-在 SpringBoot 应用中,我们需要注册一个默认的`ConfigurableWebBindingInitializer`作为一个 bean,通换掉系统中的默认,如果你好奇你可以看`EnableWebMvcConfiguration` 中的`getConfigurableWebBindingInitializer()`,它是`WebMvcAutoConfiguration`的内部类
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-```java
 /**
  * 自定义 ConfigurableWebBindingInitializer
  *
@@ -36,8 +42,3 @@ public class WebBindingInitializerExample {
         SpringApplication.run(WebBindingInitializerExample.class, args);
     }
 }
-
-```
-
-
-
