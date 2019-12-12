@@ -74,7 +74,7 @@ In the preceding example, we have a YAML file that can be used to run the same s
 
 You can add multiple peers to a system, and, as long as they are all connected to each other by at least one edge, they synchronize the registrations amongst themselves. If the peers are physically separated (inside a data center or between multiple data centers), then the system can, in principle, survive “split-brain” type failures. You can add multiple peers to a system, and as long as they are all directly connected to each other, they will synchronize the registrations amongst themselves.
 
-`application.yml (Three Peer Aware Eureka Servers)
+`application.yml (Three Peer Aware Eureka Servers)`
 
 ```yaml
 eureka:

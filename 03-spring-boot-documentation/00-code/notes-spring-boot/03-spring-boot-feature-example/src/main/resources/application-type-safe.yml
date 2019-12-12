@@ -1,0 +1,22 @@
+app:
+  send-email-on-errors: true
+  exit-on-errors: true
+  order-screen-properties:
+    title:      Order Placement
+    item-label: Item
+    qty-label:  Qunatity
+  customer-screen-properties:
+    title:       Customer Profile
+    name-label:  Customer Name
+    phone-label: Contact Number
+nest:
+  send-email-on-errors: true
+  exit-on-errors: true
+  order-screen-properties:
+    title:      Order Placement
+    item-label: Item
+    qty-label:  Qunatity
+  customer-screen-properties:
+    title:       Customer Profile
+    name-label:  Customer Name
+    phone-label: Contact Number
