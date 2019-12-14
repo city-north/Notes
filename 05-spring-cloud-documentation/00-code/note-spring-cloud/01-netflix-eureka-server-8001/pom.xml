@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>01-netflix-eureka-server</artifactId>
+    <artifactId>01-netflix-eureka-server-8001</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <description>Demo project for Spring Boot</description>
 

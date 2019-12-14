@@ -22,7 +22,7 @@ Spring Cloud 为开发⼈员提供快速构建分布式系统的⼀些通⽤模�
 
 #### **Service Discovery** 服务发现
 
-A dynamic directory that enables client side load balancing and smart routing
+> A dynamic directory that enables client side load balancing and smart routing
 
 支持客户端负载平衡和智能路由的动态目录
 

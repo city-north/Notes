@@ -13,5 +13,33 @@
     <artifactId>note-spring-cloud</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+    </properties>
 
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>00-spring-cloud-note-common</module>
+        <module>01-netflix-eureka-server-8001</module>
+        <module>02-netflix-eureka-provider-8002</module>
+        <module>03-netflix-eureka-server-8003</module>
+        <module>04-netflix-eureka-provider-8004</module>
+        <module>05-netflix-eureka-consumer-8005</module>
+        <module>16-gateway-80</module>
+
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

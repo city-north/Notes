@@ -1,5 +1,32 @@
 # Using SpringApplication.addListeners()
 
+四个SpringBoot的事件:
+
+- ApplicationStartedEvent
+
+  - 在 SpringApplicaton刚启动就发送,
+  - 在 Environment 初始化之前
+  - 在 ApplicationContext 初始化之前
+  - 在ApplicationListeners注册完以后
+
+- ApplicationEnvironmentPreparedEvent
+
+  - 在 Environment 初始化后,完全可以查看和修改
+
+- ApplicationPreparedEvent
+
+  - 在 ApplicationContext 完全初始化完但是没有刷新之前
+
+- ApplicationReadyEvent
+
+  - 应用启动完毕可以接收请求后发送
+
+- ApplicationFailedEvent
+
+  - 如果应用启动失败发送
+
+  
+
 在 SpringBoot 应用中,通过`SpringApplication.addListeners()`或者`SpringApplicationBuilder.listeners()`可以让我们在 ApplicationContext 创建之前,监听应用的事件
 
 ## 实例
@@ -47,18 +74,4 @@ event: org.springframework.context.event.ContextClosedEvent[source=org.springfra
 2017-09-07 11:36:25.285  INFO 9556 --- [       Thread-2] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
 ```
 
-四个SpringBoot的事件:
-
-- ApplicationStartedEvent
-  - 在 SpringApplicaton刚启动就发送,
-  - 在 Environment 初始化之前
-  - 在 ApplicationContext 初始化之前
-  - 在ApplicationListeners注册完以后
-- ApplicationEnvironmentPreparedEvent
-  - 在 Environment 初始化后,完全可以查看和修改
-- ApplicationPreparedEvent
-  - 在 ApplicationContext 完全初始化完但是没有刷新之前
-- ApplicationReadyEvent
-  - 应用启动完毕可以接收请求后发送
-- ApplicationFailedEvent
-  - 如果应用启动失败发送
+- - 
