@@ -8,7 +8,8 @@ spring:
         git:
           uri: https://github.com/EricChen1688/Notes.git
           force-pull: true
-          search-paths: /
+          search-paths: /05-spring-cloud-documentation/00-code/note-spring-cloud/06-cloud-config-server-8006/src/main/resources/configs
+          default-label: master
 #          uri: file://${user.dir}/06-cloud-config-server-8006/src/main/resources/configs
 eureka:
   instance:
