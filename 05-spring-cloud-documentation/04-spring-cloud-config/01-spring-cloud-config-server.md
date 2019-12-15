@@ -98,8 +98,6 @@ $ git commit -m"first commit"
 
 根据第一小结的端点测试:
 
-由于是本地系统,没有 label
-
 ```
 /{application}/{profile}[/{label}]
 /{application}-{profile}.yml
@@ -147,11 +145,44 @@ public class ConfigServerApplication {
 ### 配置远程 git 仓库
 
 ```
-## 配置服务器远程 Git 仓库（GitHub）
-spring.cloud.config.server.git.uri = https://github.com/mercyblitz/tmp
-
-## 强制拉去 Git 内容
-spring.cloud.config.server.git.force-pull = true
-
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          ## 配置服务器远程 Git 仓库（GitHub）
+          uri: https://github.com/EricChen1688/tmp.git
+          ## 强制拉去 Git 内容
+          force-pull: true
+#          search-paths: /05-spring-cloud-documentation/00-code/note-spring-cloud/06-cloud-config-server-8006/src/main/resources/configs
+          default-label: master
+#          uri: file://${user.dir}/06-cloud-config-server-8006/src/main/resources/configs
 ```
 
+### 测试
+
+根据第一小结的端点测试:
+
+```
+/{application}/{profile}[/{label}]
+/{application}-{profile}.yml
+/{label}/{application}-{profile}.yml
+/{application}-{profile}.properties
+/{label}/{application}-{profile}.properties
+```
+
+- `/{application}/{profile}[/{label}]`
+
+![image-20191215161900797](assets/image-20191215161900797.png)
+
+- `/{application}-{profile}.yml`
+
+![image-20191215161931990](assets/image-20191215161931990.png)
+
+- `/{label}/{application}-{profile}.yml`
+
+![image-20191215162021752](assets/image-20191215162021752.png)
+
+...
+
+## 基于数据库

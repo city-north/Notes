@@ -6,9 +6,11 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/EricChen1688/Notes.git
+          ## 配置服务器远程 Git 仓库（GitHub）
+          uri: https://github.com/EricChen1688/tmp.git
+          ## 强制拉去 Git 内容
           force-pull: true
-          search-paths: /05-spring-cloud-documentation/00-code/note-spring-cloud/06-cloud-config-server-8006/src/main/resources/configs
+#          search-paths: /05-spring-cloud-documentation/00-code/note-spring-cloud/06-cloud-config-server-8006/src/main/resources/configs
           default-label: master
 #          uri: file://${user.dir}/06-cloud-config-server-8006/src/main/resources/configs
 eureka:

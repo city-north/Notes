@@ -4,6 +4,14 @@ spring:
   cloud:
     config:
       overrideNone: true
+      name: eccto-custom
+      profile: prod
+      label: master
+      enabled: true
+      discovery:
+        enabled: true
+        # 在注册中心的配置中心 ID
+        service-id: eccto-config
 eureka:
   instance:
     preferIpAddress: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
