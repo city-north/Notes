@@ -1,8 +1,15 @@
-spring:
-  application:
-    name: eccto-provider
 server:
-  port: 8004
+  port: 8006
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/EricChen1688/Notes.git
+          force-pull: true
+          search-paths: /
+#          uri: file://${user.dir}/06-cloud-config-server-8006/src/main/resources/configs
 eureka:
   instance:
     preferIpAddress: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
@@ -20,3 +27,4 @@ eureka:
       defaultZone: http://study.eccto.cn:8001/eureka
     registryFetchIntervalSeconds: 10
     disable-delta: true
+

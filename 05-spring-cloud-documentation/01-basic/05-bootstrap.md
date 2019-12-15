@@ -17,6 +17,8 @@ Bootstrap 的上下文是 spring boot main 上下文的父,这意味着:
 ### application.yml 和 bootstrap.yml 的区别
 
 - `application.yml`中的属性会覆盖`Bootstrap.yml` 中的的属性
+- `Bootstrap.yml` 一般存放 Spring Cloud 相关的属性
+- `application.yml` 一般存放 本地 SpringBoot 相关的属性
 
 ## Spring Boot/Spring Cloud 上下文层次关系
 

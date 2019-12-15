@@ -30,5 +30,6 @@
 | ---- | ------------------------------------------------------------ | ---- | ---------- | ---- |
 | 1    | [Basic](05-spring-cloud-documentation/01-basic)              |      | 2019-11-30 |      |
 | 2    | [Cloud Native Application](05-spring-cloud-documentation/02-cloud-native-application/README.md) |      |            |      |
+| 4    | [Spring Cloud Config](05-spring-cloud-documentation/04-spring-cloud-conig/README.md) |      | 2019-12-15 |      |
 | 5    | [Spring Cloud Netflix](05-spring-cloud-documentation/05-spring-cloud-netflix/README.md) |      | 2019-11-30 |      |
 
