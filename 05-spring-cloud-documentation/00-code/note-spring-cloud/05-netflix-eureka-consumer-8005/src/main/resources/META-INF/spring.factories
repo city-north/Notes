@@ -1,0 +1,3 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+cn.eccto.study.eureka.consumer.config.MyBootstrapConfiguration,\
+cn.eccto.study.eureka.consumer.config.CustomPropertySourceLocator

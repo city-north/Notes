@@ -1,8 +1,9 @@
-server:
-  port: 8005
 spring:
   application:
     name: eccto-consumer
+  cloud:
+    config:
+      overrideNone: true
 eureka:
   instance:
     preferIpAddress: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
