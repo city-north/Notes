@@ -41,3 +41,7 @@ You can disable the bootstrap process completely by setting `spring.cloud.bootst
 
 > If you build an application context from `SpringApplication` or `SpringApplicationBuilder`, then the Bootstrap context is added as a parent to that context. It is a feature of Spring that child contexts inherit property sources and profiles from their parent, so the “main” application context contains additional property sources, compared to building the same context without Spring Cloud Config. The additional property sources are:
 
+- 如果你使用的是 `SpringApplication`和`SpringApplicationBuilder`来构建应用上下文,那么Bootstrap 上下文是 main 上下文的父
+- Spring子上下文继承父上下文的 `property source`(属性源) 和` profiles`
+
+所以不使用 Spring Cloud Config 的上下文缺少以下属性源

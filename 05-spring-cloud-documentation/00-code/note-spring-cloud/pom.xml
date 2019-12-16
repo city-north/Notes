@@ -27,7 +27,7 @@
         <module>03-netflix-eureka-server-8003</module>
         <module>04-netflix-eureka-provider-8004</module>
         <module>05-netflix-eureka-consumer-8005</module>
-        <module>06-cloud-config-server-8006</module>
+        <module>06-cloud-config-server-git-8006</module>
         <module>16-cloud-gateway-80</module>
 
     </modules>
