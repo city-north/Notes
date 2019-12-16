@@ -2,11 +2,11 @@
 
 ## Basics
 
-|      | Name            | Start      | End        |
-| ---- | --------------- | ---------- | ---------- |
-| 1    | Design Patterns | 2019-08-21 | 2018-09-25 |
-| 2    | Java            |            |            |
-| 3    | Effective Java  |            |            |
+|      | Name                                            | Start      | End        |
+| ---- | ----------------------------------------------- | ---------- | ---------- |
+| 1    | [Design Patterns](01-design-patterns/README.md) | 2019-08-21 | 2018-09-25 |
+| 2    | Java                                            |            |            |
+| 3    | Effective Java                                  |            |            |
 
 ## Spring Framework
 
@@ -18,9 +18,9 @@
 
 ## Spring Boot
 
-|      | Name                                                         | Start      | End  |
-| ---- | ------------------------------------------------------------ | ---------- | ---- |
-| 1    | [SpringBoot tutorials](03-spring-boot-documentation/01-tutorials) | 2019-12-03 |      |
+|      | Name                                                         | Start      | End        |
+| ---- | ------------------------------------------------------------ | ---------- | ---------- |
+| 1    | [SpringBoot tutorials](03-spring-boot-documentation/01-tutorials) | 2019-12-03 | 2019-12-16 |
 
 ## 
 
@@ -32,4 +32,6 @@
 | 2    | [Cloud Native Application](05-spring-cloud-documentation/02-cloud-native-application/README.md) |      |            |      |
 | 4    | [Spring Cloud Config](05-spring-cloud-documentation/04-spring-cloud-conig/README.md) |      | 2019-12-15 |      |
 | 5    | [Spring Cloud Netflix](05-spring-cloud-documentation/05-spring-cloud-netflix/README.md) |      | 2019-11-30 |      |
+| 6    | [Spring Cloud Open Feign](05-spring-cloud-documentation/02-cloud-native-application/06-spring-cloud-open-feign/README.md) |      |            |      |
+| 7    | [Spring Cloud Bus](05-spring-cloud-documentation/07-spring-cloud-bus/README.md) |      |            |      |
 
