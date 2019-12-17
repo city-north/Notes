@@ -26,8 +26,6 @@ Spring Cloud 配置服务器器管理理多个客户端应⽤用的配置信息�
 /{label}/{application}-{profile}.properties
 ```
 
-
-
 ## 基于文件系统(File System)
 
 ### 开启配置服务器

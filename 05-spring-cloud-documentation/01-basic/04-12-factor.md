@@ -10,9 +10,9 @@ The Twelve-Factor App
 
   > The application must have one codebase, tracked in revision control for every application (read: microservice) that can be deployed multiple times (development, test, staging, and production environments). Two microservices do not share the same codebase. This model allows the flexibility to change and deploy services without impacting other parts of the application.
 
-  代码管理.git,svn
+代码管理.git,svn
 
-  
+
 
 - **2.依赖 Dependencies**: 
 
@@ -45,7 +45,7 @@ The Twelve-Factor App
 
   
 
-- **9.易处理Disposability**: The idea is to build a microservice as immutable with a single responsibility to, in turn, maximize robustness with faster boot-up times. Immutability also lends to the service disposability.
+- **9.易处理 Disposability**: The idea is to build a microservice as immutable with a single responsibility to, in turn, maximize robustness with faster boot-up times. Immutability also lends to the service disposability.
 
   
 
