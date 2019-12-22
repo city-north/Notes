@@ -25,7 +25,7 @@ Spring Cloud 为开发⼈员提供快速构建分布式系统的⼀些通⽤模�
 -  [02-cloud-native-application](02-cloud-native-application)  云原生应用
 -  [04-spring-cloud-config](04-spring-cloud-config) 配置中心
 -  [05-spring-cloud-netflix](05-spring-cloud-netflix) netflix
--  [16-spring-cloud-gateway](16-spring-cloud-gateway) 网管
+-  [16-spring-cloud-gateway](16-spring-cloud-gateway) 网关
 
 
 
