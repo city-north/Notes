@@ -26,16 +26,16 @@
 
 ## Spring Cloud
 
-|      | Name                                                         |      | Start      | End  |
-| ---- | ------------------------------------------------------------ | ---- | ---------- | ---- |
-| 1    | [Basic](05-spring-cloud-documentation/01-basic)              |      | 2019-11-30 |      |
-| 2    | [Cloud Native Application](05-spring-cloud-documentation/02-cloud-native-application/README.md) |      | 2019-12-21 |      |
-| 4    | [Spring Cloud Config](05-spring-cloud-documentation/04-spring-cloud-conig/README.md) |      | 2019-12-15 |      |
-| 5    | [Spring Cloud Netflix](05-spring-cloud-documentation/05-spring-cloud-netflix/README.md) |      | 2019-11-30 |      |
-| 6    | [Spring Cloud Open Feign](05-spring-cloud-documentation/02-cloud-native-application/06-spring-cloud-open-feign/README.md) |      |            |      |
-| 7    | [Spring Cloud Bus](05-spring-cloud-documentation/07-spring-cloud-bus/README.md) |      |            |      |
-| 8    | [Spring Cloud Sleuth](05-spring-cloud-documentation/08-spring-cloud-sleuth/README.md) |      |            |      |
-| 9    | [Spring Cloud Consul](05-spring-cloud-documentation/09-spring-cloud-consul/README.md) |      |            |      |
-| 16   | [Spring Cloud Gateway](05-spring-cloud-documentation/09-spring-cloud-consul/README.md) |      |            |      |
-| 21   | [Spring Cloud Stream](05-spring-cloud-documentation/21-spring-cloud-stream/README.md) |      |            |      |
+|      | Name                                                         | Start      | End  |
+| ---- | ------------------------------------------------------------ | ---------- | ---- |
+| 1    | [Basic](05-spring-cloud-documentation/01-basic)              | 2019-11-30 |      |
+| 2    | [Cloud Native Application](05-spring-cloud-documentation/02-cloud-native-application/README.md) | 2019-12-21 |      |
+| 4    | [Spring Cloud Config](05-spring-cloud-documentation/04-spring-cloud-conig/README.md) | 2019-12-15 |      |
+| 5    | [Spring Cloud Netflix](05-spring-cloud-documentation/05-spring-cloud-netflix/README.md) | 2019-11-30 |      |
+| 6    | [Spring Cloud Open Feign](05-spring-cloud-documentation/02-cloud-native-application/06-spring-cloud-open-feign/README.md) |            |      |
+| 7    | [Spring Cloud Bus](05-spring-cloud-documentation/07-spring-cloud-bus/README.md) |            |      |
+| 8    | [Spring Cloud Sleuth](05-spring-cloud-documentation/08-spring-cloud-sleuth/README.md) |            |      |
+| 9    | [Spring Cloud Consul](05-spring-cloud-documentation/09-spring-cloud-consul/README.md) |            |      |
+| 16   | [Spring Cloud Gateway](05-spring-cloud-documentation/09-spring-cloud-consul/README.md) |            |      |
+| 21   | [Spring Cloud Stream](05-spring-cloud-documentation/21-spring-cloud-stream/README.md) |            |      |
 
