@@ -34,8 +34,16 @@
 客户端负载均衡和服务端负载均衡最大的不同点在千上面所提到的服务清单所存储 的位置。
 
 - 在客户端负载均衡中， 所有客户端节点都维护着自己要访问的服务端清单， 而这些 服务端的清单来自于服务注册中心
-
 - 同服务端负载均衡的架构类似， 在客户端负载均衡中也需要心跳去维护服务端清单的健康性
+
+### 常见的负载均衡算法
+
+- 先来先服务(First Come First Served)
+- 最早截止时间(优先) Earliest deadline first
+- 最短保留时间优先 Shortest remaining time
+- 固定优先级 Fixed Priority
+- 轮训 (Round-Robin)
+- 多级别队列 (Multilevel Queue)
 
 ## 引入 Ribbon
 
@@ -80,3 +88,48 @@ public class RibbonExampleController {
 
 SpringCloud整合了SpringRetry来增强RestTernplate的重试能力， 对于开发者来 说只需通过简单的配置， 原来那些通过RestTemplate实现的服务访问就会自动根据配 置来实现重试策略。
 
+## Ribbon核心接口
+
+#### 实际请求客户端
+
+- `LoadBalancerClient`
+  - `RibbonLoadBalancerClient`
+
+#### 负载均衡上下文
+
+- `LoadBalancerContext`
+  - `RibbonLoadBalancerContext`
+
+#### 负载均衡器
+
+- `ILoadBalancer (com.netflix.loadbalancer)`
+  - `AbstractLoadBalancer (com.netflix.loadbalancer)`
+    - `NoOpLoadBalancer (com.netflix.loadbalancer)`
+    - `BaseLoadBalancer (com.netflix.loadbalancer)`
+      - `DynamicServerListLoadBalancer(com.netflix.loadbalancer)`
+        - `ZoneAwareLoadBalancer (com.netflix.loadbalancer)`
+
+### 规则接口
+
+- `IRule (com.netflix.loadbalancer)`
+
+  - `AbstractLoadBalancerRule (com.netflix.loadbalancer)`
+    - `ClientConfigEnabledRoundRobinRule (com.netflix.loadbalancer)`
+      - `BestAvailableRule (com.netflix.loadbalancer)`最可用规则
+      - `PredicateBasedRule (com.netflix.loadbalancer)`
+        - `ZoneAvoidanceRule (com.netflix.loadbalancer)`
+        - `AvailabilityFilteringRule (com.netflix.loadbalancer)`
+    - `RoundRobinRule (com.netflix.loadbalancer)` 轮训规则
+      - `WeightedResponseTimeRule (com.netflix.loadbalancer)`
+      - `ResponseTimeWeightedRule (com.netflix.loadbalancer)`
+  - `RandomRule (com.netflix.loadbalancer)` 随机规则
+  - `RetryRule (com.netflix.loadbalancer)`重试规则
+
+  ### Ping  策略
+
+  - `IPingStrategy`
+    - `NoOpPing`
+    - `DummyPing`
+    - `PingConstant`
+    - `PingUrl`
+    - `NIWSDiscoveryPing`

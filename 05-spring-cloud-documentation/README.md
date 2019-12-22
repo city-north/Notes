@@ -37,12 +37,21 @@ Spring Cloud 为开发⼈员提供快速构建分布式系统的⼀些通⽤模�
 
 支持客户端负载平衡和智能路由的动态目录
 
--   [01-netflix-eureka.md](05-spring-cloud-netflix/01-netflix-eureka.md) 
--  [02-netfilix-eureka-client.md](05-spring-cloud-netflix/02-netfilix-eureka-client.md) 
+-  [Spring Cloud Consul Discovery](09-spring-cloud-consul/README.md) 
+
+- Spring Cloud Netflix Eureka
+  - [01-netflix-eureka.md](05-spring-cloud-netflix/01-netflix-eureka.md) 
+  - [02-netfilix-eureka-client.md](05-spring-cloud-netflix/02-netfilix-eureka-client.md) 
+- Spring Cloud Zookeeper Discovery
 
 #### **Circuit Breaker**
 
 Microservice fault tolerance with a monitoring dashboard
+
+- Spring Cloud NetFlix Hystrix
+- Spring Cloud Resilience4J
+- Spring Cloud Sentinel
+- Spring Retry
 
 #### **Configuration Server**
 

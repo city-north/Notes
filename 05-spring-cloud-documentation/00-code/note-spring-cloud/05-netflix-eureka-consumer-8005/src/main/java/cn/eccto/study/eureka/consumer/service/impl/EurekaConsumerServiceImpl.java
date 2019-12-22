@@ -20,6 +20,7 @@ public class EurekaConsumerServiceImpl implements IEurekaConsumerService {
     private RestTemplate restTemplate;
 
 
+    @Override
     @HystrixCommand(fallbackMethod = "helloFallback")
     public String helloService() {
         return restTemplate.getForEntity(ECCTO_PROVIDER_PRIFIX + "/hello", String.class).getBody();

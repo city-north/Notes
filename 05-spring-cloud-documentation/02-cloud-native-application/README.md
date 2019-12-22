@@ -55,6 +55,8 @@
 | **自动化可扩展性。** 大规模基础架构自动化可消除因人为错误造成的停机。计算机自动化无需面对此类挑战，可以在任何规模的部署中始终如一地应用同一组规则。云原生还超越了基于以虚拟化为导向的传统编排而构建的专用自动化。全面的云原生架构包括适用于团队的自动化和编排，而不要求他们将自动化作为自定义方法来编写。换句话说，自动化可轻松构建和运行易于管理的应用。 | **手动扩展。** 手动基础架构包括人工运营人员，他们负责手动构建和管理服务器、网络及存储配置。由于复杂程度较高，运营人员无法快速地大规模正确诊断问题，并且很容易执行错误实施。手动构建的自动化方法可能会将人为错误的硬编码到基础架构中。 |
 | **快速恢复。** 容器运行时和编排程序可在虚拟机上提供动态的高密度虚拟化覆盖，与托管微服务非常匹配。编排可动态管理容器在虚拟机群集间的放置，以便在发生故障时提供弹性扩展和恢复/重新启动功能。 | **恢复缓慢。** 基于虚拟机的基础架构对于基于微服务的应用来说是一个缓慢而低效的基础，因为单个虚拟机启动或关闭的速度很慢，甚至在向其部署应用代码之前就存在很大的开销。 |
 
+
+
 ## SpringCloud 中的云原生应用
 
 > [Cloud Native](https://pivotal.io/platform-as-a-service/migrating-to-cloud-native-application-architectures-ebook) is a style of application development that encourages easy adoption of best practices in the areas of continuous delivery and value-driven development. A related discipline is that of building [12-factor Applications](https://12factor.net/), in which development practices are aligned with delivery and operations goals — for instance, by using declarative programming and management and monitoring. Spring Cloud facilitates these styles of development in a number of specific ways. The starting point is a set of features to which all components in a distributed system need easy access.
