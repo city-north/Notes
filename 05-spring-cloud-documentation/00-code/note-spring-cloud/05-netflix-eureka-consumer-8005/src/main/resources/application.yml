@@ -7,3 +7,13 @@ management:
     web:
       exposure:
         include: '*'
+spring:
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+    config:
+      retry:
+        initial-interval: 1000
+        max-attempts: 6
+        max-interval: 2000

@@ -29,7 +29,7 @@
         <module>05-netflix-eureka-consumer-8005</module>
         <module>06-cloud-config-server-git-8006</module>
         <module>16-cloud-gateway-80</module>
-        <module>07-spring-cloud-config-database-8007</module>
+        <module>07-spring-cloud-config-db-8007</module>
 
     </modules>
 

@@ -1,5 +1,7 @@
 # Spring Cloud Commons : Common Abstractions
 
+本章主要介绍了 `spring-cloud-commons`包,粗略介绍
+
 The common abstraction 包包含了许多服务的抽象:
 
 - service discovery
@@ -171,4 +173,148 @@ spring.cloud.service-registry.auto-registration.enabled=false
 
 #### 服务注册的 Endpoints 端点
 
-#### 
+## [负载均衡地配置RestTemplate](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#rest-template-loadbalancer-client)
+
+```java
+@Configuration
+public class MyConfiguration {
+
+    @LoadBalanced
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}
+
+public class MyClass {
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public String doOtherStuff() {
+        String results = restTemplate.getForObject("http://stores/stores", String.class);
+        return results;
+    }
+}
+```
+
+- URI 需要使用一个虚拟的 hostname(也就是一个服务的名称).Ribbon 客户端用来创建全物理地址
+
+- 如果你要使用一个负载均衡的 RestTemplate,你 classpath 下必须要有负载均衡器的实现类
+
+> 默认下,如果你同时有`RibbonLoadBalancerClient`和`BlockingLoadBalancerClient`,为了保持向下兼容,会使用`RibbonLoadBalancerClient`.有个开关:
+>
+> ```properties
+> spring.cloud.loadbalancer.ribbon.enabled
+> ```
+
+## [负载均衡的WebClient](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#webclinet-loadbalancer-client)
+
+```java
+@Configuration
+public class MyConfiguration {
+
+    @Bean
+    @LoadBalanced
+    public WebClient.Builder loadBalancedWebClientBuilder() {
+        return WebClient.builder();
+    }
+}
+
+public class MyClass {
+    @Autowired
+    private WebClient.Builder webClientBuilder;
+
+    public Mono<String> doOtherStuff() {
+        return webClientBuilder.build().get().uri("http://stores/stores")
+                        .retrieve().bodyToMono(String.class);
+    }
+}
+```
+
+#### 重试失败的请求
+
+一个负载均衡的`RestTemplate`,可以配置重试错误的请求,默认下这个逻辑是关闭的,你可以通过添加[Spring Retry](https://github.com/spring-projects/spring-retry)到项目classpath 下,一些配置如下:
+
+```
+client.ribbon.MaxAutoRetries
+client.ribbon.MaxAutoRetriesNextServer
+client.ribbon.OkToRetryOnAllOperations
+```
+
+你可以关闭它们:
+
+```
+spring.cloud.loadbalancer.retry.enabled=false
+```
+
+如果想自定义实现一个`BackOffPolicy`策略,你可以创建一个 bean类型为`LoadBalancedRetryFactory`,覆盖`createBackOffPolicy`方法
+
+```java
+@Configuration
+public class MyConfiguration {
+    @Bean
+    LoadBalancedRetryFactory retryFactory() {
+        return new LoadBalancedRetryFactory() {
+            @Override
+            public BackOffPolicy createBackOffPolicy(String service) {
+                return new ExponentialBackOffPolicy();
+            }
+        };
+    }
+}
+```
+
+如果想添加一个或者多个`RetryListener`实现类,你可以创建 bean 的类型`LoadBalancedRetryListenerFactory`,返回一个`RetryListener`数组,包含
+
+2.0.0 以下版本:
+
+```java
+@Configuration
+public class MyConfiguration {
+    @Bean
+    LoadBalancedRetryListenerFactory retryListenerFactory() {
+        return new LoadBalancedRetryListenerFactory() {
+            @Override
+            public RetryListener[] createRetryListeners(String service) {
+                return new RetryListener[]{new RetryListener() {
+                    @Override
+                    public <T, E extends Throwable> boolean open(RetryContext context, RetryCallback<T, E> callback) {
+                        //TODO Do you business...
+                        return true;
+                    }
+
+                    @Override
+                     public <T, E extends Throwable> void close(RetryContext context, RetryCallback<T, E> callback, Throwable throwable) {
+                        //TODO Do you business...
+                    }
+
+                    @Override
+                    public <T, E extends Throwable> void onError(RetryContext context, RetryCallback<T, E> callback, Throwable throwable) {
+                        //TODO Do you business...
+                    }
+                }};
+            }
+        };
+    }
+}
+```
+
+另外,如果你想根据指定返回 code 才进行 retry,那么设置
+
+```
+clientName.ribbon.retryableStatusCodes
+```
+
+例如
+
+```yml
+clientName:
+  ribbon:
+    retryableStatusCodes: 404,502
+```
+
+你也可以自己创建一个	`LoadBalancedRetryPolicy	`Bean,实现	`retryableStatusCode`方法
+
+## [负载均衡的 WebClient](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#loadbalanced-webclient)
+
+****
