@@ -17,6 +17,5 @@
 
 ## Raft 协议
 
-
-
 http://thesecretlivesofdata.com/raft/
+
