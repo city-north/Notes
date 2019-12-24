@@ -315,6 +315,168 @@ clientName:
 
 你也可以自己创建一个	`LoadBalancedRetryPolicy	`Bean,实现	`retryableStatusCode`方法
 
-## [负载均衡的 WebClient](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#loadbalanced-webclient)
+## [使用多个 `RestTemplate`对象](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#multiple-resttemplate-objects)
 
-****
+你想要创建两个 `RestTemplate`,一个是负载均衡,一个不是负载均衡:
+
+```java
+@Configuration
+public class MyConfiguration {
+
+    @LoadBalanced
+    @Bean
+    RestTemplate loadBalanced() {
+        return new RestTemplate();
+    }
+
+    @Primary
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}
+
+public class MyClass {
+@Autowired
+private RestTemplate restTemplate;
+
+    @Autowired
+    @LoadBalanced
+    private RestTemplate loadBalanced;
+
+    public String doOtherStuff() {
+        return loadBalanced.getForObject("http://stores/stores", String.class);
+    }
+
+    public String doStuff() {
+        return restTemplate.getForObject("http://example.com", String.class);
+    }
+}
+```
+
+值得注意的是`@Primary`注解为了让`@Autowired`注解不产生歧义
+
+同理,多个`WebClient`对象:
+
+## [多个 WebClient 对象使用](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#multiple-webclient-objects)
+
+```java
+@Configuration
+public class MyConfiguration {
+
+    @LoadBalanced
+    @Bean
+    WebClient.Builder loadBalanced() {
+        return WebClient.builder();
+    }
+
+    @Primary
+    @Bean
+    WebClient.Builder webClient() {
+        return WebClient.builder();
+    }
+}
+
+public class MyClass {
+    @Autowired
+    private WebClient.Builder webClientBuilder;
+
+    @Autowired
+    @LoadBalanced
+    private WebClient.Builder loadBalanced;
+
+    public Mono<String> doOtherStuff() {
+        return loadBalanced.build().get().uri("http://stores/stores")
+                        .retrieve().bodyToMono(String.class);
+    }
+
+    public Mono<String> doStuff() {
+        return webClientBuilder.build().get().uri("http://example.com")
+                        .retrieve().bodyToMono(String.class);
+    }
+}
+```
+
+## [Spring WebFlux `WebClient` 配置成负载均衡客户端](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#loadbalanced-webclient)
+
+### [Spring WebFlux `WebClient` with `ReactorLoadBalancerExchangeFilterFunction`](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#webflux-with-reactive-loadbalancer)
+
+你可以配置一个 WebClient 去使用`ReactiveLoadBalancer`,如果你的 classpath下有
+
+- Spring Cloud LoadBalancer starter
+- Spring-webflux
+
+那么`ReactorLoadBalancerExchangeFilterFunction`会自动配置,你可以这样设置一个`WebClient`作为一个 reactive load-balancer
+
+```java
+public class MyClass {
+    @Autowired
+    private ReactorLoadBalancerExchangeFilterFunction lbFunction;
+
+    public Mono<String> doOtherStuff() {
+        return WebClient.builder().baseUrl("http://stores")
+            .filter(lbFunction)
+            .build()
+            .get()
+            .uri("/stores")
+            .retrieve()
+            .bodyToMono(String.class);
+    }
+}
+```
+
+- URI 需要一个虚拟的 host name (也就是服务名称,而不是 host 名称)
+- `ReactorLoadBalancer`用来创建一个全物理地址
+
+> 默认情况下,如果在 classpath 下`spring-cloud-netflix-ribbon`,那么[`LoadBalancerExchangeFilterFunction`](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#load-balancer-exchange-filter-function)用来保证向下兼容,
+>
+> 可以使用`ReactorLoadBalancerExchangeFilterFunction`,设置
+>
+> ```java
+> spring.cloud.loadbalancer.ribbon.enabled=flase
+> ```
+>
+> 
+
+```java
+public class MyClass {
+    @Autowired
+    private LoadBalancerExchangeFilterFunction lbFunction;
+
+    public Mono<String> doOtherStuff() {
+        return WebClient.builder().baseUrl("http://stores")
+            .filter(lbFunction)
+            .build()
+            .get()
+            .uri("/stores")
+            .retrieve()
+            .bodyToMono(String.class);
+    }
+}
+```
+
+### [Spring WebFlux `WebClient` with a Non-reactive Load Balancer Client](https://cloud.spring.io/spring-cloud-static/current/reference/htmlsingle/#load-balancer-exchange-filter-function)
+
+如果你的 classpath 下没有 Spring Cloud LoadBalancer starter 但是有 spring-cloud-starter-netflix-ribbon.也可以使用 `LoadBalancerClient`的 WebClient
+
+如果在 classpath 下有`spring-webflux`,`LoadBalancerExchangeFilterFunction`就会被自动配置,当然是一个非-reactive 方式:
+
+```java
+public class MyClass {
+    @Autowired
+    private LoadBalancerExchangeFilterFunction lbFunction;
+
+    public Mono<String> doOtherStuff() {
+        return WebClient.builder().baseUrl("http://stores")
+            .filter(lbFunction)
+            .build()
+            .get()
+            .uri("/stores")
+            .retrieve()
+            .bodyToMono(String.class);
+    }
+}
+```
+
+**在 2.0以后**, ` LoadBalancerExchangeFilterFunction`失效了,使用`ReactorLoadBalancerExchangeFilterFunction`
+
