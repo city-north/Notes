@@ -12,5 +12,5 @@
 | **里氏代换原则(LSP)** | [Liskov Substitution principle](03-liskov-substitution-principle.md) | 所有引用基类的地方必须能透明地使用其子类的对象               | ★★★★★    |
 | **依赖倒转原则(DIP)** | [Dependence Inversion Principle](04-dependence-inversion-principle.md) | 高层模块不应该依赖底层模块，它们都应该依赖抽象，抽象不应该依赖于细节，细节应该依赖于抽象 | ★★★★★    |
 | **接口隔离原则(ISP)** | [Interface Segregation Principle](05-interface-segregation-principle.md) | 客户端不应该依赖那些他不需要的接口                           | ★★☆☆☆    |
-| **合成复用原则(CRP)** | [Composite Reuse Principle](06-composite-reuse-principle.md) | 优先使用对象组合，而不是继承来达到复用的目的                 | ★★★★☆    |
+| **合成复用原则(CRP)** | [Composite Reuse Principle](06-composite-reuse-principle.md) | 优先使用对象组合，而不是继承(聚合)来达到复用的目的           | ★★★★☆    |
 | **迪米特法则(LoD)**   | [Law of Demeter](07-law-of-demeter.md)                       | 每一个软件单位对其他的单位都只有最少的知识，而且局限于哪些于本单位密切相关的软件单位 | ★★★☆☆    |
