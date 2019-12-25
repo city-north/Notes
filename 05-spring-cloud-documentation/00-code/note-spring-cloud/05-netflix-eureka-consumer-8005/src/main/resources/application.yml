@@ -12,6 +12,8 @@ spring:
     loadbalancer:
       retry:
         enabled: true
+      ribbon:
+        enabled: false
     config:
       retry:
         initial-interval: 1000

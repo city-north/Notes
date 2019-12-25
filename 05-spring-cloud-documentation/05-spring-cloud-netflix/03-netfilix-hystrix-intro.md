@@ -66,39 +66,3 @@ public Customizer<ReactiveHystrixCircuitBreakerFactory> customizer() {
 }
 ```
 
-## 引入项目
-
-```xml
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-</dependency>
-```
-
-添加`@EnableCircuitBreaker`
-
-```java
-@EnableCircuitBreaker 
-@EnableDiscoveryClient 
-@SpringBootApplication
-public class EurekaConsumerExample {
-    public static void main(String[] args) {
-        SpringApplication.run(EurekaConsumerExample.class, args);
-    }
-}
-```
-
-
-
-可以直接使用`@SpringCloudApplication` 默认会添加`@EnableCircuitBreaker`
-
-```
-@SpringCloudApplication
-public class EurekaConsumerExample {
-    public static void main(String[] args) {
-        SpringApplication.run(EurekaConsumerExample.class, args);
-    }
-}
-
-```
-
