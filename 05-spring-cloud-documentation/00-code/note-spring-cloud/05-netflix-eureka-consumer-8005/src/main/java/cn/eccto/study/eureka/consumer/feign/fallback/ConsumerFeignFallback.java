@@ -19,4 +19,10 @@ public class ConsumerFeignFallback implements ConsumerFeign {
         logger.error("call helloWorld failed");
         throw new RuntimeException("call helloWorld failed");
     }
+
+    @Override
+    public String index() {
+        logger.error("call index failed");
+        throw new RuntimeException("call index failed");
+    }
 }
