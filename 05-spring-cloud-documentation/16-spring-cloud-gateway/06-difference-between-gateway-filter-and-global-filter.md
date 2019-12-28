@@ -6,17 +6,16 @@
 
 ## 1. Spring Cloud gateway的Filter
 
-
 Spring Cloud gateway中的Filter从接口实现上分为两种一种是GatewayFilter，另外一种是GlobalFilter。
 
-## 1.1 GatewayFilter与GlobalFilter的区别
+### 1.1 GatewayFilter与GlobalFilter的区别
 
 区别用英语可以总结如下:
 At a high level global filters are applied to all routes, while a gateway filter will be applied to an individual route(s)
 
 > 在一个高的角度来看，Global filters会被应用到所有的路由上，而Gateway filter将应用到`单个路由`上或者`一个分组的路由`上。在下面的案例中将会进行说明。
 
-## 1.2 本文代码地址
+### 1.2 本文代码地址
 
 > https://github.com/SoftwareKing/sc-gateway/tree/master/ch2
 
