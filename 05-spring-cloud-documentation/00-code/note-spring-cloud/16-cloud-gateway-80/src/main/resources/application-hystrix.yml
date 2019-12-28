@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hystrix_route
+          uri: lb://eccto-provider
+          predicates:
+            - Path=/hystrix01/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+        - id: ingredients-fallback
+          uri: lb://eccto-provider
+          predicates:
+            - Path=/fallback
+          filters:
+            - name: FallbackHeaders
+              args:
+                executionExceptionTypeHeaderName: Test-Header

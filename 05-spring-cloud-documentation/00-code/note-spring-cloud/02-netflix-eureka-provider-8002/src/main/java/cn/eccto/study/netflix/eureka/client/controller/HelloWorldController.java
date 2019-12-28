@@ -36,7 +36,10 @@ public class HelloWorldController {
         answer.put("response_header", allRspHeaderParam);
         return answer;
     }
-
+    @GetMapping("/error-test")
+    public String error() throws Exception {
+        throw new IllegalArgumentException("自定义请求出错,from 8002");
+    }
     /**
      * 获取客户端请求参数中所有的信息
      *

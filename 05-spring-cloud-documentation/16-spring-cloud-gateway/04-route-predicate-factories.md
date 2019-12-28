@@ -4,7 +4,7 @@
 > - **本文链接：** [2018/12/25/spring cloud gateway系列教程1——Route Predicate/](https://www.edjdhbb.com/2018/12/25/spring cloud gateway系列教程1——Route Predicate/)
 > - **版权声明：** 本博客所有文章除特别声明外，均采用 [CC BY-NC-SA 3.0 CN](http://creativecommons.org/licenses/by-nc-sa/3.0/cn/) 许可协议。转载请注明出处！
 
-Spring Cloud Gateway是使用Spring WebFlux的HandlerMapping作为匹配路由底层实现，本身已自带很多Route Predicate Factories，分别匹配不同的http请求属性，多个Route Predicate Factories也可以通过`and`进行逻辑合并匹配。
+Spring Cloud Gateway是使用Spring WebFlux的`HandlerMapping`作为匹配路由底层实现，本身已自带很多Route Predicate Factories，分别匹配不同的http请求属性，多个Route Predicate Factories也可以通过`and`进行逻辑合并匹配。
 
 #### 1. After Route Predicate Factory
 
@@ -240,6 +240,4 @@ RemoteAddressResolver resolver = XForwardedRemoteAddressResolver
         .uri("http://www.google.com")
 )
 ```
-
-## 代码实例
 

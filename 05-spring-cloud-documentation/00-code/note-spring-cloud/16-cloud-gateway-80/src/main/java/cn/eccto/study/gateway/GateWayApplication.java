@@ -12,7 +12,11 @@ import org.springframework.cloud.client.SpringCloudApplication;
 @SpringCloudApplication
 public class GateWayApplication {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(GateWayApplication.class).web(WebApplicationType.REACTIVE).run(args);
+        new SpringApplicationBuilder(GateWayApplication.class)
+//                .profiles("default")
+                .profiles("hystrix")
+                .web(WebApplicationType.REACTIVE)
+                .run(args);
 //        ConfigurableApplicationContext run = SpringApplication.run(GateWayApplication.class, args);
     }
 

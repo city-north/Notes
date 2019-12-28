@@ -4,7 +4,7 @@ spring:
       enabled: true
       routes:
         - id: method_route
-          uri: lb://eureka-client-01
+          uri: lb://eccto-provider
           predicates:
            - Path=/client1/**
           filters:

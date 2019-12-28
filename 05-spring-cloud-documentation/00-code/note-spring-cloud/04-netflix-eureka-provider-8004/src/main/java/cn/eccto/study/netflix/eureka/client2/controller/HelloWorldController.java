@@ -30,6 +30,15 @@ public class HelloWorldController {
         return "Hello World form client 8004";
     }
 
+    @GetMapping("/error-test")
+    public String error() throws Exception {
+        //让处理线程等待几秒钟
+        int sleepTime = new Random().nextInt(3000);
+        Thread.sleep(sleepTime);
+        logger.info("sleepTime:" + sleepTime);
+        throw new IllegalArgumentException("自定义请求出错,from 8004");
+    }
+
     @GetMapping("/")
     public Map index(HttpServletRequest request, HttpServletResponse httpServletResponse) {
         Map answer = new LinkedHashMap(4);
