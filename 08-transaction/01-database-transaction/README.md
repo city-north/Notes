@@ -15,16 +15,46 @@
 
 ## 事务隔离级别
 
-MySQL数据库针对这四种特性，为我们提供的四种隔离级别，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题。
+MySQL数据库针对这四种特性，为我们提供的四种隔离级别，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题,默认的隔离级别是 可重复读（Repeatable read）
 
-|      | 隔离级别                                              | 可能造成的问题 |
-| ---- | ----------------------------------------------------- | -------------- |
-| 1    | [读未提交（read uncommitted)](01-read-uncommitted.md) | 脏读           |
-| 2    | [读已提交（read committed)](01-read-uncommitted.md)   |                |
-| 3    | [可重复读（repeatable read)](03-repeatable-read.md)   |                |
-| 4    | [串行化 (serializable)](04-serializable.md)           |                |
+|      | 隔离级别                                              | 脏读   | 不可重复读 | 幻读   |
+| ---- | ----------------------------------------------------- | ------ | ---------- | ------ |
+| 1    | [读未提交（read uncommitted)](01-read-uncommitted.md) | 脏读   | 可能       | 可能   |
+| 2    | [读已提交（read committed)](01-read-uncommitted.md)   | 不可能 | 可能       | 可能   |
+| 3    | [可重复读（repeatable read)](03-repeatable-read.md)   | 不可能 | 不可能     | 可能   |
+| 4    | [串行化 (serializable)](04-serializable.md)           | 不可能 | 不可能     | 不可能 |
 
-## JDBC事务管理
+##### 查询MySQL 数据库的隔离级别
+
+```sql
+SELECT @@GLOBAL.tx_isolation, @@tx_isolation;
+```
+
+![image-20191229135502621](assets/image-20191229135502621.png)
+
+可以看到默认的隔离级别是可重复度
+
+##### 设置本次查询 session 的隔离级别为 Read Uncommited
+
+```sql
+SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+```
+
+##### 设置全局隔离界别
+
+```
+SET GLOBAL TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+```
+
+
+
+## 默认隔离级别
+
+如果没有指定隔离级别，数据库就会使用默认的隔离级别。
+
+- 在MySQL中，如果使用InnoDB，默认的隔离级别是`Repeatable Read`。
+
+
 
 
 
