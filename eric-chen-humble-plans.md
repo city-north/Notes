@@ -6,7 +6,7 @@
 | ---- | ----------------------------------------------- | ---------- | ---------- |
 | 1    | [Design Patterns](01-design-patterns/README.md) | 2019-08-21 | 2018-09-25 |
 | 2    | [Java](04-java/01-basic/01-introduction.md)     | 2019-12-25 |            |
-| 3    | Effective Java                                  |            |            |
+| 3    | [Effective Java](06-effective-java/README.md)   | 2019-12-31 |            |
 
 ## Spring Framework
 

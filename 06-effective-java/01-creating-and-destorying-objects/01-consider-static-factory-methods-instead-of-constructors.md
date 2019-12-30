@@ -37,6 +37,7 @@ tags: effective-java
 BigInteger的构造器`BigInteger(int,int,Random)；`可能返回一个素数。
 
 而静态方法：表达更加清楚。返回可能是素数。
+
 ```java
 public static BigInteger probablePrime(int bitLength, Random rnd) {
 	if (bitLength < 2)
