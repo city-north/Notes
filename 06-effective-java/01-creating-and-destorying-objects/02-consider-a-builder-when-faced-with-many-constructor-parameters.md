@@ -176,17 +176,17 @@ Person person = new Person.Builder(1,"eric")
 	.build();
 ```
 
-##总结：
+## 总结：
 - builder可以对其参数加强约束条件，builder方法可以检验这些约束条件。
 - 将参数从builder拷贝到对象中之后，并在对象域而不是builder域进行检验（39条）。
 - 违反条件的参数builder方法应该抛出illegalArgumentException
 
-##优势
+## 优势
 - builder可以有多个可变参数，随着参数的增加，只需要加对应的setter方法
 - 灵活，可以使用builder构建多个对象，builder参数可以在创建期间进行调整，也可以随着不同的对象而改变
 - builder可以自动填充某些域。
 
-##缺点
+## 缺点
 - 为了创建对象，先创建其构造器，性能会有影响，但是不大
 - Builder模式比重载构造器方法更加冗长，因此只有在很多参数的时候才能使用，比如4个或者更多
 

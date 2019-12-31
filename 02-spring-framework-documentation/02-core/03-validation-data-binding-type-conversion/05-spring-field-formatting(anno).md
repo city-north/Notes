@@ -242,7 +242,7 @@ public class LocaleFormatAnnotationFormatterFactory implements
 }
 ```
 
-####  4.使用自定义注解 {@link LocaleFormat} 去标注 {@link MyBean} 内的属性
+####   4.使用自定义注解 {@link LocaleFormat} 去标注 {@link MyBean} 内的属性
 
 ```java
 public class MyBean {

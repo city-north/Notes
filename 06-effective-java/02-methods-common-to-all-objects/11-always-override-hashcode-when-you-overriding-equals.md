@@ -16,7 +16,7 @@ tags: effective-java
 - 若两个对象根据equals(Object)方法比较是不等的，那么分别调用这两个对象的hashCode方法时不一定要产生不同的数值。只是程序员应该知道，对于不等的对象若能产生不同的哈希值，有助于提高哈希表的性能。
 
 
-##两个相应的对象总会有相同的 HashCode
+## 两个相应的对象总会有相同的 HashCode
 
 ```java
 Map<PhoneNumber, String> m = new HashMap<>();

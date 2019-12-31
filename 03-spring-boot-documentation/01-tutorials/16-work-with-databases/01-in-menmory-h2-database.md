@@ -31,18 +31,18 @@ JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 常用配置
 
 ```properties
-##数据库连接设置
+## 数据库连接设置
 spring.datasource.url = jdbc:h2:mem:dbtest  #配置h2数据库的连接地址
 spring.datasource.username = sa  #配置数据库用户名
 spring.datasource.password = sa  #配置数据库密码
 #配置JDBC Driver
 spring.datasource.driverClassName =org.h2.Driver
-##数据初始化设置
+## 数据初始化设置
 #进行该配置后，每次启动程序，程序都会运行resources/db/schema.sql文件，对数据库的结构进行操作。
 spring.datasource.schema=classpath:h2/schema.sql
 #进行该配置后，每次启动程序，程序都会运行resources/db/data.sql文件，对数据库的数据操作。
 spring.datasource.data=classpath:h2/data.sql
-##h2 web console设置
+## h2 web console设置
 spring.datasource.platform=h2  #表明使用的数据库平台是h2
 # 进行该配置后，h2 web consloe就可以在远程访问了。否则只能在本机访问。
 spring.h2.console.settings.web-allow-others=true

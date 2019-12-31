@@ -211,7 +211,7 @@ public class SimpleMovieLister {
 
 `@Autowired`, `@Inject`, `@Resource`, and `@Value` 注解都由Spring中的`BeanPostProcessor` 实现类进行处理，这意味着你不能使用自己的`BeanPostProcessor`或者 `BeanFactoryPostProcessor` 类型，这些类型必须通过`xml`或者使用`@Bean` 关联在一起。
 
-##  @Primary
+##   @Primary
 在进行自动注入时，往往会有多个候选人，这时，对注入的更加细致的控制是很有必要的。
 
 

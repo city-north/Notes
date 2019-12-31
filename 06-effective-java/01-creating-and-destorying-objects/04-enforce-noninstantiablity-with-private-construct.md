@@ -5,7 +5,7 @@ tags: effective-java
 ---
 
 有一些类不希望被实例化，如一些工具类，实例对它没有任何意义，
-##提供一个私有构造方法
+## 提供一个私有构造方法
 ```java
 public class OfficeUtils{
 	private OfficeUtils(){

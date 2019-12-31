@@ -168,7 +168,7 @@ dataSource.url=jdbc:mysql:mydb
 <context:property-override location="classpath:override.properties"/>
 ```
 
-##  三、 通过自定义factoryBean来定制初始化逻辑
+##   三、 通过自定义factoryBean来定制初始化逻辑
 
 实现`org.springframework.beans.factory.FactoryBean`来自定义一个工厂。
 
