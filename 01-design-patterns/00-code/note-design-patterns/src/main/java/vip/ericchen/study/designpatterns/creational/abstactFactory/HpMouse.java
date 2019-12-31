@@ -1,4 +1,4 @@
-package vip.ericchen.study.designpatterns.creational.abstactfactory;
+package vip.ericchen.study.designpatterns.creational.abstactFactory;
 
 /**
  * description

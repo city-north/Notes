@@ -1,4 +1,4 @@
-package vip.ericchen.study.designpatterns.creational.factorymethod;
+package vip.ericchen.study.designpatterns.creational.factoryMethod;
 
 import vip.ericchen.study.designpatterns.commons.Product;
 

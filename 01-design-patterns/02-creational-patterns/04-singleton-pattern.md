@@ -87,61 +87,134 @@ public class Singleton{
 ### 1.线程不安全的懒汉
 
 ```java
-public class Singleton {  
-    private static Singleton instance;  
-    private Singleton (){}  
-  
-    public static Singleton getInstance() {  
-    if (instance == null) {  
-        instance = new Singleton();  
-    }  
-    return instance;  
-    }  
+/**
+ * 懒加载单例模式(线程不安全)
+ *
+ * @author EricChen 2019/12/31 22:39
+ */
+public class LazyInitThreadNotSafeSingleton {
+    private static Singleton INSTANCE = null;
+
+    private LazyInitThreadNotSafeSingleton() {
+        //防止反射攻击
+        throw new IllegalArgumentException("HungrySingleton not allow be constructed");
+    }
+
+    public static Singleton getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Singleton();
+        }
+        return INSTANCE;
+    }
+
+    /**
+     * 重写 readResolve 方法`java.io.ObjectStreamClass` 类在反序列初始化对象时会去判断这个方法
+     * 还是会创建两次,但是发生在 JVM 层面,相对安全,之前反序列化的对象也会被 GC 回收
+     *
+     * @see java.io.ObjectStreamClass#invokeReadResolve
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }
 ```
+
+
 
 这种方式是最基本的实现方式，这种实现最大的问题就是不支持多线程。因为没有加锁 synchronized，所以严格意义上它并不算单例模式。 这种方式 lazy loading 很明显，不要求线程安全，在多线程不能正常工作。 
 
 ### 2.线程安全的懒汉
 
 ```java
-public class Singleton {  
-    private static Singleton instance;  
-    private Singleton (){}  
-    public static synchronized Singleton getInstance() {  
-        if (instance == null) {  
-            instance = new Singleton();  
-        }  
-        return instance;  
-    }  
+/**
+ * 懒加载单例模式(线程安全)
+ *
+ * @author EricChen 2019/12/31 22:39
+ */
+public class LazyInitThreadSafeSyncSingleton {
+    private static Singleton INSTANCE = null;
+
+    private LazyInitThreadSafeSyncSingleton() {
+        //防止反射攻击
+        throw new IllegalArgumentException("HungrySingleton not allow be constructed");
+    }
+
+    /**
+     * 使用 synchronized 关键字,效率低,锁掉整个类
+     */
+    public static synchronized Singleton getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new Singleton();
+        }
+        return INSTANCE;
+    }
+
+    /**
+     * 重写 readResolve 方法`java.io.ObjectStreamClass` 类在反序列初始化对象时会去判断这个方法
+     * 还是会创建两次,但是发生在 JVM 层面,相对安全,之前反序列化的对象也会被 GC 回收
+     *
+     * @see java.io.ObjectStreamClass#invokeReadResolve
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }
+
 ```
 
  这种方式具备很好的 lazy loading，能够在多线程中很好的工作，但是，效率很低，99% 情况下不需要同步。 
 
-优点：第一次调用才初始化，避免内存浪费。 
+- 优点：第一次调用才初始化，避免内存浪费。 
 
-缺点：必须加锁 synchronized 才能保证单例，但加锁会影响效率。 getInstance() 的性能对应用程序不是很关键（该方法使用不太频繁） 
+- 缺点：必须加锁 synchronized 才能保证单例，但加锁会影响效率。 getInstance() 的性能对应用程序不是很关键（该方法使用不太频繁） 
 
 ## 双检锁/双重校验锁
 
 ```java
-public class Singleton {  
-  	//CPU执行的时候会转换成 JVM指令执行
-  	//防止指令重排序 volatile
-    private volatile static Singleton singleton;  
-    private Singleton (){}  
-    public static Singleton getSingleton() {  
-        if (singleton == null) {  
-            synchronized (Singleton.class) {  
-                if (singleton == null) {  
-                    singleton = new Singleton();  
-                }  
-            }  
-        }  
-        return singleton;  
-    }  
+/**
+ * 懒加载单例模式(线程安全) 双检锁
+ *
+ * @author EricChen 2019/12/31 22:39
+ */
+public class LazyInitThreadSafeSingleton {
+    /**
+     * CPU执行的时候会转换成 JVM指令执行,防止指令重排序 volatile
+     */
+    private static volatile Singleton INSTANCE = null;
+
+    private LazyInitThreadSafeSingleton() {
+        //防止反射攻击
+        throw new IllegalArgumentException("HungrySingleton not allow be constructed");
+    }
+
+    /**
+     * 双检锁方式单例
+     */
+    public static Singleton getInstance() {
+        if (INSTANCE == null) {
+            synchronized (LazyInitThreadNotSafeSingleton.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new Singleton();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    /**
+     * 重写 readResolve 方法`java.io.ObjectStreamClass` 类在反序列初始化对象时会去判断这个方法
+     * 还是会创建两次,但是发生在 JVM 层面,相对安全,之前反序列化的对象也会被 GC 回收
+     *
+     * @see java.io.ObjectStreamClass#invokeReadResolve
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }
+
 ```
 
 **描述**：这种方式采用双锁机制，安全且在多线程情况下能保持高性能。 getInstance() 的性能对应用程序很关键。 
@@ -149,22 +222,35 @@ public class Singleton {
 ### 注册(登记式)/静态内部类
 
 ```java
-public class Singleton {  
-    private static class SingletonHolder {  
-    	private static final Singleton INSTANCE = new Singleton();  
-    }  
-    private Singleton (){
-      if(SingletonHolder.INSTANCE!=null){
-        throw new RuntimeException();
-      }
-    }  
-  //SingletonHolder里面的逻辑需要等到外部方法调用才执行,利用了内部类的特性
-    public static final Singleton getInstance() {  
-    	return SingletonHolder.INSTANCE;  
-    }  
-  
-  
+/**
+ * 注册内部类方式的单例模式,线程安全
+ *
+ * @author EricChen 2019/12/31 23:48
+ */
+public class InnerClassSingleton {
+    private InnerClassSingleton() {
+        //防止反射攻击
+        throw new IllegalArgumentException("HungrySingleton not allow be constructed");
+    }
+
+    public static Singleton getInstance() {
+        return LazyHolder.LAZY;
+    }
+
+    private static class LazyHolder {
+        private static final Singleton LAZY = new Singleton();
+    }
+    /**
+     * 重写 readResolve 方法`java.io.ObjectStreamClass` 类在反序列初始化对象时会去判断这个方法
+     * 还是会创建两次,但是发生在 JVM 层面,相对安全,之前反序列化的对象也会被 GC 回收
+     *
+     * @see java.io.ObjectStreamClass#invokeReadResolve
+     */
+    private Object readResolve() {
+        return LazyHolder.LAZY;
+    }
 }
+
 ```
 
 这种方式能达到双检锁方式一样的功效，但实现更简单。对静态域使用延迟初始化，应使用这种方式而不是双检锁方式。这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。
@@ -217,7 +303,30 @@ public class Main {
 }
 ```
 
+```java
+/**
+ * 枚举方式单例
+ *
+ * @author EricChen 2019/12/31 23:58
+ */
+public enum EnumSingleton {
+    INSTANCE;
+    private Singleton SINGLETON_INSTANCE = new Singleton();
+
+    public Singleton getInstance() {
+        return SINGLETON_INSTANCE;
+    }
+}
+
+```
+
+
+
 输出结果为：**true**  结果表明两次获取返回了相同的实例。 
+
+## 容器单例
+
+
 
 ## 总结
 
