@@ -128,3 +128,100 @@ Inside Square::draw() method.
 2. 使用简单工厂模式，势必要增加系统中类的个数（引入了新的工厂类），增加了系统的复杂度和理解难度
 3. 拓展困难，每增加一个产品，就要修改工厂逻辑
 4. 简单工厂由于使用静态工厂方法，造成工厂角色无法形成基于继承的等级结构。
+
+## 代码实例
+
+```java
+/**
+ * Simple factory example
+ *
+ * @author EricChen 2019/12/31 21:37
+ */
+public class SimpleProductFactory {
+    public static final String IPHONE = "iphone";
+
+    public Product create(String type) {
+        if (IPHONE.equalsIgnoreCase(type)) {
+            return new Iphone();
+        }
+        return null;
+    }
+
+    /**
+     * create instance by full-qualified name
+     *
+     * @param path full qualified name
+     * @return the instance of Product
+     */
+    public Product createWithPath(String path) {
+        try {
+            if (path != null && !"".equals(path)) {
+                return (Product) Class.forName(path).newInstance();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * create instance by Class
+     */
+    public Product create(Class clazz) {
+        try {
+            if (clazz != null) {
+                return (Product) clazz.newInstance();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+}
+
+```
+
+```java
+/**
+ * 简单工厂模式代码示例
+ *
+ * @author EricChen 2019/12/31 21:06
+ */
+public class SimpleFactoryExample {
+
+    public static void main(String[] args) {
+        doWithoutPatterns();
+        doWithPatterns();
+        doWithPatterns2();
+        doWithPatterns3();
+    }
+
+
+    public static void doWithoutPatterns() {
+        Iphone iphone = new Iphone();
+        System.out.println("构建了一个手机" + iphone);
+    }
+
+    private static void doWithPatterns() {
+        SimpleProductFactory simpleProductFactory = new SimpleProductFactory();
+        Product product = simpleProductFactory.create(SimpleProductFactory.IPHONE);
+        System.out.println("通过工厂方法构建了一个手机" + product);
+    }
+
+    private static void doWithPatterns2(){
+        SimpleProductFactory simpleProductFactory = new SimpleProductFactory();
+        Product withPath = simpleProductFactory.createWithPath("vip.ericchen.study.designpatterns.commons.Iphone");
+        System.out.println("通过工厂方法创建一个一个手机"+withPath);
+    }
+
+    private static void doWithPatterns3(){
+        SimpleProductFactory simpleProductFactory = new SimpleProductFactory();
+        Product withPath = simpleProductFactory.create(Iphone.class);
+        System.out.println("通过工厂方法创建一个一个手机"+withPath);
+    }
+
+}
+
+```
+

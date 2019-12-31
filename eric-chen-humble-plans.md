@@ -4,7 +4,7 @@
 
 |      | Name                                            | Start      | End        |
 | ---- | ----------------------------------------------- | ---------- | ---------- |
-| 1    | [Design Patterns](01-design-patterns/README.md) | 2019-08-21 | 2018-09-25 |
+| 1    | [Design Patterns](01-design-patterns/README.md) | 2018-08-21 | 2018-09-25 |
 | 2    | [Java](04-java/01-basic/01-introduction.md)     | 2019-12-25 |            |
 | 3    | [Effective Java](06-effective-java/README.md)   | 2019-12-31 |            |
 
@@ -42,4 +42,4 @@
 |      | Name                                                    | Start      | End  |
 | ---- | ------------------------------------------------------- | ---------- | ---- |
 | 8    | [Transaction (事务)](08-transaction/README.md)          | 2019-11-30 |      |
-| 9    | [Microservice(微服务架构)](09-micro-services/README.md) | rq         |      |
+| 9    | [Microservice(微服务架构)](09-micro-services/README.md) | Rq         |      |
