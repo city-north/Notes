@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vip.ericchen.study.designpatterns.structural.proxy.demo.common.IOrderService;
 
+import java.lang.reflect.Method;
+
 
 public class CglibOrderServiceProxy implements MethodInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(CglibOrderServiceProxy.class);
