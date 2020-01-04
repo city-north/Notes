@@ -43,3 +43,11 @@
 | ---- | ------------------------------------------------------- | ---------- | ---- |
 | 8    | [Transaction (事务)](08-transaction/README.md)          | 2019-11-30 |      |
 | 9    | [Microservice(微服务架构)](09-micro-services/README.md) | Rq         |      |
+
+### 未分类
+
+```
+https://www.vavr.io/
+https://resilience4j.readme.io/
+```
+

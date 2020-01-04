@@ -1,6 +1,8 @@
 # 观察者模式（observer Pattern）
 
-定义对象之间的一种一对多依赖关系，使得每当一个对象状态发生变化时，其相关依赖的对象都能得到通知并自动更新。
+一种行为型模式,又称发布订阅模式
+
+>  定义对象之间的一种一对多依赖关系，使得每当一个对象状态发生变化时，其相关依赖的对象都能得到通知并自动更新。
 
 ## UML
 
@@ -73,7 +75,6 @@ public class CurrentCondictionDisplay implements DisplayElement, Observer {
 客户端代码
 
 ```java
-䯮只需要维护
 /**
  * @author Chen 2018/9/4
  */
@@ -105,9 +106,117 @@ public class Test {
 ## 缺点
 
 - 如果存在循环依赖，系统将有可能崩溃
+- 观察者之间有过多的细节依赖,提高时间消耗以及程序的复杂度
 
 
 
 # 监听器模式
 
 ![](assets/5bb987596435d.png)
+
+## JDK 中的例子
+
+```java
+/**
+ * JDK 中的观察者模式测试
+ *
+ * @author EricChen 2020/01/04 14:29
+ */
+public class JdkObserverExample {
+    public static void main(String[] args) {
+        YouTuber observer = new YouTuber();
+        observer.addObserver(new Eric());
+        observer.addObserver(new Tom());
+        observer.postVideo();
+        observer.notifyObservers();
+    }
+
+}
+
+```
+
+```java
+/**
+ * 视频订阅者
+ *
+ * @author EricChen 2020/01/04 14:20
+ */
+public abstract class VideoObserver implements Observer {
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("视频更新啦,快来看");
+        watch(o, arg);
+    }
+
+    protected abstract void watch(Observable o, Object arg);
+
+
+}
+public class Eric extends VideoObserver {
+
+
+    @Override
+    protected void watch(Observable o, Object arg) {
+        System.out.println("Eric 搬起小板凳,开始看");
+    }
+}
+public class Tom extends VideoObserver {
+
+    @Override
+    protected void watch(Observable o, Object arg) {
+        System.out.println("Tom 抢占前排,开始看");
+    }
+}
+
+```
+
+```java
+public class YouTuber extends Observable {
+
+    /**
+     * 发布视频
+     */
+    public void postVideo(){
+        super.setChanged();
+    }
+}
+```
+
+输出
+
+```
+视频更新啦,快来看
+Tom 抢占前排,开始看
+视频更新啦,快来看
+Eric 搬起小板凳,开始看
+```
+
+## Guava 
+
+```
+/**
+ * guava test
+ *
+ * @author EricChen 2020/01/04 14:43
+ */
+public class GuavaObserverExample {
+
+    public static void main(String[] args) {
+        EventBus eventBus = new EventBus();
+        eventBus.register(new Eric());
+        eventBus.post("123");
+    }
+}
+
+```
+
+```java
+public class Eric {
+
+    @Subscribe
+    public void guava(String message){
+        System.out.println("Eric" +message );
+    }
+}
+```

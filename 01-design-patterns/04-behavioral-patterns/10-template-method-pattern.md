@@ -1,8 +1,17 @@
 # 模板方法模式（Template Method Pattern）
 
-[转载](https://blog.csdn.net/carson_ho/article/details/54910518)
+> [参考博客](https://blog.csdn.net/carson_ho/article/details/54910518)
 
-定义一个操作中算法的框架，而将一些步骤延迟到子类中中，模板方法模式使得子类不改变一个算法的结构即可重新定义该算法的某些特定步骤。
+> 模板方法模式(Template Method Pattern) 是指定义一个算法的股价,并允许子类为一个或者多个步骤提供实现
+
+模板方法使得子类可以在不改变算法结构的情况下,重新定义算法的某些步骤
+
+是行为型模式的一种
+
+## 特点
+
+- 一次性实现一个算法的不变的部分,并将可变的行为留给子类来实现
+- 各个子类中公共的行为被抽取只来并集中到一个公共的父类中,从而避免代码重复
 
 ## 类图
 
@@ -59,7 +68,7 @@ void pourOil(){
 
 **步骤2：** 创建具体模板（Concrete Class）,即”手撕包菜“和”蒜蓉炒菜心“的具体步骤
 
-```
+```java
 //炒手撕包菜的类
   public class ConcreteClass_BaoCai extend  Abstract Class{
     @Override
@@ -102,7 +111,7 @@ public class Template Method{
 }
 ```
 
-```
+```java
 倒油
 热油
 下锅的蔬菜是包菜
@@ -137,3 +146,8 @@ public class Template Method{
 - 一次性实现一个算法的不变的部分，并将可变的行为留给子类来实现；
 - 各子类中公共的行为应被提取出来并集中到一个公共父类中以避免代码重复；
 - 控制子类的扩展。 
+
+## Java 中的例子
+
+- `AbstractList`
+- myabtis `baseExecutor`

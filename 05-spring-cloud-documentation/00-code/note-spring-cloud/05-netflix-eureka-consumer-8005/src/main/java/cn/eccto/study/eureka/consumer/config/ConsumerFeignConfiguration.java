@@ -2,7 +2,6 @@ package cn.eccto.study.eureka.consumer.config;
 
 import cn.eccto.study.eureka.consumer.feign.interceptor.CompositeRequestInterceptor;
 import cn.eccto.study.eureka.consumer.feign.interceptor.MyFeignRequestInterceptor;
-import feign.Contract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,7 +21,6 @@ public class ConsumerFeignConfiguration {
 
     /**
      * 添加自定义拦截器,可以拦截一些权限的校验信息
-     * @return
      */
     @Bean
     public CompositeRequestInterceptor basicAuthRequestInterceptor(List<MyFeignRequestInterceptor> myFeignRequestInterceptors) {

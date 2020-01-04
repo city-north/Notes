@@ -6,6 +6,7 @@ tags: effective-java
 
 在每个覆盖了equals方法的类里，我们也必须覆盖hashCode方法
 不这么做的后果是
+
 - 这个类将会违反hashCode的通用约定
 - 会影响 Collections 中的功能,如 HashMap 或者 HashSet
 
