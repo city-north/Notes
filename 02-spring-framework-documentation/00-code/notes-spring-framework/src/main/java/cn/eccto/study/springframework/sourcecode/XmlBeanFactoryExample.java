@@ -1,5 +1,6 @@
 package cn.eccto.study.springframework.sourcecode;
 
+import cn.eccto.study.springframework.constraints.Student;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
@@ -12,7 +13,9 @@ import org.springframework.core.io.ClassPathResource;
 public class XmlBeanFactoryExample {
 
     public static void main(String[] args) {
-        XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("beanFactoryTest.xml"));
+        XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("sourcecode/beanFactoryTest.xml"));
+        xmlBeanFactory.getBean("student");
+        xmlBeanFactory.getBean(Student.class);
     }
 
 }
