@@ -6,6 +6,33 @@
 
 核心BeanFactory API级别及其`DefaultListableBeanFactory`实现类不会对配置格式或者任何要使用的组件注解做出假设。所有这些风格都是通过扩展(如`XmlBeanDefinitionReader`和`AutowiredAnnotationBeanPostProcessor`)实现的，并作为核心元数据表示对共享的`BeanDefinition`对象进行操作。这就是Spring容器如此灵活和可扩展的本质。
 
+
+
+## BeanFactory 的实现类都支持的Bean 生命周期方法
+
+>  Bean factory implementations should support the standard bean lifecycle interfaces as far as possible. The full set of initialization methods and their standard order is:
+>
+> 1. BeanNameAware's `setBeanName`
+> 2. BeanClassLoaderAware's `setBeanClassLoader`
+> 3. BeanFactoryAware's `setBeanFactory`
+> 4. EnvironmentAware's `setEnvironment`
+> 5. EmbeddedValueResolverAware's `setEmbeddedValueResolver`
+> 6. ResourceLoaderAware's `setResourceLoader` (only applicable when running in an application context)
+> 7. ApplicationEventPublisherAware's `setApplicationEventPublisher` (only applicable when running in an application context)
+> 8. MessageSourceAware's `setMessageSource` (only applicable when running in an application context)
+> 9. ApplicationContextAware's `setApplicationContext` (only applicable when running in an application context)
+> 10. ServletContextAware's `setServletContext` (only applicable when running in a web application context)
+> 11. `postProcessBeforeInitialization` methods of BeanPostProcessors
+> 12. InitializingBean's `afterPropertiesSet`
+> 13. a custom init-method definition
+> 14. `postProcessAfterInitialization` methods of BeanPostProcessors
+>
+> On shutdown of a bean factory, the following lifecycle methods apply:
+>
+> 1. `postProcessBeforeDestruction` methods of DestructionAwareBeanPostProcessors
+> 2. DisposableBean's `destroy`
+> 3. a custom destroy-method definition
+
 ## 使用`BeanFactory`还是`ApplicationContext`
 
 大多数情况下,你应该使用`ApplicationConetxt`,除非你非常好的理由不使用它,使用`GenericApplicationContext`和他的子类`AnnotationConfigApplicationContext`作为一个自定义引导的标准实现,它实现了主要的 spring 容器的流程如

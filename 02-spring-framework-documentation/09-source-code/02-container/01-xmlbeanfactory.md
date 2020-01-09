@@ -1,3 +1,0 @@
-# XmlBeanFactory
-
-​	
