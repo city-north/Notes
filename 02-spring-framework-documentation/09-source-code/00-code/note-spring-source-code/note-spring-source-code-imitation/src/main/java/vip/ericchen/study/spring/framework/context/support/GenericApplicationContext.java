@@ -2,6 +2,7 @@ package vip.ericchen.study.spring.framework.context.support;
 
 import vip.ericchen.study.spring.framework.beans.BeanWrapperImpl;
 import vip.ericchen.study.spring.framework.beans.factory.config.BeanDefinition;
+import vip.ericchen.study.spring.framework.beans.factory.support.BeanDefinitionReader;
 import vip.ericchen.study.spring.framework.beans.factory.support.BeanDefinitionRegistry;
 import vip.ericchen.study.spring.framework.beans.factory.xml.GenericBeanDefinitionReader;
 import vip.ericchen.study.spring.framework.stereotype.Autowired;
@@ -95,5 +96,11 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
     @Override
     protected void doLoadConfig() {
         this.genericBeanDefinitionReader.loadBeanDefinitions(resourceLocations);
+    }
+
+
+    @Override
+    public BeanDefinitionReader getBeanDefinitionReader() {
+        return genericBeanDefinitionReader;
     }
 }

@@ -15,6 +15,7 @@
 | 1    | [Spring Framework Core](02-spring-framework-documentation/02-core/README.md) | 2019-10-21 | 2019-12-01 |
 | 2    | Spring Framework Testing                                     |            |            |
 | 3    | Spring Framework Data Access                                 |            |            |
+| 4    | [Spring Web MVC](02-spring-framework-documentation/05-web-servlet/README.md) | rq         |            |
 
 ## Spring Boot
 

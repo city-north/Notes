@@ -8,10 +8,10 @@
 
     <servlet>
         <servlet-name>ecmvc</servlet-name>
-        <servlet-class>vip.ericchen.spring.web.servlet.v1.DispatcherServlet</servlet-class>
+        <servlet-class>vip.ericchen.study.spring.framework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:application.properties</param-value>
+            <param-value>application.properties</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

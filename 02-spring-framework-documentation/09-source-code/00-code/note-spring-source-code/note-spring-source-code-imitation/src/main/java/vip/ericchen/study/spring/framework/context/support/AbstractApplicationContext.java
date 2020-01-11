@@ -6,7 +6,7 @@ import vip.ericchen.study.spring.framework.beans.factory.BeanWrapper;
 import vip.ericchen.study.spring.framework.beans.factory.config.BeanDefinition;
 import vip.ericchen.study.spring.framework.context.ApplicationContext;
 
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -69,6 +69,24 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
      */
     protected void onRefresh() {
         // For subclasses: do nothing by default.
+    }
+
+    @Override
+    public <T> Map<String, T> getBeansOfType(Class<T> type) {
+        Map map = new HashMap(factoryBeanInstanceCache.size());
+        factoryBeanInstanceCache.forEach((k, v) -> {
+            if (type.isInstance(v)) {
+                map.put(k, v);
+            }
+
+        });
+        return map;
+    }
+
+
+    @Override
+    public List<String> getBeanDefinitionNames() {
+        return new ArrayList<>(beanDefinitionMap.keySet());
     }
 
 

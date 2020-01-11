@@ -8,4 +8,7 @@ package vip.ericchen.spring.demo.service;
 public interface IHelloService {
 
     String hello();
+
+    String queryUser(String name);
+
 }

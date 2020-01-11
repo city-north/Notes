@@ -32,6 +32,8 @@ public class GenericBeanDefinitionReader implements BeanDefinitionReader {
 
     private final BeanDefinitionRegistry registry;
 
+    Properties config = new Properties();
+
 
     public GenericBeanDefinitionReader(BeanDefinitionRegistry registry) {
         this.registry = registry;
@@ -47,7 +49,6 @@ public class GenericBeanDefinitionReader implements BeanDefinitionReader {
     @Override
     public void loadBeanDefinitions(String location) {
         InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(location);
-        Properties config = new Properties();
         try {
             config.load(resourceAsStream);
         } catch (IOException e) {
@@ -60,6 +61,11 @@ public class GenericBeanDefinitionReader implements BeanDefinitionReader {
             }
         }
         doScan(config.getProperty(KEY_SCAN_BASE_PACKAGE));
+    }
+
+    @Override
+    public String getProperty(String key) {
+        return config.getProperty(key);
     }
 
     private void doScan(String basePackage) {

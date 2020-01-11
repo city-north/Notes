@@ -1,13 +1,16 @@
 package vip.ericchen.spring.demo;
 
-import vip.ericchen.spring.annotation.Autowired;
-import vip.ericchen.spring.annotation.Controller;
-import vip.ericchen.spring.annotation.RequestMapping;
-import vip.ericchen.spring.annotation.RequestParam;
 import vip.ericchen.spring.demo.service.IHelloService;
+import vip.ericchen.study.spring.framework.stereotype.Autowired;
+import vip.ericchen.study.spring.framework.stereotype.Controller;
+import vip.ericchen.study.spring.framework.web.bind.annotation.RequestMapping;
+import vip.ericchen.study.spring.framework.web.bind.annotation.RequestParam;
+import vip.ericchen.study.spring.framework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * description
@@ -26,5 +29,15 @@ public class HelloController {
                              HttpServletResponse response,
                              @RequestParam(value = "name") String name) {
         return helloService.hello();
+    }
+
+    @RequestMapping(value = "/")
+    public ModelAndView hello(@RequestParam("name") String name) {
+        Map<String,Object> model = new HashMap<String,Object>();
+        String result = helloService.queryUser(name);
+        model.put("name", name);
+        model.put("data", result);
+        model.put("token", "123456");
+        return new ModelAndView("hello.html",model);
     }
 }
