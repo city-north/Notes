@@ -45,7 +45,19 @@
 
 - 你需要完全控制 bean的流程
 
+#### BeanFactory 和 ApplicationContext 的区别
+
 下面列表列出了`BeanFactory`和`ApplicationContext`接口实现类的特性
+
+- ApplicationContext 是 BeanFactory 的子接口
+
+- ApplicationContext 额外提供了对 IoC 容器的监控Bean 的生命周期,创建,销毁,等生命周期的监听
+
+- ApplicationContext 支持国际化 i18n
+
+- ApplicationContext 支持ResourceLoader
+
+  
 
 | Feature                                                 | `BeanFactory` | `ApplicationContext` |
 | :------------------------------------------------------ | :------------ | :------------------- |

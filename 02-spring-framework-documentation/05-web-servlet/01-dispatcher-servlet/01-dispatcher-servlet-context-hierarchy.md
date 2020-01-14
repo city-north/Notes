@@ -127,7 +127,8 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
     }
 
     /**
-     * 指定一个 Servlet WebApplicationContext ,通常是这个 Servlet 独享的 bean,同时,它也继承了 root 的所有
+     * 指定一个 Servlet WebApplicationContext ,通常是这个 Servlet 独享的 bean,
+     * 同时,它也继承了 root 的所有
      */
     @Override
     protected Class<?>[] getServletConfigClasses() {
@@ -190,8 +191,7 @@ public class MyWebApplicationInitializer3 extends AbstractDispatcherServletIniti
 - `isAsyncSupported`方法规定了 Serlvet 是否支持同步
 - 通过覆盖`createDispatcherServlet`方法,可以定制`DispatcherServlet`
 
-## 详情
+## 配置详情
 
  [04-servlet-config.md](04-servlet-config.md) 
 
-## 

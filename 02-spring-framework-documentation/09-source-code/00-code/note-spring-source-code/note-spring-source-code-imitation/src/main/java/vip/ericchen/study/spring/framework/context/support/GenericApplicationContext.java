@@ -1,5 +1,10 @@
 package vip.ericchen.study.spring.framework.context.support;
 
+import vip.ericchen.study.spring.framework.aop.AopProxy;
+import vip.ericchen.study.spring.framework.aop.CglibProxy;
+import vip.ericchen.study.spring.framework.aop.JdkDynamicProxy;
+import vip.ericchen.study.spring.framework.aop.config.AopConfig;
+import vip.ericchen.study.spring.framework.aop.support.AdvisedSupport;
 import vip.ericchen.study.spring.framework.beans.BeanWrapperImpl;
 import vip.ericchen.study.spring.framework.beans.factory.config.BeanDefinition;
 import vip.ericchen.study.spring.framework.beans.factory.support.BeanDefinitionReader;
@@ -37,14 +42,42 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
+
+
         beanDefinitionMap.put(beanName, beanDefinition);
         String beanClassName = beanDefinition.getBeanClassName();
         try {
             Class<?> aClass = Class.forName(beanClassName);
-            factoryBeanInstanceCache.put(beanName, new BeanWrapperImpl(aClass.newInstance()));
+            Object instance = aClass.newInstance();
+            AdvisedSupport aopConfig = initAopConfig(beanDefinition);
+            aopConfig.setTarget(instance);
+            aopConfig.setTargetClass(aClass);
+            if (aopConfig.pointCutMatch()) {
+                instance = createProxy(aopConfig).getProxy();
+            }
+            factoryBeanInstanceCache.put(beanName, new BeanWrapperImpl(instance));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private AdvisedSupport initAopConfig(BeanDefinition beanDefinition) {
+        AopConfig aopConfig = new AopConfig();
+        aopConfig.setPointCut(this.getBeanDefinitionReader().getProperty("pointCut"));
+        aopConfig.setPointCut(this.getBeanDefinitionReader().getProperty("aspectClass"));
+        aopConfig.setPointCut(this.getBeanDefinitionReader().getProperty("aspectBefore"));
+        aopConfig.setPointCut(this.getBeanDefinitionReader().getProperty("aspectAfter"));
+        aopConfig.setPointCut(this.getBeanDefinitionReader().getProperty("aspectAfterThrow"));
+        aopConfig.setPointCut(this.getBeanDefinitionReader().getProperty("aspectAfterThrowingName"));
+        return new AdvisedSupport(aopConfig);
+    }
+
+    private AopProxy createProxy(AdvisedSupport aopConfig) {
+        Class<?> targetClass = aopConfig.getTargetClass();
+        if (targetClass.getGenericInterfaces().length > 0) {
+            return new JdkDynamicProxy(aopConfig);
+        }
+        return new CglibProxy(aopConfig);
     }
 
     @Override
