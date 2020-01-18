@@ -13,8 +13,9 @@ Java keywords are 50 reserved words which have a very specific meaning in the ap
 
 ## 2. Java keywords list
 
-| `abstract` | `continue` | `for`        | `new`       | `switch`       |
+|            |            |              |             |                |
 | ---------- | ---------- | ------------ | ----------- | -------------- |
+| `abstract` | `continue` | `for`        | `new`       | `switch`       |
 | `assert`   | `default`  | `goto`       | `package`   | `synchronized` |
 | `boolean`  | `do`       | `if`         | `private`   | `this`         |
 | `break`    | `double`   | `implements` | `protected` | `throw`        |

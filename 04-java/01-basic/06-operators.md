@@ -11,6 +11,8 @@ Operators in Java can be categorized based on two criteria:
 
 ## 2. Assignment Operator (=)
 
+> 赋值运算符
+
 - An assignment operator (=) is used to assign a value to a variable.
 - It is a binary operator. It takes two operands.
 - The value of the right-hand operand is assigned to the left-hand operand.
@@ -23,7 +25,9 @@ Operators in Java can be categorized based on two criteria:
 int counter = 26; 
 ```
 
-## 3. Arithmetic Operators
+## 3. Arithmetic Operators 
+
+> 算数运算符
 
 - Operators like (**+** (plus), **–** (minus), ***** (multiply), **/** (divide)) are called arithmetic operators in Java.
 - It can only be used with numeric type operands. It means, both operands to arithmetic operators must be one of types `byte`, `short`, `char`, `int`, `long`, `float`, and `double`.

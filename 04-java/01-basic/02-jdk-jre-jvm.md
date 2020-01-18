@@ -44,6 +44,9 @@ The class loader is a subsystem used for loading class files. It performs three 
 1. ##### Loading
 
    - To load classes, JVM has 3 kind of class loaders. **Bootstrap**, **extension** and **application** class loader.
+
+   > JVM 有三个 ClassLoader: **Bootstrap**, **extension** and **application**
+
    - When loading a class file, JVM finds out a dependency for some arbitrary class XYZ.class.
    - First bootstrap class loader tries to find the class. It scans the `rt.jar` file in JRE `lib` folder.
    - If class is not found then extension class loader searches the class file in inside **jre\lib\ext** folder.
