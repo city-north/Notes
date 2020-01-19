@@ -4,6 +4,8 @@ This post is next update in sequence of discussions regarding **[little known fe
 
 Java is a safe programming language and prevents programmer from doing a lot of stupid mistakes, most of which were based on memory management. But, if you are determined to mess with it, you have Unsafe class. This class is a sun.* API which **isn’t really part of the J2SE**, so you may not find any official documentation. Sadly,It also does not have any good code documentation too.
 
+> Java是一门安全的编程语言，防止程序员犯很多愚蠢的错误，它们大部分是基于内存管理的。但是，有一种方式可以有意的执行一些不安全、容易犯错的操作，那就是使用`Unsafe`类。
+
 ## **Instantiation of sun.misc.Unsafe**
 
 If you try to create an instance of Unsafe class, you will not be allowed because of two reasons.
@@ -29,34 +31,39 @@ Now coming to main part. With this object you can do following ‘interesting’
 
 Using allocateInstance() method, you can create an instance of a class without invoking it’s constructor code, initialization code, various JVM security checks and all other low level things. Even if class has private constructor, then also you can use this method to create new instance.
 
+> 你可以使用 unsafe 的方法不通过调用构造器,初始化代码或者 JVM 安全监测和其他底层机制,也能创建一个实例,即使 class 是一个 private 的构造器,你也可以用这种方式去创建一个新的实例
+
 > A real nightmare for all Singleton lovers. Guys, You just can’t handle this threat so easily. 🙂
 
 ```
-public class UnsafeDemo 
-{
-    public static void main(String[] args) throws NoSuchFieldException, SecurityException, 
-                            IllegalArgumentException, IllegalAccessException, InstantiationException 
-    {
+/**
+ * UnSafe 机制, JVM 通常会管理内存的使用,你也可以用这个机制去自己创建一个类的实例
+ * 但是这个实例不会调用构造方法,更不会调用初始化的任何方法
+ *
+ * @author EricChen 2020/01/18 21:39
+ */
+public class UnsafeExample {
+    public static void main(String[] args) throws Exception {
         Field f = Unsafe.class.getDeclaredField("theUnsafe"); //Internal reference
         f.setAccessible(true);
         Unsafe unsafe = (Unsafe) f.get(null);
-         
+
         //This creates an instance of player class without any initialization
         Player p = (Player) unsafe.allocateInstance(Player.class);
         System.out.println(p.getAge());     //Print 0
-         
+
         p.setAge(45);                       //Let's now set age 45 to un-initialized object
         System.out.println(p.getAge());     //Print 45
-         
+
         System.out.println(new Player().getAge());  //This the normal way to get fully initialized object; Prints 50
     }
+
 }
- 
 class Player{
     private int age = 12;
-     
-    public Player(){        //Even if you create this constructor private; 
-                            //You can initialize using Unsafe.allocateInstance()
+
+    public Player(){        //Even if you create this constructor private;
+        //You can initialize using Unsafe.allocateInstance()
         this.age = 50;
     }
     public int getAge(){
@@ -66,13 +73,17 @@ class Player{
         this.age = age;
     }
 }
- 
-Output:
- 
+```
+
+output
+
+```
 0
 45
 50
 ```
+
+
 
  **2) Shallow clone using direct memory access**
 
@@ -156,11 +167,21 @@ class SuperArray {
 
 Sample usage:
 
+```java
 long SUPER_SIZE = (long)Integer.MAX_VALUE * 2;
 SuperArray array = new SuperArray(SUPER_SIZE);
 System.out.println(“Array size:” + array.size()); // 4294967294
-for (int i = 0; i < 100; i++) { array.set((long)Integer.MAX_VALUE + i, (byte)3); sum += array.get((long)Integer.MAX_VALUE + i); } System.out.println("Sum of 100 elements:" + sum); // 300 [/java]Please beware it an cause JVM crash.
+for (int i = 0; i < 100; i++) { 
+	array.set((long)Integer.MAX_VALUE + i, (byte)3); 
+	sum += array.get((long)Integer.MAX_VALUE + i); 
+} 
+System.out.println("Sum of 100 elements:" + sum); // 300 
+```
+
+Please beware it an cause JVM crash.
 
 ## **Conclusion**
 
-sun.misc.Unsafe provides almost unlimited capabilities for exploring and modification of VM’s runtime data structures. Despite the fact that these capabilities are almost inapplicable in Java development itself, Unsafe is a great tool for anyone who want to study HotSpot VM without C++ code debugging or need to create ad hoc profiling instruments.
+`sun.misc.Unsafe `provides almost unlimited capabilities for exploring and modification of VM’s runtime data structures. Despite the fact that these capabilities are almost inapplicable in Java development itself, Unsafe is a great tool for anyone who want to study HotSpot VM without C++ code debugging or need to create ad hoc profiling instruments.
+
+> `sun.misc.Unsafe ` 提供了几乎无线的能力,去获取或者修改 JVM 运行是的数据结构,尽管这些功能在Java开发本身中几乎不适用，但对于那些想要学习HotSpot VM而不需要进行c++代码调试或需要创建专门的分析工具的人来说，`sun.misc.Unsafe `是一个很好的工具。

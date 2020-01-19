@@ -8,6 +8,24 @@ Primitive [data types](https://howtodoinjava.com/java/basics/data-types-in-java/
 
 ![Primitive data types in java](assets/Primitive-data-types-in-java.jpg)
 
+
+
+### Default Values
+
+| **Data Type**          | **Default Value (for fields)** |
+| ---------------------- | ------------------------------ |
+| byte                   | 0                              |
+| short                  | 0                              |
+| int                    | 0                              |
+| long                   | 0L                             |
+| float                  | 0.0f                           |
+| double                 | 0.0d                           |
+| char                   | '\u0000'                       |
+| String (or any object) | null                           |
+| boolean                | false                          |
+
+
+
 ## 1. Integral Data Types
 
 An integral data type is a numeric data type whose values are **integers**. Java offers **five integral data types**: `byte`, `short`, `int`, `long`, and `char`.
@@ -110,8 +128,6 @@ byte min = Byte.MIN_VALUE;
 ```
 
 #### 1.4. short data type
-
-
 
 The `short` data type is a **16-bit signed** Java primitive integer data type. Its range is -32768 to 32767 (or -215 to 215 – 1).
 

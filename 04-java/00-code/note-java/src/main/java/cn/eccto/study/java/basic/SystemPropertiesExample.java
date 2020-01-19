@@ -1,6 +1,7 @@
 package cn.eccto.study.java.basic;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -11,6 +12,11 @@ import java.util.Properties;
 public class SystemPropertiesExample {
 
     public static void main(String[] args) {
+        HashMap<String,String> testHashMap = new HashMap<>();
+
+
+
+
         Properties properties = System.getProperties();
         System.out.println(properties);
         System.out.println(properties.getProperty("java.home"));

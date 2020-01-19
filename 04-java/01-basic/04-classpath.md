@@ -9,6 +9,34 @@ Learn **how to set classpath** as **environment variable** and pass as **command
 > **Windows** – `; `[Semicolon]
 > **Linux/Unix** – `: `[Colon]
 
+> https://www.liaoxuefeng.com/wiki/1252599548343744/1260466914339296
+>
+> `classpath`是JVM用到的一个环境变量，它用来指示JVM如何搜索`class`。
+
+> 因为Java是编译型语言，源码文件是`.java`，而编译后的`.class`文件才是真正可以被JVM执行的字节码。因此，JVM需要知道，如果要加载一个`abc.xyz.Hello`的类，应该去哪搜索对应的`Hello.class`文件。
+
+> 在Windows系统上，用`;`分隔，带空格的目录用`""`括起来，可能长这样：
+>
+> ```
+> C:\work\project1\bin;C:\shared;"D:\My Documents\project1\bin"
+> ```
+>
+> 在Linux系统上，用`:`分隔
+>
+> ```
+> /usr/shared:/usr/local/bin:/home/liaoxuefeng/bin
+> ```
+>
+> ### 小结
+>
+> JVM通过环境变量`classpath`决定搜索`class`的路径和顺序；
+>
+> 不推荐设置系统环境变量`classpath`，始终建议通过`-cp`命令传入；
+>
+> jar包相当于目录，可以包含很多`.class`文件，方便下载和使用；
+>
+> `MANIFEST.MF`文件可以提供jar包的信息，如`Main-Class`，这样可以直接运行jar包。
+
 ## 1. Set java classpath as environment variable
 
 When you have set of jar files which are always required during your application runtime, then it’s probably best to add them in machine’s environment variable `'CLASSPATH'`. During application runtime, [application class loader](https://howtodoinjava.com/java/basics/jdk-jre-jvm/#jvm) will always scan the jar files and classes at specified paths in this variable.

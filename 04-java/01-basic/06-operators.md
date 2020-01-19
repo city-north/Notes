@@ -2,6 +2,23 @@
 
 An operator is a **symbol that performs a specific kind of operation** on one, two, or three operands, and produces a result. The type of the operator and its operands determines the kind of operation performed on the operands and the type of the result produced.
 
+| Operators            | Precedence                               |
+| -------------------- | ---------------------------------------- |
+| postfix              | `*expr*++ *expr*--`                      |
+| unary                | `++*expr* --*expr* +*expr* -*expr* ~ !`  |
+| multiplicative       | `* / %`                                  |
+| additive             | `+ -`                                    |
+| shift                | `<< >> >>>`                              |
+| relational           | `< > <= >= instanceof`                   |
+| equality             | `== !=`                                  |
+| bitwise AND          | `&`                                      |
+| bitwise exclusive OR | `^`                                      |
+| bitwise inclusive OR | `|`                                      |
+| logical AND          | `&&`                                     |
+| logical OR           | `||`                                     |
+| ternary              | `? :`                                    |
+| assignment           | `= += -= *= /= %= &= ^= |= <<= >>= >>>=` |
+
 #### 1.1. Classification of Java Operators
 
 Operators in Java can be categorized based on two criteria:
@@ -234,3 +251,70 @@ In above expression, if you want to add values first then use explicit parenthes
 | 3          | \|\|                    | Logical OR                                                   | Left to right |
 | 2          | ? :                     | Ternary conditional                                          | Right to left |
 | 1          | = += -= *= /= %=        | Assignment Addition assignment Subtraction assignment Multiplication assignment Division assignment Modulus assignment | Right to left |
+
+# Summary of Operators
+
+The following quick reference summarizes the operators supported by the Java programming language.
+
+## Simple Assignment Operator
+
+```
+=       Simple assignment operator
+```
+
+## Arithmetic Operators
+
+```
++       Additive operator (also used for String concatenation)
+-       Subtraction operator
+*       Multiplication operator
+/       Division operator
+%       Remainder operator
+```
+
+## Unary Operators
+
+```
++       Unary plus operator; indicates positive value (numbers are positive without this, however)
+-       Unary minus operator; negates an expression
+++      Increment operator; increments a value by 1
+--      Decrement operator; decrements a value by 1
+!       Logical complement operator;inverts the value of a boolean
+```
+
+## Equality and Relational Operators
+
+```
+==      Equal to
+!=      Not equal to
+>       Greater than
+>=      Greater than or equal to
+<       Less than
+<=      Less than or equal to
+```
+
+## Conditional Operators
+
+```
+&&      Conditional-AND
+||      Conditional-OR
+?:      Ternary (shorthand for if-then-else statement)
+```
+
+## Type Comparison Operator
+
+```
+instanceof      Compares an object to a specified type 
+```
+
+## Bitwise and Bit Shift Operators
+
+```
+~       Unary bitwise complement
+<<      Signed left shift
+>>      Signed right shift
+>>>     Unsigned right shift
+&       Bitwise AND
+^       Bitwise exclusive OR
+|       Bitwise inclusive OR
+```
