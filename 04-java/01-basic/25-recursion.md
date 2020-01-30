@@ -43,8 +43,6 @@ method(T parameters...)
 }
 ```
 
-
-
 #### 2. Head recursion
 
 Any recursion which is not tail recursion, can be referred as head recursion.

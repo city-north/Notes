@@ -1,4 +1,4 @@
-package vip.ericchen.study.designpatterns.commons;
+package cn.eccto.study.java.utils;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * description
+ * multiple Thread
  *
  * @author EricChen 2019/12/31 23:27
  */

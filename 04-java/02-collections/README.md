@@ -16,17 +16,81 @@
 
 这些接口允许独立于其表示的细节来操纵集合。
 
-###  [collection接口](01-interface/01-collection.md) 
+##  [Collection接口](01-interface/01-collection.md) 
+
+Collection 接口时层级结构的根接口,它提供了所有集合都适用的特性,如果其实现类不支持某些特性,会抛出`UnsupportedOperationException`,它继承了 Iterable 接口(提供了迭代集合相关元素的方法)
+
+所有的其他集合都继承自这个接口,**除了 Map**,下面是列表
 
 | Collection子接口                  | 是否有序 | 重复元素 | 备注                                           |
 | --------------------------------- | -------- | -------- | ---------------------------------------------- |
-| Set                               | 无序     | 不允许   | 按升序维护其元素的集合，比如文字字母、会员名册 |
-| SortedSet                         | 有序     | 不允许   |                                                |
-| List                              | 有序     | 允许     |                                                |
-| Queue                             | 有序     | 允许     | FIFO先进先出                                   |
+| [Set](04-set)                     | 无序     | 不允许   | 按升序维护其元素的集合，比如文字字母、会员名册 |
+| [List](02-list/README.md)         | 有序     | 允许     | 代表有顺序的集合元素                           |
+| [Queue](07-deque/README.md)       | 有序     | 允许     | FIFO先进先出                                   |
 | [Deque](01-interface/02-deque.md) | 有序     | 允许     | FIFO先进先出，LIFO先进后出                     |
 
-| Map子接口 | 是否有序 |                                                            |
-| --------- | -------- | ---------------------------------------------------------- |
-| Map       | 无序     |                                                            |
-| SortedMap | 有序     | 不允许使用null键或null值，密钥按自然排序或指定的比较器排序 |
+## [List](02-list/README.md) 
+
+| List 实现类                                                  | 线程安全 | 备注 |      |
+| ------------------------------------------------------------ | -------- | ---- | ---- |
+| **[ArrayList](02-list/01-array-list.md)**                    | 否       |      |      |
+| [**CopyOnWriteArrayList**](02-list/03-copy-on-write-array-list.md) |          |      |      |
+| **[LinkedList](02-list/02-linked-list.md)**                  | 否       |      |      |
+| **[Stack](02-list/04-stack.md)**                             |          |      |      |
+| [**Vector**](02-list/05-vector.md)                           |          |      |      |
+
+## [Map](03-map/README.md)
+
+| Map子接口                 | 是否有序 |                                                            |
+| ------------------------- | -------- | ---------------------------------------------------------- |
+| [Map](03-map/README.md)   | 无序     |                                                            |
+| SortedMap                 | 有序     | 不允许使用null键或null值，密钥按自然排序或指定的比较器排序 |
+| **ConcurrentHashMap**     |          |                                                            |
+| **ConcurrentSkipListMap** |          |                                                            |
+| **EnumMap**               |          |                                                            |
+| **HashMap**               |          |                                                            |
+| **Hashtable**             |          |                                                            |
+| **IdentityHashMap**       |          |                                                            |
+| **LinkedHashMap**         |          |                                                            |
+| **Properties**            |          |                                                            |
+| **TreeMap**               |          |                                                            |
+| **WeakHashMap**           |          |                                                            |
+
+## [Set](04-set/README.md)
+
+| Set 实现类                |      |      |      |
+| ------------------------- | ---- | ---- | ---- |
+| **ConcurrentSkipListSet** |      |      |      |
+| **CopyOnWriteArraySet**   |      |      |      |
+| **EnumSet**               |      |      |      |
+| **HashSet**               |      |      |      |
+| **LinkedHashSet**         |      |      |      |
+| **TreeSet**               |      |      |      |
+
+## [Stack](05-stack/README.md)
+
+## [Queue](05-queue/README.md)
+
+| Queue实现类           |      |      |      |
+| --------------------- | ---- | ---- | ---- |
+| **BlockingQueue**     |      |      |      |
+| ArrayDeque            |      |      |      |
+| ConcurrentLinkedDeque |      |      |      |
+| ConcurrentLinkedQueue |      |      |      |
+| DelayQueue            |      |      |      |
+| LinkedBlockingDeque   |      |      |      |
+| LinkedBlockingQueue   |      |      |      |
+| LinkedList            |      |      |      |
+| LinkedTransferQueue   |      |      |      |
+| PriorityBlockingQueue |      |      |      |
+| PriorityQueue         |      |      |      |
+| SynchronousQueue      |      |      |      |
+
+## [Deque](05-deque/README.md)
+
+| ArrayDeque            |      |      |      |
+| --------------------- | ---- | ---- | ---- |
+| ConcurrentLinkedDeque |      |      |      |
+| LinkedBlockingDeque   |      |      |      |
+| LinkedList            |      |      |      |
+

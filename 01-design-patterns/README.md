@@ -81,7 +81,7 @@
 
 | 设计模式                                                     | 简介                      | 举例                                           |
 | ------------------------------------------------------------ | ------------------------- | ---------------------------------------------- |
-| [责任链模式（Chain of Respinsibility Pattern）](04-behavioral-patterns/01-chain-of-responsibility-pattern.mdmd) |                           |                                                |
+| [责任链模式（Chain of Respinsibility Pattern）](04-behavioral-patterns/01-chain-of-responsibility-pattern.md) |                           |                                                |
 | [命令模式（Command Pattern）](04-behavioral-patterns/02-command-pattern.md) |                           |                                                |
 | [解释器模式（Interpreter Pattern）](04-behavioral-patterns/03-interpreter-pattern.md) |                           |                                                |
 | [迭代器模式（Iterator Pattern）](04-behavioral-patterns/04-iterator-pattern.md) |                           |                                                |
