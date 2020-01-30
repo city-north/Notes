@@ -13,4 +13,10 @@ public interface MyList {
      */
     int size();
 
+    /**
+     * Return <code>true</code> if this List contains no element
+     */
+    boolean isEmpty();
+
+
 }

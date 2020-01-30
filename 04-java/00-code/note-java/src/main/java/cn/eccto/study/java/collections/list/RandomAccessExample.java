@@ -60,7 +60,7 @@ public class RandomAccessExample {
     }
 
     /**
-     * {@link RandomAccess} usage Example of RanddmAccess
+     * {@link RandomAccess} usage Example of RandomAccess
      */
     public static long useRandomAccess(List arrayList) {
         if (arrayList instanceof RandomAccess) {
