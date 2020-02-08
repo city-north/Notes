@@ -44,3 +44,53 @@
 - ThreadPool
 
 线程可以合理利用多核心CPU 组员,提高程序的吞吐量
+
+## Java Concurrency Tutorial
+
+Covering whole java concurrency in single post is simply almost impossible. So, I have written below Java Concurrency Tutorials discussing one individual concept in single post. Go through these tutorials, and let me know if you have any questions or suggestions.
+
+#### Java Concurrency Basics
+
+[Concurrency Evolution](https://howtodoinjava.com/java/multi-threading/java-multi-threading-evolution-and-topics/)
+[What is Thread Safety?](https://howtodoinjava.com/java/multi-threading/what-is-thread-safety/)
+[Object level locking and class level locking](https://howtodoinjava.com/java/multi-threading/thread-synchronization-object-level-locking-and-class-level-locking/)
+[Compare and Swap (CAS) Algorithm](https://howtodoinjava.com/java/multi-threading/compare-and-swap-cas-algorithm/)
+[wait(), notify() and notifyAll() methods](https://howtodoinjava.com/java/multi-threading/how-to-work-with-wait-notify-and-notifyall-in-java/)
+
+#### Difference between
+
+[Difference between “implements Runnable” and “extends Thread”](https://howtodoinjava.com/java/multi-threading/difference-between-implements-runnable-and-extends-thread-in-java/)
+[Difference between lock and monitor](https://howtodoinjava.com/java/multi-threading/multithreading-difference-between-lock-and-monitor/)
+[Difference between yield() and join()](https://howtodoinjava.com/java/multi-threading/difference-between-yield-and-join-in-threads-in-java/)
+[Difference between sleep() and wait()?](https://howtodoinjava.com/java/multi-threading/difference-between-sleep-and-wait/)
+
+#### Executor Framework
+
+[Executor framework tutorial](https://howtodoinjava.com/java-5/java-executor-framework-tutorial-and-best-practices/)
+[ScheduledThreadPoolExecutor Example](https://howtodoinjava.com/2015/03/25/task-scheduling-with-executors-scheduledthreadpoolexecutor-example/)
+[FixedSizeThreadPoolExecutor Example](https://howtodoinjava.com/java/multi-threading/java-fixed-size-thread-pool-executor-example/)
+[ThreadPoolExecutor Example](https://howtodoinjava.com/java/multi-threading/java-thread-pool-executor-example/)
+[ThreadPoolExecutor + Callable + Future Example](https://howtodoinjava.com/java/multi-threading/threadpoolexecutor-callable-future-example/)
+[Throttling task submission rate using ThreadPoolExecutor and Semaphore](https://howtodoinjava.com/java/multi-threading/throttling-task-submission-rate-using-threadpoolexecutor-and-semaphore/)
+[BlockingQueue Example](https://howtodoinjava.com/java-5/how-to-use-blockingqueue-and-threadpoolexecutor-in-java/)
+[UncaughtExceptionHandler Example](https://howtodoinjava.com/java/multi-threading/how-to-restart-thread-using-uncaughtexceptionhandler/)
+
+#### Advance Concurrency
+
+[ForkJoinPool Example](https://howtodoinjava.com/java-7/forkjoin-framework-tutorial-forkjoinpool-example/)
+[CountDownLatch Example](https://howtodoinjava.com/java/multi-threading/when-to-use-countdownlatch-java-concurrency-example-tutorial/)
+[Control concurrent access using semaphore](https://howtodoinjava.com/java/multi-threading/control-concurrent-access-to-multiple-copies-of-a-resource-using-semaphore/)
+[BinarySemaphore](https://howtodoinjava.com/java/multi-threading/binary-semaphore-tutorial-and-example/)
+[java.util.concurrent.locks.Lock](https://howtodoinjava.com/java/multi-threading/how-to-use-locks-in-java-java-util-concurrent-locks-lock-tutorial-and-example/)
+[java.util.concurrent.ThreadFactory](https://howtodoinjava.com/java/multi-threading/creating-threads-using-java-util-concurrent-threadfactory/)
+[ThreadLocal Variables](https://howtodoinjava.com/java/multi-threading/when-and-how-to-use-thread-local-variables/)
+[Inter-thread communication](https://howtodoinjava.com/java/multi-threading/inter-thread-communication-using-piped-streams-in-java/)
+
+#### Concurrent Collections
+
+[ConcurrentHashMap Example](https://howtodoinjava.com/java/collections/best-practices-for-using-concurrenthashmap/)
+[ConcurrentLinkedDeque Example](https://howtodoinjava.com/java/multi-threading/non-blocking-thread-safe-list-concurrentlinkeddeque-example/)
+
+#### Miscellaneous
+
+[Creating and resolving Deadlock](https://howtodoinjava.com/java/multi-threading/writing-a-deadlock-and-resolving-in-java/)

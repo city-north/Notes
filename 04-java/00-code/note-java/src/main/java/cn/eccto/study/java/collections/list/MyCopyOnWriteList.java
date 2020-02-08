@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author EricChen 2020/01/30 18:23
  */
-public class MyCopyOnWriteList<E> implements MyList, RandomAccess, Cloneable, Serializable {
+public class MyCopyOnWriteList<E> implements MyList<E>, RandomAccess, Cloneable, Serializable {
 
     private transient volatile Object[] array;
 
@@ -61,7 +61,9 @@ public class MyCopyOnWriteList<E> implements MyList, RandomAccess, Cloneable, Se
 
     /**
      * appends the specified elements to the end of this list
+     * @param e
      */
+    @Override
     public boolean add(E e) {
         //加锁
         final ReentrantLock lock = new ReentrantLock();
@@ -88,6 +90,7 @@ public class MyCopyOnWriteList<E> implements MyList, RandomAccess, Cloneable, Se
      * @param index index of the specified position
      * @return the element that was removed from the list
      */
+    @Override
     public E remove(int index) {
         final ReentrantLock lock = this.lock;
         lock.lock();

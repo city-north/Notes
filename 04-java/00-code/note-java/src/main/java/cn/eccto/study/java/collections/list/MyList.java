@@ -5,7 +5,7 @@ package cn.eccto.study.java.collections.list;
  *
  * @author EricChen 2020/01/24 19:54
  */
-public interface MyList {
+public interface MyList<E> {
 
     /**
      * Returns the number of elements in this list
@@ -18,5 +18,19 @@ public interface MyList {
      */
     boolean isEmpty();
 
+    /**
+     *
+     * @param index
+     * @return
+     */
+    E remove(int index);
+
+    /**
+     * Removes the element at the specified position in this list , Shifts any subsequent elements to the
+     * left ( subtracts one from their indices)
+     * @param e
+     * @return
+     */
+    boolean add(E e);
 
 }

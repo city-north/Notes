@@ -76,8 +76,6 @@ We gone through **Java CopyOnWriteArrayList example program** to demo how snapsh
 
 Beggar version of CopyOnWriteArrayList
 
-
-
 ```java
 package cn.eccto.study.java.collections.list;
 

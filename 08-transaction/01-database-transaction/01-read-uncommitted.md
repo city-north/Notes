@@ -50,6 +50,8 @@ SELECT * FROM ACCOUNT; -- SESSION2
 
 ![image-20191229143021759](assets/image-20191229143021759.png)
 
+​                                                                                                                                                                                                                                                                                                                                                                                                                             																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				 
+
 在读未提交的隔离级别下,`SESSION2` 依然可以读到`SESSION1`未提交的更改,这就是读未提交
 
 ## 脏读（dirty read)
