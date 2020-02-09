@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>vip.ericchen.study</groupId>
-    <artifactId>orm</artifactId>
+    <artifactId>note-orm</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>01-note-orm-study-jdbc</module>
@@ -14,5 +14,14 @@
     </modules>
     <packaging>pom</packaging>
 
-
+    <dependencyManagement>
+        <dependencies>
+            <!--数据库驱动-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.34</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

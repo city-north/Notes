@@ -1,22 +1,7 @@
-# Java jdbc connection Example(MySQL)
+package vip.ericchen.study.jdbc;
 
-By Lokesh Gupta | Filed Under: [JDBC](https://howtodoinjava.com/java/jdbc/)
+import java.sql.*;
 
-It’s very strange if you are still using [**JDBC**](https://howtodoinjava.com/category/java/jdbc/) in your project for database access because there are lot’s of powerful alternatives like [**hibernate**](https://howtodoinjava.com/hibernate-tutorials/) and [**iBatis**](https://howtodoinjava.com/category/frameworks/ibatis/). But it is important to learn basics and it requires learning JDBC first.
-
-In this post, I am giving an **example of making a connection with database using MySQL Driver**. Read more about [**types of JDBC drivers**](https://howtodoinjava.com/java/jdbc/jdbc-basics-types-of-jdbc-drivers/).
-
-Handling a connection requires following steps:
-
-1) Load the driver
-2) Open database connection
-3) Close database connection
-
-Let’s follow above steps in code:
-
-## 代码实例
-
-```java
 /**
  * <p>
  * 使用 JDBC API 的普通方式
@@ -62,8 +47,3 @@ public class SimpleJdbcExample {
     }
 
 }
-```
-
-缺点显而易见:
-
-- 
