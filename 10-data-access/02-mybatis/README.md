@@ -1,5 +1,13 @@
 # Mybatis
 
+架构分层
+
+![image-20200218235122850](assets/image-20200218235122850.png)
+
+
+
+
+
 四个核心对象:
 
 #### SqlSessionFactoryBuilder
@@ -47,4 +55,14 @@ try (SqlSession session = sqlSessionFactory.openSession()) {
 -  [04-sql-session.md](04-sql-session.md) 
 -  [05-mapper.md](05-mapper.md) 
 -  [06-type-aliase.md](06-type-aliase.md) 
-- 
+-  [07-type-handler.md](07-type-handler.md) 
+-  [08-object-factory.md](08-object-factory.md) 
+-  [09-plugins.md](09-plugins.md) 
+-  [10-environments.md](10-environments.md) 
+-  [11-database-provider.md](11-database-provider.md) 
+-  [12-mappers.md](12-mappers.md) 
+-  [13-dynamic-sql.md](13-dynamic-sql.md) 
+-  [14-statement-builders.md](14-statement-builders.md) 
+-  [15-logging.md](15-logging.md) 
+-  [16-executor.md](16-executor.md) 
+-  [17-caching.md](17-caching.md) 
