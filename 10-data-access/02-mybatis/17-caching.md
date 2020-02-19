@@ -1,7 +1,7 @@
 # Cache 缓存
 
-- 一级缓存
-- 二级缓存
+- 一级缓存 ,SqlSession 级别的,会话级别的
+- 二级缓存,
 
 ### 缓存
 
@@ -114,3 +114,82 @@ public interface InitializingObject {
 <cache-ref namespace="com.someone.application.data.SomeMapper"/>
 ```
 
+## 一级缓存
+
+前面说到一级缓存的作用域是 SqlSession 级别,那么是在哪创建的呢
+
+![image-20200219215848443](assets/image-20200219215848443.png)
+
+`SqlSession `的默认实现类 `DefaultSqlSession` 中引用了一个 `Executor` , 这个 `Executor` 的抽象实现类中引用了 `PerpetualCache `,这个即使一级缓存,也叫本地缓存
+
+![image-20200219220034752](assets/image-20200219220034752.png)
+
+用户操作的是 SqlSession , 接口层的核心, 它始终会操作 Executor 执行器中的 LocalCache
+
+所以 一级缓存的作用域是 SqlSession 会话级别的,当会话结束,一级缓存就会消失
+
+#### 关闭一级缓存的方式
+
+- `localCacheScope` 设置为 `statement`
+- 
+
+## 二级缓存
+
+作用域: namespace
+
+![image-20200219223704450](assets/image-20200219223704450.png)
+
+使用 CacheingExecutor 类来包装 Executor 来实现二级缓存
+
+![image-20200219222642601](assets/image-20200219222642601.png)
+
+实际上二级缓存是一个跨 sqlSession 的缓存,当 sqlSession.commit 以后,就会提交缓存,这个时候另外一个 sqlSession 就可以获取当刚刚的缓存
+
+#### 什么时候需要开启二级缓存?
+
+默认是关闭的
+
+- 以查询为主的应用可以开启二级缓存
+- 对数据的增删改查操作都会是二级缓存失效
+
+#### 二级缓存的的 key 是什么
+
+- 
+
+#### 怎么命中二级缓存
+
+
+
+## Cache 相关源码
+
+### 核心接口
+
+Cache 接口是 MyBatis 中的核心接口,实际上
+
+![image-20200219212119652](assets/image-20200219212119652.png)
+
+值得注意的是`TransactionalCacheManager` 事务缓存管理器,实际上维护了一个 HashMap,支持同事添加或者修改多个缓存,只有调用了 Commit 方法以后,缓存的方法才会被写入
+
+![image-20200219222903814](assets/image-20200219222903814.png)
+
+#### 默认的实现类
+
+`PerpetualCache`是默认的实现类,主要是对 Cache 进行了简单的封装
+
+![image-20200219212210521](assets/image-20200219212210521.png)
+
+其中仅仅只维护了一个 HashMap 
+
+![image-20200219212313889](assets/image-20200219212313889.png)
+
+#### 装饰类
+
+实现 Cache 接口的不光光有默认的实现类`perpetualCache`,还有一系列的装饰类,这里使用的是装饰器模式 [04-decorator-pattern.md](../../01-design-patterns/03-structural-patterns/04-decorator-pattern.md) 
+
+![image-20200219212415724](assets/image-20200219212415724.png)
+
+#### SynchronizedCache 
+
+这是一个非常简单的装饰器,主要是用`synchronized`关键字封装了所有的方法来做到对 Cache 访问的同步
+
+![image-20200219212523577](assets/image-20200219212523577.png)

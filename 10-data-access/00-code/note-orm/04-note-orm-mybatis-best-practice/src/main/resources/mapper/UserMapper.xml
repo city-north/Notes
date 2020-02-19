@@ -3,7 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="vip.ericchen.study.mybatis.UserMapper">
-    <select id="selectUser" resultType="vip.ericchen.study.mybatis.User">
+    <resultMap id="userWithDeptQueryMap" type="vip.ericchen.study.mybatis.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <collection property="deptList" javaType="vip.ericchen.study.mybatis.entity.Dept">
+            <id column="id" property="id" javaType="INTEGER"></id>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <select id="selectUserWithDept" resultType="vip.ericchen.study.mybatis.entity.User">
+    select * from User where id = #{id}
+  </select>
+
+    <select id="selectUser" resultType="vip.ericchen.study.mybatis.entity.User">
     select * from User where id = #{id}
   </select>
 </mapper>

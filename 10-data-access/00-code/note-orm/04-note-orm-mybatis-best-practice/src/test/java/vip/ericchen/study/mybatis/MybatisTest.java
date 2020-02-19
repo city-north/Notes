@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
+import vip.ericchen.study.mybatis.entity.User;
 
 import java.io.IOException;
 import java.io.InputStream;

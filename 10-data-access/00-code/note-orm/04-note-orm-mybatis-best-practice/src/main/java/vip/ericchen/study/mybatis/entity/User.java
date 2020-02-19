@@ -1,6 +1,8 @@
-package vip.ericchen.study.mybatis;
+package vip.ericchen.study.mybatis.entity;
 
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +16,6 @@ public class User {
     private Integer id;
     private String name;
     private Integer age;
+
+    private List<Dept> deptList;
 }

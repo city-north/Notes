@@ -3,6 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+
+        <!-- 控制全局缓存 , 二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+
+        <!-- 	延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 特定关联关系中可通过设置 fetchType 属性来覆盖该项的开关状态。-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+
+    </settings>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
