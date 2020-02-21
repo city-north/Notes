@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vip.ericchen.study.mybatis.BlogMapperExt">
+    <!-- 只能继承statement，不能继承sql、resultMap等标签 -->
+    <resultMap id="BaseResultMap" type="blog">
+        <id column="bid" property="bid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="author_id" property="authorId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 在parent xml 和child xml 的 statement id相同的情况下，会使用child xml 的statement id -->
+    <select id="selectBlogByName" resultMap="BaseResultMap" statementType="PREPARED">
+        select * from blog where name = #{name}
+    </select>
+
+</mapper>

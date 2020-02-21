@@ -26,7 +26,7 @@ MyBatis 内置了一个强大的事务性查询缓存机制，它可以非常方
 
 这些属性可以通过 cache 元素的属性来修改。比如：
 
-```
+```xml
 <cache
   eviction="FIFO"
   flushInterval="60000"
@@ -45,13 +45,41 @@ MyBatis 内置了一个强大的事务性查询缓存机制，它可以非常方
 
 默认的清除策略是 LRU。
 
-flushInterval（刷新间隔）属性可以被设置为任意的正整数，设置的值应该是一个以毫秒为单位的合理时间量。 默认情况是不设置，也就是没有刷新间隔，缓存仅仅会在调用语句时刷新。
+- flushInterval（刷新间隔）属性可以被设置为任意的正整数，设置的值应该是一个以毫秒为单位的合理时间量。 默认情况是不设置，也就是没有刷新间隔，缓存仅仅会在调用语句时刷新。
 
-size（引用数目）属性可以被设置为任意正整数，要注意欲缓存对象的大小和运行环境中可用的内存资源。默认值是 1024。
+- size（引用数目）属性可以被设置为任意正整数，要注意欲缓存对象的大小和运行环境中可用的内存资源。默认值是 1024。
 
-readOnly（只读）属性可以被设置为 true 或 false。只读的缓存会给所有调用者返回缓存对象的相同实例。 因此这些对象不能被修改。这就提供了可观的性能提升。而可读写的缓存会（通过序列化）返回缓存对象的拷贝。 速度上会慢一些，但是更安全，因此默认值是 false。
+- readOnly（只读）属性可以被设置为 true 或 false。只读的缓存会给所有调用者返回缓存对象的相同实例。 因此这些对象不能被修改。这就提供了可观的性能提升。而可读写的缓存会（通过序列化）返回缓存对象的拷贝。 速度上会慢一些，但是更安全，因此默认值是 false。
 
 **提示** 二级缓存是事务性的。这意味着，当 SqlSession 完成并提交时，或是完成并回滚，但没有执行 flushCache=true 的 insert/delete/update 语句时，缓存会获得更新。
+
+![image-20200221215004513](assets/image-20200221215004513.png)
+
+#### 缓存的分类
+
+![image-20200221215351013](assets/image-20200221215351013.png)
+
+- 基本缓存
+- 淘汰算法缓存
+- 装饰器缓存
+
+通过使用配置属性
+
+
+
+| 缓存实现类          | 描述                                           | 作用                                                         | 装饰条件                                           |
+| ------------------- | ---------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- |
+| PerpetualCache      | 缓存的基本实现                                 | 默认是 PerpetualCache,也可以自定义比如 RedisCache,EhCache 等具备基本功能的缓存类 | 无                                                 |
+| LruCache            | LRU 策略的缓存,last recently use ,最近最少使用 | 当缓存到达上限的时候,删除最少使用的缓存                      | eviction="LRU"(默 认)                              |
+| FifoCache           | FIFO 策略的缓存                                | 当缓存达到上限的时候,删除最先入列的缓存                      | eviction="FIFO"                                    |
+| SoftCache/WeakCache | 带清理策略的缓存                               | 通过 JVM 的软引用和弱引用来实现缓存，当 JVM 内存不足时，会自动清理掉这些缓存，基于 SoftReference 和 WeakReference | eviction="SOFT"/eviction="WEAK"                    |
+| LoggingCache        | 带日志功能的缓存                               | 比如:输出缓存命中率                                          | 基本                                               |
+| BlockingCache       | 阻塞缓存                                       | 通过在 get/put 方式中加锁，保证只有一个线程操 作缓存，基于 Java 重入锁实现 | blocking=true                                      |
+| SerializedCache     | 支持序列化的缓存                               | 将对象序列化以后存到缓存中，取出时反序列化                   | readOnly=false(默 认)                              |
+| ScheduledCache      | 定时调度的缓存                                 | 在进行 get/put/remove/getSize 等操作前，判断 缓存时间是否超过了设置的最长缓存时间(默认是 一小时)，如果是则清空缓存--即每隔一段时间清 空一次缓存 | flushInterval 不为 空                              |
+| TransactionalCache  | 事务缓存                                       | 在二级缓存中使用，可一次存入多个缓存，移除多 个缓存          | 在 TransactionalCacheManager 中用 Map 维护对应关系 |
+
+
 
 #### 使用自定义缓存
 
@@ -63,7 +91,7 @@ readOnly（只读）属性可以被设置为 true 或 false。只读的缓存会
 
 这个示例展示了如何使用一个自定义的缓存实现。type 属性指定的类必须实现 org.apache.ibatis.cache.Cache 接口，且提供一个接受 String 参数作为 id 的构造器。 这个接口是 MyBatis 框架中许多复杂的接口之一，但是行为却非常简单。
 
-```
+```java
 public interface Cache {
   String getId();
   int getSize();
@@ -116,49 +144,11 @@ public interface InitializingObject {
 
 ## 一级缓存
 
-前面说到一级缓存的作用域是 SqlSession 级别,那么是在哪创建的呢
-
-![image-20200219215848443](assets/image-20200219215848443.png)
-
-`SqlSession `的默认实现类 `DefaultSqlSession` 中引用了一个 `Executor` , 这个 `Executor` 的抽象实现类中引用了 `PerpetualCache `,这个即使一级缓存,也叫本地缓存
-
-![image-20200219220034752](assets/image-20200219220034752.png)
-
-用户操作的是 SqlSession , 接口层的核心, 它始终会操作 Executor 执行器中的 LocalCache
-
-所以 一级缓存的作用域是 SqlSession 会话级别的,当会话结束,一级缓存就会消失
-
-#### 关闭一级缓存的方式
-
-- `localCacheScope` 设置为 `statement`
-- 
+ [笔记](17-first-level-cache.md) 
 
 ## 二级缓存
 
-作用域: namespace
-
-![image-20200219223704450](assets/image-20200219223704450.png)
-
-使用 CacheingExecutor 类来包装 Executor 来实现二级缓存
-
-![image-20200219222642601](assets/image-20200219222642601.png)
-
-实际上二级缓存是一个跨 sqlSession 的缓存,当 sqlSession.commit 以后,就会提交缓存,这个时候另外一个 sqlSession 就可以获取当刚刚的缓存
-
-#### 什么时候需要开启二级缓存?
-
-默认是关闭的
-
-- 以查询为主的应用可以开启二级缓存
-- 对数据的增删改查操作都会是二级缓存失效
-
-#### 二级缓存的的 key 是什么
-
-- 
-
-#### 怎么命中二级缓存
-
-
+ [笔记](17-second-level-cache.md) 
 
 ## Cache 相关源码
 

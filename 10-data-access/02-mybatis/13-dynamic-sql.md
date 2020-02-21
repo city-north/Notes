@@ -190,6 +190,81 @@ MyBatis 有一个简单的处理，这在 90% 的情况下都会有用。而在�
 
 到此我们已经完成了涉及 XML 配置文件和 XML 映射文件的讨论。下一章将详细探讨 Java API，这样就能提高已创建的映射文件的利用效率。
 
+**特别需要注意的是**
+
+这种使用动态标签进行批量操作的方式存在一定的缺点,比如数据量特别大的时候,拼接出来的 SQL 语句也非常大,MySQL 的服务端对于接受的数据包有大小限制,属性为诶
+
+```
+max_allowed_packet=4M
+```
+
+需要修改这个配置文件才能解决这个问题
+
+在我们全局配置微件中,可以配置默认的 Executor 的类型,其中有一种 BatchExecutor
+
+```xml
+<setting name = "defaultExecutorType" value="BATCH"/>
+```
+
+也可以在创建会话的时候指定执行器的类型
+
+```java
+SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH)
+```
+
+实际上就是`BatchExecutor`类底层调用的还是 JDBC 的`ps.addBatch()`方法,也是攒了一批 SQL 后再发送
+
+```java
+    /**
+     * 原生JDBC的批量操作方式 ps.addBatch()
+     *
+     * @throws IOException
+     */
+    @Test
+    public void testJdbcBatch() throws IOException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            // 注册 JDBC 驱动
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // 打开连接
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/notes", "root", "root");
+            ps = conn.prepareStatement(
+                    "INSERT into blog values (?, ?, ?)");
+
+            for (int i = 1000; i < 101000; i++) {
+                Blog blog = new Blog();
+                ps.setInt(1, i);
+                ps.setString(2, String.valueOf(i));
+                ps.setInt(3, 1001);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+//            conn.commit();
+            ps.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+
+
 ### script
 
 要在带注解的映射器接口类中使用动态 SQL，可以使用 *script* 元素。比如:
@@ -284,3 +359,71 @@ public interface Mapper {
 **注意** 可以将 Apache Velocity 作为动态语言来使用，更多细节请参考 MyBatis-Velocity 项目。
 
 你前面看到的所有 xml 标签都是由默认 MyBatis 语言提供的，而它由别名为 `xml` 的语言驱动器 `org.apache.ibatis.scripting.xmltags.XmlLanguageDriver` 所提供。
+
+### 嵌套查询延迟加载
+
+我们在查询业务数据的时候经常会遇到跨表关联查询的情况，比如查询员工就会关 联部门(一对一)，查询成绩就会关联课程(一对一)，查询订单就会关联商品(一对 多)，等等
+
+我们映射结果有两个标签，一个是 resultType，一个是 resultMap。
+
+resultType 是 select 标签的一个属性，适用于返回 JDK 类型(比如 Integer、String 等等)和实体类。这种情况下结果集的列和实体类的属性可以直接映射。如果返回的字段无法直接映射，就要用 resultMap 来建立映射关系。 对于关联查询的这种情况，通常不能用 resultType 来映射。用 resultMap 映射，要么就是修改 dto(Data Transfer Object)，在里面增加字段，这个会导致增加很多无关 的字段。要么就是引用关联的对象，比如 Blog 里面包含了一个 Author 对象，这种情况 下就要用到关联查询(association，或者嵌套查询)，MyBatis 可以帮我们自动做结果 的映射。
+
+```xml
+<!-- 根据文章查询作者，一对一查询的结果，嵌套查询 -->
+<resultMap id="BlogWithAuthorResultMap" type="com.gupaoedu.domain.associate.BlogAndAuthor">
+    <id column="bid" property="bid" jdbcType="INTEGER"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <!-- 联合查询，将author的属性映射到ResultMap -->
+    <association property="author" javaType="com.gupaoedu.domain.Author">
+        <id column="author_id" property="authorId"/>
+        <result column="author_name" property="authorName"/>
+    </association>
+</resultMap>
+
+<!-- 另一种联合查询(一对一)的实现，但是这种方式有“N+1”的问题 -->
+<resultMap id="BlogWithAuthorQueryMap" type="com.gupaoedu.domain.associate.BlogAndAuthor">
+    <id column="bid" property="bid" jdbcType="INTEGER"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <association property="author" javaType="com.gupaoedu.domain.Author"
+                 column="author_id" select="selectAuthor"/> <!-- selectAuthor 定义在下面-->
+</resultMap>
+```
+
+我们只执行了一次查询员工信息的 SQL(所谓的 1)，如果返回了 N 条记录，就会 再发送 N 条到数据库查询部门信息(所谓的 N)，这个就是我们所说的 N+1 的问题。 这样会白白地浪费我们的应用和数据库的性能。
+如果我们用了嵌套查询的方式，怎么解决这个问题?能不能等到使用部门信息的时 候再去查询?这个就是我们所说的延迟加载，或者叫懒加载。
+在 MyBatis 里面可以通过开启延迟加载的开关来解决这个问题。
+
+在 settings 标签里面可以配置:
+
+```xml
+    <settings>
+        <!-- 延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。默认 false  -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 当开启时，任何方法的调用都会加载该对象的所有属性。默认 false，可通过select标签的 fetchType来覆盖-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!--  Mybatis 创建具有延迟加载能力的对象所用到的代理工具，默认JAVASSIST -->
+        <!--<setting name="proxyFactory" value="CGLIB" />-->
+    </settings>
+
+```
+
+- lazyLoadingEnabled决定了是否延迟加载
+- aggressiveLazyLoading 决定了是不是对象的锁头方法都会触发查询
+
+**值得注意的是**
+
+- 没有开启延迟加载的开关，会连续发送两次查询;
+- 开启了延迟加载的开关，调用 blog.getAuthor()以及默认的(equals,clone,hashCode,toString)时才会发起第二次查询，其他方法并不会触发查询，比如 blog.getName();
+- 如果开启了 aggressiveLazyLoading=true，其他方法也会触发查询，比如blog.getName()。
+
+## 问答环节
+
+#### 当开启了延迟加载的开关，对象是怎么变成代理对象的?
+
+DefaultResultSetHandler.createResultObject()
+
+使用的是动态代理对象的方法,MyBatis有哪些实现动态代理的方式?
+
+- JAVASSIST 就是使用 JDK 代理
+- CGLIB 使用的是 Cglib 代理
+

@@ -1,5 +1,7 @@
 # 类型处理器（typeHandlers）
 
+由于 Java 类型和数据库的 JDBC类型不是一一对应的(比如 String 与 varchar), 所以我们把 Java 对象转化为数据库的值,和把数据库的值转化成 Java 对象,需要经过一定的转换,这两个方向的转换都要用到 TypeHandler
+
 无论是 MyBatis 在预处理语句（PreparedStatement）中设置一个参数时，还是从结果集中取出一个值时， 都会用类型处理器将获取的值以合适的方式转换成 Java 类型。下表描述了一些默认的类型处理器。
 
 **提示** 从 3.4.5 开始，MyBatis 默认支持 JSR-310（日期和时间 API） 。
@@ -51,21 +53,24 @@
 @MappedJdbcTypes(JdbcType.VARCHAR)
 public class ExampleTypeHandler extends BaseTypeHandler<String> {
 
+// 从 Java 类型转化为 JDBC 类型,get 方法时从 JDBC 类型转化成 Java 类型的
   @Override
   public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
     ps.setString(i, parameter);
   }
-
+// 获取空结果集,根据列名
   @Override
   public String getNullableResult(ResultSet rs, String columnName) throws SQLException {
     return rs.getString(columnName);
   }
 
+//获取空结果集,根据下标值
   @Override
   public String getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
     return rs.getString(columnIndex);
   }
 
+// CallableStatement 存储过程使用
   @Override
   public String getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
     return cs.getString(columnIndex);
@@ -193,33 +198,77 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
 ```java
 /**
  * <p>
- * 设置String类型参数的时候调用,Java 类型到 JDBC 类型
- * 字段上需要添加 typeHandler 属性才能生效
+ * A custom {@link TypeHandler}
  * </p>
  *
- * @author EricChen 2020/02/18 20:43
+ * @author EricChen 2020/02/21 13:13
  */
-public class MyTypeHandler extends BaseTypeHandler<String> {
-
+public class MyTypeHandler implements TypeHandler<String> {
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
-        //设置非 null 的数据
+    public void setParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
+        // 设置 String 类型的参数的时候调用，Java类型到JDBC类型
+        // 注意只有在字段上添加typeHandler属性才会生效
+        // insertBlog name字段
+        System.out.println("---------------setNonNullParameter1："+parameter);
         ps.setString(i, parameter);
     }
 
     @Override
-    public String getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    public String getResult(ResultSet rs, String columnName) throws SQLException {
+        // 根据列名获取 String 类型的参数的时候调用，JDBC类型到java类型
+        // 注意只有在字段上添加typeHandler属性才会生效
+        System.out.println("---------------getNullableResult1："+columnName);
         return rs.getString(columnName);
     }
 
     @Override
-    public String getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public String getResult(ResultSet rs, int columnIndex) throws SQLException {
+        // 根据下标获取 String 类型的参数的时候调用
+        System.out.println("---------------getNullableResult2："+columnIndex);
         return rs.getString(columnIndex);
     }
 
     @Override
-    public String getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public String getResult(CallableStatement cs, int columnIndex) throws SQLException {
+        System.out.println("---------------getNullableResult3：");
         return cs.getString(columnIndex);
     }
 }
+
 ```
+
+注册
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeHandlers>
+        <typeHandler handler="vip.ericchen.study.mybatis.typehandler.MyTypeHandler"/>
+    </typeHandlers>
+
+</configuration>
+```
+
+使用,在插入字段时指定typeHandler, 会走 handler 的`setParameter`方法
+
+```xml
+    <insert id="insertBlog" parameterType="blog">
+     insert into blog (bid, name, author_id)
+        values (#{bid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR,typeHandler=vip.ericchen.study.mybatis.typehandler.MyTypeHandler}, #{authorId,jdbcType=INTEGER})
+    </insert>
+```
+
+在解析的`resultMap`字段上,会调用`getResult`的方法
+
+```xml
+    <resultMap id="userWithDeptQueryMap" type="vip.ericchen.study.mybatis.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="name" property="name" jdbcType="VARCHAR" typeHandler="vip.ericchen.study.mybatis.typehandler.MyTypeHandler"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+    </resultMap>
+```
+

@@ -1,5 +1,23 @@
 # 映射器（mappers）
 
+## 是什么
+
+映射器里面最主要的是配置了 SQL 语句,也解决了我们参数映射和结果集映射的问题,一共有 8 个标签
+
+#### 配置类型的标签
+
+- cache – 给定命名空间的缓存配置(是否开启二级缓存)。
+- cache-ref – 其他命名空间缓存配置的引用。
+- resultMap – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载 对象。
+- sql – 可被其他语句引用的可重用语句块。
+
+#### 增删改查标签
+
+- insert – 映射插入语句
+- update – 映射更新语句
+- delete – 映射删除语句
+- select – 映射查询语句
+
 既然 MyBatis 的行为已经由上述元素配置完了，我们现在就要定义 SQL 映射语句了。 但是首先我们需要告诉 MyBatis 到哪里去找到这些语句。 Java 在自动查找这方面没有提供一个很好的方法，所以最佳的方式是告诉 MyBatis 到哪里去找映射文件。 你可以使用相对于类路径的资源引用， 或完全限定资源定位符（包括 `file:///` 的 URL），或类名和包名等。例如：
 
 ```java
@@ -1227,3 +1245,58 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 ```
 
 ```
+
+## Mapper 相关源码
+
+- 为什么要引入 Mapper 对象
+- Mapper 对象是什么对象
+- 为什么要从 SqlSession 里面去获取
+- 为什么要传进去一个接口,然后还要用接口类型来接受
+
+#### 为什么要引入 Mapper 对象
+
+在没有 Mapper 对象之前,使用硬编码的方式使用 Statement Id 进项查询
+
+#### Mapper 对象是什么对象
+
+一个接口,没有实现类
+
+#### 为什么要从 SqlSession 里面去获取
+
+SqlSession 里面维护了一个 Configuration 对象,调用 Configuration 对象的 getMapper,从 MapperRegistry 中获取 Mapper, 此类是一个 Mapper 的注册中心
+
+MapperRegistry 存的是<Mapper 类型,MapperProxyFactory>的映射关系
+
+MapperProxyFactory 是接口对应的工厂类,实际上就创建了 MapperProxy (Mapper 的代理类),使用的是 JDK 动态代理类
+
+![image-20200220001555995](assets/image-20200220001555995.png)
+
+#### 为什么要传进去一个接口,然后还要用接口类型来接受
+
+![image-20200220001710140](assets/image-20200220001710140.png)
+
+## Mapepr 的继承
+
+- 子 Mapper 可以继承父 Mapper 的 Statement
+- 子 Mapper 不能继承 sql, resultMap等标签
+- 在parent xml 和child xml 的 statement id相同的情况下，会使用child xml 的statement id
+
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vip.ericchen.study.mybatis.BlogMapperExt">
+    <!-- 只能继承statement，不能继承sql、resultMap等标签 -->
+    <resultMap id="BaseResultMap" type="blog">
+        <id column="bid" property="bid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="author_id" property="authorId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 在parent xml 和child xml 的 statement id相同的情况下，会使用child xml 的statement id -->
+    <select id="selectBlogByName" resultMap="BaseResultMap" statementType="PREPARED">
+        select * from blog where name = #{name}
+    </select>
+
+</mapper>
+```
+

@@ -5,18 +5,22 @@
 <mapper namespace="vip.ericchen.study.mybatis.UserMapper">
     <resultMap id="userWithDeptQueryMap" type="vip.ericchen.study.mybatis.entity.User">
         <id column="id" property="id" jdbcType="INTEGER"></id>
+<!--        <result column="name" property="name" jdbcType="VARCHAR" typeHandler="vip.ericchen.study.mybatis.typehandler.MyTypeHandler"/>-->
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="age" property="age" jdbcType="INTEGER"/>
-        <collection property="deptList" javaType="vip.ericchen.study.mybatis.entity.Dept">
-            <id column="id" property="id" javaType="INTEGER"></id>
-            <result column="name" property="name" jdbcType="VARCHAR"/>
-        </collection>
     </resultMap>
     <select id="selectUserWithDept" resultType="vip.ericchen.study.mybatis.entity.User">
     select * from User where id = #{id}
   </select>
 
-    <select id="selectUser" resultType="vip.ericchen.study.mybatis.entity.User">
-    select * from User where id = #{id}
-  </select>
+<!--    <select id="selectUser" resultType="vip.ericchen.study.mybatis.entity.User">-->
+<!--    select * from User where id = #{id}-->
+<!--  </select>-->
+
+
+    <!-- 测试typeHandler-->
+<!--    <select id="selectUser" resultMap="userWithDeptQueryMap">-->
+<!--    select * from User where id = #{id}-->
+<!--  </select>-->
+    <!-- 测试typeHandler-->
 </mapper>

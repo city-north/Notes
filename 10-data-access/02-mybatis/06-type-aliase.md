@@ -1,8 +1,20 @@
 # 类型别名（typeAliases）
 
+`TypeAlias`是类型的别名,跟 Linux 系统的 alias 一样,主要用来简化全路径类名的拼写,比如我们的参数类型和返回值类型都可能会用到我们的 Bean ,如果每个地方都配置全路径的话,那么内容就比较多,还可能会写错
+
+我们可以为自己的 Bean 创建别名,既可以指定单个类,也可以指定一个 package, 自动转化
+
+配置了别名以后,只需要写别名就可以了,比如 `vip.erricchen.study.Blog` ,其实只要写 blog就行了
+
+#### 注册到了那里
+
+`TypeAliasRegistry`中维护了系统中各种各样的别名
+
+## 实例
+
 类型别名是为 Java 类型设置一个短的名字。 它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余。例如：
 
-```
+```xml
 <typeAliases>
   <typeAlias alias="Author" type="domain.blog.Author"/>
   <typeAlias alias="Blog" type="domain.blog.Blog"/>
@@ -17,7 +29,7 @@
 
 也可以指定一个包名，MyBatis 会在包名下面搜索需要的 Java Bean，比如：
 
-```
+```xml
 <typeAliases>
   <package name="domain.blog"/>
 </typeAliases>
@@ -25,16 +37,16 @@
 
 每一个在包 `domain.blog` 中的 Java Bean，在没有注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。 比如 `domain.blog.Author` 的别名为 `author`；若有注解，则别名为其注解值。见下面的例子：
 
-```
+```java
 @Alias("author")
 public class Author {
     ...
 }
 ```
 
-##### 
-
 这是一些为常见的 Java 类型内建的相应的类型别名。它们都是不区分大小写的，注意对基本类型名称重复采取的特殊命名风格。
+
+#### 内置的映射器
 
 | 别名       | 映射的类型 |
 | :--------- | :--------- |
@@ -75,6 +87,7 @@ public class Author {
 ```java
 public class TypeAliasRegistry {
 
+  //类型字符串与 Class 类型的映射关系
   private final Map<String, Class<?>> typeAliases = new HashMap<>();
 
   public TypeAliasRegistry() {
@@ -215,3 +228,4 @@ public class TypeAliasRegistry {
 }
 ```
 
+## 源代码中的使用

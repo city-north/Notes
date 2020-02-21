@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.ericchen.study.mybatis.BlogMapper">
+
+    <cache/>
+    <insert id="insertBlog" parameterType="blog">
+     insert into blog (bid, name, author_id)
+        values (#{bid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{authorId,jdbcType=INTEGER})
+    </insert>
+
+
+
+    <resultMap id="BaseResultMap" type="blog">
+        <id column="bid" property="bid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="author_id" property="authorId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--测试 resultHandler -->
+    <!--    <insert id="insertBlog" parameterType="blog">-->
+    <!--     insert into blog (bid, name, author_id)-->
+    <!--        values (#{bid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR,typeHandler=vip.ericchen.study.mybatis.typehandler.MyTypeHandler}, #{authorId,jdbcType=INTEGER})-->
+    <!--    </insert>-->
+    <!--测试 resultHandler -->
+
+    <!-- 根据文章查询作者，一对一查询的结果，嵌套查询 -->
+    <resultMap id="BlogWithAuthorResultMap" type="vip.ericchen.study.mybatis.entity.BlogAndAuthor">
+        <id column="bid" property="bid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <!-- 联合查询，将author的属性映射到ResultMap -->
+        <association property="author" javaType="vip.ericchen.study.mybatis.entity.Author">
+            <id column="author_id" property="authorId"/>
+            <result column="author_name" property="authorName"/>
+        </association>
+    </resultMap>
+
+    <!-- 另一种联合查询(一对一)的实现，但是这种方式有“N+1”的问题 -->
+    <resultMap id="BlogWithAuthorQueryMap" type="vip.ericchen.study.mybatis.entity.BlogAndAuthor">
+        <id column="bid" property="bid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <association property="author" javaType="vip.ericchen.study.mybatis.entity.Author"
+                     column="author_id" select="selectAuthor" fetchType="lazy"/> <!-- selectAuthor 定义在下面-->
+    </resultMap>
+
+
+    <!--  查询文章带评论的结果（一对多） -->
+    <resultMap id="BlogWithCommentMap" type="vip.ericchen.study.mybatis.entity.BlogAndComment" extends="BaseResultMap">
+        <collection property="comment" ofType="vip.ericchen.study.mybatis.entity.Comment">
+            <id column="comment_id" property="commentId"/>
+            <result column="content" property="content"/>
+        </collection>
+    </resultMap>
+    <!--  按作者查询文章评论的结果（多对多） -->
+    <resultMap id="AuthorWithBlogMap" type="vip.ericchen.study.mybatis.entity.AuthorAndBlog" >
+        <id column="author_id" property="authorId" jdbcType="INTEGER"/>
+        <result column="author_name" property="authorName" jdbcType="VARCHAR"/>
+        <collection property="blog" ofType="vip.ericchen.study.mybatis.entity.BlogAndComment">
+            <id column="bid" property="bid" />
+            <result column="name" property="name" />
+            <result column="author_id" property="authorId" />
+            <collection property="comment" ofType="vip.ericchen.study.mybatis.entity.Comment">
+                <id column="comment_id" property="commentId" />
+                <result column="content" property="content" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <!-- 嵌套查询 -->
+    <select id="selectAuthor" parameterType="int" resultType="vip.ericchen.study.mybatis.entity.Author">
+        select author_id authorId, author_name authorName
+        from author where author_id = #{authorId}
+    </select>
+
+    <!-- $只能用在自定义类型和map上 -->
+    <select id="selectBlogByBean" parameterType="blog" resultType="blog">
+        select bid, name, author_id authorId from blog where name = #{name}
+    </select>
+
+
+    <select id="selectBlogList" resultType="vip.ericchen.study.mybatis.entity.Blog">
+        select bid, name, author_id authorId from blog
+    </select>
+    <select id="selectBlogById" resultType="vip.ericchen.study.mybatis.entity.Blog">
+                select * from blog where bid = #{bid}
+    </select>
+
+    <select id="selectBlogWithAuthorResult" resultMap="BlogWithAuthorResultMap">
+        select b.bid, b.name, b.author_id, a.author_id , a.author_name
+        from blog b
+        left join author a
+        on b.author_id=a.author_id
+        where b.bid = #{bid, jdbcType=INTEGER}
+    </select>
+    <!-- 根据文章查询作者，一对一，嵌套查询，存在N+1问题，可通过开启延迟加载解决 -->
+    <select id="selectBlogWithAuthorQuery" resultMap="BlogWithAuthorQueryMap">
+        select b.bid, b.name, b.author_id, a.author_id , a.author_name
+        from blog b
+        left join author a
+        on b.author_id=a.author_id
+        where b.bid = #{bid, jdbcType=INTEGER}
+    </select>
+
+
+    <!-- 根据文章查询评论，一对多 -->
+    <select id="selectBlogWithCommentById" resultMap="BlogWithCommentMap">
+        select b.bid, b.name, b.author_id authorId, c.comment_id commentId, c.content
+        from blog b, comment c
+        where b.bid = c.bid
+        and b.bid = #{bid}
+    </select>
+
+
+    <!-- 根据作者文章评论，多对多 -->
+    <select id="selectAuthorWithBlog" resultMap="AuthorWithBlogMap" >
+        select b.bid, b.name, a.author_id authorId, a.author_name authorName, c.comment_id commentId, c.content
+        from blog b, author a, comment c
+        where b.author_id = a.author_id and b.bid = c.bid
+    </select>
+
+
+
+    <update id="updateByPrimaryKey" parameterType="blog">
+        update blog
+        set name = #{name,jdbcType=VARCHAR}
+        where bid = #{bid,jdbcType=INTEGER}
+    </update>
+</mapper>
