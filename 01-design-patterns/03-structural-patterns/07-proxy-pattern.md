@@ -118,7 +118,6 @@ public class StaticProxyExample {
         proxyObject.doSomething();
     }
 }
-
 ```
 
 #### 静态优势与缺陷
@@ -135,12 +134,12 @@ public class StaticProxyExample {
 ### 动态代理
 
 - JDK代理，被代理对象必须要**实现接口**，才能产生代理对象，如果没有接口，将不能使用JDK代理
-- cglib代理，第三方代理技术，可以对任何类生产代理，代理的原理是对目标对象进行**继承代理**。如果目标对象被`final`修饰，那么该类不能被cglib代理Spring代理
+- cglib代理，第三方代理技术，可以对任何类生产代理，代理的原理是对目标对象进行**继承代理**。如果目标对象被`final`修饰，那么该类不能被 cglib 代理 Spring代理
 
 #### JDK代理实现原理
 
 1. 拿到被代理类的引用,并且获取它的所有接口(反射获取)
-2. JDK Proxy 类重新生成一个新的类,实现了被代理类的所有接口的方法
+2. `JDK Proxy` 类重新生成一个新的类,实现了被代理类的所有接口的方法
 3. 动态生成 Java 代码,把增强逻辑加入到新生成的代码中
 4. 编译生成新的 Java 代码的 class 文件
 5. 加载并重新运行新的 class ,得到类就是全新类
@@ -149,8 +148,8 @@ public class StaticProxyExample {
 
 JDK代理是不需要以来第三方的库，只要要JDK环境就可以进行代理，它有几个要求
 
-* 实现InvocationHandler 
-* 使用Proxy.newProxyInstance产生代理对象
+* 实现`InvocationHandler `
+* 使用`Proxy.newProxyInstance`产生代理对象
 * 被代理的对象**必须要实现接口**
 
 ```java
@@ -191,7 +190,7 @@ public class JDKProxy implements InvocationHandler {
 
 ```
 
-JDK实现代理只需要使用newProxyInstance方法，但是该方法需要接受三个参数，完整的写法是：
+JDK实现代理只需要使用`newProxyInstance`方法，但是该方法需要接受三个参数，完整的写法是：
 
 ```java
 /**
@@ -216,9 +215,9 @@ public class JDKProxyExample {
 
 注意，该方法是在Proxy类中是静态方法，且接受了三个参数依次为：
 
-* ClassLoader loader，指定当前目标对象使用类加载器，获取加载器的方法是固定的。
-* Class<?& \[\] interfaces ，目标对象实现的接口的类型，使用泛型方式确认类型。
-* InvocationHandler ，事件处理，执行目标对象的方法时，会触发事件处理器的方法，会把当前执行目标对象的方法作为参数。
+* `ClassLoader loader`，指定当前目标对象使用类加载器，获取加载器的方法是固定的。
+* `Class<?& \[\] interfaces` ，目标对象实现的接口的类型，使用泛型方式确认类型。
+* `InvocationHandler` ，事件处理，执行目标对象的方法时，会触发事件处理器的方法，会把当前执行目标对象的方法作为参数。
 
 代理对象不需要实现接口，但是目标独享一定要实现接口，否则不能用动态代理。
 
@@ -230,7 +229,7 @@ public class JDKProxyExample {
 // (powered by Fernflower decompiler)
 //
 
-package com.sun.proxy;
+package com.sun.`proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -318,8 +317,6 @@ Spring整合了JDK代理（**优先使用**）和cglib代理（**无接口时使
 <aop:aspectj-autoproxy proxy-target-class="true"</>
 ```
 
-
-
 ## Cglib代理
 
 上面的**静态代理**和**动态代理**都是要求目标对象是实现一个接口的对象，但是，有些时候，目标对象知识一个单独的对象，并没有实现任何的接口，这个时候就可以使用以目标对象子类的方式实现代理，这种方法叫做Cglib代理，Cglib代理是**继承代理。**
@@ -327,7 +324,7 @@ Spring整合了JDK代理（**优先使用**）和cglib代理（**无接口时使
 Cglib代理也叫做**子类代理，**它是在内存中构建一个子类对象从而实现对目标对象功能的拓展。
 
 * JDK的动态代理有一个限制，使用动态代理的对象必须实现一个或者多个接口，如果想代理没有实现接口的类，就可以使用Cglib代理，Cglib代理，也叫做子类代理，它是在内存中构建一个子类对象从而实现对目标对象功能的拓展。
-* Cglib是一个强大的高性能代码生成器，它在运行期间拓展Java类与现实Java接口,它广泛的被许多AOP的框架使用，例如Spring AOP 和synaop,为它们提供了方法的interception\(拦截\)
+* Cglib是一个强大的高性能代码生成器，它在运行期间拓展Java类与现实Java接口,它广泛的被许多AOP的框架使用，例如Spring AOP 和`synaop`,为它们提供了方法的`interception`\(拦截\)
 * Cglib包底层是通过使用一个小而快的字节码处理框架ASM来转换字节码并生产新的类，不鼓励直接使用ASM,因为它们要求你必须对JVM的内部结构包括class文件的格式和指令集很熟悉。
 
 ### 使用方法：

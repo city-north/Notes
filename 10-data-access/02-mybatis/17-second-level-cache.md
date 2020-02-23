@@ -175,7 +175,13 @@ namespace="com.gupaoedu.crud.dao.DepartmentMapper"/>
 cache-ref 代表引用别的命名空间的 Cache 配置，两个命名空间的操作使用的是同 一个 Cache。在关联的表比较少，或者按照业务可以对表进行分组的时候可以使用。
 注意:在这种情况下，多个 Mapper 的操作都会引起缓存刷新，缓存的意义已经不 大了。
 
+#### 二级缓存维护的 TransactionalCacheManager 
 
+CachingExecutor 实际上是一个包装器,用于包装 Executor,就拥有了二级缓存的机制
 
+![image-20200223195149118](assets/image-20200223195149118.png)
 
+支持对二级缓存的批量操作,也就是在一个事务内添加或者删除二级缓存
+
+![image-20200223195028124](assets/image-20200223195028124.png)
 

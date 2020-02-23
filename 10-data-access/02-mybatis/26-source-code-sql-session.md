@@ -101,5 +101,3 @@ Executor 的基本类型有三种:
 数据源和事务工厂在哪里会用到——创建执行器的时候。
 
 创建会话的过程，我们获得了一个 DefaultSqlSession，里面包含了一个 Executor，它是 SQL 的执行者。
-
-##  [Executor](16-executor.md) 
