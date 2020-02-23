@@ -27,6 +27,11 @@
 <!--    <typeHandlers>-->
 <!--        <typeHandler handler="vip.ericchen.study.mybatis.typehandler.MyTypeHandler"/>-->
 <!--    </typeHandlers>-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+        </plugin>
+    </plugins>
 
     <environments default="development">
         <environment id="development">
@@ -46,5 +51,6 @@
         <mapper resource="mapper/BlogMapperExt.xml"/>
         <mapper resource="mapper/UserMapper.xml"/>
     </mappers>
+
 
 </configuration>

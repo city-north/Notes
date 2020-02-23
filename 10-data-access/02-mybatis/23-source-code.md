@@ -1,0 +1,43 @@
+# 源码分析
+
+源码的查看分成四步
+
+- 通过`SqlSessionFactoryBuilder`创建一个`SqlSessionFactory`
+- 通过`SqlSessionFactory`创建一个 `SqlSession`
+- 获得一个`Mapper`对象
+- 接口调用方法
+
+## 核心对象
+
+| 对象               | 相关类                                                       | 作用                                                         |
+| ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Configuration      | `MapperRegistry`/`TypeAliasRegistry`/`TypeHandlerRegistry`   | 包含了 MyBatis 的所有配置信息                                |
+| SqlSession         | `SqlSessionFactory` / `DefaultSqlSession`                    | 对操作数据库的增删改查的 API 进行了封装,提供应用层使用       |
+| `StatementHandler` | `BaseStatementHandler` / `SimpleStatementHandler` / `PreparedStatementHandler`/`CallableStatementHandler` | 封装了 JDBC Statement 操作,负责对 JDBC Statement 的操作,如设置参数,将 Statement 结果转换成 List 集合 |
+| `ParameterHandler` | `DefaultParameterHandler`                                    | 把用户传递的参数转化成 JDBC Statement 所需要的参数           |
+| `ResultSetHandler` | `DefaultResultSetHandler`                                    | 把 JDBC 返回的 ResultSet 结果集对象转化成 List 类型的集合    |
+| `MapperProxy`      | `MapperProxyFactory`                                         | 代理对象,用于代理 Mapper 接口方法                            |
+| `MappedStatement`  | `SqlSource` 和`BoundSql`                                     | MapperdStatement 维护了一条`select|update|delete|insert`节点的封装,包括了 SQL 信息,入参信息和出参信息 |
+
+
+
+#### 通过 `SqlSessionFactoryBuilder`创建一个`SqlSessionFactory`
+
+我们通过建造者模式创建一个工厂类，配置文件的解析就是在这一步完成 的，包括 `mybatis-config.xml `和 `Mapper` 适配器文件。
+
+解析的时候怎么解析的，做了什么，产生了什么对象，结果存放到了哪里。 解析的结果决定着我们后面有什么对象可以使用，和到哪里去取。
+
+ [24-source-code-sql-session-factory-builder.md](24-source-code-sql-session-factory-builder.md) 
+
+#### 通过`SqlSessionFactory`创建一个 `SqlSession`
+
+SqlSession 是用来操作数据库的，返回了什么实现类，除了 SqlSession，还 创建了什么对象，创建了什么环境? [26-source-code-sql-session.md](26-source-code-sql-session.md) 
+
+#### 获得一个`Mapper`对象
+
+Mapper 是一个接口，没有实现类，是不能被实例化的，那获取到的这个 Mapper 对象是什么对象?为什么要从 SqlSession 里面去获取?为什么传进去一个接 口，然后还要用接口类型来接收?
+
+#### 接口调用方法
+
+我们的接口没有创建实现类，为什么可以调用它的方法?那它调用的是什么 方法?它又是根据什么找到我们要执行的 SQL 的?也就是接口方法怎么和 XML 映射器 里面的 StatementID 关联起来的?
+

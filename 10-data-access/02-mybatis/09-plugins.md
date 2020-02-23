@@ -128,6 +128,95 @@ public class ExamplePlugin implements Interceptor {
 
 除了用插件来修改 MyBatis 核心行为之外，还可以通过完全覆盖配置类来达到目的。只需继承后覆盖其中的每个方法，再把它传递到 SqlSessionFactoryBuilder.build(myConfig) 方法即可。再次重申，这可能会严重影响 MyBatis 的行为，务请慎之又慎。
 
+## Mybatis 插件原理与自定义插件
 
+MyBatis 通过提供插件机制,让我们可以根据自己的需要去增强 Mybatis 的功能, 需要注意的是，如果没有完全理解 MyBatis 的运行原理和插件的工作方式，最好不 要使用插件，因为它会改变系底层的工作逻辑，给系统带来很大的影响。
 
-- 
+#### Mybatis 如何做到不修改对象代码,对对象进行修改
+
+代理模式
+
+#### 如何做到多个插件链式调用
+
+责任链模式
+
+#### Mybatis 允许拦截的对象
+
+![image-20200223142720660](assets/image-20200223142720660.png)
+
+#### 插件的编写与注册
+
+1. 编写自己的插件类
+
+   1. 实现`Interceptor`接口
+   2. 添加`@Intercepts({@Signatture})` 指定拦截的对象和方法,方法参数,方法名称和方法类型,可以构成签名,决定拦截哪个方法
+   3. 实现接口的方法
+
+   ```
+   // 用于覆盖被拦截对象的原有方法(在调用代理对象 Plugin 的 invoke()方法时被调用)
+   Object intercept(Invocation invocation) throws Throwable;
+   // target 是被拦截对象，这个方法的作用是给被拦截对象生成一个代理对象，并返回它
+   Object plugin(Object target);
+   // 设置参数
+   void setProperties(Properties properties);
+   ```
+
+   
+
+2. 插件注册
+
+   ```xml
+   <plugins>
+   	<plugin interceptor = "com.github.pagehelper.PageInterceptor">
+   		<property name="offsetAsPageNum" value="true">
+   	</plugin>
+   </plugins>
+   ```
+
+   
+
+3. 插件登记
+
+   MyBatis 启动的时候回扫描`<plugins>`标签,注册到 Configuration 对象的 InterceptorChain 中,property 里面的参数会调用 `setProperties()`方法处理
+
+#### 代理和拦截是怎么实现的
+
+- ##### 四大对象是什么时候被代理的,代理对象是什么时候创建的
+
+- 多个插件的情况下,代理能不能被代理?代理的调用顺序的关系
+
+- 谁来创建代理对象
+
+- 被代理后,调用的是什么方法,怎么调用的原被代理对象的方法
+
+##### 四大对象是什么时候被代理的,代理对象是什么时候创建的
+
+- Executor 是 openSession() 的 时 候 创 建 的 ; 
+
+- StatementHandler 是 SimpleExecutor.doQuery()创建的;
+- 里面包含了处理参数的 ParameterHandler 和处理 结果集的 ResultSetHandler 的创建，创建之后即调用 InterceptorChain.pluginAll()， 返回层层代理后的对象。
+
+##### 多个插件的情况下,代理能不能被代理?代理的调用顺序的关系
+
+![image-20200223143929767](assets/image-20200223143929767.png)
+
+##### 谁来创建代理对象
+
+Plugin 类。在我们重写的 plugin()方法里面可以直接调用 return Plugin.wrap(target, this);返回代理对象。
+
+##### 被代理后,调用的是什么方法,怎么调用的原被代理对象的方法
+
+因为代理类是 `Plugin`，所以最后调用的是 Plugin 的 `invoke() `方法。它先调用了定义
+的拦截器的` intercept()`方法。可以通过 `invocation.proceed()`调用到被代理对象被拦截 的方法。
+
+## 插件调用流程
+
+![image-20200223144230103](assets/image-20200223144230103.png)
+
+| 对象           | 作用                                                        |
+| -------------- | ----------------------------------------------------------- |
+| Interceptor    | 自定义插件需要实现接口，实现 3 个方法                       |
+| InterceptChain | 配置的插件解析后会保存在 Configuration 的 InterceptChain 中 |
+| Plugin         | 用来创建代理对象，包装四大对象                              |
+| Invocation     | 对被代理类进行包装，可以调用 proceed()调用到被拦截的方法    |
+

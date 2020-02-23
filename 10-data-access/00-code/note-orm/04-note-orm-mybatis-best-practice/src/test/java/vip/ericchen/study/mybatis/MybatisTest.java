@@ -1,5 +1,6 @@
 package vip.ericchen.study.mybatis;
 
+import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -39,22 +40,24 @@ public class MybatisTest {
 
     /**
      * 测试使用 Mapper 类的方式查询
+     *
      * @throws IOException
      */
     @Test
-    public void testSelect() throws IOException  {
+    public void testSelect() throws IOException {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            UserMapper mapper = session.getMapper(UserMapper.class);
-            User user = mapper.selectUser(1);
-            System.out.println(user);
+            BlogMapper mapper = session.getMapper(BlogMapper.class);
+            Blog blog = mapper.selectBlogById(1);
+            System.out.println(blog);
         }
     }
 
     /**
      * 测试插入
+     *
      * @throws IOException
      */
     @Test
@@ -77,10 +80,34 @@ public class MybatisTest {
         }
     }
 
+
+    /**
+     * 测试插入
+     *
+     * @throws IOException
+     */
+    @Test
+    public void testPageHelper() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            BlogMapper mapper = session.getMapper(BlogMapper.class);
+            PageHelper.startPage(2, 1);
+            List<AuthorAndBlog> authorAndBlogs = mapper.selectAuthorWithBlog();
+            System.out.println(authorAndBlogs);
+        } finally {
+            session.close();
+        }
+    }
+
     /**
      * # 和 $ 的区别
      * # 使用PreparedStatement 进行查询 Preparing: select bid, name, author_id authorId from blog where name = ?
      * $ 直接将参数拼接到 sql 中进行替换 Preparing: select bid, name, author_id authorId from blog where name = 'RabbitMQ延时消息'
+     *
      * @throws IOException
      */
     @Test
@@ -95,7 +122,7 @@ public class MybatisTest {
             Blog queryBean = new Blog();
             queryBean.setName("RabbitMQ延时消息");
             List<Blog> blog = mapper.selectBlogByBean(queryBean);
-            System.out.println("查询结果："+blog);
+            System.out.println("查询结果：" + blog);
         } finally {
             session.close();
         }
@@ -103,6 +130,7 @@ public class MybatisTest {
 
     /**
      * 逻辑分页
+     *
      * @throws IOException
      */
     @Test
@@ -118,15 +146,17 @@ public class MybatisTest {
             int pageSize = 5; // limit
             RowBounds rb = new RowBounds(start, pageSize);
             List<Blog> list = mapper.selectBlogList(rb); // 使用逻辑分页
-            for(Blog b :list){
+            for (Blog b : list) {
                 System.out.println(b);
             }
         } finally {
             session.close();
         }
     }
+
     /**
      * Mapper.xml的继承性
+     *
      * @throws IOException
      */
     @Test
@@ -161,7 +191,7 @@ public class MybatisTest {
         BlogMapper mapper = session.getMapper(BlogMapper.class);
 
         BlogAndAuthor blog = mapper.selectBlogWithAuthorResult(1);
-        System.out.println("-----------:"+blog);
+        System.out.println("-----------:" + blog);
     }
 
 
@@ -178,10 +208,10 @@ public class MybatisTest {
         BlogMapper mapper = session.getMapper(BlogMapper.class);
 
         BlogAndAuthor blog = mapper.selectBlogWithAuthorQuery(1);
-        System.out.println("-----------:"+blog.getClass());
+        System.out.println("-----------:" + blog.getClass());
         // 如果开启了延迟加载，会在使用的时候才发出SQL
         // equals,clone,hashCode,toString也会触发延迟加载
-         System.out.println("-----------调用toString方法:"+blog.toString());
+        System.out.println("-----------调用toString方法:" + blog.toString());
 //        System.out.println("-----------getAuthor:"+blog.getAuthor().toString());
         // 如果 aggressiveLazyLoading = true ，也会触发加载，否则不会
         //System.out.println("-----------getName:"+blog.getName());
@@ -190,6 +220,7 @@ public class MybatisTest {
 
     /**
      * 一对多关联查询：一篇文章对应多条评论
+     *
      * @throws IOException
      */
     @Test
@@ -211,6 +242,7 @@ public class MybatisTest {
 
     /**
      * 多对多关联查询：作者的文章的评论
+     *
      * @throws IOException
      */
     @Test
@@ -223,7 +255,7 @@ public class MybatisTest {
         try {
             BlogMapper mapper = session.getMapper(BlogMapper.class);
             List<AuthorAndBlog> authors = mapper.selectAuthorWithBlog();
-            for (AuthorAndBlog author : authors){
+            for (AuthorAndBlog author : authors) {
                 System.out.println(author);
             }
         } finally {

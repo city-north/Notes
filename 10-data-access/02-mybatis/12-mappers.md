@@ -938,7 +938,7 @@ SELECT * FROM AUTHOR WHERE ID = #{id}
 
 在映射语句中，必须通过 `resultSets` 属性为每个结果集指定一个名字，多个名字使用逗号隔开。
 
-```
+```xml
 <select id="selectBlog" resultSets="blogs,authors" resultMap="blogResult" statementType="CALLABLE">
   {call getBlogsAndAuthors(#{id,jdbcType=INTEGER,mode=IN})}
 </select>
@@ -946,7 +946,7 @@ SELECT * FROM AUTHOR WHERE ID = #{id}
 
 现在我们可以指定使用 “authors” 结果集的数据来填充 “author” 关联：
 
-```
+```xml
 <resultMap id="blogResult" type="Blog">
   <id property="id" column="id" />
   <result property="title" column="title"/>
@@ -986,7 +986,7 @@ private List<Post> posts;
 
 首先，让我们看看如何使用嵌套 Select 查询来为博客加载文章。
 
-```
+```xml
 <resultMap id="blogResult" type="Blog">
   <collection property="posts" javaType="ArrayList" column="id" ofType="Post" select="selectPostsForBlog"/>
 </resultMap>
@@ -1053,7 +1053,7 @@ private List<Post> posts;
 
 如果你喜欢更详略的、可重用的结果映射，你可以使用下面的等价形式：
 
-```
+```xml
 <resultMap id="blogResult" type="Blog">
   <id property="id" column="blog_id" />
   <result property="title" column="blog_title"/>
@@ -1071,7 +1071,7 @@ private List<Post> posts;
 
 像关联元素那样，我们可以通过执行存储过程实现，它会执行两个查询并返回两个结果集，一个是博客的结果集，另一个是文章的结果集：
 
-```
+```xml
 SELECT * FROM BLOG WHERE ID = #{id}
 
 SELECT * FROM POST WHERE BLOG_ID = #{id}
@@ -1087,7 +1087,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 我们指定 “posts” 集合将会使用存储在 “posts” 结果集中的数据进行填充：
 
-```
+```xml
 <resultMap id="blogResult" type="Blog">
   <id property="id" column="id" />
   <result property="title" column="title"/>
@@ -1105,7 +1105,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 #### 鉴别器
 
-```
+```xml
 <discriminator javaType="int" column="draft">
   <case value="1" resultType="DraftPost"/>
 </discriminator>
@@ -1115,7 +1115,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 一个鉴别器的定义需要指定 column 和 javaType 属性。column 指定了 MyBatis 查询被比较值的地方。 而 javaType 用来确保使用正确的相等测试（虽然很多情况下字符串的相等测试都可以工作）。例如：
 
-```
+```xml
 <resultMap id="vehicleResult" type="Vehicle">
   <id property="id" column="id" />
   <result property="vin" column="vin"/>
@@ -1134,7 +1134,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 在这个示例中，MyBatis 会从结果集中得到每条记录，然后比较它的 vehicle type 值。 如果它匹配任意一个鉴别器的 case，就会使用这个 case 指定的结果映射。 这个过程是互斥的，也就是说，剩余的结果映射将被忽略（除非它是扩展的，我们将在稍后讨论它）。 如果不能匹配任何一个 case，MyBatis 就只会使用鉴别器块外定义的结果映射。 所以，如果 carResult 的声明如下：
 
-```
+```xml
 <resultMap id="carResult" type="Car">
   <result property="doorCount" column="door_count" />
 </resultMap>
@@ -1142,7 +1142,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 那么只有 doorCount 属性会被加载。这是为了即使鉴别器的 case 之间都能分为完全独立的一组，尽管和父结果映射可能没有什么关系。在上面的例子中，我们当然知道 cars 和 vehicles 之间有关系，也就是 Car 是一个 Vehicle。因此，我们希望剩余的属性也能被加载。而这只需要一个小修改。
 
-```
+```xml
 <resultMap id="carResult" type="Car" extends="vehicleResult">
   <result property="doorCount" column="door_count" />
 </resultMap>
@@ -1152,7 +1152,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 可能有人又会觉得映射的外部定义有点太冗长了。 因此，对于那些更喜欢简洁的映射风格的人来说，还有另一种语法可以选择。例如：
 
-```
+```xml
 <resultMap id="vehicleResult" type="Vehicle">
   <id property="id" column="id" />
   <result property="vin" column="vin"/>
@@ -1192,7 +1192,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 甚至在提供了结果映射后，自动映射也能工作。在这种情况下，对于每一个结果映射，在 ResultSet 出现的列，如果没有设置手动映射，将被自动映射。在自动映射处理完毕后，再处理手动映射。 在下面的例子中，*id* 和 *userName* 列将被自动映射，*hashed_password* 列将根据配置进行映射。
 
-```
+```xml
 <select id="selectUsers" resultMap="userResultMap">
   select
     user_id             as "id",
@@ -1214,7 +1214,7 @@ SELECT * FROM POST WHERE BLOG_ID = #{id}
 
 默认值是 `PARTIAL`，这是有原因的。当对连接查询的结果使用 `FULL` 时，连接查询会在同一行中获取多个不同实体的数据，因此可能导致非预期的映射。 下面的例子将展示这种风险：
 
-```
+```xml
 <select id="selectBlog" resultMap="blogResult">
   select
     B.id,
