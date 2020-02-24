@@ -2,7 +2,7 @@
 
 ## 用例
 
-```
+```java
     @Test
     public void testStatement() throws IOException {
         String resource = "mybatis-config.xml";
@@ -101,3 +101,20 @@ Executor 的基本类型有三种:
 数据源和事务工厂在哪里会用到——创建执行器的时候。
 
 创建会话的过程，我们获得了一个 DefaultSqlSession，里面包含了一个 Executor，它是 SQL 的执行者。
+
+
+
+- 用户权限同步机制,outh2 登录
+
+- 越权
+
+  Voter 锁定,踢掉改造
+
+- 数据越权
+
+防篡改机制
+
+- 整体替换 token ,时间戳的问题,通过时间戳的延迟
+
+
+

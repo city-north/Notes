@@ -92,3 +92,7 @@ public class ChainClient {
     }
 }
 ```
+
+## Mybatis 中经典的责任链-Interceptor
+
+ [09-plugins.md](../../10-data-access/02-mybatis/09-plugins.md) 

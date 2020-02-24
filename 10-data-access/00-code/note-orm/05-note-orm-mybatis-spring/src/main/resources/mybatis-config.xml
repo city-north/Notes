@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+
+        <!-- 控制全局缓存 , 二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+
+        <!-- STATEMENT级别的缓存，使一级缓存，只针对当前执行的这一statement有效 -->
+<!--                <setting name="localCacheScope" value="STATEMENT"/>-->
+<!--        <setting name="localCacheScope" value="SESSION"/>-->
+
+        <!-- 	延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 特定关联关系中可通过设置 fetchType 属性来覆盖该项的开关状态。-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="lazyLoadTriggerMethods" value=""/>
+
+
+    </settings>
+    <typeAliases>
+        <typeAlias alias="blog" type="vip.ericchen.study.mybatis.entity.Blog"/>
+    </typeAliases>
+<!--    <typeHandlers>-->
+<!--        <typeHandler handler="vip.ericchen.study.mybatis.typehandler.MyTypeHandler"/>-->
+<!--    </typeHandlers>-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+        </plugin>
+    </plugins>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/notes?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper class="vip.ericchen.study.mybatis.BlogMapper"/>
+        <mapper class="vip.ericchen.study.mybatis.BlogMapperExt"/>
+        <mapper resource="mapper/BlogMapper.xml"/>
+        <mapper resource="mapper/BlogMapperExt.xml"/>
+        <mapper resource="mapper/UserMapper.xml"/>
+    </mappers>
+
+
+</configuration>

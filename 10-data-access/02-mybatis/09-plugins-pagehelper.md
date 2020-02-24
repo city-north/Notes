@@ -1,5 +1,12 @@
 # PageHelper
 
+| 对象            | 作用         |
+| --------------- | ------------ |
+| PageInterceptor | 自定义拦截器 |
+| Page            | 包装分页参数 |
+| PageInfo        | 包装结果     |
+| PageHelper      | 工具类       |
+
 (基于 spring-mybatis)PageInterceptor 类
 
 1、用法(EmployeeController. getEmpsWithJson())

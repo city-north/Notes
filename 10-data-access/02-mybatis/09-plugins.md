@@ -6,18 +6,18 @@
 
 ## 核心类
 
-- Interceptor接口
+- `Interceptor`接口
 - 自定义拦截器(实现类)
-- Plugin 工具类用来创建代理对象
-- Invocation 内的 wrap 方法进行包装,proceed方法执行被拦截方法
-- InterceptorChain 插件的链
+- `Plugin `工具类用来创建代理对象
+- `Invocation` 内的 wrap 方法进行包装,proceed方法执行被拦截方法
+- `InterceptorChain` 插件的链
 
 MyBatis 允许你在已映射语句执行过程中的某一点进行拦截调用。默认情况下，MyBatis 允许使用插件来拦截的方法调用包括：
 
-- Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)
-- ParameterHandler (getParameterObject, setParameters)
-- ResultSetHandler (handleResultSets, handleOutputParameters)
-- StatementHandler (prepare, parameterize, batch, update, query)
+- `Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)`
+- `ParameterHandler (getParameterObject, setParameters)`
+- `ResultSetHandler (handleResultSets, handleOutputParameters)`
+- `StatementHandler (prepare, parameterize, batch, update, query)`
 
 ## 拦截器接口的介绍
 
@@ -89,8 +89,6 @@ public class PageInterceptor implements Interceptor {
   使用 
 
 ### Answer
-
-- 
 
 这些类中方法的细节可以通过查看每个方法的签名来发现，或者直接查看 MyBatis 发行包中的源代码。 如果你想做的不仅仅是监控方法的调用，那么你最好相当了解要重写的方法的行为。 因为如果在试图修改或重写已有方法的行为的时候，你很可能在破坏 MyBatis 的核心模块。 这些都是更低层的类和方法，所以使用插件的时候要特别当心。
 
@@ -213,10 +211,10 @@ Plugin 类。在我们重写的 plugin()方法里面可以直接调用 return Pl
 
 ![image-20200223144230103](assets/image-20200223144230103.png)
 
-| 对象           | 作用                                                        |
-| -------------- | ----------------------------------------------------------- |
-| Interceptor    | 自定义插件需要实现接口，实现 3 个方法                       |
-| InterceptChain | 配置的插件解析后会保存在 Configuration 的 InterceptChain 中 |
-| Plugin         | 用来创建代理对象，包装四大对象                              |
-| Invocation     | 对被代理类进行包装，可以调用 proceed()调用到被拦截的方法    |
+| 对象             | 作用                                                        |
+| ---------------- | ----------------------------------------------------------- |
+| `Interceptor`    | 自定义插件需要实现接口，实现 3 个方法                       |
+| `InterceptChain` | 配置的插件解析后会保存在 Configuration 的 InterceptChain 中 |
+| `Plugin`         | 用来创建代理对象，包装四大对象                              |
+| `Invocation`     | 对被代理类进行包装，可以调用 proceed()调用到被拦截的方法    |
 

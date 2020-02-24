@@ -2,7 +2,7 @@
 
 ## 用例
 
-```
+```java
     @Test
     public void testStatement() throws IOException {
         String resource = "mybatis-config.xml";

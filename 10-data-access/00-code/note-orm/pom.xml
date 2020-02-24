@@ -17,6 +17,7 @@
         <module>02-note-orm-study-my-orm</module>
         <module>03-note-orm-study-spring-jdbc</module>
         <module>04-note-orm-mybatis-best-practice</module>
+        <module>05-note-orm-mybatis-spring</module>
     </modules>
     <packaging>pom</packaging>
 
