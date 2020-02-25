@@ -18,6 +18,7 @@
         <module>03-note-orm-study-spring-jdbc</module>
         <module>04-note-orm-mybatis-best-practice</module>
         <module>05-note-orm-mybatis-spring</module>
+        <module>06-note-orm-fake-mybatis</module>
     </modules>
     <packaging>pom</packaging>
 
