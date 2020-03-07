@@ -1,6 +1,23 @@
-# Happens-bofore
+# happens-before
 
-它的意思表示的是前一个操作的结果对于后续操作是可见 的，所以它是一种表达多个线程之间对于内存的可见性。 所以我们可以认为在 JMM 中，如果一个操作执行的结果需 要对另一个操作课件，那么这两个操作必须要存在 happens-before 关系。这两个操作可以是同一个线程，也 可以是不同的线程
+**happens-before 用来描述操作之间的内存可见性,用来屏蔽程序员与 JMM 内存可见性操作的细节**
+
+**它的意思表示的是前一个操作的结果对于后续操作是可见的，所以它是一种表达多个线程之间对于内存的可见性。**
+
+ 所以我们可以认为在 JMM 中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作必须要存在 happens-before 关系。这两个操作可以是同一个线程，也 可以是不同的线程
+
+## happens-before
+
+- 程序顺序规则: 一个线程中的每个操作,happens-before 于该线程中的任意后续操作
+- 监视器锁规则: 对一个锁的解锁, happens-before 于随后对这个锁加锁
+- volatile 变量规则: 对一个 volatile 域的写,happens-before 于任意后续对这个 volatile 域的读
+- 传递性: 如果 A happens-before B , 且 B happens-before C , 那么 A 一定 happens-before C
+
+> 两个操作之间有 happens-before 关系,并不意味着前一个操作必须要在后一个操作之前执行,happens-before 仅仅要求前一个操作(执行的结果) 对于后一个操作可见,且前一个操作按顺序排在第二个操作之前(the first is visible to the ordered before the second)
+
+![image-20200306122005450](assets/image-20200306122005450.png)
+
+对于 Java 程序来说,happens-before 规则简单容易懂,避免Java 程序员为了理解 JMM 提供的内存可见性保证而去学习复杂的重排序规则以及这些规则的具体实现
 
 ## JMM 中有哪些方法建立 happen-before 规则
 
