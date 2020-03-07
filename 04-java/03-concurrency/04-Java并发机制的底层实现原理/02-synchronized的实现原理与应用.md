@@ -37,6 +37,40 @@ public class SynchronizedExample {
 
 ## monitorenter 和 monitorexit 指令
 
+```java
+public class Synchronized {
+    public static void main(String[] args) {
+        // 对Synchronized Class对象进行加锁
+        synchronized (Synchronized.class) {
+
+        }
+        // 静态同步方法，对Synchronized Class对象进行加锁
+        m();
+    }
+
+    public static synchronized void m() {
+    }
+}
+
+```
+
+我们使用 javap -v Synchronized 获得输出汇编指令
+
+![image-20200307170247730](assets/image-20200307170247730.png)
+
+- 同步代码块使用的是`monitorenter`和`monitorexit`
+- 同步方法使用的是`ACC_SYNCHRONIZED`完成
+
+其本质是获取对象的监视器(minitor),这个过程是排他的,同一个时刻只有一个线程能获取到对象的监视器
+
+任意一个对象都拥有自己的监视器,当这个对象由同步快或者这个同步方法调用时,执行方法的线程必须先湖区到该对象的监视器才能进入同步块或者同步方法,而没有获取到监视器(执行该方法)的线程就会被阻塞在同步块或者同步方法的入口外,进入 BLOCKED 状态 
+
+![image-20200307170828555](assets/image-20200307170828555.png)
+
+- 任意线程对 Object(Synchronized 修饰)的访问,首先要获得 Object 的监视器
+- 获取失败会进入同步队列 , 线程变为阻塞状态 BLOCKED
+- 当访问 Object 的前驱(获得锁的线程)释放了锁,释放操作会唤醒在同步队列中的线程
+
 JVM 基于进入和退出` Monitor`对象来实现方法同步和代码同步,但是细节不一样.
 
 - `monitorenter`指令是在编译后插入到同步代码块的开始位置
