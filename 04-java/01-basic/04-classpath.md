@@ -125,3 +125,23 @@ $ echo $CLASSPATH
 ```
 
 If CLASSPATH is not set you will get a **CLASSPATH: Undefined variable error** (Solaris or Linux) console or simply **%CLASSPATH%** printed in windows command prompt.
+
+#### MANIFEST.MF
+
+jar包还可以包含一个特殊的`/META-INF/MANIFEST.MF`文件，`MANIFEST.MF`是纯文本，可以指定`Main-Class`和其它信息。JVM会自动读取这个`MANIFEST.MF`文件，如果存在`Main-Class`，我们就不必在命令行指定启动的类名，而是用更方便的命令：
+
+```java
+java -jar hello.jar
+```
+
+jar包还可以包含其它jar包，这个时候，就需要在`MANIFEST.MF`文件里配置`classpath`了。
+
+在大型项目中，不可能手动编写`MANIFEST.MF`文件，再手动创建zip包。Java社区提供了大量的开源构建工具，例如[Maven](https://www.liaoxuefeng.com/wiki/1252599548343744/1255945359327200)，可以非常方便地创建jar包。
+
+## 总结
+
+- JVM通过环境变量`classpath`决定搜索`class`的路径和顺序；
+- 不推荐设置系统环境变量`classpath`，始终建议通过`-cp`命令传入；
+- jar包相当于目录，可以包含很多`.class`文件，方便下载和使用；
+- `MANIFEST.MF`文件可以提供jar包的信息，如`Main-Class`，这样可以直接运行jar包。
+
