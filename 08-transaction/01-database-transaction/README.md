@@ -32,6 +32,8 @@ SELECT @@GLOBAL.tx_isolation, @@tx_isolation;
 
 ![image-20191229135502621](assets/image-20191229135502621.png)
 
+
+
 可以看到默认的隔离级别是可重复度
 
 ##### 设置本次查询 session 的隔离级别为 Read Uncommited
