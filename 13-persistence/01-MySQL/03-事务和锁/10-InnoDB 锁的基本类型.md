@@ -83,10 +83,4 @@ select * from t2 where id =4 for update;
 
 ![image-20200315164410247](assets/image-20200315164410247.png)
 
-
-
-
-
-
-
 以上就是 MySQL 里面的 4 种基本的锁的模式，或者叫做锁的类型。

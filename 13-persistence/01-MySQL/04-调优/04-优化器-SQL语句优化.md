@@ -6,9 +6,9 @@
 
 ## 打开慢日志开关
 
-因为开启慢查询日志是有代价的(跟 bin log、optimizer-trace 一样)，所以它默 认是关闭的:
+因为开启慢查询日志是有代价的(跟 bin log、optimizer-trace 一样)，所以它默认是关闭的:
 
-```
+```sql
 show variables like 'slow_query%';
 ```
 
@@ -16,14 +16,16 @@ show variables like 'slow_query%';
 
 ![image-20200315192208506](assets/image-20200315192208506.png)
 
-除了这个开关，还有一个参数，控制执行超过多长时间的 SQL 才记录到慢日志，默 认是 10 秒。
+除了这个开关，还有一个参数，控制执行超过多长时间的 SQL 才记录到慢日志，默认是 10 秒。
 
+```sql
 show variables like '%slow_query%';
+```
 
 可以直接动态修改参数(重启后失效)。
 
-```
-set @@global.slow_query_log=1; -- 1 开启，0 关闭，重启后失效
+```sql
+set @@global.slow_query_log=1;  -- 1 开启，0 关闭，重启后失效
 set @@global.long_query_time=3; -- mysql 默认的慢查询时间是 10 秒，另开一个窗口后才会查到最新值 ​
 show variables like '%long_query%';
 show variables like '%slow_query%';
@@ -41,11 +43,13 @@ slow_query_log_file =/var/lib/mysql/localhost-slow.log
 
 #### 模拟慢查询:
 
+```sql
 select sleep(10);
+```
 
 查询 user_innodb 表的 500 万数据(检查是不是没有索引)。
 
-```
+```java
 SELECT * FROM `user_innodb` where phone = '136';
 ```
 
@@ -63,14 +67,14 @@ cat /var/lib/mysql/ localhost-slow.log
 
 ![image-20200315192402413](assets/image-20200315192402413.png)
 
-有了慢查询日志，怎么去分析统计呢?比如 SQL 语句的出现的慢查询次数最多，平 均每次执行了多久?
+有了慢查询日志，怎么去分析统计呢?比如 SQL 语句的出现的慢查询次数最多，平均每次执行了多久?
 
 #### mysqldumpslow
 
 https://dev.mysql.com/doc/refman/5.7/en/mysqldumpslow.html
 MySQL 提供了 mysqldumpslow 的工具，在 MySQL 的 bin 目录下。
 
-```
+```sql
 mysqldumpslow --help
 ```
 
@@ -90,7 +94,7 @@ mysqldumpslow -s t -t 20 -g 'select' /var/lib/mysql/localhost-slow.log
 
 ### SHOW PROFILE
 
-https://dev.mysql.com/doc/refman/5.7/en/show-profile.html
+> https://dev.mysql.com/doc/refman/5.7/en/show-profile.html
 
 SHOW PROFILE 是谷歌高级架构师 Jeremy Cole 贡献给 MySQL 社区的，可以查看SQL 语句执行的时候使用的资源，比如 CPU、IO 的消耗情况。 在 SQL 中输入 help profile 可以得到详细的帮助信息。
 
@@ -155,11 +159,11 @@ select * from information_schema.processlist;
 | Time    | 操作持续时间，单位秒                                         |
 | State   | 线程状态，比如查询可能有 copying to tmp table，Sorting result，Sending data https://dev.mysql.com/doc/refman/5.7/en/general-thread-states.html |
 | Info    | SQL 语句的前 100 个字符，如果要查看完整的 SQL 语句，用 SHOW FULL PROCESSLIST |
-|         |                                                              |
 
 #### show status 服务器运行状态
 
-https://dev.mysql.com/doc/refman/5.7/en/show-status.html
+> https://dev.mysql.com/doc/refman/5.7/en/show-status.html
+
 SHOW STATUS 用于查看 MySQL 服务器运行状态(重启后会清空)，有 session 和 global 两种作用域，格式:参数-值。
 可以用 like 带通配符过滤。
 
@@ -169,7 +173,8 @@ SHOW GLOBAL STATUS LIKE 'com_select'; -- 查看 select 次数
 
 #### show engine 存储引擎运行信息
 
-https://dev.mysql.com/doc/refman/5.7/en/show-engine.html
+> https://dev.mysql.com/doc/refman/5.7/en/show-engine.html
+
 show engine 用来显示存储引擎的当前运行信息，包括事务持有的表锁、行锁信息; 事务的锁等待情况;线程信号量等待;文件 IO 请求;buffer pool 统计信息。
 
 例如:
@@ -180,7 +185,7 @@ show engine innodb status;
 
 如果需要将监控信息输出到错误信息 error log 中(15 秒钟一次)，可以开启输出。
 
-```
+```sql
 show variables like 'innodb_status_output%';
 -- 开启输出:
 SET GLOBAL innodb_status_output=ON;
@@ -193,15 +198,19 @@ SET GLOBAL innodb_status_output_locks=ON;
 现在我们已经知道哪些 SQL 慢了，为什么慢呢?慢在哪里?
 
 MySQL 提供了一个执行计划的工具(在架构中我们有讲到，优化器最终生成的就是 一个执行计划)，其他数据库，例如 Oracle 也有类似的功能。
+
 通过 EXPLAIN 我们可以模拟优化器执行 SQL 查询语句的过程，来知道 MySQL 是 怎么处理一条 SQL 语句的。通过这种方式我们可以分析语句或者表的性能瓶颈。
 
-explain 可以分析 update、delete、insert 么?
+**explain 可以分析` update`、`delete`、`insert `么?**
 
-MySQL 5.6.3 以前只能分析 SELECT; MySQL5.6.3 以后就可以分析 update、delete、 insert 了。
+- MySQL 5.6.3 以前只能分析 SELECT; 
+
+- MySQL 5.6.3 以后就可以分析 update、delete、 insert 了。
 
 ## EXPLAIN 执行计划
 
-官方链接:https://dev.mysql.com/doc/refman/5.7/en/explain-output.html
+> 官方链接:https://dev.mysql.com/doc/refman/5.7/en/explain-output.html
+
 我们先创建三张表。一张课程表，一张老师表，一张老师联系方式表(没有任何索 引)。
 
 ```
@@ -248,12 +257,12 @@ EXPLAIN SELECT tc.phone FROM teacher_contact tc WHERE tcid = (
 
 可以看到有这么几列:
 
-- id 查询序列编号。
-- select type 查询类型
-- type 连接类型
-- possible_key、key
-- key_len
-- rows
+- **id 查询序列编号**
+- **select type 查询类型**
+- **type 连接类型**
+- **possible_key、key**
+- **key_len**
+- **rows**
 - filtered
 - ref , 使用哪个列或者常数和索引一起从表中筛选数据。
 - Extra , 执行计划给出的额外的信息说明。
@@ -329,9 +338,9 @@ id 也都是 1，但是从上往下查询顺序变成了:
 
 举例:假如有 a、b、c 三张表，分别有 2、3、4 条数据，如果做三张表的联合查询， 
 
-当查询顺序是 a→b→c 的时候，它的笛卡尔积是:`2*3*4=6*4=24`。
+- 当查询顺序是 a→b→c 的时候，它的笛卡尔积是:`2*3*4=6*4=24`。
 
-如果查询顺序是 c →b→a，它的笛卡尔积是 `4*3*2=12*2=24`。
+- 如果查询顺序是 c →b→a，它的笛卡尔积是 `4*3*2=12*2=24`。
 
 因为 MySQL 要把查询的结果，包括中间结果和最终结果都保存到内存，所以 MySQL 会优先选择中间结果数据量比较小的顺序进行查询。所以最终联表查询的顺序是 a→b→ c。这个就是为什么 teacher 表插入数据以后查询顺序会发生变化。
 
@@ -343,7 +352,7 @@ id 也都是 1，但是从上往下查询顺序变成了:
 
 #### select type 查询类型
 
-这里并没有列举全部(其它:DEPENDENT UNION、DEPENDENT SUBQUERY、 MATERIALIZED、UNCACHEABLE SUBQUERY、UNCACHEABLE UNION)。
+这里并没有列举全部(其它: DEPENDENT UNION、DEPENDENT SUBQUERY、 MATERIALIZED、UNCACHEABLE SUBQUERY、UNCACHEABLE UNION)。
 
 - SIMPLE , 简单查询，不包含子查询，不包含关联查询 union。
 - PRIMARY 子查询 SQL 语句中的主查询，也就是最外面的那层查询。
@@ -369,9 +378,9 @@ WHERE
 ```
 EXPLAIN SELECT cr.cname
 FROM (
-SELECT * FROM course WHERE tid = 1 
+	SELECT * FROM course WHERE tid = 1 
 UNION
-SELECT * FROM course WHERE tid = 2 
+	SELECT * FROM course WHERE tid = 2 
 ) cr;
 ```
 
@@ -389,10 +398,11 @@ SELECT * FROM course WHERE tid = 2
 
 ### type 连接类型
 
-https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain-join-types
+> https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain-join-types
+
 所有的连接类型中，上面的最好，越往下越差。
 
-在常用的链接类型中:**system > const > eq_ref > ref > range > index > all**
+在常用的链接类型中: **system > const > eq_ref > ref > range > index > all**
 
 这 里 并 没 有 列 举 全 部 ( 其 他 : fulltext 、 ref_or_null 、 index_merger 、
 unique_subquery、index_subquery)。
@@ -409,37 +419,38 @@ unique_subquery、index_subquery)。
 
 - eq_ref
 
-  通常出现在多表的 join 查询，表示对于前表的每一个结果,，都只能匹配到后表的 一行结果。一般是唯一性索引的查询(UNIQUE 或 PRIMARY KEY)。
-  eq_ref 是除 const 之外最好的访问类型。
-
+  通常出现在多表的 join 查询，表示对于前表的每一个结果,都只能匹配到后表的一行结果。一般是唯一性索引的查询(UNIQUE 或 PRIMARY KEY)。
+  
+eq_ref 是除 const 之外最好的访问类型。
+  
   ```
   先删除 teacher 表中多余的数据，teacher_contact 有 3 条数据，teacher 表有 3 条数据。
   DELETE FROM teacher where tid in (4,5,6); commit;
   ​
   -- 备份
   INSERT INTO `teacher` VALUES (4, 'james', 4); INSERT INTO `teacher` VALUES (5, 'tom', 5); INSERT INTO `teacher` VALUES (6, 'seven', 6); commit;
-  ```
-
-  为 teacher_contact 表的 tcid(第一个字段)创建主键索引。
-
+```
+  
+为 teacher_contact 表的 tcid(第一个字段)创建主键索引。
+  
   ```
   -- ALTER TABLE teacher_contact DROP PRIMARY KEY;
   ALTER TABLE teacher_contact ADD PRIMARY KEY(tcid);
-  ```
-
-  为 teacher 表的 tcid(第三个字段)创建普通索引。
-
+```
+  
+为 teacher 表的 tcid(第三个字段)创建普通索引。
+  
   ```
   -- ALTER TABLE teacher DROP INDEX idx_tcid;
   ALTER TABLE teacher ADD INDEX idx_tcid (tcid);
-  ```
-
-  执行以下 SQL 语句:
-
+```
+  
+执行以下 SQL 语句:
+  
   ```
   select t.tcid from teacher t,teacher_contact tc where t.tcid = tc.tcid;
-  ```
-
+```
+  
   ![image-20200315202232739](assets/image-20200315202232739.png)
 
 以上三种 system，const，eq_ref，都是可遇而不可求的，基本上很难优化到这个 状态。
@@ -461,7 +472,9 @@ explain SELECT * FROM teacher where tcid = 3;
 
 索引范围扫描。
 
-如果where后面是 betweenand 或 <或 > 或 >= 或 <=或in这些，type类型就为 range。 不走索引一定是全表扫描(ALL)，所以先加上普通索引。
+如果where后面是 `between, and, <, >, >=, <=, in这些`，type类型就为 range。 
+
+不走索引一定是全表扫描(ALL)，所以先加上普通索引。
 
 ```
 -- ALTER TABLE teacher DROP INDEX idx_tid;
@@ -477,6 +490,8 @@ EXPLAIN SELECT * FROM teacher t WHERE tid BETWEEN 1 AND 2;
 ```
 
 ![image-20200315202438809](assets/image-20200315202438809.png)
+
+
 
 IN 查询也是 range(字段有主键索引)
 
@@ -533,6 +548,8 @@ explain select phone from user_innodb where phone='126';
 
 ![image-20200315202740181](assets/image-20200315202740181.png)
 
+
+
 结论:是有可能的(这里是覆盖索引的情况)。
 
 如果通过分析发现没有用到索引，就要检查 SQL 或者创建索引。
@@ -547,8 +564,7 @@ MySQL 认为扫描多少行才能返回请求的数据，是一个预估值。�
 
 ### filtered
 
-这个字段表示存储引擎返回的数据在 server 层过滤后，剩下多少满足查询的记录数
-量的比例，它是一个百分比。
+这个字段表示存储引擎返回的数据在 server 层过滤后，剩下多少满足查询的记录数量的比例，它是一个百分比。
 
 ### ref
 
@@ -559,9 +575,9 @@ MySQL 认为扫描多少行才能返回请求的数据，是一个预估值。�
 执行计划给出的额外的信息说明。
 
 - using index ,  用到了覆盖索引，不需要回表。
-- using where , 
+- using where , 使用了 where 过滤，表示存储引擎返回的记录并不是所有的都满足查询条件，需要 在 server 层进行过滤(跟是否使用索引没有关系)。
 
-使用了 where 过滤，表示存储引擎返回的记录并不是所有的都满足查询条件，需要 在 server 层进行过滤(跟是否使用索引没有关系)。
+
 
 ```
 EXPLAIN select * from user_innodb where phone ='13866667777';
@@ -569,11 +585,9 @@ EXPLAIN select * from user_innodb where phone ='13866667777';
 
 ![image-20200315202947991](assets/image-20200315202947991.png)
 
-- Using index condition(索引条件下推)
+- using index condition (索引条件下推)
 
-- using filesort
-
-不能使用索引来排序，用到了额外的排序(跟磁盘或文件没有关系)。需要优化。 (复合索引的前提)
+- using filesort 不能使用索引来排序，用到了额外的排序(跟磁盘或文件没有关系)。需要优化。 (复合索引的前提)
 
 ```
 ALTER TABLE user_innodb DROP INDEX comidx_name_phone;
@@ -612,3 +626,4 @@ SELECT * FROM user_innodb WHERE id >= 900000 LIMIT 10;
 ```
 
 对于具体的 SQL 语句的优化，MySQL 官网也提供了很多建议，这个是我们在分析 具体的 SQL 语句的时候需要注意的，也是大家在以后的工作里面要去慢慢地积累的(这 里我们就不一一地分析了)。
+
