@@ -17,7 +17,9 @@ InnoDB 使用了一种缓冲池的技术，也就是把磁盘读到的页放到�
 ![image-20200313211144619](assets/image-20200313211144619.png)
 
 下一次读取相同的页，先判断是不是在缓冲池里面，如果是，就直接读取，不用再次访问磁盘。
+
 修改数据的时候，先修改缓冲池里面的页。内存的数据页和磁盘数据不一致的时候， 我们把它叫做脏页。InnoDB 里面有专门的后台线程把 Buffer Pool 的数据写入到磁盘， 每隔一段时间就一次性地把多个修改写入磁盘，这个动作就叫做刷脏。
+
 Buffer Pool 是 InnoDB 里面非常重要的一个结构，它的内部又分成几块区域。这里 我们趁机到官网来认识一下 InnoDB 的内存结构和磁盘结构。
 
 ## InnoDB 内存结构和磁盘结构
@@ -26,7 +28,7 @@ Buffer Pool 是 InnoDB 里面非常重要的一个结构，它的内部又分成
 
 ### 内存结构
 
-Buffer Pool 主要分为 3 个部分: `Buffer Pool`、`Change Buffer`、`Adaptive Hash Index`，另外还有一个(redo)log buffer。
+Buffer Pool 主要分为 3 个部分: `Buffer Pool`、`Change Buffer`、`Adaptive Hash Index`，另外还有一个(redo) log buffer。
 
 #### Buffer Pool
 
@@ -66,14 +68,14 @@ SHOW VARIABLES LIKE 'innodb_change_buffer_max_size';
 
 #### Adaptive Hash Index
 
-#### (redo)Log Buffer
+#### (redo) Log Buffer
 
 思考一个问题:如果 Buffer Pool 里面的脏页还没有刷入磁盘时，数据库宕机或者重 启，这些数据丢失。如果写操作写到一半，甚至可能会破坏数据文件导致数据库不可用。
-为了避免这个问题，InnoDB 把所有对页面的修改操作专门写入一个日志文件，并且 在数据库启动时从这个文件进行恢复操作(实现 crash-safe)——用它来实现事务的持 久性。
+为了避免这个问题，InnoDB 把所有对页面的修改操作专门写入一个日志文件，并且 在数据库启动时从这个文件进行恢复操作(实现 crash-safe)——用它来实现事务的持久性。
 
 ![image-20200313211659949](assets/image-20200313211659949.png)
 
-这个文件就是磁盘的 redo log(叫做重做日志)，对应于/var/lib/mysql/目录下的 ib_logfile0 和 ib_logfile1，每个 48M。
+这个文件就是磁盘的 redo log (叫做重做日志)，对应于/var/lib/mysql/目录下的 ib_logfile0 和 ib_logfile1，每个 48M。
 
 这种日志和磁盘配合的整个过程，其实就是 MySQL 里的 WAL 技术 (Write-Ahead Logging)，它的关键点就是先写日志，再写磁盘。
 
@@ -96,7 +98,7 @@ show variables like 'innodb_log%';
 
 假设我们已经找到了第一块数据，并且其他所需的数据就在这一块数据后边，那么就不需要重新寻址，可以依次拿到我们所需的数据，这个就叫顺序 IO。
 
-刷盘是随机 I/O，而记`录日志是顺序 I/O，顺序 I/O 效率更高。因此先把修改写入日志，可以延迟刷盘时机，进而提升系统吞吐。
+刷盘是随机 I/O，而记录日志是顺序 I/O，顺序 I/O 效率更高。因此先把修改写入日志，可以延迟刷盘时机，进而提升系统吞吐。
 
 当然 redo log 也不是每一次都直接写入磁盘，在 Buffer Pool 里面有一块内存区域 (Log Buffer)专门用来保存即将要写入日志文件的数据，默认 16M，它一样可以节省 磁盘 IO。
 
@@ -107,7 +109,9 @@ SHOW VARIABLES LIKE 'innodb_log_buffer_size';
 ```
 
 需要注意:redo log 的内容主要是用于崩溃恢复。磁盘的数据文件，数据来自 buffer pool。redo log 写入磁盘，不是写入数据文件。
+
 那么，Log Buffer 什么时候写入 log file?
+
 在我们写入数据到磁盘的时候，操作系统本身是有缓存的。flush 就是把操作系统缓 冲区写入到磁盘。
 
 log buffer 写入磁盘的时机，由一个参数控制，默认是 1。
@@ -118,7 +122,7 @@ SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit';
 
 - 0(延迟写)
   log buffer 将每秒一次地写入 log file 中，并且 log file 的 flush 操作同时进行。 该模式下，在事务提交的时候，不会主动触发写入磁盘的操作。
-- 1(默认，实时 写，实时刷)
+- 1(默认，实时写，实时刷)
   每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file，并且刷到磁盘 中去。
 - 2(实时写，延 迟刷)
   每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file。但是 flush 操 作并不会同时进行。该模式下，MySQL 会每秒执行一次 flush 操作。
@@ -141,7 +145,7 @@ Buffer pool、change buffer、Adaptive Hash Index、 log buffer。
 
 ## 磁盘结构
 
-表空间可以看做是 InnoDB 存储引擎逻辑结构的最高层，所有的数据都存放在表空 间中。InnoDB 的表空间分为 5 大类。
+表空间可以看做是 InnoDB 存储引擎逻辑结构的最高层，所有的数据都存放在表空间中。InnoDB 的表空间分为 5 大类。
 
 #### 系统表空间 system tablespace
 
@@ -153,7 +157,7 @@ InnoDB 系统表空间包含 InnoDB 数据字典和双写缓冲区，Change Buff
 
 2、数据字典:由内部系统表组成，存储表和索引的元数据(定义信息)。 
 
-3、双写缓冲(InnoDB 的一大特性):
+3、双写缓冲(InnoDB 的一大特性)。
 
 InnoDB 的页和操作系统的页大小不一致，InnoDB 页大小一般为 16K，操作系统页 大小为 4K，InnoDB 的页写入到磁盘时，一个页需要分 4 次写。
 
@@ -169,7 +173,7 @@ show variables like 'innodb_doublewrite';
 
 跟 redo log 一样，double write 由两部分组成，一部分是内存的 double write，一个部分是磁盘上的 double write。因为 double write 是顺序写入的，不会带来很大的 开销。
 
-在默认情况下，所有的表共享一个系统表空间，这个文件会越来越大，而且它的空 间不会收缩。
+在默认情况下，所有的表共享一个系统表空间，这个文件会越来越大，而且它的空间不会收缩。
 
 #### 独占表空间 file-per-table tablespaces
 
@@ -216,9 +220,11 @@ drop tablespace ts2673;
 
 #### undo log tablespace
 
-`undolog`( 撤 销 日 志 或 回 滚 日 志 )记 录 了 事 务 发 生 之 前 的 数 据 状 态( 不 包 括 `select` )。 如果修改数据时出现异常，可以用 undo log 来实现回滚操作(保持原子性)。
+`undolog`( 撤 销 日 志 或 回 滚 日 志 )记 录 了 **事 务 发 生 之 前** 的 数 据 状 态( 不 包 括 `select` )。 如果修改数据时出现异常，可以用 undo log 来实现回滚操作(保持原子性)。
+
 在执行 undo 的时候，仅仅是将数据从逻辑上恢复至事务之前的状态，而不是从物 理页面上操作实现的，属于逻辑格式的日志。
-redo Log 和 `undo Log` 与事务密切相关，统称为事务日志。
+
+`redo Log` 和 `undo Log` 与事务密切相关，统称为事务日志。
 undo Log 的数据默认在系统表空间 ibdata1 文件中，因为共享表空间不会自动收 缩，也可以单独创建一个 undo 表空间。
 
 ```
@@ -236,8 +242,12 @@ update user set name = 'penyuyan' where id=1;
 1、事务开始，从内存或磁盘取到这条数据，返回给 Server 的执行器; 
 
 2、执行器修改这一行数据的值为 penyuyan;
+
 3、记录 name=qingshan 到 undo log;
-4、记录 name=penyuyan 到 redo log; 5、调用存储引擎接口，在内存(Buffer Pool)中修改 name=penyuyan; 6、 事务提交。
+
+4、记录 name=penyuyan 到 redo log; 5、调用存储引擎接口，在内存(Buffer Pool)中修改 name=penyuyan; 
+
+6、 事务提交。
 
 内存和磁盘之间，工作着很多后台线程。
 
@@ -255,8 +265,12 @@ binlog，它可以被所有的存储引擎使用。
 
 #### Binlog
 
-binlog 以事件的形式记录了所有的 DDL 和 DML 语句(因为它记录的是操作而不是 数据值，属于逻辑日志)，可以用来做主从复制和数据恢复。
+一般用于主从复制
+
+**binlog 以事件的形式记录了所有的 DDL 和 DML 语句(因为它记录的是操作而不是 数据值，属于逻辑日志)，可以用来做主从复制和数据恢复。**
+
 跟 redo log 不一样，它的文件内容是可以追加的，没有固定大小限制。
+
 在开启了 binlog 功能的情况下，我们可以把 binlog 导出成 SQL 语句，把所有的操 作重放一遍，来实现数据的恢复。
 binlog 的另一个功能就是用来实现主从复制，它的原理就是从服务器读取主服务器 的 binlog，然后执行一遍。
 

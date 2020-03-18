@@ -4,18 +4,18 @@
 
 ##  模块详解
 
-- Connector:用来支持各种语言和 SQL 的交互，比如 PHP，Python，Java 的 JDBC;
-- Management Serveices & Utilities:系统管理和控制工具，包括备份恢复,MySQL 复制、集群等等;
-- Connection Pool:连接池，管理需要缓冲的资源，包括用户密码权限线程等
-- SQL Interface:用来接收用户的 SQL 命令，返回用户需要的查询结果
-- Parser:用来解析 SQL 语句;
-- Optimizer:查询优化器;
-- Cache and Buffer:查询缓存，除了行记录的缓存之外，还有表缓存，Key 缓存，权限缓存等等;
+- Connector: 用来支持各种语言和 SQL 的交互，比如 PHP，Python，Java 的 JDBC;
+- Management Serveices & Utilities: 系统管理和控制工具，包括备份恢复,MySQL 复制、集群等等;
+- Connection Pool: 连接池，管理需要缓冲的资源，包括用户密码权限线程等
+- SQL Interface: 用来接收用户的 SQL 命令，返回用户需要的查询结果
+- Parser: 用来解析 SQL 语句;
+- Optimizer: 查询优化器;
+- Cache and Buffer: 查询缓存，除了行记录的缓存之外，还有表缓存，Key 缓存，权限缓存等等;
 -  Pluggable Storage Engines:插件式存储引擎，它提供 API 给服务层使用，跟具体的文件打交道。
 
 ## 架构分层
 
-总体上，我们可以把 MySQL 分成三层，跟客户端对接的连接层，真正执行操作的服 务层，和跟硬件打交道的存储引擎层(参考 MyBatis:接口、核心、基础)
+总体上，我们可以把 MySQL 分成三层，跟客户端对接的连接层，真正执行操作的服务层，和跟硬件打交道的存储引擎层(参考 **MyBatis:接口**、**核心**、**基础**)
 
 ![image-20200313210106783](assets/image-20200313210106783.png)
 

@@ -24,10 +24,9 @@ create table m3 ( name varchar(50), fulltext index(name) );
 
 全文索引的使用:
 
-```
+```sql
 select * from fulltext_test where match(content) against('咕泡学院' IN NATURAL LANGUAGE MODE);
 ```
 
 MyISAM 和 InnoDB 支持全文索引。
 
-## 
