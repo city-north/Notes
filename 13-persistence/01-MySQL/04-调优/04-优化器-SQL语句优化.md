@@ -421,36 +421,37 @@ unique_subquery、index_subquery)。
 
   通常出现在多表的 join 查询，表示对于前表的每一个结果,都只能匹配到后表的一行结果。一般是唯一性索引的查询(UNIQUE 或 PRIMARY KEY)。
   
+
 eq_ref 是除 const 之外最好的访问类型。
-  
+
   ```
   先删除 teacher 表中多余的数据，teacher_contact 有 3 条数据，teacher 表有 3 条数据。
   DELETE FROM teacher where tid in (4,5,6); commit;
   ​
   -- 备份
   INSERT INTO `teacher` VALUES (4, 'james', 4); INSERT INTO `teacher` VALUES (5, 'tom', 5); INSERT INTO `teacher` VALUES (6, 'seven', 6); commit;
-```
-  
+  ```
+
 为 teacher_contact 表的 tcid(第一个字段)创建主键索引。
-  
+
   ```
   -- ALTER TABLE teacher_contact DROP PRIMARY KEY;
   ALTER TABLE teacher_contact ADD PRIMARY KEY(tcid);
-```
-  
+  ```
+
 为 teacher 表的 tcid(第三个字段)创建普通索引。
-  
+
   ```
   -- ALTER TABLE teacher DROP INDEX idx_tcid;
   ALTER TABLE teacher ADD INDEX idx_tcid (tcid);
-```
-  
+  ```
+
 执行以下 SQL 语句:
-  
+
   ```
   select t.tcid from teacher t,teacher_contact tc where t.tcid = tc.tcid;
-```
-  
+  ```
+
   ![image-20200315202232739](assets/image-20200315202232739.png)
 
 以上三种 system，const，eq_ref，都是可遇而不可求的，基本上很难优化到这个 状态。
