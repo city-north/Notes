@@ -4,9 +4,34 @@
 
   可以用来存储字符串、整数、浮点数。
 
-## 操作命令
 
-### 操作
+
+| 序号 | 命令        | 描述                                                         | 实例                                    |
+| ---- | ----------- | ------------------------------------------------------------ | --------------------------------------- |
+| 1    | set         | 指定 key 的值                                                |                                         |
+| 2    | get         | 获取指定 key的值                                             |                                         |
+| 3    | getrange    | 返回 key 中字符的子字符                                      | [getrange.md](string/getrange.md)       |
+| 4    | getset      | 将给定的key 的值设为 value,并返回 key 的旧值                 | [getset.md](string/getset.md)           |
+| 5    | getbit      | 对 key 所存储字符串值,获取指定偏移量上的位                   | [getbit.md](string/getbit.md)           |
+| 6    | mget        | 获取所有一个或多个给定 key 的值                              | [mget.md](string/mget.md)               |
+| 7    | setbit      | 对 key 所储存的字符串量,设置或清除指定偏移量上的位           | [setbit.md](string/setbit.md)           |
+| 8    | setex       | 将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。 | [setex.md](string/setex.md)             |
+| 9    | setnx       | 只有在 key 不存的设置 key的值                                | [setnx.md](string/setnx.md)             |
+| 10   | setrange    | 用 value 参数复写给定 key 所储存的字符串值,从偏移量 offset开始 | [setrange.md](string/setrange.md)       |
+| 11   | strlen      | 返回 key 所储存的字符串值的长度。                            | [strlen.md](string/strlen.md)           |
+| 12   | mset        | 同时设置一个或多个 key-value 对。                            | [mset.md](string/mset.md)               |
+| 13   | msetnx      | 同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。 | [msetnx.md](string/msetnx.md)           |
+| 14   | psetex      | 这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。 | [psetex.md](string/psetex.md)           |
+| 15   | incr        | 将 key 中储存的数字值增一                                    | [incr.md](string/incr.md)               |
+| 16   | Incrby      | 将 key 所储存的值加上给定的增量值（increment）               | [incrby.md](string/incrby.md)           |
+| 17   | incrbyfloat | 将 key 所储存的值加上给定的浮点增量值（increment）           | [incrbyfloat.md](string/incrbyfloat.md) |
+| 18   | decr        | 将 key 中储存的数字值减一                                    | [decr.md](string/decr.md)               |
+| 19   | decrby      | key 所储存的值减去给定的减量值（decrement)                   | [decrby.md](string/decrby.md)           |
+| 20   | append      | 如果 key 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾。 | [append.md](string/append.md)           |
+
+
+
+## 操作命令
 
 #### MSET
 
@@ -46,7 +71,7 @@ redis> GET job                   # 没有被覆盖
 
 加过期时间。单独用 expire 加过期, 也失败了,无法保证原子性,怎么办? 多参数
 
-## SET
+#### SET
 
 ```
 set key value [expiration EX seconds|PX milliseconds][NX|XX]
@@ -63,7 +88,7 @@ set lock1 1 EX 10 NX
 - `NX` ： 只在键不存在时， 才对键进行设置操作。 执行 `SET key value NX` 的效果等同于执行 `SETNX key value` 。
 - `XX` ： 只在键已经存在时， 才对键进行设置操作。
 
-## SETEX 设置值并设置失效时间
+#### SETEX 设置值并设置失效时间
 
 将键 `key` 的值设置为 `value` ， 并将键 `key` 的生存时间设置为 `seconds` 秒钟。
 
@@ -78,11 +103,11 @@ EXPIRE key seconds  # 设置生存时间
 
 `SETEX` 和这两个命令的不同之处在于 `SETEX` 是一个原子（atomic）操作， 它可以在同一时间内完成设置值和设置过期时间这两个操作， 因此 `SETEX` 命令在储存缓存的时候非常实用。
 
-### 返回值
+##### 返回值
 
 命令在设置成功时返回 `OK` 。 当 `seconds` 参数不合法时， 命令将返回一个错误。
 
-### 代码示例
+##### 代码示例
 
 ```java
 在键 key 不存在的情况下执行 SETEX ：
@@ -113,15 +138,15 @@ redis> TTL cd
 (integer) 2997
 ```
 
-## PSETEX 值 毫秒值
+#### PSETEX 值 毫秒值
 
 这个命令和 `SETEX` 命令相似， 但它以毫秒为单位设置 `key` 的生存时间， 而不是像 `SETEX` 命令那样以秒为单位进行设置。
 
-#### 返回值
+##### 返回值
 
 命令在设置成功时返回 `OK` 。
 
-#### 代码示例
+##### 代码示例
 
 ```
 redis> PSETEX mykey 1000 "Hello"
