@@ -28,18 +28,18 @@ redis 127.0.0.1:6379> SMEMBERS runoobkey
 
 | 序号 | 命令及描述  |                                                     |
 | :--- | :---------- | --------------------------------------------------- |
-| 1    | SADD        | 向集合添加一个或多个成员                            |
-| 2    | SCARD       | 获取集合的成员数                                    |
-| 3    | SDIFF       | 返回给定所有集合的差集                              |
-| 4    | SDIFFSTORE  | 返回给定所有集合的差集并存储在 destination 中       |
-| 5    | SINTER      | 返回给定所有集合的交集                              |
-| 6    | SINTERSTORE | 返回给定所有集合的交集并存储在 destination 中       |
-| 7    | SISMEMBER   | 判断 member 元素是否是集合 key 的成员               |
-| 8    | SMEMBERS    | 返回集合中的所有成员                                |
-| 9    | SMOVE       | 将 member 元素从 source 集合移动到 destination 集合 |
-| 10   | SPOP        | 移除并返回集合中的一个随机元素                      |
-| 11   | SRANDMEMBER | 返回集合中一个或多个随机数                          |
-| 12   | SREM        | 移除集合中一个或多个成员                            |
-| 13   | SUNION      | 返回所有给定集合的并集                              |
-| 14   | SUNIONSTORE | 所有给定集合的并集存储在 destination 集合中         |
-| 15   | SSCAN       | 迭代集合中的元素                                    |
+| 1    | sadd        | 向集合添加一个或多个成员                            |
+| 2    | scard       | 获取集合的成员数                                    |
+| 3    | sdiff       | 返回给定所有集合的差集                              |
+| 4    | sdiffstore  | 返回给定所有集合的差集并存储在 destination 中       |
+| 5    | sinter      | 返回给定所有集合的交集                              |
+| 6    | sinterstore | 返回给定所有集合的交集并存储在 destination 中       |
+| 7    | sismember   | 判断 member 元素是否是集合 key 的成员               |
+| 8    | smembers    | 返回集合中的所有成员                                |
+| 9    | smove       | 将 member 元素从 source 集合移动到 destination 集合 |
+| 10   | spop        | 移除并返回集合中的一个随机元素                      |
+| 11   | srandmember | 返回集合中一个或多个随机数                          |
+| 12   | srem        | 移除集合中一个或多个成员                            |
+| 13   | sunion      | 返回所有给定集合的并集                              |
+| 14   | sunionstore | 所有给定集合的并集存储在 destination 集合中         |
+| 15   | sscan       | 迭代集合中的元素                                    |

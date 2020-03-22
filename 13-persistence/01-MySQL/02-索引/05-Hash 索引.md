@@ -20,10 +20,6 @@ https://dev.mysql.com/doc/refman/5.7/en/innodb-introduction.html
 InnoDB utilizes hash indexes internally for its Adaptive Hash Index feature
 ```
 
-
-
-
-
 直接翻译过来就是:InnoDB 内部使用哈希索引来实现自适应哈希索引特性。
 
 这句话的意思是 InnoDB 只支持显式创建 B+Tree 索引，**对于一些热点的数据页**， InnoDB 会自动建立自适应 Hash 索引，也就是在 B+Tree 索引基础上建立 Hash 索引， 这个过程对于客户端是不可控制的，隐式的。
