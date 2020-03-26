@@ -16,8 +16,8 @@ public class HelloWorld {
 	  ThreadInfo[] infos = threadMXBean.dumpAllThreads(false,false);
 		//遍历线程信息，仅打印线程ID和线程名称
 	  for(ThreadInfo info : infos){
-	  	System.out.println("[" + info.getThreadId() + "]" + info.getThreadName());
-	  }
+        System.out.println("[" + info.getThreadId() + "]" + info.getThreadName());
+	  	}
     }
 }
 ```
@@ -26,7 +26,7 @@ public class HelloWorld {
 ```java
 [4]Signal Dispatcher	//分发处理发送给JVM信号的线程
 [3]Finalizer					//调用对象finalize方法的线程
-[2]Reference Handler	//清楚Reference的线程
+[2]Reference Handler	//清除Reference的线程
 [1]main								//main线程、用户程序入口
 ```
 可以看出，一个Java程序的运行不仅仅是main()方法的运行，而是main线程和多个其他线程共同运行。
@@ -45,7 +45,7 @@ public class HelloWorld {
 
 
 - 调用`start()`方法开始运行。
-- 当前线程执行wait()方法后，线程进入等待状态。
+- 当前线程执行`wait()`方法后，线程进入等待状态。
 - 进入等待状态的线程需要依靠其他线程的通知才能够返回到运行状态。
 - 超时等待状态相当于在等待状态的基础上增加了超时限制。
 - 超时时间到达时将会返回到运行状态
@@ -74,4 +74,5 @@ Daemin线程被用作完成支持性工作，但是在Java虚拟机退出时Daem
 不会输出DaemonThread ...,因为main线程（非Daemon线程）在启动了线程DaemonRunner之后随着main方法执行完毕而终止，而此时Java虚拟机已经没有非Daemon线程，虚拟机需要退出，Java虚拟机中的所有Daemon线程都需要立刻终止，因此DaemonRunner立即终止，但是DaemonRunner中的finally块并没有执行。
 
 所以：
-**在构建Daemon线程时，不能依靠`finally`块中的内容确保执行关闭或者清理资源的逻辑**`
+**在构建Daemon线程时，不能依靠`finally`块中的内容确保执行关闭或者清理资源的逻辑**
+

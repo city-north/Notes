@@ -31,9 +31,9 @@ Java 的并发采用的是共享内存模型,Java 线程之间通讯总是隐式
 
 以下不会再线程之间共享,所以不会有内存可见性的问题
 
-- 局部变量(LocalVariable)
-- 方法定义参数(Formal Method Parameters)
-- 异常处理参数(Exception Handler Parameters)
+- 局部变量 (LocalVariable)
+- 方法定义参数 (Formal Method Parameters)
+- 异常处理参数 (Exception Handler Parameters)
 
 #### JMM 的抽象
 
@@ -126,4 +126,21 @@ int rs=a*b; //3
 | StoreStoreBarriers | Store1;storestore;store2     | 确保 store1数据对其他处理器可见优先于 store2 以及所有后续存储指令的存储 |
 | LoadStoreBarriers  | `load1`;`loadstore`;`store2` | 确保`load1`数据装载优先于 `store2`以及后续的存储指令刷新到内存 |
 | StoreLoadBarriers  | `store1`;`storeload`;`load2` | 确保 store1 数据对其他处理器变得可见,优先于 load2 以及所有后续装载指令的装载;这条内存屏障指令是一个全能型的屏障 |
+
+
+
+> java的内存屏障通常所谓的四种即`LoadLoad`,`StoreStore`,`LoadStore`,`StoreLoad`实际上也是上述两种的组合，完成一系列的屏障和数据同步功能。
+>
+> LoadLoad屏障：对于这样的语句Load1; LoadLoad; Load2，在Load2及后续读取操作要读取的数据被访问前，保证Load1要读取的数据被读取完毕。
+>
+> StoreStore屏障：对于这样的语句Store1; StoreStore; Store2，在Store2及后续写入操作执行前，保证Store1的写入操作对其它处理器可见。
+>
+> LoadStore屏障：对于这样的语句Load1; LoadStore; Store2，在Store2及后续写入操作被刷出前，保证Load1要读取的数据被读取完毕。
+>
+> StoreLoad屏障：对于这样的语句Store1; StoreLoad; Load2，在Load2及后续所有读取操作执行前，保证Store1的写入对所有处理器可见。***它的开销是四种屏障中最大的。在大多数处理器的实现中，这个屏障是个万能屏障，兼具其它三种内存屏障的功能\***
+>
+> 作者：Rinoux
+> 链接：https://www.jianshu.com/p/2ab5e3d7e510
+> 来源：简书
+> 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
