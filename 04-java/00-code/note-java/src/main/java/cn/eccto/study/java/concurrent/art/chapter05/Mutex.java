@@ -81,7 +81,7 @@ public class Mutex {
                 throw new IllegalArgumentException();
             }
             setExclusiveOwnerThread(null);
-            setState(0);
+            setState(0);//更新状态
             return true;
         }
 

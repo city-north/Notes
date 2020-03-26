@@ -62,3 +62,4 @@ if (condition.await(1, TimeUnit.SECOND)) {
 - `Condition`可以替代`wait`和`notify`；
 - `Condition`对象必须从`Lock`对象获取。
 
+![image-20200326221118794](assets/image-20200326221118794.png)
