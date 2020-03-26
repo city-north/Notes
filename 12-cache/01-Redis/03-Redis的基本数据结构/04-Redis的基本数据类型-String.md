@@ -210,9 +210,13 @@ getrange qingshan 0 8
 
 ## 存储(实现)原理
 
+Redis 中的字符串叫做"SDS", 也就是 Simple Dynamic String , 它本质上是一个 **带长度信息的字节数组**
+
 #### 数据模型
 
-`set hello word `为例，因为 Redis 是 KV 的数据库，它是通过 hashtable 实现的(我 们把这个叫做外层的哈希)。所以每个键值对都会有一个 dictEntry(源码位置:dict.h)， 里面指向了 key 和 value 的指针。next 指向下一个 dictEntry。
+`set hello word `为例，因为 Redis 是 KV 的数据库，它是通过 hashtable 实现的(我们把这个叫做外层的哈希)。所以每个键值对都会有一个 dictEntry(源码位置:dict.h)， 里面指向了 key 和 value 的指针。
+
+next 指向下一个 dictEntry。
 
 ```
 typedef struct dictEntry {
