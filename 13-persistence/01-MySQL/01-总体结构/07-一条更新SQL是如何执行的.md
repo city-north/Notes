@@ -10,7 +10,7 @@
 
 ## 缓冲池 Buffer Pool
 
-InnnoDB 的数据都是放在磁盘上的，InnoDB 操作数据有一个最小的逻辑单 位，叫做页(索引页和数据页)。我们对于数据的操作，不是每次都直接操作磁盘，因为磁盘的速度太慢了。
+InnnoDB 的数据都是放在磁盘上的，InnoDB 操作数据有一个最小的逻辑单位，叫做页(索引页和数据页)。我们对于数据的操作，不是每次都直接操作磁盘，因为磁盘的速度太慢了。
 
 InnoDB 使用了一种缓冲池的技术，也就是把磁盘读到的页放到一 块内存区域里面。这个内存区域就叫 Buffer Pool。
 
@@ -28,7 +28,7 @@ Buffer Pool 是 InnoDB 里面非常重要的一个结构，它的内部又分成
 
 ### 内存结构
 
-Buffer Pool 主要分为 3 个部分: `Buffer Pool`、`Change Buffer`、`Adaptive Hash Index`，另外还有一个(redo) log buffer。
+Buffer Pool 主要分为 3 个部分: `Buffer Pool`、`Change Buffer`、`Adaptive Hash Index`，另外还有一个`(redo) log buffer`。
 
 #### Buffer Pool
 
@@ -36,7 +36,7 @@ Buffer Pool 缓存的是页面信息，包括数据页、索引页。 查看服�
 
 ![image-20200313211502350](assets/image-20200313211502350.png)
 
-Buffer Pool 默认大小是 128M(134217728 字节)，可以调整。
+`Buffer Pool` 默认大小是 `128M(134217728 字节)`，可以调整。
 
 查看参数(系统变量):
 
@@ -57,7 +57,10 @@ SHOW VARIABLES like '%innodb_buffer_pool%';
 
 如果这个数据页不是唯一索引，不存在数据重复的情况，也就不需要从磁盘加载索 引页判断数据是不是重复(唯一性检查)。这种情况下可以先把修改记录在内存的缓冲 池中，从而提升更新语句(Insert、Delete、Update)的执行速度。
 这一块区域就是 Change Buffer。5.5 之前叫 Insert Buffer 插入缓冲，现在也能支 持 delete 和 update。
-最后把 Change Buffer 记录到数据页的操作叫做 merge。什么时候发生 merge? 有几种情况:在访问这个数据页的时候，或者通过后台线程、或者数据库 shut down、 redo log 写满时触发。
+最后把 Change Buffer 记录到数据页的操作叫做 merge。什么时候发生 merge? 有几种情况:
+
+在访问这个数据页的时候，或者通过后台线程、或者数据库 shut down、 redo log 写满时触发。
+
 如果数据库大部分索引都是非唯一索引，并且业务是写多读少，不会在写数据后立 刻读取，就可以使用 Change Buffer(写缓冲)。写多读少的业务，调大这个值:
 
 ```
@@ -67,6 +70,8 @@ SHOW VARIABLES LIKE 'innodb_change_buffer_max_size';
 代表 Change Buffer 占 Buffer Pool 的比例，默认 25%。
 
 #### Adaptive Hash Index
+
+专门把一种哈希的索引放到内存
 
 #### (redo) Log Buffer
 
@@ -126,6 +131,8 @@ SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit';
   每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file，并且刷到磁盘 中去。
 - 2(实时写，延 迟刷)
   每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file。但是 flush 操 作并不会同时进行。该模式下，MySQL 会每秒执行一次 flush 操作。
+
+
 
 ![image-20200313211941999](assets/image-20200313211941999.png)
 
