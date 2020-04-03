@@ -12,6 +12,8 @@
 - 监视器锁规则: 对一个锁的解锁, happens-before 于随后对这个锁加锁
 - volatile 变量规则: 对一个 volatile 域的写,happens-before 于任意后续对这个 volatile 域的读
 - 传递性: 如果 A happens-before B , 且 B happens-before C , 那么 A 一定 happens-before C
+- start 规则:  如果线程 A执行操作 ThreadB.start(),那么A 线程的 ThreadB.start()操作happen-before 线程 B 中的任意操作
+- join 规则: 如果线程 A 执行ThreadB.join().那么线程 B 中的任意操作 happen-before与线程 A 从ThreadB.jion 操作成功返回
 
 > 两个操作之间有 happens-before 关系,并不意味着前一个操作必须要在后一个操作之前执行,happens-before 仅仅要求前一个操作(执行的结果) 对于后一个操作可见,且前一个操作按顺序排在第二个操作之前(the first is visible to the ordered before the second)
 

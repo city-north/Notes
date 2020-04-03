@@ -2,11 +2,11 @@
 
 > https://github.com/AobingJava/JavaFamily/blob/master/docs/basics/HashMap.md
 
-**数组和链表组合构成**
+## **数组和链表组合构成**
 
 ![image-20200326222215890](assets/image-20200326222215890.png)
 
-数组里面每个地方都存了Key-Value这样的实例，在Java7叫Entry在Java8中叫Node。
+HashMap是由**数组和链表组合构成**的数据结构。数组里面每个地方都存了Key-Value这样的实例，在Java7叫Entry在Java8中叫Node。
 
 因为他本身所有的位置都为null，在put插入的时候会根据key的hash去计算一个index值。
 

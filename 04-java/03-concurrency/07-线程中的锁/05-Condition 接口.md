@@ -1,6 +1,40 @@
 # 使用Condition
 
-使用`ReentrantLock`比直接使用`synchronized`更安全，可以替代`synchronized`进行线程同步。
+任意一个 Java 对象,都有一组监视器方法
+
+- Object.wait()
+- Object.wait(long timeout)
+- Object.notify()
+- Object.notifyAll()
+
+这些方法与 sychronized 关键字配合,可以实现等待/通知模式
+
+Condition 也提供了类似 Object 的监视器方法:
+
+- condtion.await()
+- condtion.awaitUninterruptibly()
+- condtion.awaitNanos
+- condtion.awaitUntil(Date deadline)
+- condtion.signal()
+- condtion.signalAll()
+
+但是使用方式和性能上还是有差异的
+
+## Object 的监视器方法和 Condition 接口的对比
+
+| 对比项                                              | Object Monitor Method           | Condition                                                    |
+| --------------------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
+| 前置条件                                            | 获取对象的锁                    | 调用 Lock.lock()获取锁,</br>调用 Lock.newCondition()获取 Condition |
+| 调用方式                                            | 直接调用 `Object.wait`          | `Condition.await()`                                          |
+| 等待队列个数                                        | 一个                            | 多个                                                         |
+| 当前线程释放锁并进入等待状态                        | 支持                            | 支持                                                         |
+| 当前线程释放锁并进入等待状态,在等待状态中不响应中断 | 不支持                          | 支持`condtion.awaitUninterruptibly()`                        |
+| 当前线程释放锁并进入等待状态到未来的某个时间        | 支持`Object.wait(long timeout)` | 支持`condtion.awaitNanos`                                    |
+| 当前线程释放锁并进入等待状态将来的某个时间          | 不支持                          | 支持`condtion.awaitUntil(Date deadline)`                     |
+| 唤醒等待队列中的全部线程                            | 支持`Object.notifyAll()`        | 支持`condtion.signalAll()`                                   |
+| 唤醒等待队列中的一个线程                            | 支持`Object.notify()`           | 支持`condtion.signal()`                                      |
+
+​	使用`ReentrantLock`比直接使用`synchronized`更安全，可以替代`synchronized`进行线程同步。
 
 但是，`synchronized`可以配合`wait`和`notify`实现线程在条件不满足时等待，条件满足时唤醒，用`ReentrantLock`我们怎么编写`wait`和`notify`的功能呢？
 
