@@ -10,11 +10,108 @@ CyclicBarrier 的字面意思是可循环使用(Cyclic)的屏障 (Barrier)。它
 
 ## 注意点
 
-1)对于指定计数值 parties，若由于某种原因，没有足够的 线程调用 CyclicBarrier 的 await，则所有调用 await 的线程 都会被阻塞;
-2)同样的 CyclicBarrier 也可以调用 await(timeout, unit)， 设置超时时间，在设定时间内，如果没有足够线程到达， 则解除阻塞状态，继续工作;
-3)通过 reset 重置计数，会使得进入 await 的线程出现 BrokenBarrierException;
-4 ) 如 果 采 用 是 CyclicBarrier(int parties, Runnable barrierAction) 构造方法，执行 barrierAction 操作的是最 后一个到达的线程
+- 对于指定计数值 parties，若由于某种原因，没有足够的 线程调用 CyclicBarrier 的 await，则所有调用 await 的线程 都会被阻塞;
+- 同样的 CyclicBarrier 也可以调用 await(timeout, unit)， 设置超时时间，在设定时间内，如果没有足够线程到达， 则解除阻塞状态，继续工作;
+- 通过 reset 重置计数，会使得进入 await 的线程出现 `BrokenBarrierException`;
+- 如 果 采 用 是 CyclicBarrier(int parties, Runnable barrierAction) 构造方法，执行 barrierAction 操作的是最 后一个到达的线程
 
-### 实现原理
+### 使用
 
 CyclicBarrier 相比 CountDownLatch 来说，要简单很多， 源码实现是基于 ReentrantLock 和 Condition 的组合使 用。看如下示意图，CyclicBarrier 和 CountDownLatch 是 不是很像，只是 CyclicBarrier 可以有不止一个栅栏，因为 它的栅栏(Barrier)可以重复使用(Cyclic)
+
+
+
+```java
+public class CyclicBarrierTest {
+    static CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
+
+    public static void main(String[] args) throws Exception{
+        new Thread(()-> {
+            try {
+                cyclicBarrier.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+            System.out.println(1);
+        }).start();
+
+        cyclicBarrier.await();
+        System.out.println(2);
+    }
+}
+```
+
+输出有一定的随机性
+
+有可能是1,2 也有可能是 2,1
+
+这是因为主线程和子线程的调度是有CPU决定的,两个线程都有可能先执行,所以会产生两种输出,第一种可能输出如下
+
+```
+public class CyclicBarrierTest2 {
+    static CyclicBarrier cyclicBarrier = new CyclicBarrier(2, new A());//达到屏障后,优先执行 A
+
+    public static void main(String[] args) throws Exception {
+        new Thread(() -> {
+            try {
+                cyclicBarrier.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+            System.out.println(1);
+        }).start();
+        try {
+            cyclicBarrier.await();
+        } catch (Exception e) {
+
+        }
+        System.out.println(2);
+    }
+
+
+    static class A implements Runnable {
+
+        @Override
+        public void run() {
+            System.out.println(3);
+        }
+    }
+}
+
+```
+
+```java
+public class CyclicBarrierTest3 {
+
+    static CyclicBarrier c = new CyclicBarrier(2);
+
+    public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    c.await();
+                } catch (Exception e) {
+                }
+            }
+        });
+        thread.start();
+        thread.interrupt();
+        try {
+            c.await();
+        } catch (BrokenBarrierException e) {
+            System.out.println(c.isBroken());//当线程被interrupt 的时候,会抛出异常
+        }
+    }
+}
+```
+
+## CyclicBarrier 和 CountDownLatch 的区别
+
+- CyclicBarrier 功能更多, 可以 reset
+- 可以获得 getNumberWaiting 获取阻塞的线程数量, isBroken 可以获取线程是否中断
