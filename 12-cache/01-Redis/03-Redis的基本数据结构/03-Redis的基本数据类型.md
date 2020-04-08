@@ -7,4 +7,9 @@
 - **hash 字典**
 - **set 集合**
 - **zset 有序集合**
+- Hyperloglog
+- Geo
+- Streams
+
+
 

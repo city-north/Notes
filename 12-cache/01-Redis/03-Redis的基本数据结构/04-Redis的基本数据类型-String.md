@@ -218,7 +218,7 @@ Redis 中的字符串叫做"SDS", 也就是 Simple Dynamic String , 它本质上
 
 next 指向下一个 dictEntry。
 
-```
+```c++
 typedef struct dictEntry {
 void *key; /* key 关键字定义 */
 union {
@@ -231,13 +231,13 @@ struct dictEntry *next; /* 指向下一个键值对节点 */
 ![image-20200318125945118](assets/image-20200318125945118.png)
 
 key 是字符串，但是 Redis 没有直接使用 C 的字符数组，而是存储在自定义的 SDS 中。
-value 既不是直接作为字符串存储，也不是直接存储在 SDS 中，而是存储在 redisObject 中。实际上五种常用的数据类型的任何一种，都是通过 redisObject 来存储 的。
+value 既不是直接作为字符串存储，也不是直接存储在 SDS 中，而是存储在 redisObject 中。实际上五种常用的数据类型的任何一种，都是通过 redisObject 来存储的。
 
 #### redisObject
 
 redisObject 定义在 src/server.h 文件中。
 
-```
+```c++
 typedef struct redisObject {
 	unsigned type:4; /* 对象的类型，包括:OBJ_STRING、OBJ_LIST、OBJ_HASH、OBJ_SET、OBJ_ZSET */ 		unsigned encoding:4; /* 具体的数据结构 */
 	unsigned lru:LRU_BITS; /* 24 位，对象最后一次被命令程序访问的时间，与内存回收有关 */
@@ -462,3 +462,113 @@ mget student:1:sno student:1:sname student:1:company
 ```
 
 缺点:key 太长，占用的空间太多。有没有更好的方式? hash  [06-Redis的基本数据结构-Hash.md](06-Redis的基本数据结构-Hash.md) 
+
+## String 的应用场景
+
+例如:热点数据缓存(例如报表，明星出轨)，对象缓存，全页缓存。
+
+可以提升热点数据的访问速度。
+
+### 数据共享分布式
+
+STRING 类型，因为 Redis 是分布式的独立服务，可以在多个应用之间共享 例如:分布式 Session
+
+```xml
+<dependency> 
+	<groupId>org.springframework.session</groupId> 
+	<artifactId>spring-session-data-redis</artifactId>
+</dependency>
+```
+
+### 分布式锁
+
+STRING 类型 setnx 方法，只有不存在时才能添加成功，返回 true。
+
+```java
+public Boolean getLock(Object lockObject){ 
+  jedisUtil = getJedisConnetion();
+	boolean flag = jedisUtil.setNX(lockObj, 1); 
+  if(flag){
+		expire(locakObj,10); 
+  }
+		return flag; 
+}
+public void releaseLock(Object lockObject){
+	del(lockObj); 
+}
+```
+
+### 全局 ID
+
+INT 类型，INCRBY，利用原子性
+
+```java
+incrby userid 1000
+```
+
+(分库分表的场景，一次性拿一段)
+
+### 计数器
+
+INT 类型，INCR 方法
+例如:文章的阅读量，微博点赞数，允许一定的延迟，先写入 Redis 再定时同步到 数据库。
+
+### 限流
+
+INT 类型，INCR 方法
+以访问者的 IP 和其他信息作为 key，访问一次增加一次计数，超过次数则返回 false。
+
+### 位统计
+
+String 类型的 BITCOUNT
+
+字符是以 8 位二进制存储的。
+
+```java
+set k1 a 
+setbit k1 6 1 
+setbit k1 7 0 
+get k1
+```
+
+a 对应的 ASCII 码是 97，转换为二进制数据是 01100001 
+
+b 对应的 ASCII 码是 98，转换为二进制数据是 01100010
+
+因为 bit 非常节省空间(1 MB=8388608 bit)，可以用来做大数据量的统计。 例如:在线用户统计，留存用户统计
+
+```java
+setbit onlineusers 0 1 setbit onlineusers 1 1 setbit onlineusers 2 0
+```
+
+支持按位与、按位或等等操作。
+
+```java
+BITOP AND destkey key [key ...] ，对一个或多个 key 求逻辑并，并将结果保存到 destkey 。 BITOP OR destkey key [key ...] ，对一个或多个 key 求逻辑或，并将结果保存到 destkey 。 BITOP XOR destkey key [key ...] ，对一个或多个 key 求逻辑异或，并将结果保存到 destkey 。 BITOP NOT destkey key ，对给定 key 求逻辑非，并将结果保存到 destkey 。
+```
+
+计算出 7 天都在线的用户
+
+```java
+BITOP "AND" "7_days_both_online_users" "day_1_online_users" "day_2_online_users" ... "day_7_online_users"
+```
+
+如果一个对象的 value 有多个值的时候，怎么存储? 例如用一个 key 存储一张表的数据。
+
+![image-20200406191830994](assets/image-20200406191830994.png)
+
+序列化?例如 JSON/Protobuf/XML，会增加序列化和反序列化的开销，并且不能 单独获取、修改一个值。
+可以通过 key 分层的方式来实现，例如:
+
+```java
+mset student:1:sno GP16666 student:1:sname 沐风 student:1:company 腾讯
+```
+
+```
+获取值的时候一次获取多个值:
+mget student:1:sno student:1:sname student:1:company
+```
+
+缺点:key 太长，占用的空间太多。有没有更好的方式?
+
+有的,Hash

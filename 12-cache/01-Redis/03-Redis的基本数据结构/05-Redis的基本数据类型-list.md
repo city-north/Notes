@@ -47,3 +47,41 @@ redis 127.0.0.1:6379> LRANGE runoobkey 0 10
 | 15   | rpoplpush  | 移除列表的最后一个元素，并将该元素添加到另一个列表并返回     | [rpoplpush.md](list/rpoplpush.md)   |
 | 16   | rpush      | 在列表中添加一个或多个值                                     | [rpush.md](list/rpush.md)           |
 | 17   | rpushhx    | 为已存在的列表添加值                                         | [rpushhx.md](list/rpushhx.md)       |
+
+#### 存储类型
+
+  存储有序的字符串(从左到右)，元素可以重复。可以充当队列和栈的角色。在早期的版本中，数据量较小时用 ziplist 存储，达到临界值时转换为 linkedlist 进 行存储，分别对应 OBJ_ENCODING_ZIPLIST 和 OBJ_ENCODING_LINKEDLIST 
+
+3.2 版本之后，统一用 quicklist 来存储。quicklist 存储了一个双向链表，每个节点 都是一个 ziplist。
+
+```
+127.0.0.1:6379> object encoding queue "quicklist"
+```
+
+#### quicklist
+
+quicklist(快速列表)是 ziplist 和 linkedlist 的结合体。 quicklist.h，head 和 tail 指向双向列表的表头和表尾
+
+```
+typedef struct quicklist {
+quicklistNode *head; /* 指向双向列表的表头 */ quicklistNode *tail; /* 指向双向列表的表尾 */
+unsigned long count;
+unsigned long len;
+int fill : 16;
+unsigned int compress : 16; /* 压缩深度，0:不压缩; */
+/* 所有的 ziplist 中一共存了多少个元素 */ /* 双向链表的长度，node 的数量 */
+/* fill factor for individual nodes */
+} quicklist;
+```
+
+redis.conf 相关参数:
+
+````
+list-max-ziplist-size(fill)
+正数表示单个 ziplist 最多所包含的 entry 个数。 负数代表单个 ziplist 的大小，默认 8k。 -1:4KB;-2:8KB;-3:16KB;-4:32KB;-5:64KB
+list-compress-depth(compress)
+压缩深度，默认是 0。
+1:首尾的 ziplist 不压缩;2:首尾第一第二个 ziplist 不压缩，以此类推
+````
+
+uyyyyy56.,,,,,,,,,≤≤≤≤≤≤≤≤≤≤≤≤≤ hhhhhhhhhhhhhhhhhhhhj                                                  j vvvvvvvvvvvvvvvvvvvv			
