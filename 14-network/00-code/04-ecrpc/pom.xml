@@ -2,15 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>note-network</artifactId>
+        <groupId>vip.ericchen.study</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>vip.ericchen.study</groupId>
-    <artifactId>note-network</artifactId>
+    <artifactId>04-ecrpc</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>03-serialization</module>
-        <module>04-ecrpc</module>
+        <module>ecrpc-api</module>
+        <module>ecrpc-server</module>
+        <module>ecrpc-client</module>
     </modules>
 
 
