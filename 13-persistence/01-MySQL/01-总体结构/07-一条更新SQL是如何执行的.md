@@ -14,13 +14,13 @@ InnnoDB 的数据都是放在磁盘上的，InnoDB 操作数据有一个最小�
 
 InnoDB 使用了一种缓冲池的技术，也就是把磁盘读到的页放到一 块内存区域里面。这个内存区域就叫 Buffer Pool。
 
-![image-20200313211144619](assets/image-20200313211144619.png)
+
 
 下一次读取相同的页，先判断是不是在缓冲池里面，如果是，就直接读取，不用再次访问磁盘。
 
-修改数据的时候，先修改缓冲池里面的页。内存的数据页和磁盘数据不一致的时候， 我们把它叫做脏页。InnoDB 里面有专门的后台线程把 Buffer Pool 的数据写入到磁盘， 每隔一段时间就一次性地把多个修改写入磁盘，这个动作就叫做刷脏。
+修改数据的时候，先修改缓冲池里面的页。内存的数据页和磁盘数据不一致的时候， 我们把它叫做脏页。InnoDB 里面有专门的后台线程把 Buffer Pool 的数据写入到磁盘， 每隔一段时间就一次性地把多个修改写入磁盘，这个动作就叫做**刷脏**。
 
-Buffer Pool 是 InnoDB 里面非常重要的一个结构，它的内部又分成几块区域。这里 我们趁机到官网来认识一下 InnoDB 的内存结构和磁盘结构。
+Buffer Pool 是 InnoDB 里面非常重要的一个结构，它的内部又分成几块区域。这里我们趁机到官网来认识一下 InnoDB 的内存结构和磁盘结构。
 
 ## InnoDB 内存结构和磁盘结构
 
@@ -28,7 +28,12 @@ Buffer Pool 是 InnoDB 里面非常重要的一个结构，它的内部又分成
 
 ### 内存结构
 
-Buffer Pool 主要分为 3 个部分: `Buffer Pool`、`Change Buffer`、`Adaptive Hash Index`，另外还有一个`(redo) log buffer`。
+Buffer Pool 主要分为 3 个部分:
+
+-  `Buffer Pool`缓冲区
+- `Change Buffer`
+- `Adaptive Hash Index`
+- `(redo) log buffer`。
 
 #### Buffer Pool
 
