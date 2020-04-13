@@ -11,6 +11,7 @@
     <modules>
         <module>03-serialization</module>
         <module>04-ecrpc</module>
+        <module>05-io-and-nio</module>
     </modules>
 
 
