@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 /**
  * <p>
- * description
+ * NIO 实现服务端
  * </p>
  *
  * @author ericchen.vip@foxmail.com 2020/04/13 22:49
@@ -49,7 +49,7 @@ public class NIOServer {
     }
 
     private void listener() throws Exception {
-        while (true) {
+        for (;;) {
             //返回 int 值就表示有多少个 Channel 出于就绪状态
             int select = selector.select();
             if (select == 0) {
@@ -93,7 +93,7 @@ public class NIOServer {
     private void write(SocketChannel channel, byte[] bytes) throws IOException {
         byteBuffer.clear();
         byteBuffer.put(bytes);
-        //bytebuffer 从写模式变为读模式
+        //byte buffer 从写模式变为读模式
         byteBuffer.flip();
         //将缓冲区的数据写入通道中
         channel.write(byteBuffer);
@@ -116,8 +116,6 @@ public class NIOServer {
         if (count < 0) {
             socketChannel.close();
         }
-
-
     }
 
     public static void main(String[] args) throws Exception {

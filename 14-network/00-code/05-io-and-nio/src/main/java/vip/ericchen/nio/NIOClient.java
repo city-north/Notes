@@ -7,7 +7,7 @@ import java.nio.channels.SocketChannel;
 
 /**
  * <p>
- * description
+ * 使用 NIO 编写客户端
  * </p>
  *
  * @author ericchen.vip@foxmail.com 2020/04/13 23:14
