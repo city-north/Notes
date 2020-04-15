@@ -17,9 +17,6 @@ Selector 用于监听多个 Channal 的事件,比如连接打开或者数据到�
 
 - java NIO 基于 Channel 和 Buffer 进行 I/O 读写操作 并且数据总是被 从 Channel读取到 Buffer 中, 或者从 Buffer 写入 Channel 中
 
-  
-  
-  
 
 ## Java NIO 和 java IO 最大的区别
 
