@@ -26,10 +26,6 @@ redis 127.0.0.1:6379> PING
 Could not connect to Redis at 127.0.0.1:6379: Connection refused
 ```
 
-
-
-
-
 # ECHO message
 
 > 可用版本： >= 1.0.0
