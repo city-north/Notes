@@ -356,3 +356,23 @@ redis.log(redis.LOG_WARNING, "Something is wrong with this script.")
 
 - 总是在流水线中使用 [EVAL](http://redisdoc.com/script/eval.html#eval) 命令
 - 检查流水线中要用到的所有命令，找到其中的 [EVAL](http://redisdoc.com/script/eval.html#eval) 命令，并使用 [SCRIPT EXISTS sha1 [sha1 …\]](http://redisdoc.com/script/script_exists.html#script-exists) 命令检查要用到的脚本是不是全都已经保存在缓存里面了。如果所需的全部脚本都可以在缓存里找到，那么就可以放心地将所有 [EVAL](http://redisdoc.com/script/eval.html#eval) 命令改成 EVALSHA 命令，否则的话，就要在流水线的顶端(top)将缺少的脚本用 [SCRIPT LOAD script](http://redisdoc.com/script/script_load.html#script-load) 命令加上去。
+
+## 示例
+
+首先编辑一个文件,后缀为 lua
+
+```lua
+[root@centos-linux redis-5.0.8]# vim lua_test.lua
+[root@centos-linux redis-5.0.8]# cat lua_test.lua 
+redis.call('set','ericchen2','ericchen.vip@foxmail.com')
+return redis.call('get','ericchen2')
+```
+
+使用`--eval ` 执行
+
+```
+[root@centos-linux redis-5.0.8]# redis-cli --eval lua_test.lu
+Can't open file 'lua_test.lu': No such file or directory
+[root@centos-linux redis-5.0.8]# redis-cli --eval lua_test.lua
+```
+
