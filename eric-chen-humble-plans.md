@@ -97,13 +97,6 @@
 | 1    |      |        |
 | 2    |      |        |
 
-##  [12-cache](12-cache) 
-
-| 序号 | ITEM | STATUS |
-| ---- | ---- | ------ |
-| 1    |      |        |
-| 2    |      |        |
-
 ##  [13-persistence](13-persistence) 
 
 
@@ -111,7 +104,7 @@
 | 序号 | ITEM                                | STATUS |
 | ---- | ----------------------------------- | ------ |
 | 1    | [01-MySQL](13-persistence/01-MySQL) | ✔️      |
-| 2    |                                     |        |
+| 2    | [02-Redis](13-persistence/02-Redis) | ✔️      |
 
 ##  [计算机网络](14-network) 
 

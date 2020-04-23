@@ -46,3 +46,12 @@ Spring Boot supports the following embedded servlet containers:
 | Undertow 2.0 | 4.0             |
 
 You can also deploy Spring Boot applications to any Servlet 3.1+ compatible container.
+
+## SpringBoot 的特性
+
+- 创建独立的 Spring 应用
+- 直接嵌入 tomcat, Jetty, Undertow 等 web 容器(不需要部署 war 文件)
+- 提供固话的"starter"依赖,简化构建配置
+- 当条件满足的时候,自动地装配 Spring 或者第三方库
+- 提供运维(production-ready) 的特性, 例如 指标信息(Metrics),健康检查以及外部化配置
+- 绝无代码生成,不需要 xml 配置

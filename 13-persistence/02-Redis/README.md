@@ -1,5 +1,7 @@
 # Redis
 
+![img](assets/640.jpeg)
+
 ## **RE**mote **DI**ctionary **S**ervice
 
 官网介绍:https://redis.io/topics/introduction
