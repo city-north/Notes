@@ -28,3 +28,52 @@
 **Troubleshooting Documentation**
 
 - [**Java™ SE Troubleshooting web site**](http://www.oracle.com/technetwork/java/javase/index-138283.html) (tools, options, and other items for use in analyzing problems)
+
+#### 常用的工
+
+| 工具名称       | 作用 |      |
+| :------------- | ---- | ---- |
+| appletviewer   |      |      |
+| extcheck       |      |      |
+| idlj           |      |      |
+| jar            |      |      |
+| jarsigner      |      |      |
+| java           |      |      |
+| javac          |      |      |
+| javadoc        |      |      |
+| javafxpackager |      |      |
+| javah          |      |      |
+| javap          |      |      |
+| javapackager   |      |      |
+| jcmd           |      |      |
+| jconsole       |      |      |
+| jdb            |      |      |
+| jdeps          |      |      |
+| jhat           |      |      |
+| jinfo          |      |      |
+| jjs            |      |      |
+| jmap           |      |      |
+| jmc            |      |      |
+| jps            |      |      |
+| jrunscript     |      |      |
+| jsadebugd      |      |      |
+| jstack         |      |      |
+| jstat          |      |      |
+| jstatd         |      |      |
+| jvisualvm      |      |      |
+| keytool        |      |      |
+| native2ascii   |      |      |
+| orbd           |      |      |
+| pack200        |      |      |
+| policytool     |      |      |
+| rmic           |      |      |
+| rmid           |      |      |
+| rmiregistry    |      |      |
+| schemagen      |      |      |
+| serialver      |      |      |
+| servertool     |      |      |
+| tnameserv      |      |      |
+| unpack200      |      |      |
+| wsgen          |      |      |
+| wsimport       |      |      |
+| xjc            |      |      |
