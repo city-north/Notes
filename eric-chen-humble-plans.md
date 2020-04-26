@@ -30,7 +30,7 @@
 | ---- | ---------------------------------------- | ------ |
 | 1    | [01-basic](04-java/01-basic)             | ✔️      |
 | 2    | [02-collections](04-java/02-collections) |        |
-| 3    | [03-concurrency](04-java/03-concurrency) |        |
+| 3    | [03-concurrency](04-java/03-concurrency) | ✔️      |
 | 4    | [04-io](04-java/04-io)                   |        |
 
 ##  [Spring Cloud](05-spring-cloud-documentation) 
