@@ -220,7 +220,10 @@ next 指向下一个 dictEntry。
 typedef struct dictEntry {
 void *key; /* key 关键字定义 */
 union {
-	void *val; uint64_t u64; /* value 定义 */ int64_t s64; double d;
+	void *val; 
+  uint64_t u64; /* value 定义 */ 
+  nt64_t s64; 
+  double d;
 } v;
 struct dictEntry *next; /* 指向下一个键值对节点 */
 } dictEntry;
@@ -228,16 +231,21 @@ struct dictEntry *next; /* 指向下一个键值对节点 */
 
 ![image-20200318125945118](assets/image-20200318125945118.png)
 
-key 是字符串，但是 Redis 没有直接使用 C 的字符数组，而是存储在自定义的 SDS 中。
-value 既不是直接作为字符串存储，也不是直接存储在 SDS 中，而是存储在 redisObject 中。实际上五种常用的数据类型的任何一种，都是通过 redisObject 来存储的。
+- key 是字符串，但是 Redis 没有直接使用 C 的字符数组，而是存储在自定义的 SDS 中。
+
+- value 既不是直接作为字符串存储，也不是直接存储在 SDS 中，而是存储在 redisObject 中。
+
+**实际上五种常用的数据类型的任何一种，都是通过 redisObject 来存储的。**
+
+> redisObject 相当于对 Redis 五种存储类型的抽象
 
 #### redisObject
 
-redisObject 定义在 src/server.h 文件中。
+redisObject 定义在 `src/server.h `文件中。
 
 ```c++
 typedef struct redisObject {
-	unsigned type:4; /* 对象的类型，包括:OBJ_STRING、OBJ_LIST、OBJ_HASH、OBJ_SET、OBJ_ZSET */ 		unsigned encoding:4; /* 具体的数据结构 */
+	unsigned type:4; /* 对象的类型，包括:OBJ_STRING、OBJ_LIST、OBJ_HASH、OBJ_SET、OBJ_ZSET */ 	unsigned encoding:4; /* 具体的数据结构 */
 	unsigned lru:LRU_BITS; /* 24 位，对象最后一次被命令程序访问的时间，与内存回收有关 */
 	int refcount; /* 引用计数。当 refcount 为 0 的时候，表示该对象已经不被任何对象引用，则可以进行垃圾回收了
 */
@@ -249,8 +257,13 @@ typedef struct redisObject {
 
 ```
 127.0.0.1:6379> type qs 
-string
+string 
 ```
+
+## 扩容策略
+
+- 在字符串长度小于 1M 的之前,扩容策略采用 **加倍策略**,也就是预留 100%的冗余空间
+- 当字符串长度超过 1MB 之后,为了避免加倍后的冗余空间过大而导致浪费,每次扩容至最多扩 1MB
 
 ## 内部编码
 
@@ -285,9 +298,9 @@ OK
 
 Redis 中字符串的实现。
 
-在 3.2 以后的版本中，SDS 又有多种结构(sds.h):sdshdr5、sdshdr8、sdshdr16、sdshdr32、sdshdr64，用于存储不同的长度的字符串，分别代表 2^5=32byte， 2^8=256byte，2^16=65536byte=64KB，2^32byte=4GB。
+在 3.2 以后的版本中，SDS 又有多种结构(sds.h): sdshdr5、sdshdr8、sdshdr16、sdshdr32、sdshdr64，用于存储不同的长度的字符串，分别代表 2^5=32byte， 2^8=256byte，2^16=65536byte=64KB，2^32byte=4GB。
 
-```
+```c++
 /* sds.h */
 struct __attribute__ ((__packed__)) sdshdr8 {
 uint8_t len; /* 当前字符数组的长度 */
@@ -296,14 +309,29 @@ unsigned char flags; /* 当前字符数组的属性、用来标识到底是 sdsh
 };
 ```
 
+```
+struct SDS<T>{
+	T capacity; //数组容量
+	T len;		//数组长度
+	byte flags; //特殊标志位
+	byte[] content
+}
+```
+
+- 字符串是可以修改的字符串,要支持 append 操作,
+
+如果数组没有冗余空间,那么追加操作必然涉及到重新分配新数组然后将旧内容复制过来,再 append 新内容,这样如果字符串非常的长,内存分配和复制的开销就会非常大
+
+- Redis 规定字符串的长度不能超过 512MB,创建字符串时,len 和 capacity 一样长,不会多分配冗余空间
+
 #### 问题 2、为什么 Redis 要用 SDS 实现字符串?
 
 我们知道，C 语言本身没有字符串类型(只能用字符数组 char[]实现)。 
 
-- 1、使用字符数组必须先给目标变量分配足够的空间，否则可能会溢出。 
-- 2、如果要获取字符长度，必须遍历字符数组，时间复杂度是 O(n)。
-- 3、C 字符串长度的变更会对字符数组做内存重分配。 
-- 4、通过从字符串开始到结尾碰到的第一个'\0'来标记字符串的结束，因此不能保存图片、音频、视频、压缩文件等二进制(bytes)保存的内容，二进制不安全。
+- 使用字符数组必须先给目标变量分配足够的空间，否则可能会溢出。 
+- 如果要获取字符长度，必须遍历字符数组，时间复杂度是 O(n)。
+- C 字符串长度的变更会对字符数组做内存重分配。 
+- 通过从字符串开始到结尾碰到的第一个'\0'来标记字符串的结束，因此不能保存图片、音频、视频、压缩文件等二进制(bytes)保存的内容，二进制不安全。
 
 SDS 的特点:
 
@@ -315,6 +343,11 @@ SDS 的特点:
 ![image-20200318130418699](assets/image-20200318130418699.png)
 
 #### 问题 3、embstr 和 raw 的区别?
+
+Redis 的字符串有两种存储方式
+
+- 在长度特别短时,使用 embstr 形式存储
+- 超过 44 字节,使用 raw 存储
 
 embstr 的使用只分配一次内存空间(因为 RedisObject 和 SDS 是连续的)，而 raw 需要分配两次内存空间(分别为 RedisObject 和 SDS 分配空间)。
 因此与 raw 相比，embstr 的好处在于创建时少分配一次空间，删除时少释放一次 空间，以及对象的所有数据连在一起，寻找方便。
@@ -406,7 +439,19 @@ INT 类型，INCR 方法
 INT 类型，INCR 方法
 以访问者的 IP 和其他信息作为 key，访问一次增加一次计数，超过次数则返回 false。
 
-#### 位统计
+## 位统计
+
+位图(bitmap)数据结构 [11-位图.md](11-位图.md) 
+
+字符是以二级制位存储的,所以一个字节是 8 位
+
+因为 bit 非常节省空间 (1 MB=8388608 bit) ,可以用来进行大量数据的统计
+
+例如
+
+- 在线人数统计
+- 留存用户统计
+- 访问量统计(HyperLoglog 一种存在误差的去重计数方案)
 
 String 类型的 BITCOUNT(1.6.6 的 bitmap 数据结构介绍)。 字符是以 8 位二进制存储的。
 
@@ -432,7 +477,10 @@ setbit onlineusers 2 0
 支持按位与、按位或等等操作。
 
 ```
-BITOP AND destkey key [key ...] ，对一个或多个 key 求逻辑并，并将结果保存到 destkey 。 BITOP OR destkey key [key ...] ，对一个或多个 key 求逻辑或，并将结果保存到 destkey 。 BITOP XOR destkey key [key ...] ，对一个或多个 key 求逻辑异或，并将结果保存到 destkey 。 BITOP NOT destkey key ，对给定 key 求逻辑非，并将结果保存到 destkey 。
+BITOP AND destkey key [key ...] ，对一个或多个 key 求逻辑并，并将结果保存到 destkey 。 
+BITOP OR destkey key [key ...] ，对一个或多个 key 求逻辑或，并将结果保存到 destkey 。 
+BITOP XOR destkey key [key ...] ，对一个或多个 key 求逻辑异或，并将结果保存到 destkey 。 
+BITOP NOT destkey key ，对给定 key 求逻辑非，并将结果保存到 destkey 。
 ```
 
 ####  计算出 7 天都在线的用户
@@ -461,112 +509,6 @@ mget student:1:sno student:1:sname student:1:company
 
 缺点:key 太长，占用的空间太多。有没有更好的方式? hash  [06-Redis的基本数据结构-Hash.md](06-Redis的基本数据结构-Hash.md) 
 
-## String 的应用场景
 
-例如:热点数据缓存(例如报表，明星出轨)，对象缓存，全页缓存。
 
-可以提升热点数据的访问速度。
-
-### 数据共享分布式
-
-STRING 类型，因为 Redis 是分布式的独立服务，可以在多个应用之间共享 例如:分布式 Session
-
-```xml
-<dependency> 
-	<groupId>org.springframework.session</groupId> 
-	<artifactId>spring-session-data-redis</artifactId>
-</dependency>
-```
-
-### 分布式锁
-
-STRING 类型 setnx 方法，只有不存在时才能添加成功，返回 true。
-
-```java
-public Boolean getLock(Object lockObject){ 
-  jedisUtil = getJedisConnetion();
-	boolean flag = jedisUtil.setNX(lockObj, 1); 
-  if(flag){
-		expire(locakObj,10); 
-  }
-		return flag; 
-}
-public void releaseLock(Object lockObject){
-	del(lockObj); 
-}
-```
-
-### 全局 ID
-
-INT 类型，INCRBY，利用原子性
-
-```java
-incrby userid 1000
-```
-
-(分库分表的场景，一次性拿一段)
-
-### 计数器
-
-INT 类型，INCR 方法
-例如:文章的阅读量，微博点赞数，允许一定的延迟，先写入 Redis 再定时同步到 数据库。
-
-### 限流
-
-INT 类型，INCR 方法
-以访问者的 IP 和其他信息作为 key，访问一次增加一次计数，超过次数则返回 false。
-
-### 位统计
-
-String 类型的 BITCOUNT
-
-字符是以 8 位二进制存储的。
-
-```java
-set k1 a 
-setbit k1 6 1 
-setbit k1 7 0 
-get k1
-```
-
-a 对应的 ASCII 码是 97，转换为二进制数据是 01100001 
-
-b 对应的 ASCII 码是 98，转换为二进制数据是 01100010
-
-因为 bit 非常节省空间(1 MB=8388608 bit)，可以用来做大数据量的统计。 例如:在线用户统计，留存用户统计
-
-```java
-setbit onlineusers 0 1 setbit onlineusers 1 1 setbit onlineusers 2 0
-```
-
-支持按位与、按位或等等操作。
-
-```java
-BITOP AND destkey key [key ...] ，对一个或多个 key 求逻辑并，并将结果保存到 destkey 。 BITOP OR destkey key [key ...] ，对一个或多个 key 求逻辑或，并将结果保存到 destkey 。 BITOP XOR destkey key [key ...] ，对一个或多个 key 求逻辑异或，并将结果保存到 destkey 。 BITOP NOT destkey key ，对给定 key 求逻辑非，并将结果保存到 destkey 。
-```
-
-计算出 7 天都在线的用户
-
-```java
-BITOP "AND" "7_days_both_online_users" "day_1_online_users" "day_2_online_users" ... "day_7_online_users"
-```
-
-如果一个对象的 value 有多个值的时候，怎么存储? 例如用一个 key 存储一张表的数据。
-
-![image-20200406191830994](assets/image-20200406191830994.png)
-
-序列化?例如 JSON/Protobuf/XML，会增加序列化和反序列化的开销，并且不能 单独获取、修改一个值。
-可以通过 key 分层的方式来实现，例如:
-
-```java
-mset student:1:sno GP16666 student:1:sname 沐风 student:1:company 腾讯
-```
-
-```
-获取值的时候一次获取多个值:
-mget student:1:sno student:1:sname student:1:company
-```
-
-缺点:key 太长，占用的空间太多。有没有更好的方式?
-
-有的,Hash
+#### 

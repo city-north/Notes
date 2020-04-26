@@ -1,6 +1,6 @@
 # Hyperloglog
 
-**Hyperloglog 提供不精确的去重计数方案**
+**Hyperloglog 提供存在误差的去重计数方案**
 
 虽然不精确,但是也不是非常离谱,标准误差是 0.81%
 
