@@ -21,7 +21,16 @@
 
 #### Redis 有哪些数据结构
 
- 字符串String、字典Hash、列表List、集合Set、有序集合SortedSet,HyperLogLog(不精确的去重计数方案),GeoHash地理位置,Pub/Sub发布订阅,还有一些组件例如布隆过滤器
+- 字符串 String 
+- 字典 Hash , 类似于 Java 中的 HashMap ,应用场景例如购物车(key做商品 ID,value 用个数)
+- 列表 List
+- 集合 Set ,点赞等
+- 有序集合 Zset ,热点数据排行榜
+- 一种存在误差的去重计数器 HyperLogLog , 统计独立用户访问量
+- 地址位置 GeoHash
+- 发布订阅 Pub/Sub
+
+- 布隆过滤器
 
 #### 
 
