@@ -55,7 +55,7 @@ volatile 关键字编译后是使用 lock 指令修饰变量的.主要做了两�
 
 - 对于普通方法,锁的是当前实例对象
 - 对于静态同步方法,锁的是当前类的 Class 对象
-- 对于同步方法块,没锁的是 sychronzied 括号里的对象 , 通过 monitorenter 和 monitorexist 指令实现
+- 对于同步方法块,锁的是 sychronzied 括号里的对象 , 通过 monitorenter 和 monitorexist 指令实现
 
 synchronzied 锁是存在在 java 对象头里的,主要标识了四种状态
 
