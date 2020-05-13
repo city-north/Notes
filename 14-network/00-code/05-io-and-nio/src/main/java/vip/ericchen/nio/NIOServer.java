@@ -49,7 +49,7 @@ public class NIOServer {
     }
 
     private void listener() throws Exception {
-        for (;;) {
+        for (; ; ) {
             //返回 int 值就表示有多少个 Channel 出于就绪状态
             int select = selector.select();
             if (select == 0) {
@@ -82,11 +82,11 @@ public class NIOServer {
     }
 
     private void registerChannel(Selector selector, SocketChannel channel, int opRead) throws IOException {
-        if (channel == null){
+        if (channel == null) {
             return;
         }
         channel.configureBlocking(false);
-        channel.register(selector,opRead);
+        channel.register(selector, opRead);
 
     }
 

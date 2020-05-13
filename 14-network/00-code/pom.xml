@@ -12,6 +12,7 @@
         <module>03-serialization</module>
         <module>04-ecrpc</module>
         <module>05-io-and-nio</module>
+        <module>06-ectomcat</module>
     </modules>
 
 
