@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: config-repo
+server:
+  port: 8008
+logging:
+  level:
+    root: debug

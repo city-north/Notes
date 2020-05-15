@@ -22,16 +22,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>00-spring-cloud-note-common</module>
-        <module>01-netflix-eureka-server-8001</module>
-        <module>02-netflix-eureka-provider-8002</module>
-        <module>03-netflix-eureka-server-8003</module>
-        <module>04-netflix-eureka-provider-8004</module>
-        <module>05-netflix-eureka-consumer-8005</module>
-        <module>06-cloud-config-server-git-8006</module>
+        <module>01-spring-cloud-config</module>
         <module>16-cloud-gateway-80</module>
         <module>07-spring-cloud-config-db-8007</module>
-        <module>08-spring-cloud-config-client-8008</module>
-        <module>09-spring-cloud-config-client-refresh-8009</module>
+        <module>05-config-server-placeholders</module>
+
 
     </modules>
     <dependencies>

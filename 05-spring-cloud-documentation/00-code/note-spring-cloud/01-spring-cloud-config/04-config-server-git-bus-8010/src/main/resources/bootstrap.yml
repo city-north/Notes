@@ -1,0 +1,20 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: configserverRabbit
+  cloud:
+    config:
+      server:
+        git:
+          ## 配置服务器远程 Git 仓库（GitHub）
+          uri: https://github.com/ericchen-vip/config-repo
+          ## 强制拉去 Git 内容
+          force-pull: true
+          default-label: master
+          search-paths: multi-repo-demo
+  rabbitmq:
+    host: 192.168.17.12
+    username: admin
+    password: admin
+    port: 5672

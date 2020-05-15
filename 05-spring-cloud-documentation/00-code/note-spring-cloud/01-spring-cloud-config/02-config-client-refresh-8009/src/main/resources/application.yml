@@ -1,0 +1,13 @@
+server:
+  port: 8009
+
+spring:
+  application:
+    name: client-bus-refresh
+
+  ## 配置rabbitMQ 信息
+  rabbitmq:
+    host: 192.168.17.12
+    username: admin
+    password: admin
+    port: 5672

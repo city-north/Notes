@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8011
+      label: master
+      profile: dev
+      name: config-repo
