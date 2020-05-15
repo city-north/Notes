@@ -30,8 +30,24 @@
         <module>06-cloud-config-server-git-8006</module>
         <module>16-cloud-gateway-80</module>
         <module>07-spring-cloud-config-db-8007</module>
+        <module>08-spring-cloud-config-client-8008</module>
+        <module>09-spring-cloud-config-client-refresh-8009</module>
 
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -42,6 +58,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

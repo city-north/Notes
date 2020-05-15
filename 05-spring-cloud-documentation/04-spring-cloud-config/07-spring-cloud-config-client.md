@@ -1,8 +1,12 @@
 ## SpringCloud Client 客户端配合
 
+> 值得注意的是刷新配置文件
+
 客户端主要分成三步
 
-- 
+- 引入依赖
+- 配置文件
+- 测试
 
 ## 引入依赖
 
@@ -109,7 +113,7 @@ public class ConfigClientProperties {
 
 ![image-20191215165424743](assets/image-20191215165424743.png)
 
-- `@Value` 注解方式生命的变量为改变
+- `@Value` 注解方式生命的变量未改变
 
 ![image-20191215165454213](assets/image-20191215165454213.png)
 
