@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: config-client-db
+
+server:
+  port: 8014
+
+logging:
+      level:
+          root: INFO

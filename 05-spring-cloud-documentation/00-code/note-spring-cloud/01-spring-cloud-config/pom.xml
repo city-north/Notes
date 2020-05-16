@@ -13,7 +13,10 @@
         <module>02-config-client-refresh-8009</module>
         <module>03-config-client-basic-8008</module>
         <module>04-config-server-git-bus-8010</module>
-        <module>05-config-server-placeholders</module>
+        <module>05-config-server-placeholders-8011</module>
+        <module>06-config-client-auto-refresh-8012</module>
+        <module>07-config-server-db-8013</module>
+        <module>08-config-client-db-8014</module>
     </modules>
 
     <artifactId>01-spring-cloud-config</artifactId>

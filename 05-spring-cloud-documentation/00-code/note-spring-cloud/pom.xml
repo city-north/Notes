@@ -25,7 +25,7 @@
         <module>01-spring-cloud-config</module>
         <module>16-cloud-gateway-80</module>
         <module>07-spring-cloud-config-db-8007</module>
-        <module>05-config-server-placeholders</module>
+        <module>08-config-client-db-8014</module>
 
 
     </modules>
