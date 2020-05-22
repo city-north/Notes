@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>common</comment>
+    <entry key="java.runtime.name">Java(TM) SE Runtime Environment</entry>
+    <entry key="sun.boot.library.path">/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib</entry>
+    <entry key="java.vm.version">25.201-b09</entry>
+    <entry key="gopherProxySet">false</entry>
+    <entry key="java.vm.vendor">Oracle Corporation</entry>
+    <entry key="java.vendor.url">http://java.oracle.com/</entry>
+    <entry key="path.separator">:</entry>
+    <entry key="java.vm.name">Java HotSpot(TM) 64-Bit Server VM</entry>
+    <entry key="file.encoding.pkg">sun.io</entry>
+    <entry key="user.country">CN</entry>
+    <entry key="sun.java.launcher">SUN_STANDARD</entry>
+    <entry key="sun.os.patch.level">unknown</entry>
+    <entry key="java.vm.specification.name">Java Virtual Machine Specification</entry>
+    <entry key="user.dir">/Users/ec/study/Notes/03-spring-boot-documentation/00-code/notes-spring-boot</entry>
+    <entry key="intellij.debug.agent">true</entry>
+    <entry key="java.runtime.version">1.8.0_201-b09</entry>
+    <entry key="java.awt.graphicsenv">sun.awt.CGraphicsEnvironment</entry>
+    <entry key="java.endorsed.dirs">/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/endorsed</entry>
+    <entry key="os.arch">x86_64</entry>
+    <entry key="java.io.tmpdir">/var/folders/c1/d1d38kss0kz34cd738qv3vx40000gn/T/</entry>
+    <entry key="line.separator">
+    </entry>
+    <entry key="java.vm.specification.vendor">Oracle Corporation</entry>
+    <entry key="os.name">Mac OS X</entry>
+    <entry key="sun.jnu.encoding">UTF-8</entry>
+    <entry key="java.library.path">/Users/ec/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.</entry>
+    <entry key="jboss.modules.system.pkgs">com.intellij.rt</entry>
+    <entry key="java.specification.name">Java Platform API Specification</entry>
+    <entry key="java.class.version">52.0</entry>
+    <entry key="sun.management.compiler">HotSpot 64-Bit Tiered Compilers</entry>
+    <entry key="os.version">10.14.5</entry>
+    <entry key="user.home">/Users/ec</entry>
+    <entry key="user.timezone"/>
+    <entry key="java.awt.printerjob">sun.lwawt.macosx.CPrinterJob</entry>
+    <entry key="file.encoding">UTF-8</entry>
+    <entry key="java.specification.version">1.8</entry>
+    <entry key="java.class.path">
+        /Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/lib/ant-javafx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/lib/dt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/lib/javafx-mx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/lib/jconsole.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/lib/packager.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/lib/sa-jdi.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/lib/tools.jar:/Users/ec/study/Notes/03-spring-boot-documentation/00-code/notes-spring-boot/03-spring-boot-feature-example/target/classes:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter-web/2.2.1.RELEASE/spring-boot-starter-web-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter/2.2.1.RELEASE/spring-boot-starter-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot/2.2.1.RELEASE/spring-boot-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/2.2.1.RELEASE/spring-boot-autoconfigure-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/jakarta/annotation/jakarta.annotation-api/1.3.5/jakarta.annotation-api-1.3.5.jar:/Users/ec/.m2/repository/org/springframework/spring-core/5.2.1.RELEASE/spring-core-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/spring-jcl/5.2.1.RELEASE/spring-jcl-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/yaml/snakeyaml/1.25/snakeyaml-1.25.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter-json/2.2.1.RELEASE/spring-boot-starter-json-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.10.0/jackson-databind-2.10.0.jar:/Users/ec/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.10.0/jackson-annotations-2.10.0.jar:/Users/ec/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.10.0/jackson-core-2.10.0.jar:/Users/ec/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.10.0/jackson-datatype-jdk8-2.10.0.jar:/Users/ec/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.10.0/jackson-datatype-jsr310-2.10.0.jar:/Users/ec/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.10.0/jackson-module-parameter-names-2.10.0.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/2.2.1.RELEASE/spring-boot-starter-tomcat-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/9.0.27/tomcat-embed-websocket-9.0.27.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter-validation/2.2.1.RELEASE/spring-boot-starter-validation-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/jakarta/validation/jakarta.validation-api/2.0.1/jakarta.validation-api-2.0.1.jar:/Users/ec/.m2/repository/org/hibernate/validator/hibernate-validator/6.0.18.Final/hibernate-validator-6.0.18.Final.jar:/Users/ec/.m2/repository/org/jboss/logging/jboss-logging/3.4.1.Final/jboss-logging-3.4.1.Final.jar:/Users/ec/.m2/repository/com/fasterxml/classmate/1.5.1/classmate-1.5.1.jar:/Users/ec/.m2/repository/org/springframework/spring-web/5.2.1.RELEASE/spring-web-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/spring-beans/5.2.1.RELEASE/spring-beans-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/spring-webmvc/5.2.1.RELEASE/spring-webmvc-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/spring-aop/5.2.1.RELEASE/spring-aop-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/spring-context/5.2.1.RELEASE/spring-context-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/spring-expression/5.2.1.RELEASE/spring-expression-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/apache/tomcat/embed/tomcat-embed-jasper/9.0.27/tomcat-embed-jasper-9.0.27.jar:/Users/ec/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/9.0.27/tomcat-embed-core-9.0.27.jar:/Users/ec/.m2/repository/org/apache/tomcat/tomcat-annotations-api/9.0.27/tomcat-annotations-api-9.0.27.jar:/Users/ec/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/9.0.27/tomcat-embed-el-9.0.27.jar:/Users/ec/.m2/repository/org/eclipse/jdt/ecj/3.18.0/ecj-3.18.0.jar:/Users/ec/.m2/repository/javax/servlet/jstl/1.2/jstl-1.2.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/2.2.1.RELEASE/spring-boot-starter-jdbc-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/com/zaxxer/HikariCP/3.4.1/HikariCP-3.4.1.jar:/Users/ec/.m2/repository/org/slf4j/slf4j-api/1.7.29/slf4j-api-1.7.29.jar:/Users/ec/.m2/repository/org/springframework/spring-jdbc/5.2.1.RELEASE/spring-jdbc-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/spring-tx/5.2.1.RELEASE/spring-tx-5.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter-actuator/2.2.1.RELEASE/spring-boot-starter-actuator-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-actuator-autoconfigure/2.2.1.RELEASE/spring-boot-actuator-autoconfigure-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-actuator/2.2.1.RELEASE/spring-boot-actuator-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/io/micrometer/micrometer-core/1.3.1/micrometer-core-1.3.1.jar:/Users/ec/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.11/HdrHistogram-2.1.11.jar:/Users/ec/.m2/repository/org/latencyutils/LatencyUtils/2.0.3/LatencyUtils-2.0.3.jar:/Users/ec/.m2/repository/org/springframework/boot/spring-boot-starter-logging/2.2.1.RELEASE/spring-boot-starter-logging-2.2.1.RELEASE.jar:/Users/ec/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar:/Users/ec/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar:/Users/ec/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.12.1/log4j-to-slf4j-2.12.1.jar:/Users/ec/.m2/repository/org/apache/logging/log4j/log4j-api/2.12.1/log4j-api-2.12.1.jar:/Users/ec/.m2/repository/org/slf4j/jul-to-slf4j/1.7.29/jul-to-slf4j-1.7.29.jar:/Users/ec/.m2/repository/com/h2database/h2/1.4.200/h2-1.4.200.jar:/Applications/IntelliJ
+        IDEA.app/Contents/lib/idea_rt.jar:/Users/ec/Library/Caches/JetBrains/IntelliJIdea2020.1/captureAgent/debugger-agent.jar
+    </entry>
+    <entry key="user.name">ec</entry>
+    <entry key="java.vm.specification.version">1.8</entry>
+    <entry key="sun.java.command">cn.eccto.study.sb.configuration.GenericConfiguration</entry>
+    <entry key="java.home">/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre</entry>
+    <entry key="sun.arch.data.model">64</entry>
+    <entry key="user.language">en</entry>
+    <entry key="java.specification.vendor">Oracle Corporation</entry>
+    <entry key="awt.toolkit">sun.lwawt.macosx.LWCToolkit</entry>
+    <entry key="java.vm.info">mixed mode</entry>
+    <entry key="java.version">1.8.0_201</entry>
+    <entry key="java.ext.dirs">
+        /Users/ec/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java
+    </entry>
+    <entry key="sun.boot.class.path">
+        /Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/jre/classes
+    </entry>
+    <entry key="java.vendor">Oracle Corporation</entry>
+    <entry key="file.separator">/</entry>
+    <entry key="java.vendor.url.bug">http://bugreport.sun.com/bugreport/</entry>
+    <entry key="sun.io.unicode.encoding">UnicodeBig</entry>
+    <entry key="sun.cpu.endian">little</entry>
+    <entry key="sun.cpu.isalist"/>
+</properties>
