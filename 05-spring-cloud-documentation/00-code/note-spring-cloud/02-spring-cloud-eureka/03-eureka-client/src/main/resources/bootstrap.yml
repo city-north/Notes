@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: eureka-client
+#  cloud:
+#    config:
+#      uri: http://localhost:8888
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/ # one eureka server

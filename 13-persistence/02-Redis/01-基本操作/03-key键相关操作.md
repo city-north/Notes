@@ -26,7 +26,7 @@ redis 127.0.0.1:6379> DEL runoobkey
 | 序号 | 命令      | 描述                                                         | 实例                              |
 | ---- | --------- | ------------------------------------------------------------ | --------------------------------- |
 | 1    | del       | 用于在 key 存在时删除 key                                    | `del name`                        |
-| 2    | dump      | 序列化给定 key,并返回被序列化的照顾                          | `dump greeting`                   |
+| 2    | dump      | 序列化给定 key,并返回被序列化的值                            | `dump greeting`                   |
 | 3    | exist     | 检查给定的 key 是否存在                                      | `exist name`                      |
 | 4    | expire    | 为给定的 key 设置过期时间,以秒计算                           | `expire name 1000`                |
 | 5    | pexpire   | 设置 key的过期时间,以毫秒计算                                | `pexpire key 1000`                |
