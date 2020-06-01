@@ -26,6 +26,9 @@
         <module>07-spring-cloud-config-db-8007</module>
         <module>02-spring-cloud-eureka</module>
         <module>16-cloud-gateway-80</module>
+        <module>03-spring-cloud-ribbon</module>
+        <module>03-spring-cloud-ribbon/ribbon-loadbalancer</module>
+        <module>03-spring-cloud-ribbon/ribbon-service-provider</module>
 
     </modules>
     <dependencies>
