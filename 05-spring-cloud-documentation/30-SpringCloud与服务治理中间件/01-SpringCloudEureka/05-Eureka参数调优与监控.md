@@ -6,6 +6,17 @@
 
 Client 端的参数分别为基本参数,定时任务参数,http 参数三大类来梳理
 
+## 推荐配置
+
+| 属性                                         | 描述                                                         |
+| -------------------------------------------- | ------------------------------------------------------------ |
+| eureka.client.serviceUrl.defaultZone         | 注册中心位置,高可用应该配置多个地址,可以根据启动参数传入,也可以使用配置中心托管 |
+| eureka.instance.prefer-ip-address            | 是否优先使用 ip 地址来替代 hostname 作为实例的 hostName 字段值, 推荐大家都可以用 ip 来注册 |
+| eureka.server.enable-self-preservation       | 默认开启,关闭自我保护,如果规模较大,可以考虑不关闭(AP)        |
+| eureka.servier.eviction-interval-timer-in-ms | 主动失效检测间隔,默认为 60s,可以设置短一点如 30 秒           |
+
+
+
 #### 基本参数
 
 ![image-20200522132257858](assets/image-20200522132257858.png)

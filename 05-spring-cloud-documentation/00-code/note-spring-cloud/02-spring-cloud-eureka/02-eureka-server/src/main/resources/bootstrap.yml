@@ -10,3 +10,9 @@ management:
     web:
       exposure:
         include: '*'
+eureka:
+  server:
+    enable-self-preservation: false
+  client:
+    fetch-registry: false
+    register-with-eureka: false

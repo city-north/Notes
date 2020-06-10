@@ -2,7 +2,7 @@
 
 > Ribbon is a client-side load balancer that gives you a lot of control over the behavior of HTTP and TCP clients 
 >
-> > 本质上是通过拦截 RestTemplate 根据服务 ID 查找服务实例并使用轮询算法进行拦截修改 url 的机制
+> > 本质上是通过拦截 RestTemplate 根据服务 ID 查找服务实例并使用轮询算法(可配置)进行拦截修改 url 的机制
 
 Ribbon 是一个客户端负载均衡器
 

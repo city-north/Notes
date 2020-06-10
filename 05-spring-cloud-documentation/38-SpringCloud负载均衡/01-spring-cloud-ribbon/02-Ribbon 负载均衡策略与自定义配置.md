@@ -20,7 +20,6 @@ public class TestConfiguration {
 ### 基于注解的策略设置
 
 ```
-
 public @interface AvoidScan {
 
 }
@@ -39,11 +38,11 @@ public @interface AvoidScan {
 ```yml
 client-a:
   ribbon:
-    ConnectTimeout: 3000
-    ReadTimeout: 60000
-    MaxAutoRetries: 1 #对第一次请求的服务的重试次数
+    ConnectTimeout: 3000 #全局请求连接的超时时间,默认 5 秒
+    ReadTimeout: 60000 #全局超时是时间
+    MaxAutoRetries: 0 #对第一次请求的服务的重试次数.如果要开启,需要保证服务的幂等性 ,注意
     MaxAutoRetriesNextServer: 1 #要重试的下一个服务的最大数量（不包括第一个服务）
-    OkToRetryOnAllOperations: true
+    OkToRetryOnAllOperations: true #对所有操作请求都进行充实
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule#ribbon:
 eager-load: #饥饿加载
   enabled: true
