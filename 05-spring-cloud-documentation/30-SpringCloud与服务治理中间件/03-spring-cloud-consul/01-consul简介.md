@@ -48,3 +48,33 @@ Consul 对外提供了丰富的 API, 有运维人员喜欢的命令行接口,也
 - /v1/status/leader: 显示当前集群的 leader
 - /v1/catalog/services : 显示,目前注册的服务
 - /v1/kv/key:显示当前 key对应的 value
+
+#### 列出集群中的所有成员信息
+
+![image-20200611183353446](assets/image-20200611183353446.png)
+
+#### 显示集群的 leader
+
+![image-20200611183436701](assets/image-20200611183436701.png)
+
+
+
+## 开启 consul
+
+默认情况下,集群需要至少三台 Consul 启动,本地开发可以使用开发者模式启动
+
+> consul agent -dev
+
+![image-20200611183007015](assets/image-20200611183007015.png)
+
+#### 开启 UI
+
+```
+consul agent -dev -ui
+```
+
+> http://localhost:8500/ 访问
+
+![image-20200611183135645](assets/image-20200611183135645.png)
+
+#### 

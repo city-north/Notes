@@ -34,7 +34,10 @@
         <module>09-spring-cloud-zuul</module>
         <module>09-spring-cloud-zuul/01-oauth-server</module>
         <module>09-spring-cloud-zuul/02-zuul-server</module>
-        <module>09-spring-cloud-zuul/01-oauth-server/03-client-a</module>
+        <module>06-spring-cloud-consul</module>
+        <module>06-spring-cloud-consul/consul-provider</module>
+        <module>06-spring-cloud-consul/consul-consumer</module>
+        <module>06-spring-cloud-consul/consul-config</module>
 
     </modules>
     <dependencies>
@@ -54,6 +57,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-feign</artifactId>
+                <version>1.3.5.RELEASE</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
