@@ -38,21 +38,27 @@
         <module>06-spring-cloud-consul/consul-provider</module>
         <module>06-spring-cloud-consul/consul-consumer</module>
         <module>06-spring-cloud-consul/consul-config</module>
+        <module>08-spring-cloud-gateway/eureka-server</module>
+        <module>08-spring-cloud-gateway/gateway-server</module>
+        <module>08-spring-cloud-gateway/common</module>
+        <module>08-spring-cloud-gateway/client-service</module>
+        <module>08-spring-cloud-gateway/provider-service</module>
+        <module>10-spring-cloud-sleuth</module>
 
     </modules>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <dependencyManagement>

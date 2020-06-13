@@ -9,10 +9,12 @@ import java.io.Serializable;
  */
 public class SerializableDto implements Serializable {
 
-    private static final long serialVersionUID = -5809782578272943999L;
+    private static final long serialVersionUID = -123;
 
     private String name;
     private int age;
+
+    private ReferenceDto referenceDto = new ReferenceDto("123", 1);
 
     public SerializableDto(String name, int age) {
         System.out.println("SerializableDto 的构造方法被调用了");
