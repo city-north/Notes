@@ -3,8 +3,13 @@ package gateway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.codec.ServerCodecConfigurer;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 /**
  * <p>
@@ -21,6 +26,40 @@ public class GatewayApplication {
     }
 
 
+//    @Bean
+//    public RouteLocator afterRouteLocator(RouteLocatorBuilder builder) {
+//        //生成比当前时间早一个小时的UTC时间
+//        ZonedDateTime minusTime = LocalDateTime.now().minusHours(1).atZone(ZoneId.systemDefault());
+//        return builder.routes()
+//                .route("after_route", r -> r.after(minusTime)
+//                        .uri("http://baidu.com"))
+//                .build();
+//    }
 
+    /**
+     * before 断言
+     */
+    @Bean
+    public RouteLocator beforeRouteLocator(RouteLocatorBuilder builder) {
+
+        ZonedDateTime datetime = LocalDateTime.now().plusDays(1).atZone(ZoneId.systemDefault());
+        return builder.routes()
+                .route("before_route", r -> r.before(datetime)
+                        .uri("http://baidu.com"))
+
+                .build();
+    }
+
+    @Bean
+    public RouteLocator betweenRouteLocator(RouteLocatorBuilder builder) {
+
+        ZonedDateTime datetime1 = LocalDateTime.now().minusDays(1).atZone(ZoneId.systemDefault());
+        ZonedDateTime datetime2 = LocalDateTime.now().plusDays(1).atZone(ZoneId.systemDefault());
+        return builder.routes()
+                .route("between_route", r -> r.between(datetime1, datetime2)
+                        .uri("http://baidu.com"))
+
+                .build();
+    }
 
 }
