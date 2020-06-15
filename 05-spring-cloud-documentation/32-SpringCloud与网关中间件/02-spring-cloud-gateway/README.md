@@ -67,13 +67,15 @@ Java8 中的断言函数, SC gatway 项目中的断言函数输入类型是 Spri
 
 一个标准的 Spring WebFilter , SC Gatway 中的 filter 分为两类
 
-- GatwayFilter
+- Gateway FIlter
 
-> 网关类型的filter
+> Gateway Filter 是从 web Filter 复制过来的,相当于一个 Filter 过滤器,可以对访问的 URL过滤,进行横切处理(切面处理) ,应用场景包括超时,安全等
 
-- GlobalFilter
+- Global Filter
 
->  全局 filter ,所有的请求都会被拦截
+> Spring Cloud Gateway 定义了 GlobalFIlter 接口,让我们可以自定义实现自己的 Global FIlter  , Global Filter 是一个全局 Filter ,作用于所有路由
+
+
 
 ## 如何使用
 

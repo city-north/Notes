@@ -1,5 +1,15 @@
 ## GateWay 内置的 Filter
 
+- Gateway FIlter
+
+> Gateway Filter 是从 web Filter 复制过来的,相当于一个 Filter 过滤器,可以对访问的 URL过滤,进行横切处理(切面处理) ,应用场景包括超时,安全等
+
+- Global Filter
+
+> Spring Cloud Gateway 定义了 GlobalFIlter 接口,让我们可以自定义实现自己的 Global FIlter  , Global Filter 是一个全局 Filter ,作用于所有路由
+
+
+
 内置的Filter 多达 20 多个,可以分为 7 类
 
 - Header 
