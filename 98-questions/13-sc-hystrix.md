@@ -26,3 +26,19 @@ Hystrix 是一个延迟和容错库,主要用来隔离远程系统,服务和第�
 
    Hystrix可以对其进行资源隔离，比如限制服务B只有40个线程调用服务C。当此40个线程被hang住时，其它60个线程依然能正常调用工作。从而确保整个系统不会被拖垮。
 
+#### Hystrix 异常机制和处理
+
+五种情况下会触发 fallback 捕获
+
+- failure 执行失败,抛出异常
+- timeout 执行超时
+- short_circuited 短路器打开
+- thread_pool_rejected 线程池拒绝
+- semaphore_rejected 信号量拒绝
+
+有一种类型的差异是不会触发 fallback , 且不会被技术进入熔断的, 它是 BAD_REQUEST 抛出 `HystrixBadRequestException`
+
+#### 常用的一些配置
+
+ [03-hystrix 异常机制和处理.md](../05-spring-cloud-documentation/39-SpringCloud与熔断器/01-SpringCloudHystrix/03-hystrix 异常机制和处理.md) 
+
