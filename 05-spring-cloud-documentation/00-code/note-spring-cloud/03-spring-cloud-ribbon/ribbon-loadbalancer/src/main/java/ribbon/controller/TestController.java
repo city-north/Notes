@@ -19,7 +19,7 @@ public class TestController {
 	@GetMapping("/add")
 	public String adda(Integer a, Integer b) {
 		String result = restTemplate
-				.getForObject("http://CLIENT-A/add?a=" + a + "&b=" + b, String.class);
+				a.getForObject("http://CLIENT-A/add?a=" + a + "&b=" + b, String.class);
 		System.out.println(result);
 		return result;
 	}

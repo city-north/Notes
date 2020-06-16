@@ -21,7 +21,7 @@ import java.util.Map;
  * @author EricChen 2020/06/12 12:24
  */
 
-@Component
+//@Component
 public class AuthFilter implements GatewayFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
