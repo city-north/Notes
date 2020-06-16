@@ -6,6 +6,78 @@
 
 ## Collection
 
+####  ArrayList
+
+增删慢,查找快(因为可以随机访问,二分法),线程不安全
+
+#### 默认容量
+
+add 对象的时候给一个初始值 10
+
+#### 扩容
+
+重新创建一个列表 `int newCapacity = oldCapacity + (oldCapacity >> 1);`,原来 1.5 倍,然后进行拷贝
+
+#### ArrayList插入删除一定慢么？
+
+取决于你删除的元素离数组末端有多远，ArrayList拿来作为堆栈来用还是挺合适的，push和pop操作完全不涉及数据移动操作。
+
+#### 删除怎么实现的呢？
+
+不过叫是叫删除，但是在代码里面我们发现，他还是在copy一个数组
+
+#### ![image-20200617073942721](../assets/image-20200617073942721.png)
+
+继续打个比方，我们现在要删除下面这个数组中的index5这个位置
+
+![image-20200617073956554](../assets/image-20200617073956554.png)
+
+那代码他就复制一个index5+1开始到最后的数组，然后把它放到index开始的位置
+
+![image-20200617074008214](../assets/image-20200617074008214.png)
+
+index5的位置就成功被”删除“了其实就是被覆盖了，给了你被删除的感觉。
+
+同理他的效率也低，因为数组如果很大的话，一样需要复制和移动的位置就大了。
+
+### 线程安全吗
+
+不安全,线程安全版本的数组容器是Vector。
+
+#### ArrayList用来做队列合适么？
+
+不适合,因为队列是 FIFO, ArrayList不适合做队列。
+
+新增和删除会涉及到数据的复制.效率低
+
+#### ArrayList的遍历和LinkedList遍历性能比较如何？
+
+ArrayList遍历最大的优势在于内存的连续性，CPU的内部缓存结构会缓存连续的内存片段，可以大幅降低读取内存的性能开销。
+
+#### ArrayList 的迭代器
+
+> 什么时候会抛出`ConcurrentModificationException`？
+
+在迭代的时候，会校验`modCount`是否等于`expectedModCount`，不等于就会抛出著名的`ConcurrentModificationException`异常。
+
+原因就是因为Itr的`remove()`方法，移除之后将`modCount`重新赋值给 `expectedModCount`。这就是源码，不管单线程还是多线程，只要违反了规则，就会抛异常。
+
+> 快速失败
+
+`iterator()`和`listIterator(int)`方法是`fail-fast`的，如果在迭代器创建之后，列表进行结构化修改，迭代器会抛出`ConcurrentModificationException`。
+
+> 为什么`elementData`要被`transient`修饰
+
+`elementData`之所以用`transient`修饰，是因为JDK不想将整个`elementData`都序列化或者反序列化，而只是将`size`和实际存储的元素序列化或反序列化，从而节省空间和时间。通过重写`readObject` 和  `writeObject `方法
+
+> 为什么`elementData`没有被`private`修饰？难道正如注释所写的**non-private to simplify nested class access**
+
+简化内部类的访问
+
+
+
+
+
 ### HashMap
 
 > HashMap 是我们经常使用的集合类
