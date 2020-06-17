@@ -1,17 +1,9 @@
 package gateway;
 
-import gateway.filter.ratelimiter.GatewayRateLimitFilterByIp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
-import org.springframework.context.annotation.Bean;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 /**
  * <p>
@@ -63,14 +55,14 @@ public class GatewayApplication {
 //
 //                .build();
 //    }
-
-    @Bean
-    public RouteLocator customerRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route(r -> r.path("/test/rateLimit")
-                        .filters(f -> f.filter(new GatewayRateLimitFilterByIp(10, 1, Duration.ofSeconds(1))))
-                        .uri("http://baidu.com")
-                        .id("rateLimit_route")
-                ).build();
-    }
+//
+//    @Bean
+//    public RouteLocator customerRouteLocator(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route(r -> r.path("/test/rateLimit")
+//                        .filters(f -> f.filter(new GatewayRateLimitFilterByIp(10, 1, Duration.ofSeconds(1))))
+//                        .uri("http://baidu.com")
+//                        .id("rateLimit_route")
+//                ).build();
+//    }
 }

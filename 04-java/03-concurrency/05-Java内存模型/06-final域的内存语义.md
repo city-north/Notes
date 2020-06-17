@@ -1,6 +1,6 @@
 # final 域的内存语义
 
-在构造函数返回之前,加入一个 StoreStore 内存屏障,保证对实例的引用时,final 域绝对是初始化好的
+> 在构造函数返回之前,加入一个 StoreStore 内存屏障,保证对实例的引用时,final 域绝对是初始化好的
 
 
 
@@ -15,6 +15,16 @@ final 重排序语义:
 - **在读一个对象的 final 域 之前,一定会先读包含这个 final 域的对象的引用**
 
 > https://www.cnblogs.com/michaelwwx/p/10526991.html
+
+
+
+> 如何实现的呢
+>
+> 在构造函数 return 之前插入一个 StoreStore 屏障,确保刷新到内存
+>
+> 在引用 final 域操作的时候,插入一个 LoadLoad 凭证,确保从内存中读取最新的值
+
+
 
 
 

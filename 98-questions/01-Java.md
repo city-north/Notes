@@ -80,6 +80,8 @@ ArrayList遍历最大的优势在于内存的连续性，CPU的内部缓存结�
 
 ### HashMap
 
+>  [051-hashMap的底层原理.md](../04-java/02-collections/03-map/051-hashMap的底层原理.md) 
+
 > HashMap 是我们经常使用的集合类
 >
 > - 是数组和链表的组合, 1.7 叫 Entry, 1.8叫Node

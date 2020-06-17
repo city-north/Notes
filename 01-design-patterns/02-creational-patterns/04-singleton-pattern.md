@@ -221,6 +221,12 @@ public class LazyInitThreadSafeSingleton {
 
 ### 注册(登记式)/静态内部类
 
+> 基于类初始化的解决方案
+
+JVM 在类初始化阶段,即Class 被加载后,且被线程使用之前,会执行类的初始化,在执行类的初始化期间,JVM 会去获取一个锁,这个锁可以同步多个线程对同一个类型的初始化
+
+ [08-双重检查锁定与延迟初始化.md](../../04-java/03-concurrency/05-Java内存模型/08-双重检查锁定与延迟初始化.md) 
+
 ```java
 /**
  * 注册内部类方式的单例模式,线程安全
@@ -260,6 +266,8 @@ public class InnerClassSingleton {
 - 饿汉单例只要 Singleton 类被装载了，那么 instance 就会被实例化（没有达到 lazy loading 效果），而这种方式是 Singleton 类被装载了，instance 不一定被初始化。
 
 因为 SingletonHolder 类没有被主动使用，只有通过显式调用 getInstance 方法时，才会显式装载 SingletonHolder 类，从而实例化 instance。想象一下，如果实例化 instance 很消耗资源，所以想让它延迟加载，另外一方面，又不希望在 Singleton 类加载时就实例化，因为不能确保 Singleton 类还可能在其他的地方被主动使用从而被加载，那么这个时候实例化 instance 显然是不合适的。这个时候，这种方式相比饿汉单例就显得很合理。
+
+
 
 ####   缺点
 
