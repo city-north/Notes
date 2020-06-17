@@ -14,6 +14,14 @@ TCC 模式的全称是
 - confirm : 执行业务,使用资源
 - cancel : 回滚业务,释放资源
 
+#### TCC事务模型总共有三个状态
+
+- Initial 状态: 是最初始的状态,接到 Try 请求时变成 Reserved 状态
+- Reserved 状态 : 接受 Confirm 请求时变成 Final 状态,如果接手 Cancel 请求或者等待超时则退回到 Initial 状态
+- Final 状态 : TCC 事务成功状态
+
+
+
 
 
 ## <img src="assets/image-20200102001306503.png" alt="image-20200102001306503" style="zoom: 67%;" />
@@ -42,4 +50,11 @@ TCC (try-confirm-cancel)与Saga事务处理方式相比多了一个Try方法。�
 异常场景下，事务发起方会向alpha上报异常事件，然后alpha会向该全局事务的其它已完成的子事务发送补偿指令，确保最终所有的子事务要么都成功，要么都回滚。
 
 ![exception_scenario_TCC](assets/exception_scenario_TCC.png)
+
+## TCC 与 2PC
+
+与 2PC 不同,
+
+- TCC的模式把原来 2PC 的 prepare 操作从事务管理中剥离出来,规范为 try 操作,并且变成 Reserverd 状态
+- 撤销的 prepare 的操作范围为 cancel 操作,并且变为 Initial 状态
 
