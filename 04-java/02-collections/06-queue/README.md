@@ -7,3 +7,4 @@
 - SynchronousQueue 用于线程同步的阻塞队列
 - LinkedTransferQueue 基于链表的,无界阻塞队列
 - LinkedBlockingDeque 基于链表的,双向阻塞队列
+
