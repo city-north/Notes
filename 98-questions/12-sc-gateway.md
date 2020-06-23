@@ -68,14 +68,14 @@ gateway 项目中的断言函数实际上是 Spring5.0中的 ServerWebExchange �
 
 ### 权重路由
 
- [051-gateway-权重路由.md](../05-spring-cloud-documentation/32-SpringCloud与网关中间件/02-spring-cloud-gateway/051-gateway-权重路由.md) 
+ [051-gateway-权重路由.md](../05-spring-cloud-documentation/32-SpringCloud与网关中间件/02-SpringCloudGateway/051-gateway-权重路由.md) 
 
 有时候我们想打一部分流量到 v1版本,打一部分流量到 v2 版本
 
 #### 如何做限流,限流常用算法
 
-
+ [README.md](../09-micro-services/README.md) 
 
 #### 如何做动态路由?
 
- [06-gateway动态路由.md](../05-spring-cloud-documentation/32-SpringCloud与网关中间件/02-spring-cloud-gateway/06-gateway动态路由.md) 
+ [06-gateway动态路由.md](../05-spring-cloud-documentation/32-SpringCloud与网关中间件/02-SpringCloudGateway/06-gateway动态路由.md) 
