@@ -1,32 +1,12 @@
 # Mybatis
 
-## 目录
+![image-20200628113430985](../../assets/image-20200628113430985.png)
 
--  [01-quick-start.md](01-quick-start.md) 
--  [02-sql-session-factory.md](02-sql-session-factory.md) 
--  [03-sql-session-factory-builder.md](03-sql-session-factory-builder.md) 
--  [04-sql-session.md](04-sql-session.md) 
--  [05-mapper.md](05-mapper.md) 
--  [06-type-aliase.md](06-type-aliase.md) 
--  [07-type-handler.md](07-type-handler.md) 
--  [08-object-factory.md](08-object-factory.md) 
--  [09-plugins.md](09-plugins.md) 
--  [10-environments.md](10-environments.md) 
--  [11-database-provider.md](11-database-provider.md) 
--  [12-mappers.md](12-mappers.md) 
--  [13-dynamic-sql.md](13-dynamic-sql.md) 
--  [14-statement-builders.md](14-statement-builders.md) 
--  [15-logging.md](15-logging.md) 
--  [16-executor.md](16-executor.md) 
--  [17-caching.md](17-caching.md) 
--   [18-configuration.md](18-configuration.md) 
--   [19-sql-exeute.md](19-sql-exeute.md) 
--   [20-spring.md](20-spring.md) 
--   [21-springboot.md](21-springboot.md) 
+
 
 ## 架构分层
 
-![image-20200218235122850](assets/image-20200218235122850.png)
+![image-20200218235122850](../../assets/image-20200218235122850.png)
 
 #### 接口层
 

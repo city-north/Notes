@@ -1,6 +1,14 @@
 # 类型处理器（typeHandlers）
 
-由于 Java 类型和数据库的 JDBC类型不是一一对应的(比如 String 与 varchar), 所以我们把 Java 对象转化为数据库的值,和把数据库的值转化成 Java 对象,需要经过一定的转换,这两个方向的转换都要用到 TypeHandler
+由于 Java 类型和数据库的 JDBC 类型不是一一对应的 (比如 String 与 varchar)， 所以我们把 Java 对象转换为数据库的值，和把数据库的值转换成 Java 对象，需要经过 一定的转换，这两个方向的转换就要用到 TypeHandler
+
+##### 为什么实体类对象里面的一个 String 属性，可以保存成数据库里面的 varchar 字段，或者保存成 char 字段?
+
+因为 MyBatis 已经内置了很多` TypeHandler`(在 type 包下)，它们全部全部 注册在 `TypeHandlerRegistry` 中，他们都继承了抽象类 `BaseTypeHandler`，泛型就是要处理的 Java 数据类型。当我们做数据类型转换的时候，就会自动调用对应的 TypeHandler 的方法。
+
+![image-20200628134620928](../../assets/image-20200628134620928.png)
+
+##### 
 
 无论是 MyBatis 在预处理语句（PreparedStatement）中设置一个参数时，还是从结果集中取出一个值时， 都会用类型处理器将获取的值以合适的方式转换成 Java 类型。下表描述了一些默认的类型处理器。
 
