@@ -223,4 +223,4 @@ finally {
 
 ![image-20200222192711424](assets/image-20200222192711424.png)
 
-实际上 `MapperProxyFactory `创建的就是我们的Mapper 接口类的代理,通过 JDK 动态代理的方式,将 interface 和 对应的 xml Statement 进行了一一关联
+实际上 `MapperProxyFactory `创建的就是我们的Mapper 接口类的代理,通过 JDK 动态代理的方式,将 interface 和 对应的 xml Statement 进行了一一关联第一步,配置解析流程

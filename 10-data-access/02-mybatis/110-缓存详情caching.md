@@ -1,7 +1,19 @@
 # Cache 缓存
 
 - 一级缓存 ,SqlSession 级别的,会话级别的
-- 二级缓存,
+- 二级缓存
+
+MyBatis 跟缓存相关的类都在 cache 包里面，其中有一个 Cache 接口，只有一个默 认的实现类 PerpetualCache，它是用 HashMap 实现的。
+
+除此之外，还有很多的装饰器，通过这些装饰器可以额外实现很多的功能:回收策 略、日志记录、定时刷新等等。
+
+所有的缓存实现类总体上可分为三类:
+
+- 基本缓存
+- 淘汰算法缓存
+- 装饰器缓存
+
+
 
 ### 缓存
 
@@ -53,11 +65,11 @@ MyBatis 内置了一个强大的事务性查询缓存机制，它可以非常方
 
 **提示** 二级缓存是事务性的。这意味着，当 SqlSession 完成并提交时，或是完成并回滚，但没有执行 flushCache=true 的 insert/delete/update 语句时，缓存会获得更新。
 
-![image-20200221215004513](assets/image-20200221215004513.png)
+![image-20200221215004513](../../assets/image-20200221215004513.png)
 
 #### 缓存的分类
 
-![image-20200221215351013](assets/image-20200221215351013.png)
+![image-20200221215351013](../../assets/image-20200221215351013.png)
 
 - 基本缓存
 - 淘汰算法缓存
@@ -65,21 +77,17 @@ MyBatis 内置了一个强大的事务性查询缓存机制，它可以非常方
 
 通过使用配置属性
 
-
-
 | 缓存实现类          | 描述                                           | 作用                                                         | 装饰条件                                           |
 | ------------------- | ---------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- |
-| PerpetualCache      | 缓存的基本实现                                 | 默认是 PerpetualCache,也可以自定义比如 RedisCache,EhCache 等具备基本功能的缓存类 | 无                                                 |
-| LruCache            | LRU 策略的缓存,last recently use ,最近最少使用 | 当缓存到达上限的时候,删除最少使用的缓存                      | eviction="LRU"(默 认)                              |
-| FifoCache           | FIFO 策略的缓存                                | 当缓存达到上限的时候,删除最先入列的缓存                      | eviction="FIFO"                                    |
-| SoftCache/WeakCache | 带清理策略的缓存                               | 通过 JVM 的软引用和弱引用来实现缓存，当 JVM 内存不足时，会自动清理掉这些缓存，基于 SoftReference 和 WeakReference | eviction="SOFT"/eviction="WEAK"                    |
+| PerpetualCache      | 缓存的基本实现                                 | 默认是 `PerpetualCache`,也可以自定义比如 `RedisCache`,`EhCache` 等具备基本功能的缓存类 | 无                                                 |
+| LruCache            | LRU 策略的缓存,last recently use ,最近最少使用 | 当缓存到达上限的时候,删除最少使用的缓存                      | `eviction="LRU"(默 认)`                            |
+| FifoCache           | FIFO 策略的缓存                                | 当缓存达到上限的时候,删除最先入列的缓存                      | `eviction="FIFO"`                                  |
+| SoftCache/WeakCache | 带清理策略的缓存                               | 通过 JVM 的软引用和弱引用来实现缓存，当 JVM 内存不足时，会自动清理掉这些缓存，基于 SoftReference 和 WeakReference | `eviction="SOFT"/eviction="WEAK"`                  |
 | LoggingCache        | 带日志功能的缓存                               | 比如:输出缓存命中率                                          | 基本                                               |
-| BlockingCache       | 阻塞缓存                                       | 通过在 get/put 方式中加锁，保证只有一个线程操 作缓存，基于 Java 重入锁实现 | blocking=true                                      |
-| SerializedCache     | 支持序列化的缓存                               | 将对象序列化以后存到缓存中，取出时反序列化                   | readOnly=false(默 认)                              |
-| ScheduledCache      | 定时调度的缓存                                 | 在进行 get/put/remove/getSize 等操作前，判断 缓存时间是否超过了设置的最长缓存时间(默认是 一小时)，如果是则清空缓存--即每隔一段时间清 空一次缓存 | flushInterval 不为 空                              |
+| BlockingCache       | 阻塞缓存                                       | 通过在 get/put 方式中加锁，保证只有一个线程操 作缓存，基于 Java 重入锁实现 | `blocking=true`                                    |
+| SerializedCache     | 支持序列化的缓存                               | 将对象序列化以后存到缓存中，取出时反序列化                   | `readOnly=false`(默 认)                            |
+| ScheduledCache      | 定时调度的缓存                                 | 在进行 get/put/remove/getSize 等操作前，判断 缓存时间是否超过了设置的最长缓存时间(默认是 一小时)，如果是则清空缓存--即每隔一段时间清 空一次缓存 | `flushInterval` 不为 空                            |
 | TransactionalCache  | 事务缓存                                       | 在二级缓存中使用，可一次存入多个缓存，移除多 个缓存          | 在 TransactionalCacheManager 中用 Map 维护对应关系 |
-
-
 
 #### 使用自定义缓存
 
@@ -156,30 +164,30 @@ public interface InitializingObject {
 
 Cache 接口是 MyBatis 中的核心接口,实际上
 
-![image-20200219212119652](assets/image-20200219212119652.png)
+![image-20200219212119652](../../assets/image-20200219212119652.png)
 
 值得注意的是`TransactionalCacheManager` 事务缓存管理器,实际上维护了一个 HashMap,支持同事添加或者修改多个缓存,只有调用了 Commit 方法以后,缓存的方法才会被写入
 
-![image-20200219222903814](assets/image-20200219222903814.png)
+![image-20200219222903814](../../assets/image-20200219222903814.png)
 
 #### 默认的实现类
 
 `PerpetualCache`是默认的实现类,主要是对 Cache 进行了简单的封装
 
-![image-20200219212210521](assets/image-20200219212210521.png)
+![image-20200219212210521](../../assets/image-20200219212210521.png)
 
 其中仅仅只维护了一个 HashMap 
 
-![image-20200219212313889](assets/image-20200219212313889.png)
+![image-20200219212313889](../../assets/image-20200219212313889.png)
 
 #### 装饰类
 
 实现 Cache 接口的不光光有默认的实现类`perpetualCache`,还有一系列的装饰类,这里使用的是装饰器模式 [04-decorator-pattern.md](../../01-design-patterns/03-structural-patterns/04-decorator-pattern.md) 
 
-![image-20200219212415724](assets/image-20200219212415724.png)
+![image-20200219212415724](../../assets/image-20200219212415724.png)
 
 #### SynchronizedCache 
 
 这是一个非常简单的装饰器,主要是用`synchronized`关键字封装了所有的方法来做到对 Cache 访问的同步
 
-![image-20200219212523577](assets/image-20200219212523577.png)
+![image-20200219212523577](../../assets/image-20200219212523577.png)
