@@ -17,7 +17,7 @@ public void testStatement() throws IOException {
 ```
 ## 时序图
 
-![image-20200222202949552](assets/image-20200222202949552.png)
+![image-20200222202949552](../../assets/image-20200222202949552.png)
 
 ## 获得 Mapper 对象
 

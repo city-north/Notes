@@ -18,7 +18,7 @@
 
 ## 时序图
 
-![image-20200222202929112](assets/image-20200222202929112.png)
+![image-20200222202929112](../../assets/image-20200222202929112.png)
 
 ## 创建会话过程
 
@@ -30,7 +30,7 @@
 
 上个笔记分析了解析,解析后返回的是`DefaultSqlSessionFactory`类,筒仓情况下这个类是单例的,应用级别
 
-![image-20200222193750189](assets/image-20200222193750189.png)
+![image-20200222193750189](../../assets/image-20200222193750189.png)
 
 ```
 ExecutorType execType, TransactionIsolationLevel level, boolean autoCommit
@@ -90,9 +90,9 @@ Executor 的基本类型有三种:
 
 他们都继承了`BaseExecutor`
 
-![image-20200222194815422](assets/image-20200222194815422.png)
+![image-20200222194815422](../../assets/image-20200222194815422.png)
 
-![image-20200222194953045](assets/image-20200222194953045.png)
+![image-20200222194953045](../../assets/image-20200222194953045.png)
 
 
 

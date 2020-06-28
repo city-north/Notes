@@ -1269,11 +1269,11 @@ MapperRegistry 存的是<Mapper 类型,MapperProxyFactory>的映射关系
 
 MapperProxyFactory 是接口对应的工厂类,实际上就创建了 MapperProxy (Mapper 的代理类),使用的是 JDK 动态代理类
 
-![image-20200220001555995](assets/image-20200220001555995.png)
+![image-20200220001555995](../../assets/image-20200220001555995.png)
 
 #### 为什么要传进去一个接口,然后还要用接口类型来接受
 
-![image-20200220001710140](assets/image-20200220001710140.png)
+![image-20200220001710140](../../assets/image-20200220001710140.png)
 
 ## Mapepr 的继承
 

@@ -199,7 +199,7 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
 
 维护了内置的类型转换工具,又 Java 类型到 JDBC 类型的映射,或者是其他类型的互转方式
 
-![image-20200218203922174](assets/image-20200218203922174.png)
+![image-20200218203922174](../../assets/image-20200218203922174.png)
 
 需要自定义时,实现一个`BaseTypeHandler`的实现类
 

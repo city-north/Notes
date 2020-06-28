@@ -11,7 +11,7 @@
 - 直接与用户对接的API 应用层 `SqlSession`,对应着一次数据库会话
 - 用户定义的 Mapper 接口需要一个代理映射到指定的 sql 语句(Statement) 我们需要一个` MapperProxy` 类
 
-![image-20200226105823122](assets/image-20200226105823122.png)
+![image-20200226105823122](../../assets/image-20200226105823122.png)
 
 #### 流程
 

@@ -22,7 +22,7 @@
 
 ## 时序图
 
-![image-20200222202905289](assets/image-20200222202905289.png)
+![image-20200222202905289](../../assets/image-20200222202905289.png)
 
 
 
@@ -35,7 +35,7 @@
 SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 ```
 
-![image-20200222181842820](assets/image-20200222181842820.png)
+![image-20200222181842820](../../assets/image-20200222181842820.png)
 
 `build`通过`XMLConfigBuilder`这个默认实现类
 
@@ -46,22 +46,22 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(input
 `XMLConfigBuilder` 是抽象类 `BaseBuilder` 的一个子类，专门用来解析全局配置文 件，针对不同的构建目标还有其他的一些子类，比如:
 `XMLMapperBuilder`:解析` Mapper `映射器 `XMLStatementBuilder`:解析增删改查标签
 
-![image-20200222185126975](assets/image-20200222185126975.png)
+![image-20200222185126975](../../assets/image-20200222185126975.png)
 
 - XMLMapperBuilder:解析 Mapper 映射器
 - XMLStatementBuilder: 解析增删改查标签
 
-![image-20200222185437349](assets/image-20200222185437349.png)
+![image-20200222185437349](../../assets/image-20200222185437349.png)
 
 `SqlSessionBuilder`中的 `build `方法创建了 `XMLConfigBuilder`
 
-![image-20200222185708831](assets/image-20200222185708831.png)
+![image-20200222185708831](../../assets/image-20200222185708831.png)
 
 在解析的方法中,可以看到每一个` XMLConfigBuilder `只能使用一次,这里使用了一个变量存储了是否解析过,下面就到了`propertiesElement`方法,
 
 
 
-![image-20200222190147622](assets/image-20200222190147622.png)
+![image-20200222190147622](../../assets/image-20200222190147622.png)
 
 #### propertiesElement方法
 
@@ -99,7 +99,7 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(input
 这里就是对`<settings>`标签里面所有子标签的处理了，前面我们已经把子标签全部 转换成了 Properties 对象，所以在这里处理 Properties 对象就可以了。
 二级标签里面有很多的配置，比如二级缓存，延迟加载，自动生成主键这些。需要 注意的是，我们之前提到的所有的默认值，都是在这里赋值的。
 
-![image-20200222190522787](assets/image-20200222190522787.png)
+![image-20200222190522787](../../assets/image-20200222190522787.png)
 
 #### environmentsElement()
 
@@ -181,11 +181,11 @@ XMLMapperBuilder.parse()方法，是对 Mapper 映射器的解析。里面有两
 
 无论是 package 扫描还是根据接口扫描,最后都会调用到 `MapperRegistry` 的 `addMapper` 方法
 
-![image-20200222191531879](assets/image-20200222191531879.png)
+![image-20200222191531879](../../assets/image-20200222191531879.png)
 
 ##### 第三步,处理注解
 
-![image-20200222192012951](assets/image-20200222192012951.png)
+![image-20200222192012951](../../assets/image-20200222192012951.png)
 
 除了映射器文件，在这里也会去解析 Mapper 接口方法上的注解。在 `addMapper()` 方法里面创建了一个 `MapperAnnotationBuilder`，我们点进去看一下 `parse()`方法。
 
@@ -217,10 +217,10 @@ finally {
 
 ## 值得注意的是
 
-![image-20200222192651059](assets/image-20200222192651059.png)
+![image-20200222192651059](../../assets/image-20200222192651059.png)
 
 在 MapperResgistry 里维护了一个 接口类和`MapperProxyFactory`的映射关系:
 
-![image-20200222192711424](assets/image-20200222192711424.png)
+![image-20200222192711424](../../assets/image-20200222192711424.png)
 
 实际上 `MapperProxyFactory `创建的就是我们的Mapper 接口类的代理,通过 JDK 动态代理的方式,将 interface 和 对应的 xml Statement 进行了一一关联第一步,配置解析流程

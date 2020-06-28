@@ -65,7 +65,7 @@
 
 可以看到 `SqlSessionFactoryBean` 的`Hierarchy`
 
-![image-20200224215538154](assets/image-20200224215538154.png)
+![image-20200224215538154](../../assets/image-20200224215538154.png)
 
 #### 实现 `InitializingBean`
 
@@ -146,7 +146,7 @@
 
 #### Hierarchy 
 
-![image-20200224222042073](assets/image-20200224222042073.png)
+![image-20200224222042073](../../assets/image-20200224222042073.png)
 
 从类注释上可以看出这个类是用来扫描` Mapper `对象的
 
@@ -154,29 +154,29 @@
 
 - `BeanDefinitionRegistryPostProcessor`:在`BeanFactoryPostProcessor`执行之前,进行相关的操作
 
-![image-20200224224708404](assets/image-20200224224708404.png)
+![image-20200224224708404](../../assets/image-20200224224708404.png)
 
 这里主要实现了扫描器的加载与扫描,首先,会调用 Spring 的 Bean 扫描机制
 
-![image-20200224224924096](assets/image-20200224224924096.png)
+![image-20200224224924096](../../assets/image-20200224224924096.png)
 
 
 
-![image-20200224224940670](assets/image-20200224224940670.png)
+![image-20200224224940670](../../assets/image-20200224224940670.png)
 
 我们可以看到这个 执行 BeanDefinitions 的方法中,实际的 接口对应的实现类是一个 `MapperFactoryBean`
 
-![image-20200224225144329](assets/image-20200224225144329.png)
+![image-20200224225144329](../../assets/image-20200224225144329.png)
 
 从这里可以知道实际上 Spring 容器中的接口对应的实现类实际上是一个 `MapperfactoryBean`,
 
-![image-20200224222235285](assets/image-20200224222235285.png)
+![image-20200224222235285](../../assets/image-20200224222235285.png)
 
 可以看到 MapperFactoryBean 通过适配器模式适配上了 SqlSessionDaoSupport,这个类中维护了一个 SqlSessionTemplate(一个通过事务管理而线程安全的 SqlSession).通过这个 SqlSession,就可以获取 Mapper
 
 当调用`MapperfactoryBean`获取对象的时候
 
-![image-20200224225515100](assets/image-20200224225515100.png)
+![image-20200224225515100](../../assets/image-20200224225515100.png)
 
 所以实际上`MapperfactoryBean`中直接可以获取到 Mapper 的 MapperProxy 代理对象,从而能够执行 Mybatis 的操作
 
@@ -184,7 +184,7 @@
 
 - `InitializingBean`: 主要是为了在该 bean 属性被初始化完后的回调,这里用来检测基础包是否正常
 
-![image-20200224224547857](assets/image-20200224224547857.png)
+![image-20200224224547857](../../assets/image-20200224224547857.png)
 
 
 
@@ -194,11 +194,11 @@
 
 由于` DefaultSqlSession `是线程非安全的,所以我们在Spring 中配置Bean 的时候就不能使用,因为它可能会在不同的 Service 里共享
 
-![image-20200224220842821](assets/image-20200224220842821.png)
+![image-20200224220842821](../../assets/image-20200224220842821.png)
 
 所以,在和 Spring 集成的时候,要新建一个类,也就是 SqlSessionTemplate,这个类第一句话就说明了这个类是线程安全的
 
-![image-20200224220944775](assets/image-20200224220944775.png)
+![image-20200224220944775](../../assets/image-20200224220944775.png)
 
 #### 为什么 SqlSessionTemplate 是线程安全的呢
 
@@ -212,11 +212,11 @@ The SqlSession in MyBatis's architecture is the top-level interface provided to 
 
 
 
-![437015342ccba88a850688faaec86873](assets/437015342ccba88a850688faaec86873.png)
+![437015342ccba88a850688faaec86873](../../assets/437015342ccba88a850688faaec86873.png)
 
 For the native implementation class provided by MyBatis, the most used is DefaultSqlSession, but we know that the DefaultSqlSession class is not thread safe as follows!
 
-![ ](assets/990a9c7baa96f364d78ffb16491fc359.png)
+![ ](../../assets/990a9c7baa96f364d78ffb16491fc359.png)
 
 #### Second, how does SqlSessionTemplate use DefaultSqlSession?
 
@@ -239,7 +239,7 @@ In our development, we will definitely use spring, and will also use MyBatis's s
 
 The source code comments for SqlSessionTemplate are as follows:
 
-![ ](assets/3cb9ffbffc7660e1b5a35b0e1660be8b.png)
+![ ](../../assets/3cb9ffbffc7660e1b5a35b0e1660be8b.png)
 
 Through the source code, we can see that the SqlSessionTemplate implements the SqlSession interface, which means that we can use the SqlSessionTemplate to proxy the previous DefaultSqlSession to complete the operation on the database, but the DefaultSqlSession class is not thread-safe. So the DefaultSqlSession class can't be set to singleton mode.
 
@@ -249,13 +249,13 @@ f it is a regular development mode, we can get one from the SqlSessionFactory ob
 
 - First, create a proxy class by the following code, representing an instance of the proxy class of the created SqlSessionFactory, the SqlSession interface implemented by the proxy class, defining a method interceptor, if calling the method defined by the SqlSession interface implemented in the proxy class instance, The call is directed to the invoke method of the SqlSessionInterceptor (the InvocationHandler of the proxy object is the SqlSessionInterceptor, if you name it SqlSessionInvocationHandler it is better understood!) Core
 
-![ ](assets/ec6a238482d69821f8bf80e7d432c35d.png)
+![ ](../../assets/ec6a238482d69821f8bf80e7d432c35d.png)
 
 >  这里其实是核心,使用了一个 SqlSessionInterceptor 去代理了SqlSession 
 
 The code is in the invoke method of the SqlSessionInterceptor.
 
-![image-20200224231856743](assets/image-20200224231856743.png)
+![image-20200224231856743](../../assets/image-20200224231856743.png)
 
 > 实际上我们可以看到,这里直接使用了 SqlSessionManager 中的 Threadloacl 变量 localSqlSession
 
@@ -264,11 +264,11 @@ The two tool methods used in the above calling methods are:
 - getSqlSession
 - closeSqlSession 
 
-![image-20200224231954920](assets/image-20200224231954920.png)
+![image-20200224231954920](../../assets/image-20200224231954920.png)
 
 我们可以看到是通过`SqlSessionHolder`拿到的的 ,当然也是通过`TransactionSynchronizationManager`的`getResource`方法获取,我们可以看到,这是一个ThreadLocal的变量
 
-![image-20200224232202971](assets/image-20200224232202971.png)
+![image-20200224232202971](../../assets/image-20200224232202971.png)
 
 The rough analysis is so far, it may not be smooth enough. However, the paper has a long-lasting sensation. I know that I have to do it and hope that my partner can open my own compiler, find the code here, and go through the process carefully!
 In fact, through the above code we can see that MyBatis uses the proxy mode in many places. The proxy mode can be said to be a classic mode. In fact, it is not used in this place. Patterns, spring things, AOP, MyBatis database connection pool technology, MyBatis's core principles (how to complete database operations in the case of only interfaces without implementation classes!) and other technologies use proxy technology.
@@ -277,19 +277,19 @@ In fact, through the above code we can see that MyBatis uses the proxy mode in m
 
 The above said that a SqlSession implementation also has a SqlSessionManager, then what is the SqlSessionManager and what is defined as follows:
 
-![ ](assets/603bc8c68b24bd15d7345077151b96d9.png)
+![ ](../../assets/603bc8c68b24bd15d7345077151b96d9.png)
 
 You may find that the constructor of SqlSessionManager is private, so how do we create this object? Actually, the SqlSessionManager creates the object through the newInstance method, but it needs to be noted that he Although there is a private constructor and it gives us a public newInstance method, it is not a singleton mode! newInstance has a lot of overloaded methods, as shown below:
 
-![ ](assets/8584bfce34523558bcd6847a1d7b5b9e.png)
+![ ](../../assets/8584bfce34523558bcd6847a1d7b5b9e.png)
 
 The SqlSessionManager's openSession method and its overloaded method directly create the SqlSession object by calling the openSession method of the underlying packaged SqlSessionFactory object. The overloaded method is as follows:
 
-![ ](assets/e8efc039dced15a6c40e5c2d47d021ff.png)
+![ ](../../assets/e8efc039dced15a6c40e5c2d47d021ff.png)
 
 SqlSessionManager implements the methods in the SqlSession interface, such as: select, update, etc., are directly called SqlSessionProxy proxy object corresponding method in the creation of the proxy object used in the InvocationHandler The object is the SqlSessionInterceptor, which is an internal class defined in the SqlSessionManager, which is defined as follows:
 
-![ ](assets/ea7cc10179b73f42fa249d44583810c5.png)
+![ ](../../assets/ea7cc10179b73f42fa249d44583810c5.png)
 
 In summary, we should have a general understanding of the difference between DefaultSqlSession and SqlSessionManager:
 
