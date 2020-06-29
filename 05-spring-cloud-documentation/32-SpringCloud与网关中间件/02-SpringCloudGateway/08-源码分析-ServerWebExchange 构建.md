@@ -1,4 +1,4 @@
-# gatway 中 ServerWebExchange 构建
+# gateway 中 ServerWebExchange 构建
 
 不管是 zuul, sc gatway 还是基于 netty 的自研网关,都会对请求进来的 Request ,或者 Response 进行包装,转换提取为网关运行的上下文
 

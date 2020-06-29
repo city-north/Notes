@@ -40,7 +40,7 @@ volatile 在多处理器开发中保证了共享变量的可见性,这意味着�
 
 
 
-![image-20200228145036211](assets/image-20200228145036211.png)
+![image-20200228145036211](../../../assets/image-20200228145036211.png)
 
 通过高速缓存的存储交互很好的解决了处理器与内存的速度矛盾，但是也为计算机系统带来了更高的复杂度，因为它引入了一个新的问题，缓存一致性。
 
@@ -83,7 +83,7 @@ MESI 表示缓存行的四种状态，分别是
 
 假如在主内存中有一个 `MainMemory`存在变量 i = 1,此时 M 代表修改的状态 ,`CORE 1` 中的缓存输入 I 失效状态
 
-<img src="assets/image-20200228152824505.png" alt="image-20200228152824505" style="zoom:50%;" />
+<img src="../../../assets/image-20200228152824505.png" alt="image-20200228152824505" style="zoom:50%;" />
 
 
 
@@ -91,11 +91,11 @@ MESI 表示缓存行的四种状态，分别是
 
 
 
-<img src="assets/image-20200228152836449.png" alt="image-20200228152836449" style="zoom:50%;" />
+<img src="../../../assets/image-20200228152836449.png" alt="image-20200228152836449" style="zoom:50%;" />
 
 下图中 `CORE0` 和 `CORE1` 属于 S 分享状态 
 
-<img src="assets/image-20200228152848779.png" alt="image-20200228152848779" style="zoom:50%;" />
+<img src="../../../assets/image-20200228152848779.png" alt="image-20200228152848779" style="zoom:50%;" />
 
 对于 MESI 协议，从 CPU 读写角度来说会遵循以下原则: 
 
@@ -105,7 +105,7 @@ MESI 表示缓存行的四种状态，分别是
 
 使用总线锁和缓存锁机制之后，CPU 对于内存的操作大概 可以抽象成下面这样的结构。从而达到缓存一致性效果
 
-<img src="assets/image-20200228154623072.png" alt="image-20200228154623072" style="zoom:33%;" />
+<img src="../../../assets/image-20200228154623072.png" alt="image-20200228154623072" style="zoom:33%;" />
 
 #### 总结可见性的本质
 
@@ -117,13 +117,13 @@ MESI 协议虽然可以实现缓存的一致性，但是也会存在一些问题
 
 就是各个 CPU 缓存行的状态是通过消息传递来进行的。如果 CPU0 要对一个在缓存中共享的变量进行写入，首先需要发送一个`失效的消息`给到其他缓存了该数据的 CPU。并 且要等到他们的确认回执。CPU0 在这段时间内都会处于 阻塞状态。为了避免阻塞带来的资源浪费。在 cpu 中引入 了 **Store Bufferes**。
 
-<img src="assets/image-20200228153441639.png" alt="image-20200228153441639" style="zoom:33%;" />
+<img src="../../../assets/image-20200228153441639.png" alt="image-20200228153441639" style="zoom:33%;" />
 
 CPU0 只需要在写入共享数据时，直接把数据写入到 store bufferes 中，同时发送 invalidate 消息，然后继续去处理其他指令。
 
 当收到其他所有 CPU 发送了 invalidate acknowledge 消息 时，再将 store bufferes 中的数据数据存储至 cache line 中。最后再从缓存行同步到主内存。
 
-<img src="assets/image-20200228153542948.png" alt="image-20200228153542948" style="zoom:33%;" />
+<img src="../../../assets/image-20200228153542948.png" alt="image-20200228153542948" style="zoom:33%;" />
 
 但是这种优化存在两个问题
 1. 数据什么时候提交是不确定的，因为需要等待其他 cpu给回复才会进行数据同步。这里其实是一个异步操作
@@ -170,7 +170,7 @@ Java虚拟机有自己的内存模型（Java Memory Model，JMM），JMM可以�
 
 　　JMM决定一个线程对共享变量的写入何时对另一个线程可见，JMM定义了线程和主内存之间的抽象关系：共享变量存储在主内存(Main Memory)中，每个线程都有一个私有的本地内存（Local Memory），本地内存保存了被该线程使用到的主内存的副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存中的变量。
 
-  <img src="assets/856fde6999c798be9a5ddc98d64b89a0.jpg" style="zoom:33%;" />
+  <img src="../../../assets/856fde6999c798be9a5ddc98d64b89a0.jpg" style="zoom:33%;" />
 
 volatile具备两种特性，第一就是保证共享变量对所有线程的可见性。将一个共享变量声明为volatile后，会有以下效应：
 

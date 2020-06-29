@@ -6,7 +6,7 @@ JWT (JSON WEB TOKEN ) 是一种使用 JSON 格式来规约TOKEN 或者 SESSION �
 - payload 荷载 :  包含一些自定义与非自定义的认证信息
 - signature 签名 : 将头部与载荷使用"."连接,使用头部的签名算法生成签名信息并拼装到末尾
 
-![img](assets/jwt.png)
+![img](../assets/jwt.png)
 
 
 
