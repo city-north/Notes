@@ -17,7 +17,7 @@
 
 > 两个操作之间有 happens-before 关系,并不意味着前一个操作必须要在后一个操作之前执行,happens-before 仅仅要求前一个操作(执行的结果) 对于后一个操作可见,且前一个操作按顺序排在第二个操作之前(the first is visible to the ordered before the second)
 
-![image-20200306122005450](assets/image-20200306122005450.png)
+![image-20200306122005450](../../../assets/image-20200306122005450.png)
 
 对于 Java 程序来说,happens-before 规则简单容易懂,避免Java 程序员为了理解 JMM 提供的内存可见性保证而去学习复杂的重排序规则以及这些规则的具体实现
 
@@ -29,7 +29,7 @@
   - 1 happenns-before 2; 
   - 3 happens- before 4
 
-![image-20200228174831591](assets/image-20200228174831591.png)
+![image-20200228174831591](../../../assets/image-20200228174831591.png)
 
 - volatile 变量规则，对于 volatile 修饰的变量的写的操作， 一定 happen-before 后续对于 volatile 变量的读操作; 根据 volatile 规则，2 happens before 3
 

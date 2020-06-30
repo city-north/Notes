@@ -16,6 +16,56 @@ Semaphore 分公平策略和非公平策略
 
 通过对比发现公平和非公平的区别就在于是否多了一个 hasQueuedPredecessors 的判断
 
-### 使用场景
+### 
 
-用来做限流操作
+
+
+```java
+public class SemaphoreTest {
+    public static void main(String[] args) {
+        Semaphore semaphore = new Semaphore(3);
+        for (int i = 0; i < 10; i++) {
+            new Car(i, semaphore).start();
+        }
+    }
+
+    static class Car extends Thread {
+
+        private int num;
+        private Semaphore semaphore;
+
+        public Car(int num, Semaphore semaphore) {
+            this.num = num;
+            this.semaphore = semaphore;
+        }
+
+
+        @Override
+        public void run() {
+            try {
+                semaphore.acquire();//获取一个令牌(类似于停车卡)
+                System.out.println("num:" + num + " ,got a parking space");
+                TimeUnit.SECONDS.sleep(5);
+                System.out.println("num" + num + " ,release a parking space");
+                semaphore.release();//释放令牌(类似于停车卡)
+            } catch (InterruptedException e) {
+              可以打断
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+```
+
+### 值得注意的是
+
+Semaphore 对锁的申请和释放和 ReentrantLock 类似,通过 acquire 方法和 release 方法来获取和释放许可信号资源,
+
+`Semaphore.acquire` 方法默认和 `ReentrentLock.lockInterruptibly` 方法效果一样,为可响应中断锁,也就是说在等待许可信号资源的过程中可以被` Thread.interrupt `方法中断而取消对许可信号的申请
+
+## 使用场景
+
+- 对象池,资源池的构建, 比如静态全局对象池,数据库连接池等等
+- 我们可以创建一个计数器为 1 的 `Semaphore`.将其作为一种互斥锁的机制(二元信号量,表示两种互斥的状态),同一时间只有一个线程可以获取该锁
+
