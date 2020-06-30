@@ -24,4 +24,22 @@ public class InterruptDemo {
         thread.interrupt(); //加和不加的效果
 
     }
+
+    public class SafeInterruptedThread extends Thread {
+
+        @Override
+        public void run() {
+            if (!Thread.currentThread().isInterrupted()) {
+                try {
+                    //TODO 处理线程具体的业务逻辑
+                    sleep(3000);
+                } catch (InterruptedException e) {
+                    //处理线程的释放操作.如果释放锁
+                    //重新设置中断标志
+                    Thread.currentThread().interrupt();
+                }
+            }
+            super.run();
+        }
+    }
 }
