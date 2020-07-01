@@ -1,5 +1,7 @@
 # 使用ReentrantLock
 
+![image-20200701192552421](../../../assets/image-20200701192552421.png)
+
 从Java 5开始，引入了一个高级的处理并发的`java.util.concurrent`包，它提供了大量更高级的并发功能，能大大简化多线程程序的编写。
 
 > ReentrantLock 继承了 Lock 接口并实现了在接口中定义的方法,是一个可重入的独占锁,内部通过自定义 队列同步器(Abstract Queued Sychronized, AQS) 来实现锁的获取与释放
@@ -202,4 +204,59 @@ public class InterruptiblyReentrantLock {
 - Lock 是一个接口,而`synchronized`是 Java 的关键字,`synchronized`由内置的语言实现
 
 
+
+## ReentrantLock 实现原理
+
+### Lock 加锁
+
+![image-20200701194049866](../../../assets/image-20200701194049866.png)
+
+#### ReentrantLock.lock()
+
+```java
+public void lock() { 
+	sync.lock();
+}
+```
+
+sync 实际上是一个抽象的静态内部类，它继承了 AQS 来实现重入锁的逻辑，我们前面说过 AQS 是一个同步队列，它能够实现线程的阻塞以及唤醒，但它并不具备 业务功能，所以在不同的同步场景中，会继承 AQS 来实现对应场景的功能
+Sync 有两个具体的实现类，分别是: 
+
+- NofairSync:表示可以存在抢占锁的功能，也就是说不管当前队列上是否存在其他 线程等待，新线程都有机会抢占锁
+- FailSync: 表示所有线程严格按照 FIFO 来获取锁
+
+#### NofairSync.lock
+
+以非公平锁为例，来看看 lock 中的实现
+
+1. 非公平锁和公平锁最大的区别在于，在非公平锁中抢占锁的逻辑是，不管有没有线程排队，我先上来 cas 去抢占一下 
+2. CAS 成功，就表示成功获得了锁
+3. CAS 失败，调用` acquire(1`)走锁竞争逻辑
+
+```java
+
+    /**
+     * Sync object for non-fair locks
+     */
+    static final class NonfairSync extends Sync {
+        private static final long serialVersionUID = 7316153563782823691L;
+
+        /**
+         * Performs lock.  Try immediate barge, backing up to normal
+         * acquire on failure.
+         * CAS 设置获取锁,如果成功就设置当前线程为独占线程
+         	如果失败,则走锁竞争
+         */
+        final void lock() {
+            if (compareAndSetState(0, 1))
+                setExclusiveOwnerThread(Thread.currentThread());
+            else
+                acquire(1);
+        }
+
+        protected final boolean tryAcquire(int acquires) {
+            return nonfairTryAcquire(acquires);
+        }
+    }
+```
 

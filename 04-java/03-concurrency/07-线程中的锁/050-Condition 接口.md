@@ -1,5 +1,8 @@
 # 使用Condition
 
+> 在前面学习 synchronized 的时候，有讲到 wait/notify 的基本使用，结合 synchronized 可以实现对线程的通信。那么这个时候我就在思考了，既然 J.U.C 里 面提供了锁的实现机制，那 J.U.C 里面有没有提供类似的线程通信的工具呢? 于 是找阿找，发现了一个 Condition 工具类。
+> Condition 是一个多线程协调通信的工具类，可以让某些线程一起等待某个条件 (condition)，只有满足条件时，线程才会被唤醒
+
 Condition 在 AQS 的基础上,额外添加了一个单向的**等待队列**,当调用 await 方法的时候,相当于AQS同步队列的首节点(获得了锁的节点),移动到 Condition 队列的等待队列中,
 
  当调用condition 对象的 signal 方法时, 会将等待时间最长的线程放入 AQS 队列的末尾
@@ -7,11 +10,13 @@ Condition 在 AQS 的基础上,额外添加了一个单向的**等待队列**,�
 - 跟 Object 比较下 , 总体来说是更有灵活性,并且可以同时创建多个condition 队列 , 使用更加灵活
 - 支持在等待的时候,忽略中断,支持等待超时退出
 
+<img src="../../../assets/image-20200405002650107.png" alt="image-20200405002650107" style="zoom:50%;" />
+
 ## 和 Object 的对比
 
 任意一个 Java 对象,都有一组监视器方法
 
-- Object.wait()
+- Object.wait()	
 - Object.wait(long timeout)
 - Object.notify()
 - Object.notifyAll()
@@ -105,7 +110,7 @@ if (condition.await(1, TimeUnit.SECOND)) {
 - `Condition`可以替代`wait`和`notify`；
 - `Condition`对象必须从`Lock`对象获取。
 
-![image-20200326221118794](assets/image-20200326221118794.png)
+<img src="../../../assets/image-20200326221118794.png" alt="image-20200326221118794" style="zoom:50%;" />
 
 ## Condition 和 对象锁的区别
 
@@ -116,9 +121,73 @@ if (condition.await(1, TimeUnit.SECOND)) {
 #### 值得注意的是
 
 - sychronized 对标的是 lock.lock();
-
 - condtion.await 对标的是 object.wait()
 - condtion.signal 对标的是 object.notify()
+
+## Condition 实现原理
+
+`CondtionObject`是 AbstractQueuedSynchronzier 的内部类,因为 Condition 的操作需要获取关联的锁,所以作为同步器的内部类也较为合理
+
+每个 Condition 对象都包含着一个队列(等待队列) , 该队列是 Condition 对象实现等待/通知功能的关键
+
+- [等待队列的实现](#等待队列的实现)
+- [等待和通知](#等待和通知)
+
+#### 等待队列的实现
+
+等待队列是一个 FIFO 的队列,在队列中,每个节点都包含了一个线程引用,该线程就是在 Condition 对象上等待的线程
+
+- 如果一个线程调用了 Condition.wait 方法,则该线程会释放锁,构造成节点(与 AQS.NODE 一样)加入等待队列
+
+  > <img src="../../../assets/image-20200701215608601.png" alt="image-20200701215608601" style="zoom:33%;" />\
+  >
+  > Condition 拥有收尾节点的引用,而新增及诶单只需要将原有的尾巴节点 nextWaiter 指向它,并且更新尾结点即可
+  >
+  > 这个节点的更新过程没有 CAS 保证,因为调用 await 方法的线程必定是获取了锁的线程.也就是说这个过程是由锁来保证线程安全的
+
+- 在 Object 监视器模型上,一个对象拥有一个同步队列和等待队列,而并发包中的同步器拥有一个同步队列和多个等待队列
+
+  
+
+  > <img src="../../../assets/image-20200701215828921.png" alt="image-20200701215828921" style="zoom:33%;" />]\
+  >
+  > 值得注意的是 Condition 的实现是同步器的内部类,因此每个 Condition 实例都能够访问同步器提供的方法,相当于每个 Condition 都拥有所属同步器的引用
+  >
+  > ```java
+  >        public final void await() throws InterruptedException {
+  >             if (Thread.interrupted())
+  >                 throw new InterruptedException();
+  >          //当前线程加入等待队列
+  >             Node node = addConditionWaiter();
+  >          //释放同步状态,也就是释放锁
+  >             int savedState = fullyRelease(node);
+  >             int interruptMode = 0;
+  >             while (!isOnSyncQueue(node)) {
+  >                 LockSupport.park(this);
+  >                 if ((interruptMode = checkInterruptWhileWaiting(node)) != 0)
+  >                     break;
+  >             }
+  >             if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
+  >                 interruptMode = REINTERRUPT;
+  >             if (node.nextWaiter != null) // clean up if cancelled
+  >                 unlinkCancelledWaiters();
+  >             if (interruptMode != 0)
+  >                 reportInterruptAfterWait(interruptMode);
+  >         }
+  > 
+  > ```
+  >
+  > 
+
+#### 等待
+
+等待实际上就是
+
+> Condition 的 await()方法,或者以 await 开头的方法,会使当前线程进入等待队列并释放锁,同时线程状态变为等待状态
+>
+> 当 await 方法返回时,当前线程一定获取了 Condition 相关的锁
+>
+> 
 
 ## Condition源码
 
@@ -133,7 +202,7 @@ if (condition.await(1, TimeUnit.SECOND)) {
 
 #### Condition.await 流程图
 
-![image-20200405002117466](assets/image-20200405002117466.png)
+<img src="../../../assets/image-20200405002650107.png" alt="image-20200405002650107" style="zoom:50%;" />
 
 #### Condition.await源码
 
@@ -228,7 +297,7 @@ public final void await() throws InterruptedException {
 1. 获取到等待队列中的首节点,加入同步队列
 2. 唤醒该节点,这个时候被唤醒的线程将会从 await()方法返回,此时该线程已经成功获取到了锁
 
-![image-20200405002650107](assets/image-20200405002650107.png)
+<img src="../../../assets/image-20200405002650107.png" alt="image-20200405002650107" style="zoom:50%;" />
 
 
 
