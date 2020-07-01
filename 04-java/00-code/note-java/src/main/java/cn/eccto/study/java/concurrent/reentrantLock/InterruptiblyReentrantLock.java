@@ -1,5 +1,6 @@
 package cn.eccto.study.java.concurrent.reentrantLock;
 
+import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -85,7 +86,8 @@ public class InterruptiblyReentrantLock {
         InterruptiblyReentrantLock reentrantLock = new InterruptiblyReentrantLock();
         final Thread thread = reentrantLock.lock1();
         final Thread thread1 = reentrantLock.lock2();
-        for (; ; ) {
+        new ReadWriteLock()
+        for (;;) {
             if (System.currentTimeMillis() - l >= 4000) {
                 thread.interrupt();
             }
