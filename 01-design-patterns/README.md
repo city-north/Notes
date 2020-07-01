@@ -43,15 +43,15 @@
 
 ### [设计模式设计原则](01-design-principles/README.md)
 
-| 设计模式                                                     |
-| ------------------------------------------------------------ |
-| [单一职责原则（Single Responsibility Principle,SRP）](01-design-principles/01-single-responsibility-principle.md) |
-| [开闭原则(Open-Closed Principle,OPC)](01-design-principles/02-open-closed-principle.md) |
-| [里氏代换原则 (Liskov Substitution Principle,LSP](01-design-principles/03-Liskov-substitution-principle.md) |
-| [依赖倒转原则(Dependancy Inversion Principle,DIP)](01-design-principles/04-dependence-inversion-principle.md) |
-| [接口隔离原则(Interface Segregation Principle,ISP)](01-design-principles/05-interface-segregation-principle.md) |
-| [合成复用原则(Composite Reuse Principle,CRP)](01-design-principles/06-composite-reuse-principle.md) |
-| [迪米特法则((Law of Demeter)](01-design-principles/07-law-of-demeter.md) |
+| 序号 | 设计模式                                                     |
+| ---- | ------------------------------------------------------------ |
+| 1    | [单一职责原则（Single Responsibility Principle,SRP）](01-design-principles/01-single-responsibility-principle.md) |
+| 2    | [开闭原则(Open-Closed Principle,OPC)](01-design-principles/02-open-closed-principle.md) |
+| 3    | [里氏代换原则 (Liskov Substitution Principle,LSP](01-design-principles/03-Liskov-substitution-principle.md) |
+| 4    | [依赖倒转原则(Dependancy Inversion Principle,DIP)](01-design-principles/04-dependence-inversion-principle.md) |
+| 5    | [接口隔离原则(Interface Segregation Principle,ISP)](01-design-principles/05-interface-segregation-principle.md) |
+| 6    | [合成复用原则(Composite Reuse Principle,CRP)](01-design-principles/06-composite-reuse-principle.md) |
+| 7    | [迪米特法则((Law of Demeter)](01-design-principles/07-law-of-demeter.md) |
 
 ### [创建型模式（Creational Patterns）](02-creational-patterns/README.md)
 
