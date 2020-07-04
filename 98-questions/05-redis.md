@@ -3,6 +3,7 @@
 - [介绍一下 Redis 持久化机制](#介绍一下 Redis 持久化机制)
 - [了解Redis管道技术吗](#了解Redis管道技术吗)
 - [Redis集群](#Redis主从复制)
+- 用过hyperLogLog
 
 1. redis数据类型，说下跳跃表是如何实现的，可以用什么数据结构替换。
 2. 删除过期key策略有哪些，内存淘汰策略有哪些，分别什么时候触发。
@@ -86,9 +87,13 @@ Redis集群有两种方式,一种是点对点的集群方式cluster 一种是mas
 
 #### 布隆过滤器知道吗，说下原理
 
+#### 用过hyperLogLog
 
+> 知识点:   [09-hyperloglog.md](../13-persistence/02-Redis/03-Redis的基本数据结构/09-hyperloglog.md)   [09-01hyperloglog原理.md](../13-persistence/02-Redis/03-Redis的基本数据结构/09-01hyperloglog原理.md) 伯努利过程
 
+HyperLogLog 是一数据结构,主要作用是 **一种有误差的去重计数方案**, 标准误差为 0.81%
 
+Redis 的 HyperLogLog 通过牺牲准确率来减少内存空间的消耗，只需要12K内存，在标准误差0.81%的前提下，能够统计`2^64`个数据。所以 HyperLogLog 是否适合在比如统计日活月活此类的对精度要不不高的场景。
 
 
 
