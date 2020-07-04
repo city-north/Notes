@@ -77,9 +77,9 @@ class VolatileFeaturesExample1 {
 - 在每一个 volatile 写操作的前面插入一个 `StoreStore` 屏障,后面插入一个 `StoreLoad` 屏障
 - 在每一个 volatile 读操作的后面插入一个 `LoadLoad` 屏障 和 一个  `LoadStore` 屏障
 
-| 屏障类型           | 指令示意                     | 备注                                                         |
-| ------------------ | ---------------------------- | ------------------------------------------------------------ |
-| LoadLoadBarriers   | load1;LoadLoad;Load2         | 确保 load1数据的装载优先于 load2 以及所有后续装载指令的装载  |
-| StoreStoreBarriers | Store1;storestore;store2     | 确保 store1数据对其他处理器可见优先于 store2 以及所有后续存储指令的存储 |
-| LoadStoreBarriers  | `load1`;`loadstore`;`store2` | 确保`load1`数据装载优先于 `store2`以及后续的存储指令刷新到内存 |
-| StoreLoadBarriers  | `store1`;`storeload`;`load2` | 确保 store1 数据对其他处理器变得可见,优先于 load2 以及所有后续装载指令的装载;这条内存屏障指令是一个全能型的屏障 |
+| 屏障类型           | 指令示意                       | 备注                                                         |
+| ------------------ | ------------------------------ | ------------------------------------------------------------ |
+| LoadLoadBarriers   | `load1`;`LoadLoad`;`Load2`     | 确保 load1数据的装载优先于 load2 以及所有后续装载指令的装载  |
+| StoreStoreBarriers | `Store1`;`storestore`;`store2` | 确保 store1数据对其他处理器可见优先于 store2 以及所有后续存储指令的存储 |
+| LoadStoreBarriers  | `load1`;`loadstore`;`store2`   | 确保`load1`数据装载优先于 `store2`以及后续的存储指令刷新到内存 |
+| StoreLoadBarriers  | `store1`;`storeload`;`load2`   | 确保 store1 数据对其他处理器变得可见,优先于 load2 以及所有后续装载指令的装载;这条内存屏障指令是一个全能型的屏障 |

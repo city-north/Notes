@@ -77,10 +77,59 @@ public void testJdbc() throws IOException {
         }
     }
 }
+
+    /**
+     * 原生JDBC的批量操作方式 ps.addBatch()
+     * @throws IOException
+     */
+    @Test
+    public void testJdbcBatch() throws IOException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            // 注册 JDBC 驱动
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // 打开连接
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gp-mybatis?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true", "root", "123456");
+            ps = conn.prepareStatement(
+                    "INSERT into blog values (?, ?, ?)");
+
+            for (int i = 1000; i < 1100; i++) {
+                Blog blog = new Blog();
+                ps.setInt(1, i);
+                ps.setString(2, String.valueOf(i));
+                ps.setInt(3, 1001);
+                ps.addBatch();
+            }
+
+            ps.executeBatch(); //这里是批量执行
+            // conn.commit();
+            ps.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
 ```
 
 - 业务代码与数据库操作代码耦合,不利于维护
 - 每一段代码都需要自己去管理数据库的链接,如果忘记关闭链接,可能会造成数据库服务的链接耗尽
+
+
 
 #### SpringJDBC
 
