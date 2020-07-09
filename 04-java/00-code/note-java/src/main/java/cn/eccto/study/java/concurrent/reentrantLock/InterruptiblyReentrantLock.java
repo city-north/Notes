@@ -86,7 +86,6 @@ public class InterruptiblyReentrantLock {
         InterruptiblyReentrantLock reentrantLock = new InterruptiblyReentrantLock();
         final Thread thread = reentrantLock.lock1();
         final Thread thread1 = reentrantLock.lock2();
-        new ReadWriteLock()
         for (;;) {
             if (System.currentTimeMillis() - l >= 4000) {
                 thread.interrupt();

@@ -29,7 +29,7 @@
   - 1 happenns-before 2; 
   - 3 happens- before 4
 
-![image-20200228174831591](../../../assets/image-20200228174831591.png)
+<img src="../../../assets/image-20200228174831591.png" alt="image-20200228174831591" style="zoom:50%;" />
 
 - volatile 变量规则，对于 volatile 修饰的变量的写的操作， 一定 happen-before 后续对于 volatile 变量的读操作; 根据 volatile 规则，2 happens before 3
 
