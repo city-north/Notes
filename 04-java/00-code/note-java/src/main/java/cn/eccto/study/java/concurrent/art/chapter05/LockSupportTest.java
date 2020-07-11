@@ -12,6 +12,8 @@ import java.util.concurrent.locks.LockSupport;
 public class LockSupportTest {
 
     public static void main(String[] args) {
+        System.out.println("begin park");
         LockSupport.park();//   java.lang.Thread.State: WAITING (parking)
+        System.out.println("end park");
     }
 }
