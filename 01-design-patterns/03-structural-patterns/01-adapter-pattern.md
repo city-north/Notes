@@ -86,8 +86,6 @@ public class AdapterPattern {
 
 与类的适配器模式不同的是，对象的适配器模式不是使用继承关系连接到Adaptee类，而是使用委派关系连接到Adaptee类。
 
-![](/assets/import02.png)
-
 
 
 在上图中可以看出：
@@ -102,7 +100,7 @@ Adapter与Adaptee是委派关系，这决定了适配器模式是对象适配器
 
 **步骤1**：创建T**arget接口**；
 
-```
+```java
 public interface Target {
 
     //这是源类Adapteee没有的方法
@@ -112,7 +110,7 @@ public interface Target {
 
 **步骤2**：创建**源类（Adaptee）**；
 
-```
+```java
 public class Adaptee {
 
     public void SpecificRequest(){
@@ -122,7 +120,7 @@ public class Adaptee {
 
 **步骤3**：创建**适配器类（Adapter）**（不适用继承而是委派）
 
-```
+```java
 class Adapter implements Target{  
     // 直接关联被适配类  
     private Adaptee adaptee;  
@@ -142,7 +140,7 @@ class Adapter implements Target{
 
 **步骤4**：定义具体使用目标类，并通过Adapter类调用所需要的方法从而实现目标
 
-```
+```java
 public class AdapterPattern {
     public static void main(String[] args){
         //需要先创建一个被适配类的对象作为参数  
