@@ -5,7 +5,9 @@ LockSupport 可以用来
 - 阻塞一个线程
 - 唤醒一个线程
 
-
+> LockSupport 类与每个使用它的线程都会关联一个许可证,在默认情况下,调用 LockSupport 类的方法的线程是不持有许可证的
+>
+> LockSupport 类 是使用 Unsafe 类实现的
 
 LockSupport 类是 Java6 引入的一个类，提供了基本的线程同步原语。LockSupport 实际上是调用了 Unsafe 类里的函数，归结到 Unsafe 里，只有两个函数
 

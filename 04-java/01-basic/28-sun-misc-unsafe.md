@@ -184,4 +184,4 @@ Please beware it an cause JVM crash.
 
 `sun.misc.Unsafe `provides almost unlimited capabilities for exploring and modification of VM’s runtime data structures. Despite the fact that these capabilities are almost inapplicable in Java development itself, Unsafe is a great tool for anyone who want to study HotSpot VM without C++ code debugging or need to create ad hoc profiling instruments.
 
-> `sun.misc.Unsafe ` 提供了几乎无线的能力,去获取或者修改 JVM 运行是的数据结构,尽管这些功能在Java开发本身中几乎不适用，但对于那些想要学习HotSpot VM而不需要进行c++代码调试或需要创建专门的分析工具的人来说，`sun.misc.Unsafe `是一个很好的工具。
+> `sun.misc.Unsafe ` 提供了几乎无限的能力,去获取或者修改 JVM 运行是的数据结构,尽管这些功能在Java开发本身中几乎不适用，但对于那些想要学习HotSpot VM而不需要进行c++代码调试或需要创建专门的分析工具的人来说，`sun.misc.Unsafe `是一个很好的工具。
