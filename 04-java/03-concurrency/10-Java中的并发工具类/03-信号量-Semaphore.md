@@ -156,3 +156,88 @@ Semaphore 对锁的申请和释放和 ReentrantLock 类似,通过 acquire 方法
 - 对象池,资源池的构建, 比如静态全局对象池,数据库连接池等等
 - 我们可以创建一个计数器为 1 的 `Semaphore`.将其作为一种互斥锁的机制(二元信号量,表示两种互斥的状态),同一时间只有一个线程可以获取该锁
 
+## 原理
+
+![image-20200712132953678](../../../assets/image-20200712132953678.png)
+
+Semaphore 默认采用非公平策略，如果需要使用公平策略 则 可以使用 带两个 参数 的构造函数来构造 Semaphore 对象。另外 ，如 CountDownLatch 构 造函数传递 的初始化信号量个数 permits被赋给了 AQS 的 state状态变量一样，这里 AQS 的 state值也 表示当前持有的信号量个数 。
+
+#### void acquire()方法
+
+```java
+    public final void acquireSharedInterruptibly(int arg)
+            throws InterruptedException {
+      //如果线程被中断,则抛出中断异常
+        if (Thread.interrupted())
+            throw new InterruptedException();
+      //否则调用 Sync 子类方法尝试获取,这里根据构造函数确定使用公平策略
+        if (tryAcquireShared(arg) < 0)
+          //如果获取是吧加入 AQS 队列
+            doAcquireSharedInterruptibly(arg);
+    }
+```
+
+由如上代码可知， acquire() 在内部调用了 Sync 的 acquireSharedlnterruptibly 方法，后 者会对中断进行响应(如果当前线程被中断， 则 抛出中断异常) 。尝 试获取信号 量 资源的 AQS 的方法 tryAcquireShared 是 由 Sync 的子 类实 现的，所以这 里分 别从两 方 面来讨论 。 先讨论非公平策略 NonfairSync类的 tryAcquireShared方法
+
+```java
+protected int tryAcquireShared(int acquires) {
+  return nonfairTryAcquireShared(acquires);
+}
+final int nonfairTryAcquireShared(int acquires) {
+  for (;;) {
+    //获取当前信号量
+    int available = getState();
+    //计算当前剩余值
+    int remaining = available - acquires;
+    //如果当前剩余值小于 0 或者 CAS设置成功则返回
+    if (remaining < 0 ||
+        compareAndSetState(available, remaining))
+      return remaining;
+  }
+}
+```
+
+如上代码先获取 当前信号量值 (available)，然后减去需要获取的值( acquires)， 得到 剩余的信号量个数(remaining)，如果剩余值小于 0则说明当前信号量个数满足不了需求， 那么直接返回负数 ，这时当前线程会被放入 AQS 的阻塞 队列而被挂起 。 如果剩余值大于 o, 则使用 CAS操作设置当前信号量值为剩余值，然后返回剩余值。
+
+由于 NonFairSync 是 非公平获取的，也就是说先调用 aquire 方法获取信号 量 的 线程不一定比后来者先获取到信号量。 考虑下面场景，如果线程 A 先调用了 aquire ()方 法获取信号量，但是当前信号量个数为 0， 那么线程 A 会被放入 AQS 的阻塞队列 。 过一 段时间后线程 C调用了 release ()方法释放了一个信号量，如果当前没有其他线程获取信 号量， 那么线程 A就会被激活，然后获取该信号量， 但是假如线程 C释放信号量后，线 程 C调用了 aquire方法，那么线程 C就会和线程 A去竞争这个信号量资源。 如果采用非公平策略，由 nonfairTryAcquireShared 的代码可知，线程 C 完全可以在线程 A 被激活前， 或者 激活后先于线程 A 获取到 该信号量 ，也就是 在这种模式下阻塞线程和当 前请求的线 程是竞争关系，而不遵循先来先得的策略。下面看公平性的 FairSync类是如何保证公平性 的。
+
+```java
+    protected int tryAcquireShared(int acquires) {
+        for (;;) {
+            if (hasQueuedPredecessors())
+                return -1;
+            int available = getState();
+            int remaining = available - acquires;
+            if (remaining < 0 ||
+                compareAndSetState(available, remaining))
+                return remaining;
+        }
+    }
+}
+```
+
+可见公平性还是靠 `hasQueuedPredecessors` 这个函数来保证的 。 略是看当前线程节点的前驱节点是否也在等待获取该资源，如果是 则 自己放弃获取的权限， 然后当前线程会被放入 AQS 阻塞队列，否则就去获取。
+
+#### void Release()方法
+
+该方法的作用是把当前 Semaphore对象的信号量值增加 l，如果当前有线程因为调用 aquire方法被阻塞而被放入了 AQS 的阻塞队列，则会根据公平策略选择一个信号量个数 能被满足的线程进行激活， 激活的线程会尝试获取刚增加的信号量，下面看代码实现。
+
+```java
+        protected final boolean tryReleaseShared(int releases) {
+            for (;;) {
+              //(4)获取信号量
+                int current = getState();
+              //(5)信号量+1
+                int next = current + releases;
+                if (next < current) // overflow 移除
+                    throw new Error("Maximum permit count exceeded");
+              //使用 CAS 保证鞥新信号量值的原子性
+                if (compareAndSetState(current, next))
+                    return true;
+            }
+        }
+```
+
+
+
+由代码 release()->sync.releaseShared(1)可知， release方法每次只会对信号量值增加 1, tryReleaseShared 方法是无限循环，使用 CAS 保证了 release 方法对信号量递增 l 的原子性 操作。 tryReleaseShared方法增加信号量值成功后会执行代码 (3)，即调用 AQS 的方法来 激活因为调用 aquire方法而被阻塞的线程。

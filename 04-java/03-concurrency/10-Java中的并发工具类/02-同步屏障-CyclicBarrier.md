@@ -1,6 +1,12 @@
 # CyclicBarrier 内存屏障
 
+` CountDownLatch` 的计数器是一次性的，也就是等到计数器值变为 0 后，再调用` CountDownLatch` 的 await 和 `countdown `方法都会立刻返回,这就起不到线 程同步的效果了 。
+
+> 使用 ReentrantLock 和 Condition 实现的
+
 > 到齐才能吃
+
+CyclicBanier基于独占锁实现
 
 CyclicBarrier 的字面意思是可循环使用(Cyclic)的屏障 (Barrier)。它要做的事情是，让一组线程到达一个屏障(也 可以叫同步点)时被阻塞，直到最后一个线程到达屏障时， 屏障才会开门，所有被屏障拦截的线程才会继续工作。 CyclicBarrier 默认的构造方法是 CyclicBarrier(int parties)， 其参数表示屏障拦截的线程数量，每个线程调用 await 方 法告诉 CyclicBarrier 当前线程已经到达了屏障，然后当前
 
@@ -17,7 +23,7 @@ CyclicBarrier 的字面意思是可循环使用(Cyclic)的屏障 (Barrier)。它
 - 对于指定计数值 parties，若由于某种原因，没有足够的 线程调用 CyclicBarrier 的 await，则所有调用 await 的线程 都会被阻塞;
 - 同样的 `CyclicBarrier `也可以调用 `await(timeout, unit)`， 设置超时时间，在设定时间内，如果没有足够线程到达， 则解除阻塞状态，继续工作;
 - 通过 reset 重置计数，会使得进入 await 的线程出现 `BrokenBarrierException`;
-- 如 果 采 用 是 CyclicBarrier(int parties, Runnable barrierAction) 构造方法，执行 barrierAction 操作的是最 后一个到达的线程
+- 如 果 采 用 是 `CyclicBarrier(int parties, Runnable barrierAction)` 构造方法，执行 barrierAction 操作的是最 后一个到达的线程
 
 ### 使用
 
@@ -74,7 +80,6 @@ public class CyclicBarrierTest2 {
         System.out.println(2);
     }
 
-
     static class A implements Runnable {
 
         @Override
@@ -114,16 +119,166 @@ public class CyclicBarrierTest3 {
 }
 ```
 
-## CyclicBarrier 和 CountDownLatch 的区别
+## `CyclicBarrier` 和 `CountDownLatch` 的区别
 
-- CyclicBarrier 功能更多, 可以 reset
-- 可以获得 getNumberWaiting 获取阻塞的线程数量, isBroken 可以获取线程是否中断
+- `CyclicBarrier` 功能更多, 可以 reset
+- 可以获得` getNumberWaiting` 获取阻塞的线程数量, isBroken 可以获取线程是否中断
 
 ## 源码
 
-CyclicBarrier 相比 CountDownLatch 来说，要简单很多， 源码实现是基于 ReentrantLock 和 Condition 的组合使 用
+`CyclicBarrier` 相比 `CountDownLatch` 来说，要简单很多， 源码实现是基于`ReentrantLock`和 Condition 的组合使 用
 
-只是 CyclicBarrier 可以有不止一个栅栏，因为 它的栅栏(Barrier)可以重复使用(Cyclic)
+只是 `CyclicBarrier` 可以有不止一个栅栏，因为 它的栅栏(Barrier)可以重复使用(Cyclic)
 
+![image-20200712124539691](../../../assets/image-20200712124539691.png)
 
+CyclicBanier基于独占锁实现， 本质底层还是基于 AQS 的。
+
+- `parties` 用来记录线程个数，这里表示多少线程调用 await后，所有线程才会冲破屏障继续往下运行。
+- `count`一开始等于 parties， 每当有线程调用 `await`方法就递减 1， 当 `count`为 0时就 表示所有线程都到了屏障点
+
+- 当 `count` 计数器值变为 0 后 ， 会将 `parties` 的值赋给 `count,` 从而进行复用
+
+#### 构造函数
+
+```java
+    public CyclicBarrier(int parties, Runnable barrierAction) {
+        if (parties <= 0) throw new IllegalArgumentException();
+        this.parties = parties;
+        this.count = parties;
+        this.barrierCommand = barrierAction;
+    }
+```
+
+还有一 个 变量 ba1TierCommand 也 通 过构造 函数传递 ，这 是一 个 任务，这个任务的执行时机 是当所有线程都到达屏障点后。使用 lock 首先保 证 了更新计数器 count 的原子性。另外使用 lock的条件变量 trip支持线程间使用 await和 signal操作进行同步。
+最后，在变量 generation 内部有一个变量 broken，其用来记录当前屏障是否被打破。 
+
+>  注意 ， 这里 的 broken 并没有被声 明为 volatile 的， 因为是在锁 内使用变量 ， 所 以不需要声明。
+
+#### public int await()
+
+当前线程调用 CyclicBarrier的该方法时会被阻塞， 直到满足下面条件之一才会返回:
+
+- `parties`个线程都调用了`await`方法.也就是线程都到了屏障点
+- 其他线程调用了当前线程的`interrupt`方法中断了当前线程,则当前线程会抛出 `InterruptedException`异常而返回
+- 与当前凭证点关联的 Generation 对象的 broken 标志被标记为 true 时,会抛出`BrokenBarrierException`而返回
+
+```java
+    public int await() throws InterruptedException, BrokenBarrierException {
+        try {
+            return dowait(false, 0L);
+        } catch (TimeoutException toe) {
+            throw new Error(toe); // cannot happen
+        }
+    }
+```
+
+#### dowait
+
+当一个线程调用了 dowait方法后，首先会获取独占锁 lock，如果创建 CycleBarrier 时传递的参数为 10，那么后面 9 个调用钱程会被阻塞。 
+
+然后当前获取到锁的线程会对计数器 count进行递减操作，递减后 count=index=9，
+
+因为`index == 0`所以当前线程会执行代码
+
+```java
+boolean ranAction = false;
+try {
+	final Runnable command = barrierCommand;
+	//执行任务
+	if (command != null)
+	command.run();
+	ranAction = true;
+	//激活其他因调用 await 方法而被阻塞的线程,并充值 Cyclicarrier
+	nextGeneration();
+	//返回
+	return 0;
+} finally {
+	if (!ranAction)
+			breakBarrier();
+}
+```
+
+ 如果当前线程调用的是无参数的 await()方法，则 这里 timed=false，
+
+所以当前线程会被放入条件变 量 的p 的条件阻塞队列，当前线程会被挂 起并释放获取的 lock 锁 。
+
+ 如果调用的是有 参 数的 await 方法 则 timed=true，然后当前线程 也会被放入条件变量的条件队列并释放锁资源，不同的是当前线程会在指定时间超时后自 动被激活。
+
+当第一个获取锁的线程由于被阻塞释放锁后，被阻塞的 9个线程中有一个会竞争到 `lock `锁，
+
+然后执行与第一个线程 同样的 操作，直 到 最后一个线程获取到 lock 锁，此时-己 经有 9 个线程被放入了条件变量 trip 的条件队列 里面。最后 count=index 等于 0，所以执行 代码(刀，如果创建 CyclicBarrier时传递了任务，则在其他线程被唤醒前先执行任务，任 务执行完毕后再执行 代码 (3)，唤醒其他 9 个线程，并重置 CyclicBarrier，然后这 10 个 线程就可以继续 向下运行了。
+
+```java
+private int dowait(boolean timed, long nanos)
+        throws InterruptedException, BrokenBarrierException,
+               TimeoutException {
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            final Generation g = generation;
+
+            if (g.broken)
+                throw new BrokenBarrierException();
+
+            if (Thread.interrupted()) {
+                breakBarrier();
+                throw new InterruptedException();
+            }
+					//如果 index=0 则说明所有线程都到了屏障点点.此时执行初始化时传递的任务
+            int index = --count;
+            if (index == 0) {  // tripped
+                boolean ranAction = false;
+                try {
+             
+                    final Runnable command = barrierCommand;
+                  //执行任务
+                    if (command != null)
+                        command.run();
+                    ranAction = true;
+                  //激活其他因调用 await 方法而被阻塞的线程,并充值 Cyclicarrier
+                    nextGeneration();
+                  //返回
+                    return 0;
+                } finally {
+                    if (!ranAction)
+                        breakBarrier();
+                }
+            }
+
+            // loop until tripped, broken, interrupted, or timed out
+            for (;;) {
+                try {
+                    if (!timed)
+                        trip.await();
+                    else if (nanos > 0L)
+                        nanos = trip.awaitNanos(nanos);
+                } catch (InterruptedException ie) {
+                    if (g == generation && ! g.broken) {
+                        breakBarrier();
+                        throw ie;
+                    } else {
+                        // We're about to finish waiting even if we had not
+                        // been interrupted, so this interrupt is deemed to
+                        // "belong" to subsequent execution.
+                        Thread.currentThread().interrupt();
+                    }
+                }
+
+                if (g.broken)
+                    throw new BrokenBarrierException();
+
+                if (g != generation)
+                    return index;
+
+                if (timed && nanos <= 0L) {
+                    breakBarrier();
+                    throw new TimeoutException();
+                }
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+```
 

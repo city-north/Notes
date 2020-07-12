@@ -36,7 +36,6 @@ public class CountDownLatchTest {
         countDownLatch.await();//所有线程执行完成后才会执行 WAITING 状态
     }
 }
-
 ```
 
 对于 CountDownLatch，我们仅仅需要关心两个方法，
