@@ -1,13 +1,19 @@
 # 读写锁 ReentrantReadWriteLock
 
-之前说的锁都是排他锁:
+`ReentrantLock`是独占锁:
 
 - 同一时刻值允许一个线程进行访问, 写的时候不允许读,读的时候不允许写
 
-读写锁:
+在读多写少的场景中，读写锁可以减少加锁和解锁的时间消耗:
 
 - 写的时候不允许读
 - 读的时候允许读
+
+## 类图
+
+![image-20200712023208283](../../../assets/image-20200712023208283.png)
+
+读写锁内部维护了一个ReadLock 和一个WriteLock, 他们依赖Sync 实现具体的功能， Sync 继承AQS 队列， 提供了公平锁和非公平锁
 
 
 
@@ -17,8 +23,8 @@
 
 除了有两个基础的方法外,:
 
--  获取读锁 readLock
-- 获取写锁 writeLock
+-  获取读锁` readLock`
+- 获取写锁 `writeLock`
 
 还提供了一些接口
 
@@ -26,64 +32,7 @@
 
 ![image-20200326215634624](../../../assets/image-20200326215634624.png)
 
-```java
-/**
- * <p>
- * Read Write 缓存
- * </p>
- *
- * @author EricChen 2020/03/26 21:57
- */
-public class ReadWriteCache {
-    private static Map<String, Object> map = new HashMap<>();
-    private static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-    private static Lock readLock = readWriteLock.readLock();
-    private static Lock writeLock = readWriteLock.writeLock();
-    private static volatile boolean update = false;
 
-
-    public static final Object get(String key) {
-        readLock.lock();
-        try {
-            return map.get(key);
-        } finally {
-            readLock.unlock();
-        }
-    }
-
-
-    public static final void set(String key, Object object) {
-        writeLock.lock();
-        try {
-            map.put(key, object);
-        } finally {
-            writeLock.unlock();
-        }
-    }
-
-    /**
-     * 锁降级
-     */
-    public static void processData() {
-        readLock.lock();
-        if (!update) {
-            //先释放读锁再降级
-            readLock.unlock();
-            //锁降级为写锁
-            writeLock.lock();
-            try {
-                if (!update) {
-                    update = true;
-                }
-                readLock.lock();
-            } finally {
-                writeLock.unlock();
-            }
-            //锁降级完成
-        }
-
-    }
-```
 
 # 读写锁的设计
 
@@ -101,9 +50,10 @@ public class ReadWriteCache {
 
 如果要在一个整型变量上维护多种状态,使用位图数据结构
 
-**高 16 位代表读,第 16 位代表写**
+- 高16 位表示获取到读锁的次数
+- 低16 位 表示获取到写所的线程的可重入次数
 
-
+##### 值得注意的是
 
 - 写状态等于 S&0x0000FFFF , 将高 16 位全部抹去
 - 读状态等于 S >>> 16  无符号补 0 右移16位 , 当写操作增加 1时, 等于 S+1 ,当读状态增加 1 时,等于 S + (1 << 16)  也就是等于 S+0x0010000
@@ -192,3 +142,63 @@ public class Counter {
 - `ReadWriteLock`适合读多写少的场景。
 
 ## 
+
+```java
+/**
+ * <p>
+ * Read Write 缓存
+ * </p>
+ *
+ * @author EricChen 2020/03/26 21:57
+ */
+public class ReadWriteCache {
+    private static Map<String, Object> map = new HashMap<>();
+    private static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    private static Lock readLock = readWriteLock.readLock();
+    private static Lock writeLock = readWriteLock.writeLock();
+    private static volatile boolean update = false;
+
+
+    public static final Object get(String key) {
+        readLock.lock();
+        try {
+            return map.get(key);
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+
+    public static final void set(String key, Object object) {
+        writeLock.lock();
+        try {
+            map.put(key, object);
+        } finally {
+            writeLock.unlock();
+        }
+    }
+
+    /**
+     * 锁降级
+     */
+    public static void processData() {
+        readLock.lock();
+        if (!update) {
+            //先释放读锁再降级
+            readLock.unlock();
+            //锁降级为写锁
+            writeLock.lock();
+            try {
+                if (!update) {
+                    update = true;
+                }
+                readLock.lock();
+            } finally {
+                writeLock.unlock();
+            }
+            //锁降级完成
+        }
+
+    }
+```
+
