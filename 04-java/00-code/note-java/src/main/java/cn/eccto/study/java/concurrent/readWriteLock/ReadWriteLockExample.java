@@ -36,4 +36,10 @@ public class ReadWriteLockExample {
             rlock.unlock(); // 释放读锁
         }
     }
+
+    public static void main(String[] args) {
+        ReadWriteLockExample readWriteLockExample = new ReadWriteLockExample();
+        readWriteLockExample.get();
+    }
+
 }
