@@ -20,11 +20,11 @@ jstat -gc 2764 250 20
 
 #### 示例
 
-![image-20200612224407891](assets/image-20200612224407891.png)
+<img src="../../assets/image-20200612224407891.png" alt="image-20200612224407891" style="zoom:67%;" />
 
 #### 参数
 
-![image-20200612225543231](assets/image-20200612225543231.png)
+<img src="../../assets/image-20200612225543231.png" alt="image-20200612225543231" style="zoom: 67%;" />
 
 ## 实例
 

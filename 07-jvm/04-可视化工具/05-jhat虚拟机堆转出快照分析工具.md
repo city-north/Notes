@@ -13,8 +13,8 @@ JDK提供 jhat (JVM Heap Analysis Tool )命令生成 jmap 搭配使用,分析 jm
 
 
 
-![image-20200613111618742](assets/image-20200613111618742.png)
+<img src="../../assets/image-20200613111618742.png" alt="image-20200613111618742" style="zoom:67%;" />
 
 ![image-20200613111638565](assets/image-20200613111638565.png)
 
-![image-20200613111658111](assets/image-20200613111658111.png)
+<img src="../../assets/image-20200613111658111.png" alt="image-20200613111658111" style="zoom:50%;" />

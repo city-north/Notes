@@ -24,7 +24,7 @@ kill -3 命令
 
 吓唬一下虚拟机也能堆存储快照
 
-![image-20200612234853160](assets/image-20200612234853160.png)
+<img src="../../assets/image-20200612234853160.png" alt="image-20200612234853160" style="zoom: 67%;" />
 
 ```
 jmap -dump:format=b,file=eclipse.bin 3500
