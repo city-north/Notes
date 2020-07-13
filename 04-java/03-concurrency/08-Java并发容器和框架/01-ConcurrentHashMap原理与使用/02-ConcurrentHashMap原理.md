@@ -24,7 +24,14 @@
 
 `concurrentLevel` 参数表示并行级别，默认是16，也就是说ConcurrentHashMap 默认是16个Segment 组成； 一旦初始化就不可以更改，CHM 可以同时支持16个线程在这些不同的`Segment`即可
 
+ConcurrentHashMap 与HashMap和Hashtable 最大的不同在于：put和 get 两次Hash到达指定的HashEntry，第一次hash到达Segment,第二次到达Segment里面的Entry,然后在遍历entry链表
 
+- 从1.7到1.8版本，由于HashEntry从链表 变成了红黑树所以 concurrentHashMap的时间复杂度从O(n)到O(log(n))
+
+- HashEntry最小的容量为2
+
+- Segment的初始化容量是16;
+- HashEntry在1.8中称为Node,链表转红黑树的值是8 ,当Node链表的节点数大于8时Node会自动转化为TreeNode,会转换成红黑树的结构
 
 
 
