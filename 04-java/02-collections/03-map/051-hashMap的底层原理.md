@@ -1,5 +1,11 @@
 # HashMap 的底层原理
 
+
+
+## 树化
+
+根据泊松分布，在负载因子默认为0.75的情况下，单个hash槽内元素个数为8 的概率小于百万分之一，
+
 > https://github.com/AobingJava/JavaFamily/blob/master/docs/basics/HashMap.md
 
 >  [01-HashMap 为什么线程不安全.md](../../03-concurrency/08-Java并发容器和框架/01-ConcurrentHashMap原理与使用/01-HashMap 为什么线程不安全.md) 
@@ -145,6 +151,14 @@ Java8在同样的前提下并不会引起死循环，原因是扩容转移后前
 只要输入的HashCode本身分布均匀，Hash算法的结果就是均匀的。
 
 这是为了**实现均匀分布**。
+
+## 初始容量为什么是2次幂
+
+进行位运算效率高
+
+
+
+
 
 ## 重写equals方法的时候需要重写hashCode方法呢？
 
