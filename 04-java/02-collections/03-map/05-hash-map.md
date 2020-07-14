@@ -12,7 +12,7 @@ Keys are unique. It means we can insert a key ‘K’ only once in a map. Duplic
 
 ## Hierarchy
 
-![HashMap Hierarchy](assets/HashMap-Hierarchy.png)
+![HashMap Hierarchy](../../../assets/HashMap-Hierarchy.png)
 
 ## 2. Java HashMap Features
 
@@ -86,7 +86,7 @@ HashMap会根据内容的变化，转化存储方式，以达到最高的效率�
 
 
 
-![](assets/HashMap-tree.jpg)
+![](../../../assets/HashMap-tree.jpg)
 
 
 #### 几个注意点：
@@ -116,7 +116,7 @@ static final int MIN_TREEIFY_CAPACITY = 64;
 ```
 
 
-![](assets/32f908cf142.jpg)
+![](../../../assets/32f908cf142.jpg)
 
 
 

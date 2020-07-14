@@ -2,6 +2,8 @@
 
 > https://github.com/AobingJava/JavaFamily/blob/master/docs/basics/HashMap.md
 
+>  [01-HashMap 为什么线程不安全.md](../../03-concurrency/08-Java并发容器和框架/01-ConcurrentHashMap原理与使用/01-HashMap 为什么线程不安全.md) 
+
 ## **数组和链表组合构成**
 
 ![image-20200326222215890](assets/image-20200326222215890.png)
@@ -245,6 +247,18 @@ Hashtable 是不允许键或值为 null 的，HashMap 的键值则都可以为 n
   所以，当其他线程改变了HashMap 的结构，如：增加、删除元素，将会抛出ConcurrentModificationException 异常，而 Hashtable 则不会。
 
 
+
+## 为什么初始化的值为 16
+
+> 16是2的幂，8也是，32也是，为啥偏偏选了16？
+
+我觉得就是一个经验值，定义16没有很特别的原因，只要是2次幂，其实用 8 和 32 都差不多。
+
+用16只是因为作者认为16这个初始容量是能符合常用而已。
+
+#### Hashmap中的链表大小超过八个时会自动转化为红黑树，当删除小于六时重新变为链表，为啥呢？
+
+根据泊松分布，在负载因子默认为`0.75`的时候，单个hash槽内元素个数为8的概率小于百万分之一，所以将7作为一个分水岭，等于7的时候不转换，大于等于8的时候才进行转换，小于等于6的时候就化为链表。
 
 
 
