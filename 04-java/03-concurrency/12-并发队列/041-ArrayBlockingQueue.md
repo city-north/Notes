@@ -21,3 +21,4 @@ ArrayBlockingQueue 通过使用全局独占锁实现了同时只能有一个线�
 - LinkedBlockingQueue 是使用单向链表实现的, 存储两个 Node , 一个 是 head 代表 头节点 , 一个是是 tail节点代表尾节点
 - count 变量 的初始值为 0 , 用来计算元素的个数
 - 两个 ReentrantLock , 分别代表了 
+
