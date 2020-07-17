@@ -1,6 +1,7 @@
 # 使用Condition
 
-> 在前面学习 synchronized 的时候，有讲到 wait/notify 的基本使用，结合 synchronized 可以实现对线程的通信。那么这个时候我就在思考了，既然 J.U.C 里 面提供了锁的实现机制，那 J.U.C 里面有没有提供类似的线程通信的工具呢? 于 是找阿找，发现了一个 Condition 工具类。
+> 在前面学习 synchronized 的时候，有讲到 wait/notify 的基本使用，结合 synchronized 可以实现对线程的通信。既然 J.U.C 里 面提供了锁的实现机制，那 J.U.C 里面有没有提供类似的线程通信的工具呢? 
+
 > Condition 是一个多线程协调通信的工具类，可以让某些线程一起等待某个条件 (condition)，只有满足条件时，线程才会被唤醒
 
 Condition 在 AQS 的基础上,额外添加了一个单向的**等待队列**,当调用 await 方法的时候,相当于AQS同步队列的首节点(获得了锁的节点),移动到 Condition 队列的等待队列中,
