@@ -1,14 +1,17 @@
 # CyclicBarrier 内存屏障
 
-` CountDownLatch` 的计数器是一次性的，也就是等到计数器值变为 0 后，再调用` CountDownLatch` 的 await 和 `countdown `方法都会立刻返回,这就起不到线 程同步的效果了 。
+## 为什么要有CyclicBarrier
+
+我们都知道， CountDownLatch 在解决多线程同步方面相对于调用线程的 join 方法已经有了不少优化
+
+但是 CountDownLatch 计数器是一次性的也就是等到计数器值变为 0 后，再调用` CountDownLatch` 的 await 和 `countdown `方法都会立刻返回,这就起不到线程同步的效果了 。所以为了满足计数器可以重置的需要，JDK 开发组提供了CyclicBarrier 类，它的作用是：
+
+- 让一组线程全部达到一个状态后再全部同时执行
+- 当所有等待线程全部执行完毕，重置 CyclicBarrier 后可以被重用
 
 > 使用 ReentrantLock 和 Condition 实现的
 
 > 到齐才能吃
-
-CyclicBanier基于独占锁实现
-
-CyclicBarrier 的字面意思是可循环使用(Cyclic)的屏障 (Barrier)。它要做的事情是，让一组线程到达一个屏障(也 可以叫同步点)时被阻塞，直到最后一个线程到达屏障时， 屏障才会开门，所有被屏障拦截的线程才会继续工作。 CyclicBarrier 默认的构造方法是 CyclicBarrier(int parties)， 其参数表示屏障拦截的线程数量，每个线程调用 await 方 法告诉 CyclicBarrier 当前线程已经到达了屏障，然后当前
 
 ## 使用场景
 
@@ -122,13 +125,13 @@ public class CyclicBarrierTest3 {
 ## `CyclicBarrier` 和 `CountDownLatch` 的区别
 
 - `CyclicBarrier` 功能更多, 可以 reset
-- 可以获得` getNumberWaiting` 获取阻塞的线程数量, isBroken 可以获取线程是否中断
+- 可以获得` getNumberWaiting` 获取阻塞的线程数量, `isBroken` 可以获取线程是否中断
 
 ## 源码
 
 `CyclicBarrier` 相比 `CountDownLatch` 来说，要简单很多， 源码实现是基于`ReentrantLock`和 Condition 的组合使 用
 
-只是 `CyclicBarrier` 可以有不止一个栅栏，因为 它的栅栏(Barrier)可以重复使用(Cyclic)
+只是 `CyclicBarrier` 可以有不止一个栅栏，因为它的栅栏(Barrier)可以重复使用(Cyclic)
 
 ![image-20200712124539691](../../../assets/image-20200712124539691.png)
 
@@ -137,7 +140,7 @@ CyclicBanier基于独占锁实现， 本质底层还是基于 AQS 的。
 - `parties` 用来记录线程个数，这里表示多少线程调用 await后，所有线程才会冲破屏障继续往下运行。
 - `count`一开始等于 parties， 每当有线程调用 `await`方法就递减 1， 当 `count`为 0时就 表示所有线程都到了屏障点
 
-- 当 `count` 计数器值变为 0 后 ， 会将 `parties` 的值赋给 `count,` 从而进行复用
+- **当 `count` 计数器值变为 0 后 ， 会将 `parties` 的值赋给 `count,` 从而进行复用**
 
 #### 构造函数
 
@@ -179,102 +182,50 @@ CyclicBanier基于独占锁实现， 本质底层还是基于 AQS 的。
 
 然后当前获取到锁的线程会对计数器 count进行递减操作，递减后 count=index=9，
 
-因为`index == 0`所以当前线程会执行代码
+因为`index != 0`所以当前线程会执行代码 ④
 
 ```java
-boolean ranAction = false;
-try {
-	final Runnable command = barrierCommand;
-	//执行任务
-	if (command != null)
-	command.run();
-	ranAction = true;
-	//激活其他因调用 await 方法而被阻塞的线程,并充值 Cyclicarrier
-	nextGeneration();
-	//返回
-	return 0;
-} finally {
-	if (!ranAction)
-			breakBarrier();
-}
-```
-
- 如果当前线程调用的是无参数的 await()方法，则 这里 timed=false，
-
-所以当前线程会被放入条件变 量 的p 的条件阻塞队列，当前线程会被挂 起并释放获取的 lock 锁 。
-
- 如果调用的是有 参 数的 await 方法 则 timed=true，然后当前线程 也会被放入条件变量的条件队列并释放锁资源，不同的是当前线程会在指定时间超时后自 动被激活。
-
-当第一个获取锁的线程由于被阻塞释放锁后，被阻塞的 9个线程中有一个会竞争到 `lock `锁，
-
-然后执行与第一个线程 同样的 操作，直 到 最后一个线程获取到 lock 锁，此时-己 经有 9 个线程被放入了条件变量 trip 的条件队列 里面。最后 count=index 等于 0，所以执行 代码(刀，如果创建 CyclicBarrier时传递了任务，则在其他线程被唤醒前先执行任务，任 务执行完毕后再执行 代码 (3)，唤醒其他 9 个线程，并重置 CyclicBarrier，然后这 10 个 线程就可以继续 向下运行了。
-
-```java
-private int dowait(boolean timed, long nanos)
+   private int dowait(boolean timed, long nanos)
         throws InterruptedException, BrokenBarrierException,
                TimeoutException {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
-            final Generation g = generation;
-
-            if (g.broken)
-                throw new BrokenBarrierException();
-
-            if (Thread.interrupted()) {
-                breakBarrier();
-                throw new InterruptedException();
-            }
-					//如果 index=0 则说明所有线程都到了屏障点点.此时执行初始化时传递的任务
+           	...
+            //① 如果 index == 0 则说明所有线程都到了屏障点， 此时执行初始化时传递的任务
             int index = --count;
             if (index == 0) {  // tripped
                 boolean ranAction = false;
                 try {
-             
                     final Runnable command = barrierCommand;
-                  //执行任务
+                    // ② 执行任务
                     if (command != null)
                         command.run();
                     ranAction = true;
-                  //激活其他因调用 await 方法而被阻塞的线程,并充值 Cyclicarrier
+                    // ③ 激活其他因调用 await 方法而被阻塞的线程， 并重置 CyclicBarrier
                     nextGeneration();
-                  //返回
+                    //返回
                     return 0;
                 } finally {
                     if (!ranAction)
                         breakBarrier();
                 }
             }
-
+			// ④ 如果 index !=0 
             // loop until tripped, broken, interrupted, or timed out
             for (;;) {
                 try {
+                    // ⑤ 没有设置超时时间
                     if (!timed)
                         trip.await();
+                    // ⑥ 设置了超时时间
                     else if (nanos > 0L)
                         nanos = trip.awaitNanos(nanos);
                 } catch (InterruptedException ie) {
-                    if (g == generation && ! g.broken) {
-                        breakBarrier();
-                        throw ie;
-                    } else {
-                        // We're about to finish waiting even if we had not
-                        // been interrupted, so this interrupt is deemed to
-                        // "belong" to subsequent execution.
-                        Thread.currentThread().interrupt();
-                    }
+					...
                 }
 
-                if (g.broken)
-                    throw new BrokenBarrierException();
-
-                if (g != generation)
-                    return index;
-
-                if (timed && nanos <= 0L) {
-                    breakBarrier();
-                    throw new TimeoutException();
-                }
+			...
             }
         } finally {
             lock.unlock();
@@ -282,3 +233,10 @@ private int dowait(boolean timed, long nanos)
     }
 ```
 
+await 方法的执行主干：
+
+当一个线程调用 await 方法 ， 首先会获取独占锁 lock ， 如果创建CycleBarrier 的时候传递的是10 ， 那么后面9 个调用线程会被阻塞, 当前获取到锁的线程会对计数器 count 进行递减操作 ， 递减后 count = index = 9 ， count 就是还剩余的次数
+
+- 因为 index ！=0 所以当前代码会执行代码 ④
+- 当前线程会被加入到条件变量trip 的条件阻塞队列中， 当前线程会被挂起并释放获取的 lock 锁
+- 直到最后线程执行，index == 0  , 如果在 CyclicBarrier 创建的时候传递了任务，则在其他线程被唤醒前先执行任务，然后唤醒 其他9个线程
