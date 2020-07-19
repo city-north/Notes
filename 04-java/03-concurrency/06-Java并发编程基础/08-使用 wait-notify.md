@@ -1,10 +1,14 @@
-# 使用wait和notify
+# 线程的等待与通知 - 使用wait和notify 
 
 Java中的Object类是所有对象的父类， 鉴于继承机制， Java把所有类都需要的方法放到了Object 类里面
 
 - wait 函数 
+
 - notify 
-- notifyAll
+
+  > 在共享变量上挂起的线程， 随机选择一个幸运线程执行
+  >
+  > 被唤醒的线程不能马上从wait 方法返回并且执行， 它必须获取到共享变量的监视器锁后才可以返回
 
 ## wait 函数
 
