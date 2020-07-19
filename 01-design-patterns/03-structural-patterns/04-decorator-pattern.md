@@ -97,12 +97,12 @@ public class ConcreteDecorator extends Decorator {
 
 ## Spring 中的应用
 
-- TransactionAwareCacheDecorator
-- HttpHeadResponseDecorator
+- `TransactionAwareCacheDecorator`
+- `HttpHeadResponseDecorator`
 
 ## Mybatis 中的应用
 
-- org.apache.ibatis.Cache
+- `org.apache.ibatis.Cache`
 
 ## 优缺点
 
@@ -240,4 +240,4 @@ public class SugarDecorator implements Goods {
 
 ![image-20200716234818454](../../assets/image-20200716234818454.png)
 
-PerpetualCache 是默认的 Cache 接口 实现类，可以看到事务相关的TransactionalCache 就是这个缓存的装饰器，除了这个装饰器， Mybatis 还内置了许多装饰器
+`PerpetualCache` 是默认的 Cache 接口 实现类，可以看到事务相关的`TransactionalCache` 就是这个缓存的装饰器，除了这个装饰器， `Mybatis` 还内置了许多装饰器
