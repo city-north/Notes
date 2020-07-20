@@ -1,6 +1,17 @@
 # Synchronzied 的实现原理
 
+
+
 在多线程并发编程中 synchronized 一直是元老级角色，很多人都会称呼它为重量级锁。但是，随着 Java SE 1.6 对 synchronized 进行了各种优化之后，有些情况下它就并不那么重，Java SE 1.6 中为了减少获得锁和释放锁带来的性能消耗而引入的**偏向锁**和**轻量级锁**。以及锁的升级过程和存储结构
+
+## Synchronzied 的内存语义
+
+Synchronzied 的内存语义可以解决内存可见性问题
+
+- 进入 Synchronzied 块 的内存语义是吧 Synchronzied 块内使用到的变量从线程的工作内存中清除,这样在Synchronzied 块内使用到该变量时就不会从线程的工作内存中获取,而是直接从主内存中获取
+- 退出 Synchronzied 块的内存语义是把 Synchronzied 块内对共享变量的修改刷新到主内存
+
+值得注意的是 Synchronzied 会引起线程上下文切换的开销
 
 ## Java对象的锁
 Java中每一个对象都可以作为锁：

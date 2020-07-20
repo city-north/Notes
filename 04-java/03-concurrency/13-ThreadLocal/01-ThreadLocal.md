@@ -83,10 +83,6 @@ void createMap(Thread t, T firstValue) {
 }
 ```
 
-
-
-
-
 #### ThreadLocal#get
 
 ```java
