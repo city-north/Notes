@@ -4,6 +4,8 @@
 
 特点，装饰器和被装饰类拥有共同抽象父类。
 
+装饰器模式 ： 无需改变原有类和类的继承关系的情况下，动态地扩展一个类的功能， 它通过装饰器来包裹真实的对象， 并动态地向对象添加或者撤销功能
+
 
 ## UML
 ![](assets/5bb981e2de1ae.jpg)
@@ -27,8 +29,6 @@ public abstract class Component{
     public abstract void operation();
 }
 ```
-
-
 
 ```java
 public ConcreteComponent extends Component{
@@ -97,12 +97,12 @@ public class ConcreteDecorator extends Decorator {
 
 ## Spring 中的应用
 
-- TransactionAwareCacheDecorator
-- HttpHeadResponseDecorator
+- `TransactionAwareCacheDecorator`
+- `HttpHeadResponseDecorator`
 
 ## Mybatis 中的应用
 
-- org.apache.ibatis.Cache
+- `org.apache.ibatis.Cache`
 
 ## 优缺点
 
@@ -135,7 +135,6 @@ public interface Goods {
      */
     Double getPrice();
 }
-
 ```
 
 咖啡
@@ -237,3 +236,8 @@ public class SugarDecorator implements Goods {
 
 ```
 
+## Mybatis 里的缓存机制就是典型的装饰器模式
+
+![image-20200716234818454](../../assets/image-20200716234818454.png)
+
+`PerpetualCache` 是默认的 Cache 接口 实现类，可以看到事务相关的`TransactionalCache` 就是这个缓存的装饰器，除了这个装饰器， `Mybatis` 还内置了许多装饰器

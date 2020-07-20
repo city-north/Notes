@@ -91,7 +91,7 @@ protected final boolean tryAcquire(int acquires) {
   //w !=0说明读锁或者写锁已经被线程获取
   if (c != 0) {
     // (Note: if c != 0 and w == 0 then shared count != 0)
-    if (w == 0 || current != getExclusiveOwnerThread())
+    if (w =n  n    = 0 || current != getExclusiveOwnerThread())
       return false;
     if (w + exclusiveCount(acquires) > MAX_COUNT)
       throw new Error("Maximum lock count exceeded");

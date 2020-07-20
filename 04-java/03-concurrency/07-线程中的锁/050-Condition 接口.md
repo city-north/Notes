@@ -6,9 +6,9 @@
 
 Condition 在 AQS 的基础上,额外添加了一个单向的**等待队列**,当调用 await 方法的时候,相当于AQS同步队列的首节点(获得了锁的节点),移动到 Condition 队列的等待队列中,
 
- 当调用condition 对象的 signal 方法时, 会将等待时间最长的线程放入 AQS 队列的末尾
+ 当调用 condition 对象的 signal 方法时, 会将等待时间最长的线程放入 AQS 队列的末尾
 
-- 跟 Object 比较下 , 总体来说是更有灵活性,并且可以同时创建多个condition 队列 , 使用更加灵活
+- 跟 Object 比较下 , 总体来说是更有灵活性 , 并且可以同时创建多个 condition 队列 , 使用更加灵活
 - 支持在等待的时候,忽略中断,支持等待超时退出
 
 <img src="../../../assets/image-20200405002650107.png" alt="image-20200405002650107" style="zoom:50%;" />
@@ -142,8 +142,6 @@ if (condition.await(1, TimeUnit.SECOND)) {
 - 将节点加入等待队列,并进入等待状态
 - 线程释放锁
 
-
-
 ```java
     public final void await() throws InterruptedException {
          if (Thread.interrupted())
@@ -174,7 +172,7 @@ if (condition.await(1, TimeUnit.SECOND)) {
         if (node.waitStatus == Node.CONDITION || node.prev == null)
           //这里意味着在首节点
             return false;
-      //如果后续还有及诶单,那他肯定在对垒中
+      //如果后续还有及诶单,那他肯定在队列中
         if (node.next != null) // If has successor, it must be on queue
             return true;
       

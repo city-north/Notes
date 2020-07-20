@@ -1,4 +1,58 @@
-# 使用wait和notify
+# 线程的等待与通知 - 使用wait和notify 
+
+Java中的Object类是所有对象的父类， 鉴于继承机制， Java把所有类都需要的方法放到了Object 类里面
+
+- wait 函数 
+
+- notify 
+
+  > 在共享变量上挂起的线程， 随机选择一个幸运线程执行
+  >
+  > 被唤醒的线程不能马上从wait 方法返回并且执行， 它必须获取到共享变量的监视器锁后才可以返回
+
+## wait 函数
+
+当一个线程调用一个共享变量的wait方法时， 该调用线程会被阻塞挂起，知道发生以下几件事情之一才会返回
+
+- 其他线程调用了该共享对象的 notify 方法 或者 notifyAll 方法
+- 其他线程调用了该线程的 interrupt 方法 ， 该方法会抛出 InterruptedException 异常返回
+
+> 如果调用线程没有获取到对象的监视器锁， 则调用wait方法时调用线程会抛出 illegalMonitorStateException
+
+#### 一个线程如何获取一个共享变量的监视器锁
+
+- 执行 `synchronized` 同步代码块时 ，使用该共享变量作为参数
+
+```java
+sychronized(共享变量){
+	//doSomething
+}
+```
+
+- 调用该共享变量的方法， 并且该方法使用了`synchronized` 关键字修饰
+
+```java
+synchronized void add(int a , int b){
+	// doSomething
+}
+```
+
+#### 虚假唤醒
+
+一个线程从挂起状态变为可以运行的状态（也就是被唤醒）即使该线程没有被其他线程调用notify ， notifyAll 方法进行通知， 或者被中断，或者等待超时， 这就是所谓的虚假唤醒
+
+虽然虚假唤醒在应用实践中很少发生，但是要防患于未然， 做法就是不停地去测试该线程被唤醒的条件是否满足， 不满足则继续等待，也就是创建一个循环中调用wait 方法进行防范：
+
+```java
+//经典的调用共享变量wait方法的实例，首先通过同步块获取obj 上面的监视器锁，然后while 循环内调用obj的wait方法
+synchronized (obj){
+    while(条件不足){
+    	obj.wait();
+    }
+}
+```
+
+## 代码实例
 
 在Java程序中，`synchronized`解决了多线程竞争的问题。例如，对于一个任务管理器，多个线程同时往队列中添加任务，可以用`synchronized`加锁：
 
@@ -152,7 +206,6 @@ class TaskQueue {
         return queue.remove();
     }
 }
-
 ```
 
 这个例子中，我们重点关注`addTask()`方法，内部调用了`this.notifyAll()`而不是`this.notify()`，使用`notifyAll()`将唤醒所有当前正在`this`锁等待的线程，而`notify()`只会唤醒其中一个（具体哪个依赖操作系统，有一定的随机性）。
@@ -163,7 +216,7 @@ class TaskQueue {
 
 再注意到我们在`while()`循环中调用`wait()`，而不是`if`语句：
 
-```
+```java
 public synchronized String getTask() throws InterruptedException {
     if (queue.isEmpty()) {
         this.wait();
@@ -174,7 +227,7 @@ public synchronized String getTask() throws InterruptedException {
 
 这种写法实际上是错误的，因为线程被唤醒时，需要再次获取`this`锁。多个线程被唤醒后，只有一个线程能获取`this`锁，此刻，该线程执行`queue.remove()`可以获取到队列的元素，然而，剩下的线程如果获取`this`锁后执行`queue.remove()`，此刻队列可能已经没有任何元素了，所以，要始终在`while`循环中`wait()`，并且每次被唤醒后拿到`this`锁就必须再次判断：
 
-```
+```java
 while (queue.isEmpty()) {
     this.wait();
 }
