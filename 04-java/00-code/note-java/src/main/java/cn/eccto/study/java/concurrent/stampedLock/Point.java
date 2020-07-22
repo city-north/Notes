@@ -48,7 +48,7 @@ public class Point {
 
         }
         //返回计算结果
-        return Math.sqrt(currentX * currentX  + currentY * currentY)
+        return Math.sqrt(currentX * currentX  + currentY * currentY);
 
     }
 

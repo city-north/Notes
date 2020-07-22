@@ -1,6 +1,6 @@
 # MyBatis 工作流程
 
-![image-20200628220129104](../../assets/image-20200628220129104.png)
+<img src="../../assets/image-20200628220129104.png" alt="image-20200628220129104" style="zoom:50%;" />
 
 #### 解析配置文件和映射器 Mapper 文件
 

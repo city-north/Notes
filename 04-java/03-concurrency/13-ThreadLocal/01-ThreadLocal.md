@@ -1,5 +1,7 @@
 # ThreadLocal
 
+>  [100-使用 ThreadLocal不当可能会导致内存泄漏.md](../15-并发编程实战/100-使用 ThreadLocal不当可能会导致内存泄漏.md) 
+
 ## 是什么
 
 ThreadLocal 是 JDK 包提供的,它提供了线程本地变量,也就是如果你创建了一个 ThreadLocal 变量, 那么访问这个变量的每个线程都会有这个变量的一个**本地副本**
