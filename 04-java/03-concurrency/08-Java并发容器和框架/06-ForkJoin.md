@@ -33,7 +33,13 @@ Java 7开始引入了一种新的Fork/Join线程池，它可以执行一种特�
 
 这就是Fork/Join任务的原理：判断一个任务是否足够小，如果是，直接计算，否则，就分拆成几个小任务分别计算。这个过程可以反复“裂变”成一系列小任务。
 
-我们来看如何使用Fork/Join对大数据进行并行求和：
+## ForkJoinPool
+
+<img src="../../../assets/640-5507868.png" alt="在这里插入图片描述" style="zoom:50%;" />
+
+
+
+我们来看如何使用 Fork/Join 对大数据进行并行求和：
 
 ```java
 public class Main {
