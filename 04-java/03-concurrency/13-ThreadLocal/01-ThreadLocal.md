@@ -1,6 +1,8 @@
 # ThreadLocal
 
 >  [100-使用 ThreadLocal不当可能会导致内存泄漏.md](../15-并发编程实战/100-使用 ThreadLocal不当可能会导致内存泄漏.md) 
+>
+>  
 
 ## 是什么
 
@@ -14,7 +16,7 @@ ThreadLocal 是 JDK 包提供的,它提供了线程本地变量,也就是如果�
 
 ## 总结
 
-每个线程内部都维护了一个名为 threadLocals 的成员变量,该变量的类型为 HashMap , 其中 key 为我们定义的 ThreadLocal 变量的 this 引用,value 则为我们使用 set 方法设置的值
+每个线程内部都维护了一个名为 threadLocals 的成员变量,该变量的类型为 ThreadLocalMap , 其中 key 为我们定义的 ThreadLocal 变量的 this 引用,value 则为我们使用 set 方法设置的值
 
 每个线程的本地变量存放在自己内存变量 threadLocals 中, 如果当前线程一直不消亡, 那么这些本地变量会一直存在,所以可能会造成内存溢出
 
@@ -24,7 +26,7 @@ ThreadLocal 是 JDK 包提供的,它提供了线程本地变量,也就是如果�
 
 ## 使用
 
-略已经很熟了, set 和 get
+ [简单使用](../08-Java并发容器和框架/07-ThreadLocal.md) 
 
 ## 实现原理
 

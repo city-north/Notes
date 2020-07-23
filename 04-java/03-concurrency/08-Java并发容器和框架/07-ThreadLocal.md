@@ -1,5 +1,7 @@
 # ThreadLocal
 
+ [核心原理](../13-ThreadLocal/01-ThreadLocal.md) 
+
 多线程是Java实现多任务的基础，`Thread`对象代表一个线程，我们可以在代码中调用`Thread.currentThread()`获取当前线程。例如，打印日志时，可以同时打印出当前线程的名字：
 
 ```java
