@@ -155,7 +155,7 @@ leader 线程延迟时间过期后，会退出 take 方法 ，并通过调用 **
 
 - 当线程 B 调用 offer(item) 将 元素添加到队列后, 线程A 会从 available 条件队列中唤醒, 执行 q.peek()方法
 
-- 线程 A 调用 first.getDelay(TimeUnit.UANOSECONDS) 方法查看该元素还剩多少时间就要过期
+- 线程 A 调用` first.getDelay(TimeUnit.UANOSECONDS)` 方法查看该元素还剩多少时间就要过期
 
   - 如果 delay <= 0, 则说明这个元素已经过期, 直接出队列
   - 否则, 查看 leader 是否为 null, 不为 null 则说明其他线程也在执行 take, 则把该线程放入条件队列

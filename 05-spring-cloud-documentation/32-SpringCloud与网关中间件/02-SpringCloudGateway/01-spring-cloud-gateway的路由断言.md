@@ -1,4 +1,4 @@
-# SC gatway 的路由断言
+# gatway 的路由断言
 
 <img src="../../../assets/image-20200615123602357.png" alt="image-20200615123602357" style="zoom:50%;" />
 

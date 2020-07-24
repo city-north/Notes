@@ -1,10 +1,26 @@
 # Spring Cloud Gateway
 
+SpringCloud Gateway 基于
+
 - Spring 5.0
 - SpringBoot 2.0
 - Project Reactor 
 
-Spring Cloud Gateway 
+开发, 主要目的是提供简单,有效且统一的 API 路由管理方式,其目标是代替 NetFlix Zuul , 
+
+主要提供了
+
+- 统一的路由方式
+
+- 基于 Filter 链的方式提供了网关基本的功能, 例如
+
+  - 协议适配
+  - 协议转发
+  - 安全策略
+  - 防刷
+  - 流量,监控日志
+
+  等等
 
 ## 是什么
 
@@ -25,19 +41,33 @@ Spring Cloud Gateway
 
 ![Spring Cloud Gateway Diagram](../../../assets/spring_cloud_gateway_diagram.png)
 
-- 客户端发送请求到 `springCloud gataway`
-- 如果 `gateway handler mapping` 映射能够匹配这个请求到一个路由,就会发送到 `Gatway Web Handler`
-- `Gatway Web Handler` 发送这请求到 fitler 链(过滤器被虚线分隔的原因是，过滤器可能在发送代理请求之前或之后执行逻辑。)
-- 执行所有`pre`筛选器逻辑，然后发出代理请求。发出代理请求后，将执行`post`筛选器逻辑。
-- 发送到指定路由
+- 客户端发送请求到 gateway
+
+- 首先会被 HttpwebHandlerAdapter 进行提取组装成网关的上下文
+
+- 网关上下文会传递到 DispatcherHandler ,  DispatcherHandler 是所有请求的分发处理器
+
+  > 主要负责分发请求对应的处理器,比如将请求分发到对应的 RoutePredicateHandlerMapping 路由断言处理映射器
+
+- 路由断言处理映射器主要用于**路由**的查找,以及找到路由后返回对应的 FilteringWebHandler 
+
+- FilteringWebHandler 主要负责组装 Filter链表并调用 Filter 执行一系列 Filter 操作,然后把请求转到后端对应的代理服务器处理
+
+- 处理完成之后,将 Response 返回到 Gateway 客户端
 
 
 
 <img src="../../../assets/image-20200615123602357.png" alt="image-20200615123602357" style="zoom:50%;" />
 
+值得注意的是
+
+在 Filter 链中,通过虚线分隔 filter 的原因是, 过滤器可以在转发请求之前处理或者接收到被代理对象的返回结果之后处理
+
+所有的 pre 类型的 Filter 执行完毕之后,才会转发请求到被代理的服务处理
+
+被代理的服务把所有请求处理完毕之后, 才会执行 Post 类型的过滤器
+
 > 先走断言,断言成功了才走 filter
-
-
 
 ## 核心概念
 
