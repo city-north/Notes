@@ -1,80 +1,328 @@
-# Java CopyOnWriteArrayList class
+# CopyOnWriteArrayList
 
-> https://www.cnblogs.com/myseries/p/10877420.html
->
-> https://howtodoinjava.com/java/collections/java-copyonwritearraylist/
+> [COW-CopyOnWrite写时复制机制.md](../../../99-unclassified/01-COW-CopyOnWrite写时复制机制.md) 
 
-**Java CopyOnWriteArrayList** is a [thread-safe](https://howtodoinjava.com/java/multi-threading/what-is-thread-safety/) variant of **ArrayList** in which all mutative operations (add, set, and so on) are implemented by making a fresh copy of the underlying [array](https://howtodoinjava.com/java-array/).
+CopyOnWriteArrayList 使用CopyOnWrite 写时复制的策略来保证 list 的一致性, 而
 
-It’s **[immutable](https://howtodoinjava.com/java/basics/how-to-make-a-java-class-immutable/) snapshot** style iterator method uses a reference to the state of the array at the point that the [iterator](https://howtodoinjava.com/java/collections/java-iterator/) was created. This helps in usecases when traversal operations vastly outnumber list update operations and we do not want to synchronize the traversals and still want thread safety while updating the list.
+- 获取
 
-> 线程安全版本的ArrayList
+- 修改
+- 写入
 
- [01-COW-CopyOnWrite写时复制机制.md](../../../99-unclassified/01-COW-CopyOnWrite写时复制机制.md) 
+三步操作不是原子性的,所以在增删改的过程中都是用了独占锁,来保证在某个时间只有一个线程能对 list 数组进行修改
 
-> 写入时复制（CopyOnWrite，简称COW）思想是计算机程序设计领域中的一种优化策略。其核心思想是，如果有多个调用者（Callers）同时要求相同的资源（如内存或者是磁盘上的数据存储），他们会共同获取相同的指针指向相同的资源，直到某个调用者视图修改资源内容时，系统才会真正复制一份专用副本（private copy）给该调用者，而其他调用者所见到的最初的资源仍然保持不变。这过程对其他的调用者都是透明的（transparently）。此做法主要的优点是如果调用者没有修改资源，就不会有副本（private copy）被创建，因此多个调用者只是读取操作时可以共享同一份资源。
+CopyOnWriteArrayList 提供了弱一致性的迭代器,从而保证了获取迭代器后, 其他线程对 list 的修改是不可见的, 迭代器遍历的数组是一个快照
+
+CopyOnWriteArraySet 底层也是用它实现的
+
+## Copy On WriteArrayList 的类图结构
+
+![image-20200724110811010](../../../assets/image-20200724110811010.png)
+
+在 CopyOnWriteArrayList 的类图中 , 每个 CopyOnWriteArrayList 对象里面
+
+- array 数组对象用来存放具体的元素
+- ReentrantLock 独占锁对象用来保证同时只有一个线程对 array 进行修改
+
+如果让我们自己做一个写时复制的线程安全的 list 我们可以怎么做, 有哪些点需要考虑?
+
+- 何时初始化 list, 初始化的 list 元素个数为多少, list 是有限大小吗 ?
+- 如何保证线程安全, 比如多个线程进行读写时如何保证是线程安全的 ?
+- 如何保证使用迭代器遍历 list 的数据一致性
+
+## 源码解析
+
+### 初始化
+
+```java
+public CopyOnWriteArrayList() {
+  setArray(new Object[0]);
+}
+```
+
+然后看下有参的构造函数
+
+```java
+// 入参为集合, 将集合里面的元素复制到  
+public CopyOnWriteArrayList(Collection<? extends E> c) {
+        Object[] elements;
+        if (c.getClass() == CopyOnWriteArrayList.class)
+            elements = ((CopyOnWriteArrayList<?>)c).getArray();
+        else {
+            elements = c.toArray();
+            // c.toArray might (incorrectly) not return Object[] (see 6260652)
+            if (elements.getClass() != Object[].class)
+                elements = Arrays.copyOf(elements, elements.length, Object[].class);
+        }
+        setArray(elements);
+    }
+```
+
+### 添加元素
+
+可以添加元素的函数有
+
+- add(E e)
+- add(int index , E element)
+- addIfAbsent(E e)
+- addAllAbsent(Collection<? extends E>)
+
+```java
+    public boolean add(E e) {
+      //获取独占锁
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+          //② 获取 array
+            Object[] elements = getArray();
+          // ③ 获取 array 到新数组.添加元素到新数组
+            int len = elements.length;
+            Object[] newElements = Arrays.copyOf(elements, len + 1);
+        
+            newElements[len] = e;
+          //④ 使用新数组替换添加前的数组
+            setArray(newElements);
+            return true;
+        } finally {
+          //释放独占锁
+            lock.unlock();
+        }
+    }
+
+```
+
+- 代码① 获取独占锁,如果多个线程都去调用 add方法则只有一个线程能够获取到该锁
+- 如果多个线程都调用 add 方法, 则只有一个线程会获取到该锁, 其他线程都会被阻塞挂起直到锁被释放
+- ② 获取 array ,然后执行代码③ , 复制 array 到一个新的数组, 数组长度是原来长度增加 1 ,所以 copyOnWriteArrayList 是一个无界数组
+- 将新增的额元素添加到新数组
+- 代码④ , 使用新数组替换原数组, 并在返回前释放锁, 由于加了锁,所以整个 add 过程是个原子性操作
+
+简而言之就是添加元素时,先复制一个快照,然后在快照上添加,而不是直接在原来的数组上进行
+
+## 获取指定位置的元素
+
+使用 E get(int index) 获取下标为 index 的元素, 如果元素不存在则抛出 IndexOutOfBoundsException 异常
+
+```java
+    public E get(int index) {
+        return get(getArray(), index);
+    }
+    final Object[] getArray() {
+        return array;
+    }
+    private E get(Object[] a, int index) {
+        return (E) a[index];
+    }
+
+```
 
 
 
-## CopyOnWriteArrayList Featrue
+- 首先获取 array 数组, 然后通过下标访问指定位置的元素 
+- 然后通过下标访问指定元素
 
-- CopyOnWriteArrayList 类 实现了`List` 和`RandomAccess` ,Cloneable 和 Serializable
-- 支持随机访问意味着 for 循环遍历比迭代器速度快
-- 使用更新操作时消耗比较大,因为会`ReentrantLock`加锁
-- 因为迭代器创建的时候是用的快照,所以不会抛出**ConcurrentModificationException**
-- 迭代器中修改操作不支持,会直接抛出`UnsupportedOperationException`
+整个过程没有加锁同步
 
-- 多个线程写入时,复制一份并加锁
-- 因为迭代器创建的时候会拷贝一份快照,所以性能比 ArrayList 慢
-- 支持所有元素,包括 null
+![image-20200724114647546](../../../assets/image-20200724114647546.png)
 
-## 4. CopyOnWriteArrayList Constructors
+由于没有加锁,可能导致 线程 x 在执行完第一步前,另外一个线程 y 进行了 remove 操作, 假设要删除元素 1 ,remove 操作首先会获取独占锁,然后进行写时复制
 
-- **CopyOnWriteArrayList()** : Creates an empty list.
-- **CopyOnWriteArrayList(Collection c)** : Creates a list containing the elements of the specified collection, in the order they are returned by the collection’s iterator.
-- **CopyOnWriteArrayList(object[] array)** : Creates a list holding a copy of the given array.
+而这个时候 array 之前指向的数组的引用计数为 1 ,而不是0 , 因为线程 x 还在使用它, 这时 线程 x 考试执行步骤 B ,步骤 B 操作的数组是线程 y删除之前的数组
 
-## 5. CopyOnWriteArrayList Methods
+![image-20200724114916765](../../../assets/image-20200724114916765.png)
 
-CopyOnWriteArrayList class all the methods which are supported in ArrayList class. The behavior is different only in case of iterators (**snapshot iterator**) AND new backing array created during mutations in the list.
+虽然 y 已经删除了 index 的元素,但是 x 线程还是会返回 index 处的元素,这就是写时复制产生的弱一致性
 
-Additionally it provides few methods which are additional to this class.
+## 修改指定元素
 
-- **boolean addIfAbsent(object o)** : Append the element if not present.
-- **int addAllAbsent(Collection c)** : Appends all of the elements in the specified collection that are not already contained in this list, to the end of this list, in the order that they are returned by the specified collection’s iterator.
+使用 E set (int index, E element) 修改 list 中指定元素的值, 如果指定位置的元素不存在则抛出 IndeOutOfBoundsException 异常
 
-For all other methods supported, visit [ArrayList](https://howtodoinjava.com/java-arraylist/) methods section.
+```java
+    public E set(int index, E element) {
+      //获取独占锁
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            Object[] elements = getArray();
+          //get 方法获取指定位置的元素
+            E oldValue = get(elements, index);
+						//如果指定位置的元素值与新值不一致,则创建新数组并复制元素
+            if (oldValue != element) {
+                int len = elements.length;
+                Object[] newElements = Arrays.copyOf(elements, len);
+              //在新数组上修改制定位置的元素并设置新数组到 array
+                newElements[index] = element;
+                setArray(newElements);
+            } else {
+                // Not quite a no-op; ensures volatile write semantics
+              // 如果指定位置的元素与新的值一样,为了保证 volatile 语义,还是重新设置 array,虽然 array 内容并没有变化
+                setArray(elements);
+            }
+            return oldValue;
+        } finally {
+            lock.unlock();
+        }
+    }
+```
 
-## 6. Java CopyOnWriteArrayList Usecases
+- 获取独占锁
+- get 方法获取指定位置的元素
+  - 如果指定位置的元素值与新值不一致,则创建新数组并复制元素
+    - 在新数组上修改制定位置的元素并设置新数组到 array
+  - 如果指定位置的元素与新的值一样,为了保证 volatile 语义,还是重新设置 array,虽然 array 内容并没有变化
 
-> 使用场景
+## 删除指定元素
 
-We can prefer to use CopyOnWriteArrayList over normal ArrayList in following cases:
+```java
+    public E remove(int index) {
+        final ReentrantLock lock = this.lock;
+      //获取独占锁
+        lock.lock();
+        try {
+          //获取数组
+            Object[] elements = getArray();
+            int len = elements.length;
+          //获取指定元素
+            E oldValue = get(elements, index);
+            int numMoved = len - index - 1;
+          //如果要删除的是最后一个元素
+            if (numMoved == 0)
+          //    直接复制一个新的元素,长度为原长度 -1
+                setArray(Arrays.copyOf(elements, len - 1));
+            else {
+              //如果不是最后一个元素,则分两次复制删除后的元素到新数组
+                Object[] newElements = new Object[len - 1];
+                System.arraycopy(elements, 0, newElements, 0, index);
+                System.arraycopy(elements, index + 1, newElements, index,
+                                 numMoved);
+                setArray(newElements);
+            }
+            return oldValue;
+        } finally {
+          //释放锁
+            lock.unlock();
+        }
+    }
+```
 
-1. When list is to be used in concurrent environemnt.
+- 获取独占锁
 
-   > 多线程环境
+- 获取数组
 
-2. Iterations outnumber the mutation operations.
+- 获取指定元素
 
-   > 迭代操作超过更新操作
+- 如果要删除的是最后一个元素
 
-3. Iterators must have snapshot version of list at the time when they were created.
+  - 直接复制一个新的元素,长度为原长度 -1
 
-   > 迭代器在创建的时候,必须有 list 的快照
+- 如果不是最后一个元素,则分两次复制删除后的元素到新数组
 
-4. We don’t want to [synchronize the thread access](https://howtodoinjava.com/java/multi-threading/wait-notify-and-notifyall-methods/) programatically.
+  > 比如要删除的是 index ,那么久复制 0- index-1 , 然后再复制 index+1到结束
 
-## 7. Java CopyOnWriteArrayList Performance
+## 弱一致性的迭代器
 
-Due to added step of creating a new backing array everytime the list is updated, it performs worse than ArrayList.
-There is no performance overhead on read operations and both classes perform same.
+遍历列表元素可以使用迭代器,
 
-## 8. Conclusion
+弱一致性:
 
-In this Java Collection tutorial, we learned to use **CopyOnWriteArrayList** class, it’s [constructors](https://howtodoinjava.com/oops/java-constructors/), methods and usecases. We learned the **CopyOnWriteArrayList internal working in java** as well as **CopyOnWriteArrayList vs synchronized arraylist**.
+**其他线程对 list 增删改对迭代器是不可见的,**
 
-We gone through **Java CopyOnWriteArrayList example program** to demo how snapshot iterators works.
+遍历的不是原来的数组,而是快照 
+
+#### 在创建迭代器的时候分明是把数组引用传进去了,为什么是快照呢?
+
+如果其他线程没有对 list 修改, 那么 snapshot 本身就是快照,因为增删改后 list 里面的数组被新数组替换了, 这个时候,来数组被snapshot 引用
+
+使用迭代器元素时, 其他对该 list 进行增删改不可见, 因为它们操作的是两个不同的数组
+
+
+
+```java
+    static final class COWIterator<E> implements ListIterator<E> {
+        /** Snapshot of the array */
+        private final Object[] snapshot;
+        /** Index of element to be returned by subsequent call to next.  */
+        private int cursor;
+
+        private COWIterator(Object[] elements, int initialCursor) {
+            cursor = initialCursor;
+            snapshot = elements;
+        }
+
+        public boolean hasNext() {
+            return cursor < snapshot.length;
+        }
+
+        public boolean hasPrevious() {
+            return cursor > 0;
+        }
+
+        @SuppressWarnings("unchecked")
+        public E next() {
+            if (! hasNext())
+                throw new NoSuchElementException();
+            return (E) snapshot[cursor++];
+        }
+
+        @SuppressWarnings("unchecked")
+        public E previous() {
+            if (! hasPrevious())
+                throw new NoSuchElementException();
+            return (E) snapshot[--cursor];
+        }
+
+        public int nextIndex() {
+            return cursor;
+        }
+
+        public int previousIndex() {
+            return cursor-1;
+        }
+
+        /**
+         * Not supported. Always throws UnsupportedOperationException.
+         * @throws UnsupportedOperationException always; {@code remove}
+         *         is not supported by this iterator.
+         */
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Not supported. Always throws UnsupportedOperationException.
+         * @throws UnsupportedOperationException always; {@code set}
+         *         is not supported by this iterator.
+         */
+        public void set(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * Not supported. Always throws UnsupportedOperationException.
+         * @throws UnsupportedOperationException always; {@code add}
+         *         is not supported by this iterator.
+         */
+        public void add(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super E> action) {
+            Objects.requireNonNull(action);
+            Object[] elements = snapshot;
+            final int size = elements.length;
+            for (int i = cursor; i < size; i++) {
+                @SuppressWarnings("unchecked") E e = (E) elements[i];
+                action.accept(e);
+            }
+            cursor = size;
+        }
+    }
+```
+
+
+
+
 
 ## 代码 
 
