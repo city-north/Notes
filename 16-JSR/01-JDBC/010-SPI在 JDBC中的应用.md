@@ -10,7 +10,7 @@
 
 数据库DriverManager为例，看下如何实现的。
 
-`DriverManager`是JDC里管理和注册不通数据库Driver的工具类。
+`DriverManager`是JDBC里管理和注册不通数据库Driver的工具类。
 
 针对一个数据库、会存在不同的数据库驱动实现。
 
