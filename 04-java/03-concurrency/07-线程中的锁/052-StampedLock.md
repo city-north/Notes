@@ -14,7 +14,7 @@ StampedLock 提供了三种模式的读写控制 :
 
 **当调用释放锁和转换锁的方法时 需要传入获取锁时返回的 stamp 值**
 
-#乐观读锁tryOptimisticRead)
+#乐观读锁tryOptimisticRead
 
 ## 类图
 
