@@ -1,6 +1,6 @@
 # Feign 的基础原理
 
-```
+```java
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
