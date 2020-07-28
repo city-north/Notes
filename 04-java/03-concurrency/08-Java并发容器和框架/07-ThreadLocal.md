@@ -2,6 +2,10 @@
 
  [核心原理](../13-ThreadLocal/01-ThreadLocal.md) 
 
+ [100-使用 ThreadLocal不当可能会导致内存泄漏.md](../15-并发编程实战/100-使用 ThreadLocal不当可能会导致内存泄漏.md) 
+
+
+
 多线程是Java实现多任务的基础，`Thread`对象代表一个线程，我们可以在代码中调用`Thread.currentThread()`获取当前线程。例如，打印日志时，可以同时打印出当前线程的名字：
 
 ```java
@@ -41,7 +45,7 @@ public void process(User user) {
 
 `process()`方法需要传递的状态就是`User`实例。有的童鞋会想，简单地传入`User`就可以了：
 
-```
+```java
 public void process(User user) {
     checkPermission(user);
     doWork(user);
@@ -112,7 +116,7 @@ void step2() {
 
 实际上，可以把`ThreadLocal`看成一个全局`Map`：每个线程获取`ThreadLocal`变量时，总是使用`Thread`自身作为key：
 
-```
+```java
 Object threadLocalValue = threadLocalMap.get(Thread.currentThread());
 ```
 
@@ -155,7 +159,7 @@ public class UserContext implements AutoCloseable {
 
 使用的时候，我们借助`try (resource) {...}`结构，可以这么写：
 
-```
+```java
 try (var ctx = new UserContext("Bob")) {
     // 可任意调用UserContext.currentUser():
     String currentUser = UserContext.currentUser();

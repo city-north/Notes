@@ -16,6 +16,10 @@ ThreadLocalMap 中的 Entry 中的 key使用的是对 ThreadLocal 对象的弱�
 
 可以在一些时机下对这些 Entry项进行清理,但是这个是不及时的,也不是每次都会执行所以在一些情况下还是会发生内存泄漏,因此使用完毕之后机制调用 remove 方法才是解决内存泄漏问题的王道
 
+#### 对于线程池来说
+
+线程池中的核心线程是一直存在的,如果不清理,线程池的核心线程的 threadLocals 变量会一直持有 ThreadLocal 变量
+
 ## 原理
 
 ThreadLocal只是一个工具类,具体存放的变量是线程的 threadLocals 变量
@@ -46,7 +50,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 }
 ```
 
-这里的super 实际上就是 WeakReference
+这里的 super 实际上就是 WeakReference
 
 ```java
 public WeakReference(T referent) {
@@ -68,7 +72,7 @@ k 被传递给 WeakReference 的构造函数, 也就是说 ThreadLocalMap 里面
 
 **如果当前线程一直存在, 且没有调用 ThreadLocal 的 remove 方法,并且这时候其他地方还有对 ThreadLocal 的引用, 则当线程的 ThreadLocalMap 变量里面会存在对 ThreadLocal 变量的引用和对 value 对象的引用,他们是不会被释放的,所以会内存泄漏**
 
-如果ThreadLocal变量没有其他强依赖, 
+如果ThreadLocal 变量没有其他强依赖, 
 
 - 由于 ThreadLocalMap 里面的 key 是弱依赖,所以当前线程的 ThreadLocalMap 里面的 ThreadLocal 变量的弱引用会在 gc 会回收
 - 但是 value 还是会造成内存泄漏, 就会变成 key 为 null, 但是 value 不会 null 的 entry
