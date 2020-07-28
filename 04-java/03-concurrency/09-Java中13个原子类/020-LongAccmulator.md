@@ -7,11 +7,11 @@ LongAdder 类是 LongAccumulator  的一个特例, LongAccumulator 比 LongAdder
 ## 构造函数
 
 ```java
-    public LongAccumulator(LongBinaryOperator accumulatorFunction,
-                           long identity) {
-        this.function = accumulatorFunction;
-        base = this.identity = identity;
-    }
+public LongAccumulator(LongBinaryOperator accumulatorFunction,
+                       long identity) {
+  this.function = accumulatorFunction;
+  base = this.identity = identity;
+}
 ```
 
 ```java
@@ -37,7 +37,7 @@ LongAccumulator acc = new LongAccumulator(new LongBinaryOperator(){
 	},0);
 ```
 
-LongAccumulator 相比于 LongAdder , 可以为累加器提供 非 0 的初始值, 后者只能提供默认的 0 值, 
+**LongAccumulator** 相比于 **LongAdder** , 可以为累加器提供 非 0 的初始值, 后者只能提供默认的 0 值, 
 
 另外 ,  前者还可以指定累加规则, 比如不进行累加而进行相乘, 只需要在构造 LongAccumlator 时 传入自定义的双目运算器即可, 后者则内置累加的规则
 
@@ -82,5 +82,6 @@ LongAccumlator 的 accumulate
 else if (casBase(v = base, ((fn == null)) ? v + x:
                  fn.applyAsLong(v,x))))
   			break;
-                ))
+	))
 ```
+

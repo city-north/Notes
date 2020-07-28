@@ -11,7 +11,7 @@ final 重排序语义:
 - 通过在构造函数 return 之前插入一个 StoreStore 屏障, 从而确保 final 域的初始化 与 对该域的引用不能重排序 , 在引用对象的 final 域 时 ,final 域已经被初始化
 - 通过禁止对象引用和引用这个对象的 final 域之间的重排序确保在修改 final 域的时候,对象被正确初始化了
 
-> https://www.cnblogs.com/michaelwwx/p/10526991.html
+https://www.cnblogs.com/michaelwwx/p/10526991.html
 
 > 编译器会在 final 域的写之后, 构造函数的 return 之前,插入一个 StoreStore 屏障,禁止处理器把 final 域写重排序到构造函数之外
 >

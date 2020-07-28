@@ -2,7 +2,7 @@
 
 > [COW-CopyOnWrite写时复制机制.md](../../../99-unclassified/01-COW-CopyOnWrite写时复制机制.md) 
 
-CopyOnWriteArrayList 使用CopyOnWrite 写时复制的策略来保证 list 的一致性, 而
+CopyOnWriteArrayList 是一个线程安全的无界数组 , 使用CopyOnWrite 写时复制的策略来保证 list 的一致性, 而
 
 - 获取
 
@@ -93,7 +93,7 @@ public CopyOnWriteArrayList(Collection<? extends E> c) {
 
 - 代码① 获取独占锁,如果多个线程都去调用 add方法则只有一个线程能够获取到该锁
 - 如果多个线程都调用 add 方法, 则只有一个线程会获取到该锁, 其他线程都会被阻塞挂起直到锁被释放
-- ② 获取 array ,然后执行代码③ , 复制 array 到一个新的数组, 数组长度是原来长度增加 1 ,所以 copyOnWriteArrayList 是一个无界数组
+- ② 获取 array ,然后执行代码 ③ , 复制 array 到一个新的数组, 数组长度是原来长度增加 1 ,所以 copyOnWriteArrayList 是一个无界数组
 - 将新增的额元素添加到新数组
 - 代码④ , 使用新数组替换原数组, 并在返回前释放锁, 由于加了锁,所以整个 add 过程是个原子性操作
 
@@ -104,19 +104,16 @@ public CopyOnWriteArrayList(Collection<? extends E> c) {
 使用 E get(int index) 获取下标为 index 的元素, 如果元素不存在则抛出 IndexOutOfBoundsException 异常
 
 ```java
-    public E get(int index) {
-        return get(getArray(), index);
-    }
-    final Object[] getArray() {
-        return array;
-    }
-    private E get(Object[] a, int index) {
-        return (E) a[index];
-    }
-
+public E get(int index) {
+  return get(getArray(), index);
+}
+final Object[] getArray() {
+  return array;
+}
+private E get(Object[] a, int index) {
+  return (E) a[index];
+}
 ```
-
-
 
 - 首先获取 array 数组, 然后通过下标访问指定位置的元素 
 - 然后通过下标访问指定元素
@@ -319,10 +316,6 @@ public CopyOnWriteArrayList(Collection<? extends E> c) {
         }
     }
 ```
-
-
-
-
 
 ## 代码 
 

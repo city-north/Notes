@@ -1,4 +1,4 @@
-# happens-before
+#              happens-before
 
 **happens-before 用来描述操作之间的内存可见性,用来屏蔽程序员与 JMM 内存可见性操作的细节**
 

@@ -32,7 +32,7 @@
 
 ![image-20200222193750189](../../assets/image-20200222193750189.png)
 
-```
+```java
 ExecutorType execType, TransactionIsolationLevel level, boolean autoCommit
 ```
 
@@ -74,8 +74,6 @@ ExecutorType execType, TransactionIsolationLevel level, boolean autoCommit
 
 Executor 的基本类型有三种:
 
-
-
 - SIMPLE 对应的实现类是`SimpleExecutor`
 
 每次执行一次` update` 或者是` select` 方法, 就会开启一个` Statement`对象,用完就会立刻关闭 `Statement `对象
@@ -96,7 +94,7 @@ Executor 的基本类型有三种:
 
 
 
-如果配置了 cacheEnabled=ture，会用装饰器模式对 executor 进行包装:new CachingExecutor(executor)。
+如果配置了 cacheEnabled=ture，会用装饰器模式对 executor 进行包装: new CachingExecutor(executor)。
 
 数据源和事务工厂在哪里会用到——创建执行器的时候。
 
@@ -105,11 +103,8 @@ Executor 的基本类型有三种:
 
 
 - 用户权限同步机制,outh2 登录
-
 - 越权
-
-  Voter 锁定,踢掉改造
-
+- Voter 锁定,踢掉改造
 - 数据越权
 
 防篡改机制

@@ -2,7 +2,14 @@
 
 ## 是什么
 
-插件是 Mybatis 的一个强大的机制,Mybatis 预留了插件的接口,让 Mybatis 更加容易拓展
+插件是 Mybatis 的一个强大的机制,Mybatis 预留了插件的接口,让 Mybatis 更加容易拓展 , MyBatis 通过 JDK 代理的方式通过代理 四大天王
+
+- Executor 执行器,用来执行 sql
+- ParameterHandler , SQL语句组装的时候
+- ResultSetHandler ,  结果集映射器,用来把查询的结果集转换成 Object
+- StatementHandler  , 主要是用来处理 Statement 也就是 xml 中的 select .update 等标签 
+
+对四个对象进行代理
 
 ## 核心类
 
@@ -11,6 +18,8 @@
 - `Plugin `工具类用来创建代理对象
 - `Invocation` 内的 wrap 方法进行包装,proceed方法执行被拦截方法
 - `InterceptorChain` 插件的链
+
+## 四大天王
 
 MyBatis 允许你在已映射语句执行过程中的某一点进行拦截调用。默认情况下，MyBatis 允许使用插件来拦截的方法调用包括：
 
@@ -71,7 +80,7 @@ public class PageInterceptor implements Interceptor {
 
 责任连模式
 
-- 有哪些对象允许被代理,哪些方法被拦截
+- [有哪些对象允许被代理,哪些方法被拦截](#有哪些对象允许被代理,哪些方法被拦截)
 - 四大天王什么时候被代理的,代理对象是什么时候创建的
 
 使用 JDK 的动态代理来实现的,executor 是在 openSession 的时候创建的代理对象,其他三个一旦被创建就会调用 InterceptorChan 来之执行拦截器
@@ -87,6 +96,12 @@ public class PageInterceptor implements Interceptor {
   四大天王被代理以后,调用的是 `intercept` 方法, 和 plugin 方法,创建代理类
 
   使用 
+
+## 有哪些对象允许被代理,哪些方法被拦截
+
+
+
+
 
 ### Answer
 
