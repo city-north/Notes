@@ -14,6 +14,9 @@
 ## 核心类
 
 - `Interceptor`接口
+  - intercept  
+  - plugin
+  - setProperties
 - 自定义拦截器(实现类)
 - `Plugin `工具类用来创建代理对象
 - `Invocation` 内的 wrap 方法进行包装,proceed方法执行被拦截方法
@@ -97,13 +100,7 @@ public class PageInterceptor implements Interceptor {
 
   使用 
 
-## 有哪些对象允许被代理,哪些方法被拦截
-
-
-
-
-
-### Answer
+#### 有哪些对象允许被代理,哪些方法被拦截
 
 这些类中方法的细节可以通过查看每个方法的签名来发现，或者直接查看 MyBatis 发行包中的源代码。 如果你想做的不仅仅是监控方法的调用，那么你最好相当了解要重写的方法的行为。 因为如果在试图修改或重写已有方法的行为的时候，你很可能在破坏 MyBatis 的核心模块。 这些都是更低层的类和方法，所以使用插件的时候要特别当心。
 

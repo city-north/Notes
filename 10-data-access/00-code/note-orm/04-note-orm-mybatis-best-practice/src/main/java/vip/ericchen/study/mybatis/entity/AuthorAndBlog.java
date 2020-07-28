@@ -1,5 +1,6 @@
 package vip.ericchen.study.mybatis.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author EricChen 2020/02/21 21:23
  */
-public class AuthorAndBlog {
+public class AuthorAndBlog implements Serializable {
     Integer authorId; // 作者ID
     String authorName; // 作者名称
     List<BlogAndComment> blog; // 文章和评论列表
