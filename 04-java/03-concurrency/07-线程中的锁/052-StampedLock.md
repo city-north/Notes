@@ -2,7 +2,7 @@
 
 ## 是什么
 
-StampedLock 提供了三种模式的读写控制 :
+StampedLock 是并发包 里面 JDK8 版本新增的一个锁, 这个锁有三种读写控制
 
 - writeLock 写锁
 - readLock 悲观读锁
@@ -18,7 +18,7 @@ StampedLock 提供了三种模式的读写控制 :
 
 ## 类图
 
-![image-20200712111816081](../../../assets/image-20200712111816081.png)
+<img src="../../../assets/image-20200712111816081.png" alt="image-20200712111816081" style="zoom: 67%;" />
 
 ## 组成
 
@@ -28,7 +28,9 @@ StampedLock 有三种状态,三种状态可以互相转换,
 - [悲观读锁readLock](#悲观读锁readLock)
 - [乐观读锁tryOptimisticRead](#乐观读锁tryOptimisticRead)
 
-### 写锁writeLock
+#### 写锁writeLock
+
+是一个不可重入的排他锁, 某时值有一个线程可以获取这个锁,当一个线程获取该锁后,其他请求读锁和写锁的线程必须等待,这类似于 ReentrantReadWriteLock 的写锁, 不同的是这里的写锁时不可重入锁
 
 - 独占锁,但是不可以重入,请求读锁会返回一个stamp 变量用来表示该锁的版本
 
@@ -48,21 +50,21 @@ public void incr(double value) {
 }
 ```
 
-### 悲观读锁readLock
+#### 悲观读锁readLock
 
 > 一个不可重入的共享锁 
 
 是一个共享锁 ，在没有线程获取独占写锁的情况下，多个线程可以同时获取该锁 。
 
-如果己经有线程持有写 锁，则其他线程请求获取该读锁会被阻塞，这类似于 `ReentrantReadWriteLock`的读锁 **(不同的是这里的读锁是不可重入锁〉**。 
+如果己经有线程持有写锁，则其他线程请求获取该读锁会被阻塞，这类似于 `ReentrantReadWriteLock`的读锁 **(不同的是这里的读锁是不可重入锁〉**。 
 
 这里说的悲观是指在 具体操作数据前其会悲观地认为其他线程可能要对自己操作的 数据进行修改，所以需要先对数据加锁，这是在读少写多的情况下的一种考虑 。
 
 请求该锁成功后会返回一个 stamp 变量用来表示该锁的版本，当释放该锁时需要调用 `unlockRead` 方法并传递 `stamp` 参数。并且它提供了非阻塞的 `tryReadLock` 方法
 
-### 乐观读锁tryOptimisticRead
+#### 乐观读锁tryOptimisticRead
 
-它是相对于悲观锁来说的，在操作数据前并没有通过 CAS 设置锁的状态，仅仅通过位运算测试。
+**它是相对于悲观锁来说的，在操作数据前并没有通过 CAS 设置锁的状态，仅仅通过位运算测试。**
 
 - 如果当前没有线程持有写锁 ，则简单地返回一个非0的stamp版本信息。 
 
@@ -71,6 +73,67 @@ public void incr(double value) {
 由于 tryOptimisticRead 并没有 使用 CAS 设置锁状态，所以不需要显式地释放该锁 。 
 
 该锁的一个特点是适用于读多写少的场景 ，因为获取读锁只是使用位操作进行检验，不涉及 CAS 操作，所以效率会高很多，但是同时由于没有使用真正的锁，在保证数据 一致性上需要复制一份要操作的变量到方法栈，并且在操作数据时可能其他写线程己经修改了数据，而我们操作的是方法栈里面的数据，也就是一个快照，所以最多返回 的不是最新的数据，但是一致性还是得到保障的 。
+
+## 代码实例
+
+```java
+public class StampedLockExample {
+    private final StampedLock stampedLock = new StampedLock();
+
+    private double value = 0;
+
+
+    public double getValue() {
+      //首先获取乐观锁
+        long stamp = stampedLock.tryOptimisticRead();
+      // 如果乐观锁校验成功,也就是在读取期间数据没有发生变化
+        if (stampedLock.validate(stamp)) {
+          // 直接返回
+            return value;
+        } else {
+          //升级锁为悲观读锁,读期间不能写
+            try {
+                stamp = stampedLock.readLock();
+                return value;
+            } finally {
+                stampedLock.unlockRead(stamp);
+            }
+        }
+    }
+
+    public void incr(double value) {
+      //获取写锁
+        long stamp = stampedLock.writeLock();
+        try {
+            this.value += value;
+        } finally {
+          //释放写锁
+            stampedLock.unlockWrite(stamp);
+        }
+    }
+
+    public static void main(String[] args) throws Exception{
+        StampedLockExample example = new StampedLockExample();
+        for (int i = 0; i < 200; i++) {
+            Thread thread = new Thread(() -> {
+                example.incr(1);
+            });
+            thread.start();
+        }
+        for (int i = 0; i < 200; i++) {
+            Thread thread = new Thread(() -> {
+                double value = example.getValue();
+                System.out.println(value);
+            });
+            thread.start();
+        }
+        Thread.sleep(10000);
+
+    }
+
+```
+
+
 
 ## StampedLock 三种锁转换
 

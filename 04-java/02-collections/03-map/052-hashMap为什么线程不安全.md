@@ -62,8 +62,6 @@ class HashMapThread extends Thread {
 
 从堆栈信息中可以看到出现死循环的位置，通过该信息可明确知道死循环发生在HashMap的扩容函数中，根源在**transfer函数**中，jdk1.7中HashMap的transfer函数如下：
 
-
-
 ```java
 void transfer(Entry[] newTable, boolean rehash) {
         int newCapacity = newTable.length;
