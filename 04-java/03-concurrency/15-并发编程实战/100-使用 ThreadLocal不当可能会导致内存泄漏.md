@@ -18,7 +18,7 @@ ThreadLocalMap 中的 Entry 中的 key使用的是对 ThreadLocal 对象的弱�
 
 #### 对于线程池来说
 
-线程池中的核心线程是一直存在的,如果不清理,线程池的核心线程的 threadLocals 变量会一直持有 ThreadLocal 变量
+线程池中的核心线程是一直存在的,如果不清理,线程池的核心线程的 threadLocals 变量会一直持有 **ThreadLocal** 变量
 
 ## 原理
 
