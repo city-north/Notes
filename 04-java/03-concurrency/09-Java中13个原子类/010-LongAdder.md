@@ -1,12 +1,20 @@
 # LongAdder
 
-- JDK8 的 LongAdder 原子性操作类, 该类通过内部 cells 数组 分担了高并发下多线程同时对一个原子变量进行更新时的竞争量, 让多个线程可以同时 对 Cells 数组里面的元素进行并行的更新操作
+## LongAdder是什么
 
-- 数组 Cell 使用 `@Sun.misc.Contended`注解进行修饰,避免了 cells 数组内多个元素变量被放入同一个缓存行,避免伪共享, 提升性能
+JDK8 的 LongAdder 原子性操作类, 该类通过内部 cells 数组 分担了高并发下多线程同时对一个原子变量进行更新时的竞争量, 让多个线程可以同时 对 Cells 数组里面的元素进行并行的更新操作
 
-#### AtomicLong的缺陷
+数组 Cell 使用 `@Sun.misc.Contended`注解进行修饰,避免了 cells 数组内多个元素变量被放入同一个缓存行,避免伪共享, 提升性能
 
-AtomicLong 通过 CAS 提供非阻塞的原子操作,相比使用阻塞算法的同步器来说它的性能已经非常好了, 但是在高并发情况下, 大量线程会同时竞争更新同一个原子变量,但是只有一个线程能够 CAS 成功,这就造成了大量线程竞争失败后,会通过无线循环自旋尝试 CAS ,造成 cpu 资源浪费
+## 为什么要有 LongAdder
+
+AtomicLong 通过 CAS 提供了非阻塞的原子性操作,相比使用阻塞算法的同步器性能已经提升了很多
+
+**但是**
+
+由于AtomicLong 底层使用的 CAS 去操作,大量线程竞争同一个原子变量时,只有一个线程能够 CAS 成功,就会造成大量线程竞争失败后,通过无线循环不断进行自旋尝试 CAS 操作,浪费 CPU 性能
+
+
 
 ![image-20200723205623343](../../../assets/image-20200723205623343.png)
 
@@ -41,7 +49,7 @@ JDK8 新增了一个原子递增或者递减类 LongAdder 用来克服高并发�
 
 ## 防止伪共享
 
-对于大多数孤立的原子操作进行字节填充是浪费的, 因为 原子性操作都是无规律地分散在内存中的 (也就是说多个原子性变量的内存地址是不连续的), 多个原子变量被放入同一个缓存行的可能性是很小的
+对于大多数孤立的原子操作进行字节填充是浪费的, 因为原子性操作都是无规律地分散在内存中的 (也就是说多个原子性变量的内存地址是不连续的), 多个原子变量被放入同一个缓存行的可能性是很小的
 
 但是原子性数组的内存地址是连续的,所以数组内的多个元素会经常共享缓存行, 因此这里使用
 
@@ -85,8 +93,7 @@ Cells 构造方法
             try {
                 UNSAFE = sun.misc.Unsafe.getUnsafe();
                 Class<?> ak = Cell.class;
-                valueOffset = UNSAFE.objectFieldOffset
-                    (ak.getDeclaredField("value"));
+                valueOffset = UNSAFE.objectFieldOffset(ak.getDeclaredField("value"));
             } catch (Exception e) {
                 throw new Error(e);
             }
@@ -116,7 +123,7 @@ Cells 构造方法
     }
 ```
 
-值得注意的是这个方法并没有使用 cas ,或者加锁, 所以 **是不精确的**. 
+值得注意的是这个方法并没有使用 cas ,或者加锁, 所以**是不精确的**. 
 
 在累加的过程中可能有其他线程对 Cell 中的值进行了修改,也有可能进行了扩容, 所以仅仅返回的是快照
 
@@ -197,47 +204,11 @@ public long sumThenReset() {
 
 初始化 Cells 数组和扩容
 
-##### 如何初始化 Cell 数组
-
-初始化从 14 开始,  cellsBusy 标志位 0 则说明当前数没有被初始化或者扩容.也没有在新建 Cell 元素
-
-- 为 1 则说明 cells 数组在被初始化或者扩容, 或者当前在创建新的 Cell 元素 
-- 通过 CAS 操作来进行 0 或者 1 状态的切换
-  - 设置为 1 标识正在扩容. 其他线程不能进行扩容了
-
-- 14.1代码 , 初始化 Cells 大小为 2 ,使用 当前线程的 threadLocalRandomProbe 变量 & (数组长度 -1 ),然后标识 cells 数组已经被初始化了
-
-##### 线程访问分配的 Cell元素有冲突如何处理
-
-> 代码 13 , 对 CAS 失败的线程重新计算当前线程的随机值 threadLocalRandomProbe 以减少下次访问 cells 元素时的冲突机会
-
-##### Cell 数组如何扩容
-
-cells 数组的扩容时在代码 12 中进行的, 
-
-扩容条件 10 ,11 都不满足则扩容
-
-具体当前 cell 元素的个数小于机器 CPU 个数才会进行扩容
-
-> 因为每个 CPU 都裕兴一个线程的时候,多线程效果最佳,也就是为什么 cells 数组和 CPU个数一致时, 每个 Cell 都使用一个 CPU处理,性能最佳
-
-代码 12 进行扩容操作
-
-- 先 cas 设置 cellsBusy 为 1 , 复制 Cell 元素都扩容后的数组,
-- 扩容后 cells 数组里除了包含复制过来的元素外,还有其他新元素,目前是 null
-
-代码 7 和 8 中,当前线程调用 add 方法并根据当前线程随机值threadLocalRandomProbe  和 cells 元素个数计算要访问 Cell 元素的下表,然后如果发现对应下标 为 null ,则新增一个 Cell 元素到 cells 数组, 设置 cellBusy 为 1 并且添加器到 cells 数组
-
-
-
-
-
 
 
 ```java
-    final void longAccumulate(long x, LongBinaryOperator fn,
-                              boolean wasUncontended) {
-      //liu6
+    final void longAccumulate(long x, LongBinaryOperator fn, boolean wasUncontended) {
+      //⑥
         int h;
         if ((h = getProbe()) == 0) {
             ThreadLocalRandom.current(); // force initialization
@@ -330,4 +301,44 @@ cells 数组的扩容时在代码 12 中进行的,
 
 ```
 
-#### 
+#### 值得注意的是
+
+- **14.3 重置了 cellBusy 标记, 显然这里没有使用 CAS 操作,因为 cellBusy 是 volatile 修饰的,所以线程安全的**
+
+##### 如何初始化 Cell 数组
+
+初始化从 14 开始,  cellsBusy 标志位 0 则说明当前数没有被初始化或者扩容.也没有在新建 Cell 元素
+
+- 为 1 则说明 cells 数组在被初始化或者扩容, 或者当前在创建新的 Cell 元素 
+- 通过 CAS 操作来进行 0 或者 1 状态的切换
+  - 设置为 1 标识正在扩容. 其他线程不能进行扩容了
+
+- **14.1 初始化数组的长度时 2 ,然后使用 h&1 计算当前线程应该访问 cell 数组的哪个位置,也就是 使用当前线程的 threadLocalRandomProbe 变量 & (cells 数组元素个数 -1) 然后标记已经初始化**
+
+##### 线程访问分配的 Cell元素有冲突如何处理
+
+> 代码 13 , 对 CAS 失败的线程重新计算当前线程的随机值 threadLocalRandomProbe 以减少下次访问 cells 元素时的冲突机会
+
+### Cell 数组如何扩容
+
+cells 数组的扩容时在代码 12 中进行的, 
+
+扩容条件 10 ,11 都不满足则扩容
+
+##### 扩容条件
+
+- 当前 cell 元素的个数小于机器 CPU 个数
+- 当前多个线程访问 cells 中同一个元素 , 从而导致其中一个线程 CAS 失败时
+
+> 因为每个 CPU 都运行一个线程的时候,多线程效果最佳,也就是为什么 cells 数组和 CPU个数一致时, 每个 Cell 都使用一个 CPU处理,性能最佳
+
+代码 7 和 8 中,当前线程调用 add 方法并根据当前线程随机值threadLocalRandomProbe  和 cells 元素个数计算要访问 Cell 元素的下表,然后如果发现对应下标 为 null ,则新增一个 Cell 元素到 cells 数组, 设置 cellBusy 为 1 并且添加器到 cells 数组
+
+##### 扩容了多少
+
+> 代码 12 进行扩容操作
+
+- 先 cas 设置 cellsBusy 为 1 ,
+
+- 容量为之前的 2 倍,并复制 Cell 元素到扩容后数组
+- 扩容后的 cells 数组里面除了包含复制过来的元素外,还包含其他新元素, 这些元素的值目前是 null

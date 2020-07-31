@@ -8,7 +8,7 @@
 
 ## 如何实现
 
-数据库DriverManager为例，看下如何实现的。
+数据库 DriverManager为例，看下如何实现的。
 
 `DriverManager`是JDBC里管理和注册不通数据库Driver的工具类。
 
