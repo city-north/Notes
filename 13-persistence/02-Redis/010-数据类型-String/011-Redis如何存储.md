@@ -45,6 +45,14 @@ void *ptr; /* 指向对象实际的数据结构 */
 } robj;
 ```
 
+- type  4bit
+- encoding 4bit
+- lru 24bit
+- refcount 4 字节 32 bit
+- ptr 8 字节,64bit
+
+**一共是对象头就占用 16 个字节**
+
 我们可以使用 type查看 redisObject 的类型
 
 ```java
