@@ -41,7 +41,7 @@ Mybatis 插件可以用来实现拦截器接口 Interceptor
 
 - `plugin` 这个方法参数 target 即使要拦截器拦截的对象,这个方法会在创建被拦截的接口实现类时被调用,这个方法非常简单,只需要调用 Mybatis 实现的`Plugin(org.apache.ibatis.plugin.plgin)`类的 wrap 静态方法就可以通过 Java 的 JDK 动态代理拦截目标对象
 
-```
+```java
     @Override
     public Object plugin(Object target) {
     //自动判断拦截器的签名和被拦截对象的接口是否匹配,只有匹配的情况下才会使用动态代理拦截目标对象,因此不必要做额外的逻辑判断
@@ -53,7 +53,7 @@ Mybatis 插件可以用来实现拦截器接口 Interceptor
 
 ## 拦截器签名介绍
 
-```
+```java
 @SuppressWarnings({"rawtypes", "unchecked"})
 @Intercepts(
         {
@@ -106,7 +106,7 @@ public class PageInterceptor implements Interceptor {
 
 通过 MyBatis 提供的强大机制，使用插件是非常简单的，只需实现 Interceptor 接口，并指定想要拦截的方法签名即可。
 
-```
+```java
 // ExamplePlugin.java
 @Intercepts({@Signature(
   type= Executor.class,
@@ -162,7 +162,7 @@ MyBatis 通过提供插件机制,让我们可以根据自己的需要去增强 M
    2. 添加`@Intercepts({@Signatture})` 指定拦截的对象和方法,方法参数,方法名称和方法类型,可以构成签名,决定拦截哪个方法
    3. 实现接口的方法
 
-   ```
+   ```java
    // 用于覆盖被拦截对象的原有方法(在调用代理对象 Plugin 的 invoke()方法时被调用)
    Object intercept(Invocation invocation) throws Throwable;
    // target 是被拦截对象，这个方法的作用是给被拦截对象生成一个代理对象，并返回它

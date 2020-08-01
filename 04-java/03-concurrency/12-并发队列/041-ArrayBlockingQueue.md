@@ -1,5 +1,7 @@
 # ArrayBlockingQueue
 
+ [010-ArrayBlockingQueue的使用.md](../15-并发编程实战/010-ArrayBlockingQueue的使用.md) 
+
 ArrayBlockingQueue 通过使用全局独占锁实现了同时只能有一个线程进行入队和出队的动作, 这个锁的粒度比较大,有点类似于 在方法上添加 **synchronized** 的意思
 
 -  offer 操作 和 poll 操作通过简单的加锁进行入队, 出队操作
