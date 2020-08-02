@@ -7,13 +7,13 @@ Redis 的 Hash 本身也是一个 KV 的结构，类似于 Java 中的 HashMap�
 - 元素较少时  [ziplist 压缩列表](../16-Redis底层数据结构/01-压缩列表.md) 
 - hashtable
 
-
-
 #### 值得注意的问题
 
 - [为什么要定义两个哈希表呢](#为什么要定义两个哈希表呢)
 
   参考 [011-Redis如何存储.md](../010-数据类型-String/011-Redis如何存储.md) 
+
+-  [什么时候使用hash什么时候使用String](../010-数据类型-String/011-Redis如何存储.md#什么时候使用hash什么时候使用String) 
 
 - [什么时候使用 zipList什么时候使用 hashtable](#什么时候使用 zipList什么时候使用 hashtable) 
 
@@ -60,4 +60,5 @@ redis 的 hash 默认使用的是 ht[0]，ht[1]不会初始化和分配空间。
 
  [06-Redis扩容与缩容.md](../06-模式以及常见问题/06-Redis扩容与缩容.md) 
 
-## 什么时候使用 zipList什么时候使用 hashtable 
+## 什么时候使用zipList什么时候使用hashtable 
+

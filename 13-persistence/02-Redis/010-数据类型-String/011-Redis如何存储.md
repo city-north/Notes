@@ -7,6 +7,11 @@
 关于存储值得讨论的问题
 
 -  [Redis扩容与缩容](../06-模式以及常见问题/06-Redis扩容与缩容.md) 
+-  [什么时候使用hash什么时候使用String](#什么时候使用hash什么时候使用String)
+
+## 图示
+
+![RedisDB主体数据结构](../../../assets/RedisDB主体数据结构.png)
 
 ## 详细介绍
 
@@ -73,7 +78,13 @@ string
 
 
 
+## 什么时候使用hash什么时候使用String
 
+Redi 底层存储是 k,v 形式存储, k 是一个 sds, v 是一个 dict 对象,维护了两个 hashtable 数组,
 
+如果直接使用 String 类型存储, hashtable 数组势必会进行扩容进行 rehash, 造成性能浪费
 
+而如果使用 hash 呢,实际上存储在 entry 指向的 redisObject 里面,扩容不会影响到最外层的 hash 数组
 
+- hash 里的 value 没有办法单独设置过期时间
+- 扩容
