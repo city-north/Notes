@@ -5,7 +5,7 @@
 Redis 的 Hash 本身也是一个 KV 的结构，类似于 Java 中的 HashMap。头插法
 
 - 元素较少时  [ziplist 压缩列表](../16-Redis底层数据结构/01-压缩列表.md) 
-- hashtable
+-  [hashtable](../010-数据类型-String/011-Redis如何存储.md) 
 
 #### 值得注意的问题
 
@@ -61,4 +61,18 @@ redis 的 hash 默认使用的是 ht[0]，ht[1]不会初始化和分配空间。
  [06-Redis扩容与缩容.md](../06-模式以及常见问题/06-Redis扩容与缩容.md) 
 
 ## 什么时候使用zipList什么时候使用hashtable 
+
+当 hash 对象同时满足以下两个条件的时候，使用 ziplist 编码: 
+
+- 所有的键值对的健和值的字符串长度都小于等于 64byte(一个英文字母一个字节);
+- 哈希对象保存的键值对数量小于 512 个。
+
+一个哈希对象超过配置的阈值(键和值的长度有>64byte，键值对个数>512 个)时， 会转换成哈希表(hashtable)。
+
+#### 相关配置
+
+```
+hash-max-ziplist-value 64
+hash-max-ziolist-entries =512
+```
 

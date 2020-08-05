@@ -51,9 +51,17 @@ void *ptr; /* 指向对象实际的数据结构 */
 ```
 
 - type  4bit
-- encoding 4bit
-- lru 24bit
-- refcount 4 字节 32 bit
+
+- encoding 4bit  实际使用的编码
+
+  > 12.7.0.0.1 6379 > object encoidng 
+
+- lru 24bit  内存回收有关
+
+- refcount 4 字节 32 bit , 
+
+  >  引用计数。当 refcount 为 0 的时候，表示该对象已经不被任何对象引用，则可以进行垃圾回收了
+
 - ptr 8 字节,64bit
 
 **一共是对象头就占用 16 个字节**
@@ -76,8 +84,6 @@ string
 
 - [字符串存储方式.md](030-字符串存储方式.md) 
 
-
-
 ## 什么时候使用hash什么时候使用String
 
 Redi 底层存储是 k,v 形式存储, k 是一个 sds, v 是一个 dict 对象,维护了两个 hashtable 数组,
@@ -88,3 +94,18 @@ Redi 底层存储是 k,v 形式存储, k 是一个 sds, v 是一个 dict 对象,
 
 - hash 里的 value 没有办法单独设置过期时间
 - 扩容
+
+## 数据结构总结
+
+| 对象         | 对象 type 属性值 | type 命令输出 | 底层可能的存储结构                                    | object encoding           |
+| ------------ | ---------------- | ------------- | ----------------------------------------------------- | ------------------------- |
+| 字符串对象   | OBJ_STRING       | "string"      | OBJ_ENCODING_INT OBJ_ENCODING_EMBSTR OBJ_ENCODING_RAW | int embstr raw            |
+| 列表对象     | OBJ_LIST         | "list"        | OBJ_ENCODING_QUICKLIST                                | quicklist                 |
+| 哈希对象     | OBJ_HASH         | "hash"        | OBJ_ENCODING_ZIPLIST OBJ_ENCODING_HT                  | ziplist hashtable         |
+| 集合对象     | OBJ_SET          | "set"         | OBJ_ENCODING_INTSET OBJ_ENCODING_HT                   | intset hashtable          |
+| 有序集合对象 | OBJ_ZSET         | "zset"        | OBJ_ENCODING_ZIPLIST OBJ_ENCODING_SKIPLIST            | ziplist skiplist(包含 ht) |
+
+## 编码转换总结
+
+![image-20200805185909374](../../../assets/image-20200805185909374.png)
+
