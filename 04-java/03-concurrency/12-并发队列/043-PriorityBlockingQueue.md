@@ -39,7 +39,7 @@ PriorityBlockingQueue 类似于 ArrayBlockingQueue, 在内部使用一个**独�
   - 0 代表没有扩容
   - 1 标识正在扩容
 
-PriorityBlockingQueue是一个优先级队列, 所以有一个比较器 comparator 用来比较元素的大小
+PriorityBlockingQueue 是一个优先级队列, 所以有一个比较器 comparator 用来比较元素的大小
 
 - lock 独占锁对象用来控制同时只能有一个线程可以进行 出队,入队操作
 

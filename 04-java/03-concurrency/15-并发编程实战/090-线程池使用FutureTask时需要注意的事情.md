@@ -70,13 +70,13 @@ public class FutureTest {
 
 - ① 创建了一个单线程和一个队列元素个数为 1 的线程池,拒绝策略为 DiscardPolicy
 
-- ②添加任务 one. 并且这个任务会由 2 唯一的线程来执行,并打印后阻塞该线程 5 秒
+- ② 添加任务 one. 并且这个任务会由 2 唯一的线程来执行,并打印后阻塞该线程 5 秒
 - ③ 想线程池提交了一个任务 two , 这个时候会把任务 two 放入阻塞队列
 - ④ 向线程池提交任务 three , 由于队列已满,所以触发拒绝策略丢弃任务 Three
 - 从任务 one 阻塞的 5s 内,主线程执行到了代码⑤,并等待任务 one执行完毕,当任务 one 执行完毕后代码⑤返回,主线程打印 task one null, 任务 one 执行完成后线程池的唯一线程会去队列里面取出任务 two 并执行,所以输出 start runnable two , 然后代码⑥ 返回
 - 这时候主线程输出 task tow nul, 然后执行代码 ⑦等待任务 three执行完毕, 从执行结果看,代码 ⑦会一直阻塞而不会返回,至此 问题产生,
-  - 如果把拒绝策略改为 DiscardOldestPolicy , 也会存在有一个任务的 get 方法一直阻塞,
-  - 如果设置拒绝策略为 AbortPolicy 则会正常返回
+  - 如果把拒绝策略改为 **DiscardOldestPolicy** , 也会存在有一个任务的 get 方法一直阻塞,
+  - 如果设置拒绝策略为 **AbortPolicy ** 则会正常返回
 
 ## 问题分析
 
@@ -104,7 +104,7 @@ DiscardPolicy 的代码
 
 可以看到拒绝策略什么都没做 ,返回的 Future 的状态还是 NEW 
 
-而当我们调用 Future 的无参get 方法时 Future只有 在 COMPLETING 状态才会返回,所以会等待状态改变
+而当我们调用 Future 的无参get 方法时 Future只有 在 **COMPLETING** 状态才会返回,所以会等待状态改变
 
 ```java
     public V get() throws InterruptedException, ExecutionException {

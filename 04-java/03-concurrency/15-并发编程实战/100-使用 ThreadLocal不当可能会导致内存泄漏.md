@@ -4,17 +4,45 @@
 
 ## 为什么会出现内存泄漏
 
-ThreadLocalMap 中的 Entry 中的 key使用的是对 ThreadLocal 对象的弱引用, 这在避免内存泄漏方便是一个进步, 因为如果是强引用, 即使其他地方没有对 ThreadLocal 对象的引用, ThreadLocalMap 中的 ThreadLocal 对象还是不会被回收
+> 使用完记得 remove
 
-而如果是弱引用则 ThreadLocal 引用时会被回收掉的,但是对应的 value 还是还是不能回收,
+#### 什么是内存泄漏
 
-这个时候 ThreadLocalMap 里面就会存在 key 为 null 但是 value 不为 null 的entry项, 虽然 ThreadLocalMap 提供了 
+*内存泄漏*（Memory Leak）是指程序中己动态分配的堆内存由于某种原因程序未释放或无法释放，造成系统内存的浪费，导致程序运行速度减慢甚至系统崩溃等严重后果。
 
-- set 
-- get
-- remove 方法
+#### 为什么 ThreadLocal 使用不当会导致内存泄漏问题
 
-可以在一些时机下对这些 Entry项进行清理,但是这个是不及时的,也不是每次都会执行所以在一些情况下还是会发生内存泄漏,因此使用完毕之后机制调用 remove 方法才是解决内存泄漏问题的王道
+ThreadLocal 实际是一个工具类, 操作的是 Thread 内部的 ThreadLocalMap 对象
+
+```java
+static class ThreadLocalMap {
+  ...
+  static class Entry extends WeakReference<ThreadLocal<?>> {
+    Object value;
+    Entry(ThreadLocal<?> k, Object v) {
+      super(k);
+      value = v;
+    }
+  }
+
+}
+```
+
+- ThreadLocalMap 的 key 是 使用的 **ThreadLocal 对象的弱引用** 
+- ThreadLocalMap 的 value 是 具体的调用 ThreadLocal 的 set 方法传递的值
+
+当一个线程调用了 ThreadLocal 的 set 方法设置变量时, 当前线程的 ThreadLocalMap .
+
+- 如果当前线程一直存在且没有调用 ThreadLocal 的 remove 方法, 并且这时候在其他地方还有对 ThreadLocal 的引用, 则当前线程的 ThreadLocalMap 变量不会被释放,就会造成内存泄漏
+
+- 如果这个 ThreadLocal 变量没有其他强依赖,而当前线程还存在
+
+  > 由于 key 是弱依赖,所以当前线程的 ThreadLocalMap 里面的 key 在 gc 时会被回收
+  >
+  > 但是对应的 value 不会被回收,就导致了 这样的Entry 
+  >
+  > - key = null
+  > - value != null
 
 #### 对于线程池来说
 

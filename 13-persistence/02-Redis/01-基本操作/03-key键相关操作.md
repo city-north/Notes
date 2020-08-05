@@ -41,8 +41,6 @@ redis 127.0.0.1:6379> DEL runoobkey
 | 14   | renamenx  | 仅当 newkey 不存在时，将 key 改名为 newkey 。                | [renameex.md](keys/renameex.md)   |
 | 15   | type      | 返回 key 所存储的值的类型                                    | [type.md](keys/type.md)           |
 
-
-
 #### DEL key 删除
 
 用于在 key 存在时删除 key
