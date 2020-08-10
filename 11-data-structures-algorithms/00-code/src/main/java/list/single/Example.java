@@ -94,26 +94,84 @@ public class Example {
         node1.next = node2;
         node2.next = node3;
         node3.next = null;
+//
+//        traverse(node1);
+//        Node newHead = new Node(0);
+//        insertHead(node1, newHead);
+//        traverse(newHead);
+//
+//        Node newTail = new Node(4);
+//        insertTail(node3, newTail);
+//        traverse(newHead);
+//
+//        //验证查找
+//        System.out.println(find(newHead, 3));
+//
+//        //
+//        insert(node3, new Node(99));
+//        traverse(newHead);
+//
+//        //删除
+//        delete(newHead, node3);
+//        traverse(newHead);
 
-        traverse(node1);
-        Node newHead = new Node(0);
-        insertHead(node1, newHead);
-        traverse(newHead);
 
-        Node newTail = new Node(4);
-        insertTail(node3, newTail);
-        traverse(newHead);
+//        Node node = reverseList(node1);
+//        traverse(node);
+        System.out.println(middleNode(node1).value);
+    }
 
-        //验证查找
-        System.out.println(find(newHead, 3));
 
-        //
-        insert(node3,new Node(99));
-        traverse(newHead);
+    /**
+     * 翻转
+     * 时间复杂度O(n), 空间复杂度O(1)
+     */
+    public static Node reverseList(Node head) {
+        //当前节点的上一个节点
+        Node pre = null;
+        // 当前节点的下一个节点
+        Node next = null;
+        while (head != null) {
+            //记录一下下一个节点的位置
+            next = head.next;
+            //将当前节点的尾指针指向它前一个位置
+            head.next = pre;
+            //往后移动一位
+            pre = head;
+            //往后移动一位
+            head = next;
+        }
+        return pre;
+    }
 
-        //删除
-        delete(newHead,node3);
-        traverse(newHead);
+    /**
+     * 取中间节点 , 偶数个取得中间节点是前面那个
+     */
+    public static Node getMid(Node head) {
+        if (head == null) {
+            return head;
+        }
+        Node fast = head;
+        Node slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
 
+    public static Node middleNode(Node head) {
+        int tail = 0;
+        Node copy = head;
+        while(copy != null && copy.next != null){
+            copy = copy.next;
+            tail++;
+        }
+        tail = tail /2;
+        while(tail > 0){
+            head = head.next;
+            tail--;
+        }
+        return head;
     }
 }
