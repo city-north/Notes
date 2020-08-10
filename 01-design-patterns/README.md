@@ -68,7 +68,7 @@
 
 | 设计模式                                                     | 简介              | 举例                                              |
 | ------------------------------------------------------------ | ----------------- | ------------------------------------------------- |
-| [适配器模式（Adapter Pattern）](03-structural-patterns/02-bridge-pattern.md) | 兼容转接头        | AdvisorAdaptor/HandlerAdaptor                     |
+| [适配器模式（Adapter Pattern）](03-structural-patterns/01-adapter-pattern.md) | 兼容转接头        | AdvisorAdaptor/HandlerAdaptor                     |
 | [桥接模式（Bridge Pattern）](03-structural-patterns/02-bridge-pattern.md) |                   |                                                   |
 | [过滤器模式（ Filter /Criteria Pattern）](03-structural-patterns/08-filter-pattern.md) |                   |                                                   |
 | [组合模式（Composite Pattern）](03-structural-patterns/03-composite-pattern.md) |                   |                                                   |
