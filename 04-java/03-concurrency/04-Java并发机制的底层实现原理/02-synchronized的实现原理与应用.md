@@ -1,14 +1,12 @@
 # Synchronzied 的实现原理
 
-
-
 在多线程并发编程中 synchronized 一直是元老级角色，很多人都会称呼它为重量级锁。但是，随着 Java SE 1.6 对 synchronized 进行了各种优化之后，有些情况下它就并不那么重，Java SE 1.6 中为了减少获得锁和释放锁带来的性能消耗而引入的**偏向锁**和**轻量级锁**。以及锁的升级过程和存储结构
 
 ## Synchronzied 的内存语义
 
 Synchronzied 的内存语义可以解决内存可见性问题
 
-- 进入 Synchronzied 块 的内存语义是吧 Synchronzied 块内使用到的变量从线程的工作内存中清除,这样在Synchronzied 块内使用到该变量时就不会从线程的工作内存中获取,而是直接从主内存中获取
+- 进入 Synchronzied 块 的内存语义是把 Synchronzied 块内使用到的变量从线程的工作内存中清除,这样在Synchronzied 块内使用到 该变量时就不会从线程的工作内存中获取,而是直接从主内存中获取
 - 退出 Synchronzied 块的内存语义是把 Synchronzied 块内对共享变量的修改刷新到主内存
 
 值得注意的是 Synchronzied 会引起线程上下文切换的开销
@@ -65,16 +63,16 @@ public class Synchronized {
 
 ```
 
-我们使用 javap -v Synchronized 获得输出汇编指令
+我们使用 `javap -v Synchronized `获得输出汇编指令
 
-![image-20200307170247730](../../../assets/image-20200307170247730.png)
+<img src="../../../assets/image-20200307170247730.png" alt="image-20200307170247730" style="zoom: 50%;" />
 
 - 同步代码块使用的是`monitorenter`和`monitorexit`
 - 同步方法使用的是`ACC_SYNCHRONIZED`完成
 
 其本质是获取对象的监视器(minitor),这个过程是排他的,**同一个时刻只有一个线程能获取到对象的监视器**
 
-任意一个对象都拥有自己的监视器,当这个对象由同步快或者这个同步方法调用时,执行方法的线程必须先湖区到该对象的监视器才能进入同步块或者同步方法,而没有获取到监视器(执行该方法)的线程就会被阻塞在同步块或者同步方法的入口外,进入 BLOCKED 状态 
+任意一个对象都拥有自己的监视器,当这个对象由同步块或者这个同步方法调用时,执行方法的线程必须先湖区到该对象的监视器才能进入同步块或者同步方法,而没有获取到监视器(执行该方法)的线程就会被阻塞在同步块或者同步方法的入口外,进入 BLOCKED 状态 
 
 <img src="../../../assets/image-20200307170828555.png" alt="image-20200307170828555" style="zoom: 33%;" />
 

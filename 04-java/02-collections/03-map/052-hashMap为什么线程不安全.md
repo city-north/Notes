@@ -96,7 +96,7 @@ void transfer(Entry[] newTable, boolean rehash) {
 假设
 
 - hash算法为简单的用key mod链表的大小。
-- 最开始hash表size=2，key=3,7,5，则都在table[1]中。
+- 最开始 hash 表 size=2，key=3,7,5 ，则都在table[1]中。
 - 后进行resize，使size变成4。
 
 ![image-20200708083400886](../../../assets/image-20200708083400886.png)
