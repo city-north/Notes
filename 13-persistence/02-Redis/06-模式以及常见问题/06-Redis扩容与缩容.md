@@ -22,7 +22,10 @@ static unsigned int dict_force_resize_ratio = 5;
 ```
 
 - ratio = used / size，已使用节点与字典大小的比例
-- dict_can_resize (是不是在 bgsave )为 1 并且 dict_force_resize_ratio **已使用节点数和字典大小之间**的 比率超过 1:5，触发扩容
+
+  > hash 表中的个数等于一维数组长度时,就开始扩容,double 
+
+- **dict_can_resize** (是不是在 bgsave )为 1 并且 dict_force_resize_ratio **已使用节点数和字典大小之间**的 比率超过 1:5，触发扩容
 
 ## 渐进式Rehash
 

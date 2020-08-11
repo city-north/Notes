@@ -1,5 +1,13 @@
 # Redis-Hash-底层存储
 
+| 对象         | 对象 type 属性值 | type 命令输出 | 底层可能的存储结构                                    | object encoding           |
+| ------------ | ---------------- | ------------- | ----------------------------------------------------- | ------------------------- |
+| 字符串对象   | OBJ_STRING       | "string"      | OBJ_ENCODING_INT OBJ_ENCODING_EMBSTR OBJ_ENCODING_RAW | int embstr raw            |
+| 列表对象     | OBJ_LIST         | "list"        | OBJ_ENCODING_QUICKLIST                                | quicklist                 |
+| 哈希对象     | OBJ_HASH         | "hash"        | OBJ_ENCODING_ZIPLIST OBJ_ENCODING_HT                  | ziplist hashtable         |
+| 集合对象     | OBJ_SET          | "set"         | OBJ_ENCODING_INTSET OBJ_ENCODING_HT                   | intset hashtable          |
+| 有序集合对象 | OBJ_ZSET         | "zset"        | OBJ_ENCODING_ZIPLIST OBJ_ENCODING_SKIPLIST            | ziplist skiplist(包含 ht) |
+
 #### 一句话定义
 
 Redis 的 Hash 本身也是一个 KV 的结构，类似于 Java 中的 HashMap。头插法
