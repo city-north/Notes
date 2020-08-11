@@ -1,25 +1,30 @@
 # Ribbon 与负载均衡
 
-> Ribbon is a client-side load balancer that gives you a lot of control over the behavior of HTTP and TCP clients 
->
-> > 本质上是通过拦截 RestTemplate 根据服务 ID 查找服务实例并使用轮询算法(可配置)进行拦截修改 url 的机制
+- [Ribbon是什么](#Ribbon是什么)
+- [一句话概括](#一句话概括)
+- [为什么要有负载均衡](#为什么要有负载均衡)
 
-Ribbon 是一个客户端负载均衡器
+## Ribbon是什么
 
-少了它.服务就不能横向拓展,有悖于云原生 12 原则
+Ribbon 是一个客户端负载均衡器 , Feign 和 Zuul 默认集成了 Ribbon , 其核心就是
 
-Feign 和 Zuul 默认集成了 Ribbon
+- 获取到服务列表, 可以是从注册中心或者是配置文件
+- 根据负载均衡算法访问这个服务列表
 
-Spring Cloud Ribbon 是 SpringCloud 微服务体系弹性拓展的基础组件,与其他组件结合可以发挥强大的作用
+#### 体现点
 
-- 丰富的负载均衡策略
+-  [丰富的负载均衡策略](02-Ribbon 负载均衡策略与自定义配置.md)
 - 重试机制
 - 支持多协议异步与响应式模型
 - 容错
 - 缓存
 - 批处理
 
-等等特性让你在构建自己的微服务架构时游刃有余
+## 一句话概括
+
+本质上是通过拦截 RestTemplate 根据服务 ID 查找服务实例并使用轮询算法(可配置)进行拦截修改 url 的机制
+
+## 为什么要有负载均衡
 
 ## 负载均衡
 
