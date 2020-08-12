@@ -6,9 +6,9 @@ public class Example {
     /**
      * 插入头节点
      */
-    public static void insertHead(Node head, Node newNode) {
+    public static void insertHead(ListNode head, ListNode newNode) {
         //记录下原来节点的引用
-        Node old = head;
+        ListNode old = head;
         //头结点设置为新插入的及诶单
         head = newNode;
         //头结点的后续节点设置为老的元素
@@ -18,8 +18,8 @@ public class Example {
     /**
      * 插入尾节点
      */
-    public static void insertTail(Node tail, Node newTail) {
-        Node old = tail;
+    public static void insertTail(ListNode tail, ListNode newTail) {
+        ListNode old = tail;
         tail = newTail;
         tail.next = null;
         old.next = tail;
@@ -28,7 +28,7 @@ public class Example {
     /**
      * 遍历
      */
-    public static void traverse(Node head) {
+    public static void traverse(ListNode head) {
         while (head != null) {
             System.out.println(head.value + "");
             head = head.next;
@@ -40,7 +40,7 @@ public class Example {
     /**
      * 遍历查找
      */
-    public static int find(Node head, int value) {
+    public static int find(ListNode head, int value) {
         int index = -1;
         int count = 0;
         while (head != null) {
@@ -57,8 +57,8 @@ public class Example {
     /**
      * 插入节点
      */
-    public static void insert(Node p, Node s) {
-        Node next = p.next;
+    public static void insert(ListNode p, ListNode s) {
+        ListNode next = p.next;
         p.next = s;
         s.next = next;
     }
@@ -67,9 +67,9 @@ public class Example {
     /**
      * 删除
      */
-    public static void delete(Node head, Node q) {
+    public static void delete(ListNode head, ListNode q) {
         if (q != null && q.next != null) {
-            Node p = q.next;
+            ListNode p = q.next;
             q.value = p.value;
             q.next = p.next;
             p = null;
@@ -88,9 +88,9 @@ public class Example {
     }
 
     public static void main(String[] args) {
-        Node node1 = new Node(1);
-        Node node2 = new Node(2);
-        Node node3 = new Node(3);
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
         node1.next = node2;
         node2.next = node3;
         node3.next = null;
@@ -126,11 +126,11 @@ public class Example {
      * 翻转
      * 时间复杂度O(n), 空间复杂度O(1)
      */
-    public static Node reverseList(Node head) {
+    public static ListNode reverseList(ListNode head) {
         //当前节点的上一个节点
-        Node pre = null;
+        ListNode pre = null;
         // 当前节点的下一个节点
-        Node next = null;
+        ListNode next = null;
         while (head != null) {
             //记录一下下一个节点的位置
             next = head.next;
@@ -147,12 +147,12 @@ public class Example {
     /**
      * 取中间节点 , 偶数个取得中间节点是前面那个
      */
-    public static Node getMid(Node head) {
+    public static ListNode getMid(ListNode head) {
         if (head == null) {
             return head;
         }
-        Node fast = head;
-        Node slow = head;
+        ListNode fast = head;
+        ListNode slow = head;
         while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
@@ -160,9 +160,9 @@ public class Example {
         return slow;
     }
 
-    public static Node middleNode(Node head) {
+    public static ListNode middleNode(ListNode head) {
         int tail = 0;
-        Node copy = head;
+        ListNode copy = head;
         while(copy != null && copy.next != null){
             copy = copy.next;
             tail++;
