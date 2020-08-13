@@ -41,3 +41,5 @@ IFU的全称是 Least Frequently Used ,  表示按最近的访问频率进行淘
 
 
 ## 为什么要LFU算法
+
+## 实现 LFU算法

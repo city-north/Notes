@@ -31,9 +31,7 @@ public class JedisSentinelTest {
 从代码中可以看出， 我们使用`JedisSentinelPool` 构造了一个Sentinel 连接池
 
 ```java
-
-        pool = new JedisSentinelPool(masterName, sentinels);
-
+pool = new JedisSentinelPool(masterName, sentinels);
 ```
 
 最终调用JedisSentinelPool中的初始化方法
