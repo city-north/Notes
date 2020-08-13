@@ -48,8 +48,6 @@ public class SemaphoreTest {
 
 ```
 
-
-
 ### Semaphore 源码分析
 
 创建 Semaphore 实例的时候，需要一个参数 permits， 
@@ -169,7 +167,6 @@ Semaphore 对锁的申请和释放和 ReentrantLock 类似,通过 acquire 方法
 - Semaphore 默认采用非公平策略，如果需要使用公平策略 则 可以使用 带两个 参数 的构造函数来构造 Semaphore 对象；
 
 - permits被赋给了 AQS 的 state状态变量，这里 AQS 的 state值也 表示当前持有的信号量个数 。
-- 
 
 #### void acquire()方法
 
@@ -256,12 +253,6 @@ final int nonfairTryAcquireShared(int acquires) {
 
 
  略是看当前线程节点的前驱节点是否也在等待获取该资源，如果是 则 自己放弃获取的权限， 然后当前线程会被放入 AQS 阻塞队列，否则就去获取。
-
-
-
-
-
-
 
 #### void Release()方法
 

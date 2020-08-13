@@ -7,8 +7,6 @@ ThreadPoolExecutor 只是 Executors 工具类的一部分 ,线程池巧妙地使
 - [execute方法](#execute方法)
 - [addWorker方法](#addWorker方法)
 
-
-
 ## execute方法
 
 execute 方法的作用是提交任务 command 到线程池中进行执行 . 用户线程提交任务到线程池的模型图

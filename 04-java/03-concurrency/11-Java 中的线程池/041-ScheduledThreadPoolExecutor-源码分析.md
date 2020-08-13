@@ -10,8 +10,6 @@
 - fixed-delay 任务保证了同一个任务在多次执行之间间隔固定时间
 - fixed-rate 任务保证按照固定固定评论执行, 任务类型使用 period 的值来区分
 
-
-
 ScheduledThreadPoolExecutor 继承了 ThreadPoolExecutor 并实现了 ScheduledExecutorService 接口,
 
 线程池队列是 DelayedWorkQueue , 其和 DelayedQueue类似, 是一个延迟队列
@@ -106,7 +104,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
 ## 原理剖析
 
-- [schedule(Runnable command,long delay,TimeUnit unit);](#schedule(Runnable command,long delay,TimeUnit unit);)提交一个延迟执行的任务
+- [schedule(Runnable command,long delay,TimeUnit unit);](#schedule(Runnable command,long delay,TimeUnit unit);)  提交一个延迟执行的任务
 - [scheduleWithFixedDelay(Runnable command,long initialDelay, long delay, TimeUnit unit);](#scheduleWithFixedDelay(Runnable command,long initialDelay, long delay, TimeUnit unit);)
 - [scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit);](#scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit);)
 
