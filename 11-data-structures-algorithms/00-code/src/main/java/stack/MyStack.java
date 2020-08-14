@@ -1,78 +1,77 @@
 package stack;
 
-import list.single.ListNode;
 
-import javax.xml.soap.Node;
-import java.util.List;
+import list.ListNode;
 
-public class MyStack {
-    private ListNode stackTop;
-    private ListNode stackBottom;
 
-    public MyStack(ListNode stackTop, ListNode stackBottom) {
-        this.stackTop = stackTop;
-        this.stackBottom = stackBottom;
-        this.stackTop = this.stackBottom;
+/**
+ * 链表实现的栈
+ * stack.MyStack
+ */
+public class MyStack implements Stack<Integer> {
+
+    /**
+     * 栈顶
+     */
+    private ListNode first;
+    /**
+     * 栈深度
+     */
+    private int size;
+
+
+    /**
+     * 弹出
+     *
+     * @return ListNode
+     */
+    public Integer pop() {
+        int value = first.value;
+        first = first.next;
+        size--;
+        return value;
     }
-
 
     /**
      * 压栈
+     *
+     * @param item 栈 node
      */
-    public static void pushStack(MyStack stack, int value) {
-        ListNode node = new ListNode(value);
-        node.next = stack.stackTop;
-        stack.stackTop = node;
+    public void push(Integer item) {
+        ListNode oldFirst = first;
+        ListNode itemNode = new ListNode(item);
+        first = itemNode;
+        itemNode.next = oldFirst;
+        size++;
     }
 
     /**
-     * 遍历
+     * @return 栈深度
      */
-    public static void traverse(MyStack stack) {
-        ListNode stackTop = stack.stackTop;
-        while (stackTop != stack.stackBottom) {
-            System.out.print(stackTop.value + " ");
-            stackTop = stackTop.next;
-        }
-        System.out.println();
-    }
-
-
-    /**
-     * 判断是否为空
-     */
-    public static boolean isEmpty(MyStack stack) {
-        return stack.stackTop == stack.stackBottom;
+    public int size() {
+        return size;
     }
 
     /**
-     * 出栈
+     * @return 是否为空
      */
-    public static void pop(MyStack myStack) {
-        if (isEmpty(myStack)) {
-            return;
-        }
-        ListNode stackTop = myStack.stackTop;
-        myStack.stackTop = stackTop.next;
-        System.out.println(stackTop.value);
-    }
-
-    public static void clear(MyStack stack){
-        stack.stackTop = null;
-        stack.stackBottom = null;
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     public static void main(String[] args) {
-        MyStack stack  = new MyStack(new ListNode(0),new ListNode(0));
-        System.out.println(isEmpty(stack));
-//        traverse(stack);
-        pushStack(stack,1);
-        pushStack(stack,2);
-        pushStack(stack,3);
-        traverse(stack);
-        pop(stack);
-        pop(stack);
-        pop(stack);
-    }
+        MyStack stack = new MyStack();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(5);
 
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+
+    }
 }
