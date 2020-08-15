@@ -24,11 +24,12 @@
 
 ## 实现方式
 
-- **饿汉单例**：提前实例化，没有延迟加载，不管是否使用都会有一个已经初始化的实例在内存中，线程安全
-- **懒汉单例**：只要到要getInstance的时候才创建实例，分为线程安全和线程不安全两种。
-- **双检锁/双重校验锁**:使用两个线程锁确保线程安全
-- **登记式/内部类**：使用内部类的形式，确保线程安全性。
-- **枚举式**：使用枚举类完成线程的安全性
+- **[饿汉单例](#饿汉单例)**：提前实例化，没有延迟加载，不管是否使用都会有一个已经初始化的实例在内存中，线程安全
+- **[懒汉单例](#懒汉单例)**：只要到要getInstance的时候才创建实例，分为线程安全和线程不安全两种。
+- **[双检锁/双重校验锁](#双检锁/双重校验锁)**:使用两个线程锁确保线程安全
+- **[登记式/内部类](#登记式/内部类)**：使用内部类的形式，确保线程安全性。
+- **[枚举式](#枚举单例)**：使用枚举类完成线程的安全性
+- [序列化单例](#序列化单例)
 - **ThreadLocal 单例**
 - 容器单例 : Ioc 容器中类似的单例
 
@@ -219,7 +220,7 @@ public class LazyInitThreadSafeSingleton {
 
 **描述**：这种方式采用双锁机制，安全且在多线程情况下能保持高性能。 getInstance() 的性能对应用程序很关键。 
 
-### 注册(登记式)/静态内部类
+### 登记式/内部类
 
 > 基于类初始化的解决方案
 
@@ -243,6 +244,7 @@ public class InnerClassSingleton {
         return LazyHolder.LAZY;
     }
 
+  //每一个关键字都不是多余的,static 为了使单例模式的空间共享,保证这个方法不被重写,重载
     private static class LazyHolder {
         private static final Singleton LAZY = new Singleton();
     }
@@ -275,64 +277,11 @@ public class InnerClassSingleton {
 
 ### 枚举单例
 
-JDK 层面就不允许枚举通过反射调用构造器,所以就没有反射攻击风险
-
-这种实现方式还没有被广泛采用，但这是实现单例模式的最佳方法。它更简洁，自动支持序列化机制，绝对防止多次实例化。 这种方式是 Effective Java 作者 Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。 不能通过 reflection attack 来调用私有构造方法。 
-
-```java
-public enum Singleton {  
-    INSTANCE;  
-    private Singleton() {}
-}
-```
-
-[例子参考](https://blog.csdn.net/gavin_dyson/article/details/70832185)
-
-```java
-public enum DataSourceEnum {
-    DATASOURCE;
-    private DBConnection connection = null;
-    private DataSourceEnum() {
-        connection = new DBConnection();
-    }
-    public DBConnection getConnection() {
-        return connection;
-    }
-}  
-```
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        DBConnection con1 = DataSourceEnum.DATASOURCE.getConnection();
-        DBConnection con2 = DataSourceEnum.DATASOURCE.getConnection();
-        System.out.println(con1 == con2);
-    }
-}
-```
-
-```java
-/**
- * 枚举方式单例
- *
- * @author EricChen 2019/12/31 23:58
- */
-public enum EnumSingleton {
-    INSTANCE;
-    private Singleton SINGLETON_INSTANCE = new Singleton();
-
-    public Singleton getInstance() {
-        return SINGLETON_INSTANCE;
-    }
-}
-
-```
-
-
-
-输出结果为：**true**  结果表明两次获取返回了相同的实例。 
+ [07-枚举单例.md](07-枚举单例.md) 
 
 ## 容器单例
+
+适用于需要大量创建单例对象的场景(Spring BeanFactory)
 
 ```java
 public class ContainerSingleton {
@@ -361,6 +310,21 @@ public class ContainerSingleton {
 
 }
 ```
+
+## 序列化单例
+
+不能修复
+
+反序列化的对象和手动创建的对象时不一致的,被实例化了两次,违背了单例模式的设计初衷
+
+反序列化流程
+
+- ObjectInputStream#readObject()
+- ObjectInputStream#readObject0(), 相当于重载 
+- ObjectInputStream#readOrdinaryObject
+- ObjectStreamClass#isInstantiable() 查看这个对象是否可以被初始化.就是判断了这个的对象是否有构造方法
+
+吗
 
 
 
