@@ -26,13 +26,52 @@ LFU，Least Frequently Used，最不常用，4.0 版本新增
 
 IFU的全称是 Least Frequently Used ,  表示按最近的访问频率进行淘汰, 它比 LRU 更加精确地表达一个 key 被访问的热度
 
-如果一个 key 长时间不被访问,只有刚刚偶然被用户访问了一下,那么在 LRU 算法里
+- 如果一个 key 长时间不被访问,只有刚刚偶然被用户访问了一下,那么在 LRU 算法里,它是不容易被淘汰的.因为 LRU 算法认为这个 key 是身热的
+- LFU 算法需要追踪最近一段时间的访问频率,如果某个 key 只是偶尔被访问那么一次,不足以变得很热,它需要在最近一段时间内被访问很多次才有机会被 LFU 算法任务很热
+
+## Redis 对象的热度存在哪
+
+头结构中有一个 24bit 的字段,这字段就来存
+
+```c
+typedef struct redisObject {
+    unsigned type:4;
+    unsigned encoding:4;
+    unsigned lru:LRU_BITS; /* LRU time (relative to global lru_clock) or
+                            * LFU data (least significant 8 bits frequency
+                            * and most significant 16 bits access time). */
+    int refcount;
+    void *ptr;
+} robj;
+```
+
+- 在 lru 模式下,默认是存时间
+- lfu 模式下分为两个
+  - logc 8 位存放访问频次,新对象默认给 5, 会衰减空闲分钟数再除以衰减系数(默认 1)
+  - ldt 16 为,存储上次 logc 更新的时间
 
 
 
-## 如何找出热度最低的数据
+## LFU
 
+当这 24 bits 用作 LFU 时，其被分为两部分:
+高 16 位用来记录访问时间(单位为分钟，ldt，last decrement time) 
 
+低 8 位用来记录访问频率，简称 counter(logc，logistic counter)
+counter 是用基于概率的对数计数器实现的，8 位可以表示百万次的访问频率。 对象被读写的时候，lfu 的值会被更新。
+
+对象被读写的时候，lfu 的值会被更新。
+
+增长的速率由，lfu-log-factor 越大，counter 增长的越慢 redis.conf 配置文件
+
+> lfu-log-factor 10
+
+如果计数器只会递增不会递减，也不能体现对象的热度。没有被访问的时候， 计数器怎么递减呢?
+减少的值由衰减因子 lfu-decay-time(分钟)来控制，如果值是 1 的话，N 分 钟没有访问就要减少 N。
+
+redis.conf 配置文件
+
+>  lfu-decay-time 1
 
 
 

@@ -24,7 +24,7 @@ Buffer Pool 是 InnoDB 里面非常重要的一个结构，它的内部又分成
 
 ## InnoDB 内存结构和磁盘结构
 
-![image-20200313211319713](assets/image-20200313211319713.png)
+![image-20200313211319713](../../../assets/image-20200313211319713.png)
 
 ### 内存结构
 
@@ -39,7 +39,7 @@ Buffer Pool 主要分为 3 个部分:
 
 Buffer Pool 缓存的是页面信息，包括数据页、索引页。 查看服务器状态，里面有很多跟 Buffer Pool 相关的信息:
 
-![image-20200313211502350](assets/image-20200313211502350.png)
+![image-20200313211502350](../../../assets/image-20200313211502350.png)
 
 `Buffer Pool` 默认大小是 `128M(134217728 字节)`，可以调整。
 
@@ -51,7 +51,7 @@ SHOW VARIABLES like '%innodb_buffer_pool%';
 
 这些参数都可以在官网查到详细的含义，用搜索功能。
 
-![image-20200313211531858](assets/image-20200313211531858.png)
+![image-20200313211531858](../../../assets/image-20200313211531858.png)
 
 内存的缓冲池写满了怎么办?(Redis 设置的内存满了怎么办?)InnoDB 用 LRU 算法来管理缓冲池(链表实现，不是传统的 LRU，分成了 young 和 old)，经过淘汰的 数据就是热点数据。
 
@@ -83,7 +83,7 @@ SHOW VARIABLES LIKE 'innodb_change_buffer_max_size';
 思考一个问题:如果 Buffer Pool 里面的脏页还没有刷入磁盘时，数据库宕机或者重 启，这些数据丢失。如果写操作写到一半，甚至可能会破坏数据文件导致数据库不可用。
 为了避免这个问题，InnoDB 把所有对页面的修改操作专门写入一个日志文件，并且 在数据库启动时从这个文件进行恢复操作(实现 crash-safe)——用它来实现事务的持久性。
 
-![image-20200313211659949](assets/image-20200313211659949.png)
+![image-20200313211659949](../../../assets/image-20200313211659949.png)
 
 这个文件就是磁盘的 redo log (叫做重做日志)，对应于/var/lib/mysql/目录下的 ib_logfile0 和 ib_logfile1，每个 48M。
 
@@ -102,7 +102,7 @@ show variables like 'innodb_log%';
 
 同样是写磁盘，为什么不直接写到 db file 里面去?为什么先写日志再写磁盘? 我们先来了解一下随机 I/O 和顺序 I/O 的概念。 磁盘的最小组成单元是扇区，通常是 512 个字节。 操作系统和内存打交道，最小的单位是页 Page。 操作系统和磁盘打交道，读写磁盘，最小的单位是块 Block。
 
-![image-20200313211804108](assets/image-20200313211804108.png)
+![image-20200313211804108](../../../assets/image-20200313211804108.png)
 
 如果我们所需要的数据是随机分散在不同页的不同扇区中，那么找到相应的数据需 要等到磁臂旋转到指定的页，然后盘片寻找到对应的扇区，才能找到我们所需要的一块 数据，一次进行此过程直到找完所有数据，这个就是随机 IO，读取数据速度较慢。
 
@@ -112,7 +112,7 @@ show variables like 'innodb_log%';
 
 当然 redo log 也不是每一次都直接写入磁盘，在 Buffer Pool 里面有一块内存区域 (Log Buffer)专门用来保存即将要写入日志文件的数据，默认 16M，它一样可以节省 磁盘 IO。
 
-![image-20200313211837638](assets/image-20200313211837638.png)
+![image-20200313211837638](../../../assets/image-20200313211837638.png)
 
 ```
 SHOW VARIABLES LIKE 'innodb_log_buffer_size';
@@ -139,7 +139,7 @@ SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit';
 
 
 
-![image-20200313211941999](assets/image-20200313211941999.png)
+![image-20200313211941999](../../../assets/image-20200313211941999.png)
 
 这是内存结构的第 4 块内容，redo log，它又分成内存和磁盘两部分。redo log 有 什么特点?
 
@@ -147,7 +147,7 @@ SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit';
 - 不是记录数据页更新之后的状态，而是记录这个页做了什么改动，属于物理日志
 - redo log 的大小是固定的，前面的内容会被覆盖。
 
-![image-20200313212030176](assets/image-20200313212030176.png)
+![image-20200313212030176](../../../assets/image-20200313212030176.png)
 
 check point 是当前要覆盖的位置。如果 write pos 跟 check point 重叠，说明 redo log 已经写满，这时候需要同步 redo log 到磁盘中。
 这是 MySQL 的内存结构，总结一下，分为:
@@ -173,7 +173,7 @@ InnoDB 系统表空间包含 InnoDB 数据字典和双写缓冲区，Change Buff
 
 InnoDB 的页和操作系统的页大小不一致，InnoDB 页大小一般为 16K，操作系统页 大小为 4K，InnoDB 的页写入到磁盘时，一个页需要分 4 次写。
 
-![image-20200313212147528](assets/image-20200313212147528.png)
+![image-20200313212147528](../../../assets/image-20200313212147528.png)
 
 如果存储引擎正在写入页的数据到磁盘时发生了宕机，可能出现页只写了一部分的 情况，比如只写了 4K，就宕机了，这种情况叫做部分写失效(partial page write)，可 能会导致数据丢失。
 
@@ -288,7 +288,7 @@ binlog 的另一个功能就是用来实现主从复制，它的原理就是从�
 
 有了这两个日志之后，我们来看一下一条更新语句是怎么执行的:
 
-![image-20200313212639117](assets/image-20200313212639117.png)
+![image-20200313212639117](../../../assets/image-20200313212639117.png)
 
 例如一条语句:update teacher set name='盆鱼宴' where id=1;
 

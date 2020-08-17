@@ -13,7 +13,7 @@
 
 **撤销日志, 主要记录了事务发生之前的数据状态,如果修改数据的时候发生异常,可以用 undo log 实现回滚**
 
-##  Redo log 重做日志
+##   
 
 > redo log 又称重做日志文件, 用于记录事务操作的变化,记录的是数据修改之后的值,不管事务是否提交都会被记录下来,. 当数据库掉电这种极端情况发生时,Innodb 会使用重做日志恢复到掉电前的状态,来确保数据的完整性
 
@@ -93,7 +93,7 @@ innodb_mirrored_log_groups 指定了日志镜像文件组的数量，默认1
 
 如果undo使用的共享表空间，这个共享表空间中又不仅仅是存储了undo的信息，共享表空间的默认为与MySQL的数据目录下面，其属性由参数innodb_data_file_path配置。
 
-> ![img](https://www.linuxidc.com/upload/2018_01/180128104819882.png)
+> ![img](../../../assets/180128104819882.png)
 
 - 其他
 
@@ -131,14 +131,14 @@ innodb_mirrored_log_groups 指定了日志镜像文件组的数量，默认1
 
 　　binlog的默认是保持时间由参数expire_logs_days配置，也就是说对于非活动的日志文件，在生成时间超过expire_logs_days配置的天数之后，会被自动删除。
 
-> ![img](https://www.linuxidc.com/upload/2018_01/180128104819883.png)
+> ![img](../../../assets/180128104819883.png)
 
 - 对应的物理文件
 
 > 　　配置文件的路径为log_bin_basename，binlog日志文件按照指定大小，当日志文件达到指定的最大的大小之后，进行滚动更新，生成新的日志文件。
 > 　　对于每个binlog日志文件，通过一个统一的index文件来组织。
 >
-> ![img](https://www.linuxidc.com/upload/2018_01/180128104819884.png)
+> ![img](../../../assets/180128104819884.png)
 
 ## redolog 和 binlog 的区别
 
@@ -153,7 +153,7 @@ innodb_mirrored_log_groups 指定了日志镜像文件组的数量，默认1
 
 ## 三个 log 的时序图
 
-![image-20200313212639117](assets/image-20200313212639117.png)
+![image-20200313212639117](../../../assets/image-20200313212639117-7629638.png)
 
 例如一条语句:update teacher set name='盆鱼宴' where id=1;
 
