@@ -4,15 +4,15 @@
 
 #### 什么是 FastClass机制
 
-简单来说就是为为代理类和被代理类个生成一个类,这个类会为代理类或者被代理类的方法分配一个 index.这个 index 会被当做入参,FastClass可以直接定位要调用的方法并直接进行调用
+简单来说就是为代理类和被代理类个生成一个类,这个类会为代理类或者被代理类的方法分配一个 index.这个 index 会被当做入参,FastClass可以直接定位要调用的方法并直接进行调用
 
 省去了反射调用,因此效率比 JDK动态代理反射效率高
 
-第一次执行 MethodProxy的 invoke 或者 invokeSuper 方法时生成,并加入缓存
+第一次执行 MethodProxy 的 invoke 或者 invokeSuper 方法时生成,并加入缓存
 
 ## 原理
 
-当调用 getInstance 时, enhancer.create()方法会创建三个类
+当调用 getInstance 时,  enhancer.create() 方法会创建三个类
 
 ![image-20200815220708484](../../../assets/image-20200815220708484.png)
 

@@ -77,5 +77,9 @@ ShardedJedis 之类的客户端分片代码的优势是配置，不依赖于其�
 
 典型的代理分区方案有 Twitter 开源的 Twemproxy 和国内的豌豆荚开源的 Codis。
 
+-  [Twemproxy.md](031-twemproxy.md) 
+-  [Codis](032-Codis.md) 
 
+## 服务端分片
 
+[Redis-cluster](040-Redis-cluster.md)

@@ -6,7 +6,7 @@ ArrayBlockingQueue 通过使用全局独占锁实现了同时只能有一个线�
 
 -  offer 操作 和 poll 操作通过简单的加锁进行入队, 出队操作
 
-- put 操作和 take 操作则使用条件变量实现了,如果队列满则等待,如果队列为空则等待,然后分别在出队和入队操作中发送信号激活等待线程实现同步
+- put 操作和 take 操作则使用条件变量实现了, 如果队列满则等待 , 如果队列为空则等待, 然后分别在出队和入队操作中发送信号激活等待线程实现同步
 
 #### ArrayBlockingQueue 对比 LinkedBlockingQueue
 
@@ -94,45 +94,44 @@ ArrayBlockingQueue 通过使用全局独占锁实现了同时只能有一个线�
 - 这个方法是不阻塞的
 
 ```java
-    public boolean offer(E e) {
-      // ① e 为 null , 则抛出 NullPointerException
-        checkNotNull(e);
-      // ② 获取独占锁
-        final ReentrantLock lock = this.lock;
-        lock.lock();
-        try {
-          // ③ 如果队列满了则返回 false
-            if (count == items.length)
-                return false;
-            else {
-              //④ 插入元素
-                enqueue(e);
-                return true;
-            }
-        } finally {
-          //⑤
-            lock.unlock();
-        }
+public boolean offer(E e) {
+  // ① e 为 null , 则抛出 NullPointerException
+  checkNotNull(e);
+  // ② 获取独占锁
+  final ReentrantLock lock = this.lock;
+  lock.lock();
+  try {
+    // ③ 如果队列满了则返回 false
+    if (count == items.length)
+      return false;
+    else {
+      //④ 插入元素
+      enqueue(e);
+      return true;
     }
+  } finally {
+    //⑤
+    lock.unlock();
+  }
+}
 ```
 
 入队函数
 
 ```java
-    private void enqueue(E x) {
-        // assert lock.getHoldCount() == 1;
-        // assert items[putIndex] == null;
-      // ⑥元素入队
-        final Object[] items = this.items;
-        items[putIndex] = x;
-      // ⑦计算下一个元素应该存放的下标位置
-        if (++putIndex == items.length)
-            putIndex = 0;
-        count++;
-      //⑧ 
-        notEmpty.signal();
-    }
-
+private void enqueue(E x) {
+  // assert lock.getHoldCount() == 1;
+  // assert items[putIndex] == null;
+  // ⑥元素入队
+  final Object[] items = this.items;
+  items[putIndex] = x;
+  // ⑦计算下一个元素应该存放的下标位置
+  if (++putIndex == items.length)
+    putIndex = 0;
+  count++;
+  //⑧ 
+  notEmpty.signal();
+}
 ```
 
 - 代码⑥ 先把当前元素放入 item 数组
@@ -156,24 +155,23 @@ ArrayBlockingQueue 通过使用全局独占锁实现了同时只能有一个线�
 - 如果 e 元素为 null  则抛出空指针
 
 ```java
-
-    public void put(E e) throws InterruptedException {
-      //①
-        checkNotNull(e);
-        final ReentrantLock lock = this.lock;
-      //② 获取锁可以被中断
-        lock.lockInterruptibly();
-        try {
-          //③ 如果队列已经满了了,则吧当前线程放入 notFull 管理的条件队列
-            while (count == items.length)
-                notFull.await();
-          //④ 插入元素
-            enqueue(e);
-        } finally {
-          //⑤ 
-            lock.unlock();
-        }
-    }
+public void put(E e) throws InterruptedException {
+  //①
+  checkNotNull(e);
+  final ReentrantLock lock = this.lock;
+  //② 获取锁可以被中断
+  lock.lockInterruptibly();
+  try {
+    //③ 如果队列已经满了了,则吧当前线程放入 notFull 管理的条件队列
+    while (count == items.length)
+      notFull.await();
+    //④ 插入元素
+    enqueue(e);
+  } finally {
+    //⑤ 
+    lock.unlock();
+  }
+}
 ```
 
 - ③ 注意这里是 while 循环而不是 if 语句, 防止虚假唤醒
@@ -200,26 +198,25 @@ public E poll() {
 dequeue
 
 ```java
-
 private E dequeue() {
         // assert lock.getHoldCount() == 1;
         // assert items[takeIndex] != null;
         final Object[] items = this.items;
-  // ④ 获取元素值
+   //④ 获取元素值
         @SuppressWarnings("unchecked")
         E x = (E) items[takeIndex];
-  // ⑤ 数组中的值为 null
+   //⑤ 数组中的值为 null
         items[takeIndex] = null;
-  //⑥ 对头指针计算,队列元素个数减一
+   //⑥ 对头指针计算,队列元素个数减一
         if (++takeIndex == items.length)
             takeIndex = 0;
         count--;
         if (itrs != null)
             itrs.elementDequeued();
-  // 期 发送信号激活 notFull 条件队列里的一个线程
+   // 期 发送信号激活 notFull 条件队列里的一个线程
         notFull.signal();
         return x;
-    }
+}
 ```
 
 - 获取当前队头元素并将其保存到局部变量
@@ -286,5 +283,7 @@ public int size() {
 
 size 操作比较简单,获取锁后直接返回 count ,并在返回前释放锁
 
-为什么要加锁? 因为count 不是 volatile 声明的
+为什么要加锁 ?
+
+> 因为count 不是 volatile 声明的
 

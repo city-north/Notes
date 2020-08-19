@@ -90,7 +90,7 @@
 - start 规则，如果线程 A 执行操作` ThreadB.start()`,那么线 程 A 的 `ThreadB.start()`操作 `happens-before `线程 B 中
   的任意操作
 
-```
+```java
 public StartDemo{
 int x=0;
 Thread t1 = new Thread(()->{
@@ -106,7 +106,7 @@ Thread t1 = new Thread(()->{
 
 - join 规则，如果线程 A 执行操作 ThreadB.join()并成功返 回，那么线程 B 中的任意操作 happens-before 于线程 A 从 ThreadB.join()操作成功返回。
 
-```
+```java
 Thread t1 = new Thread(()->{ // 此处对共享变量 x 修改 x= 100;
 });
 // 例如此处对共享变量修改，
@@ -121,7 +121,7 @@ t1.join()
 
 - 监视器锁的规则，对一个锁的解锁，happens-before 于 随后对这个锁的加锁
 
-```
+```java
 synchronized (this) { // 此处自动加锁 // x 是共享变量, 初始值 =10
 	if (this.x < 12) {
 		this.x = 12; 

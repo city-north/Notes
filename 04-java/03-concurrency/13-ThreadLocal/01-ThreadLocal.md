@@ -21,8 +21,6 @@ ThreadLocal 是 JDK 包提供的,它提供了线程本地变量,也就是如果�
 
 因此使用完毕之后要记得 remove 掉 , JUC 中的 ThreadLocalRandom 就是借鉴了这个思想
 
-
-
 ## 使用
 
  [简单使用](../08-Java并发容器和框架/07-ThreadLocal.md) 

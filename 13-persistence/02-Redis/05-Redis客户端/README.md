@@ -1,6 +1,6 @@
 # 客户端通讯原理
 
-客户端跟 Redis 之间 使用一种特殊的编码格式(在 AOF 文件里面我们看到了)，叫 做 Redis Serialization Protocol (Redis 序列化协议)
+客户端跟 Redis 之间 使用一种特殊的编码格式(在 AOF 文件里面我们看到了)，叫 做 Redis Serialization Protocol  (Redis 序列化协议)
 
 特点:容易实现、解析快、可读性强。
 

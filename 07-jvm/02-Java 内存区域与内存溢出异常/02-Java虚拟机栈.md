@@ -7,7 +7,7 @@
 **虚拟机栈描述了 Java 方法执行的内存模型,每一个方法从调用直至执行完成,就会对应着一个栈帧在虚拟机栈中从入栈到出栈的过程,每个方法执行都会创建一个栈帧用于**
 
 - 存储局部变量	
-  - 存放编译器可知的各种基本数据类型(boolean,byte,char,short,int,float,long,double)
+  - 存放编译器可知的各种基本数据类型 (boolean, byte, char, short, int, float, long, double)
   - 引用对象 reference 类型,通常是指向对象起始位置的指针
 - 操作数栈
 - 动态链接

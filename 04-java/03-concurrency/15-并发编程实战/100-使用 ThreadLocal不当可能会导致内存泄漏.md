@@ -24,7 +24,6 @@ static class ThreadLocalMap {
       value = v;
     }
   }
-
 }
 ```
 
@@ -96,11 +95,11 @@ Reference(T referent, ReferenceQueue<? super T> queue) {
 
 k 被传递给 WeakReference 的构造函数, 也就是说 ThreadLocalMap 里面的key 为 ThreadLocal 对象的弱引用,具体就是 referent 变量引用了 ThreadLocal 对象, value 为具体调用 Threadlocal 的 set 方法时传递的值
 
-当一个线程调用 ThreadLocal 的 set 方法设置变量时, 当前线程的 ThreadLocalMap里面就存放了一个记录,这个记录的 key 为 ThreadLocal 的弱引用, value 则为设置的值
+当一个线程调用 ThreadLocal 的 set 方法设置变量时, 当前线程的 ThreadLocalMap 里面就存放了一个记录,这个记录的 key 为 ThreadLocal 的弱引用, value 则为设置的值
 
 **如果当前线程一直存在, 且没有调用 ThreadLocal 的 remove 方法,并且这时候其他地方还有对 ThreadLocal 的引用, 则当线程的 ThreadLocalMap 变量里面会存在对 ThreadLocal 变量的引用和对 value 对象的引用,他们是不会被释放的,所以会内存泄漏**
 
-如果ThreadLocal 变量没有其他强依赖, 
+如果 ThreadLocal 变量没有其他强依赖, 
 
 - 由于 ThreadLocalMap 里面的 key 是弱依赖,所以当前线程的 ThreadLocalMap 里面的 ThreadLocal 变量的弱引用会在 gc 会回收
 - 但是 value 还是会造成内存泄漏, 就会变成 key 为 null, 但是 value 不会 null 的 entry
@@ -133,42 +132,42 @@ private void remove(ThreadLocal<?> key) {
 - 代码⑥ 对掉 对 value 的引用, 到这里当前线程里面的当前 ThreadLocal 对象的信息被清理完毕了
 
 ```java
-        private int expungeStaleEntry(int staleSlot) {
-            Entry[] tab = table;
-            int len = tab.length;
+private int expungeStaleEntry(int staleSlot) {
+  Entry[] tab = table;
+  int len = tab.length;
 
-            // expunge entry at staleSlot
-            tab[staleSlot].value = null;
-            tab[staleSlot] = null;
-            size--;
+  // expunge entry at staleSlot
+  tab[staleSlot].value = null;
+  tab[staleSlot] = null;
+  size--;
 
-            // Rehash until we encounter null
-            Entry e;
-            int i;
-            for (i = nextIndex(staleSlot, len);
-                 (e = tab[i]) != null;
-                 i = nextIndex(i, len)) {
-                ThreadLocal<?> k = e.get();
-              // ⑦ 如果 key 为 null ,则去掉对 value 的引用
-                if (k == null) {
-                    e.value = null;
-                    tab[i] = null;
-                    size--;
-                } else {
-                    int h = k.threadLocalHashCode & (len - 1);
-                    if (h != i) {
-                        tab[i] = null;
+  // Rehash until we encounter null
+  Entry e;
+  int i;
+  for (i = nextIndex(staleSlot, len);
+       (e = tab[i]) != null;
+       i = nextIndex(i, len)) {
+    ThreadLocal<?> k = e.get();
+    // ⑦ 如果 key 为 null ,则去掉对 value 的引用
+    if (k == null) {
+      e.value = null;
+      tab[i] = null;
+      size--;
+    } else {
+      int h = k.threadLocalHashCode & (len - 1);
+      if (h != i) {
+        tab[i] = null;
 
-                        // Unlike Knuth 6.4 Algorithm R, we must scan until
-                        // null because multiple entries could have been stale.
-                        while (tab[h] != null)
-                            h = nextIndex(h, len);
-                        tab[h] = e;
-                    }
-                }
-            }
-            return i;
-        }
+        // Unlike Knuth 6.4 Algorithm R, we must scan until
+        // null because multiple entries could have been stale.
+        while (tab[h] != null)
+          h = nextIndex(h, len);
+        tab[h] = e;
+      }
+    }
+  }
+  return i;
+}
 ```
 
 代码 7 从当前元素的下表开始查看 table 数组里面是否有 key 为 null的其他元素,有则清理
