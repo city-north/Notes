@@ -36,11 +36,11 @@ ChangeBuffer写缓冲是缓冲池 [缓冲池 ](08-缓冲池-buffer-pool.md) 的�
 
 ## 相关设置
 
-**innodb_change_buffer_max_size**
+>  innodb_change_buffer_max_size
 
 innodb_change_buffer_max_size 表示 Change Buffer 最大大小占 Buffer Pool 的百分比，默认为 25%。最大可以设置为 50%。
 
-**innodb_change_buffering**
+>  innodb_change_buffering
 
 innodb_change_buffering 参数用来控制对哪些操作启用 Change Buffer 功能，默认是：all。innodb_change_buffering 参数有以下几种选择：
 

@@ -1,4 +1,6 @@
-# (redo)Log Buffer
+# Redo Log - Log buffer
+
+![image-20200313211319713](../../../assets/image-20200313211319713.png)
 
 > InnoDB ,物理日志
 
