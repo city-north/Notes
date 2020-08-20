@@ -1,4 +1,4 @@
-## Spring 的代理
+# Spring 的代理
 
 Spring整合了JDK代理（**优先使用**）和cglib代理（**无接口时使用**），
 
