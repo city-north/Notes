@@ -10,7 +10,7 @@ JWT (JSON WEB TOKEN ) 是一种使用 JSON 格式来规约TOKEN 或者 SESSION �
 
 
 
-至此，三个部分，都解释完了，那么按照header.payload.signature这个格式串起来就行了，串之前注意，header和payload也要做一个base64url encoded的转换。那么最终拼出来的一个例子是：
+至此，三个部分，都解释完了，那么按照 header.payload.signature 这个格式串起来就行了，串之前注意，header和payload也要做一个base64url encoded的转换。那么最终拼出来的一个例子是：
 
 
 

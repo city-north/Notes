@@ -89,3 +89,19 @@ class Solution {
 ```
 
 ## 
+
+```java
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode cur = null, pre = head;
+        while(pre != null){
+            ListNode next = pre.next;
+            pre.next = cur;
+            cur = pre;
+            pre =  next;
+        }
+        return cur;
+    }
+}
+```
+
