@@ -43,6 +43,6 @@ InnoDB 用 LRU 算法来管理缓冲池(链表实现，不是传统的 LRU，分
 
 ## Adaptive Hash Index
 
-##LoggerBUffer
+## LoggerBuffer
 
  [12-日志缓冲-LogBuffer.md](12-日志缓冲-LogBuffer.md) 

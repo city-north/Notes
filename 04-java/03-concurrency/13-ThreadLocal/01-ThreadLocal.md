@@ -1,6 +1,6 @@
 # ThreadLocal
 
->  [100-使用 ThreadLocal不当可能会导致内存泄漏.md](../15-并发编程实战/100-使用 ThreadLocal不当可能会导致内存泄漏.md) 
+>  [100-使用ThreadLocal不当可能会导致内存泄漏.md](../15-并发编程实战/100-使用 ThreadLocal不当可能会导致内存泄漏.md) 
 >
 
 ## 是什么
