@@ -2,7 +2,7 @@
 
 MySQL 的存储结构分为 5 级:**表空间**、段、区、页、行。
 
-![image-20200315145232387](assets/image-20200315145232387.png)
+![image-20200315145232387](../../../assets/image-20200315145232387.png)
 
 ## 表空间(Table Space)
 
@@ -20,7 +20,7 @@ MySQL 的存储结构分为 5 级:**表空间**、段、区、页、行。
 
 创建一个索引会创建两个段
 
-- 一个是索引段:leaf node segment，索引段管理非叶子节点的数据。
+- 一个是索引段: leaf node segment，索引段管理非叶子节点的数据。
 - 一个是数据段: non-leaf node segment。数据段管理叶子节点的数据。
 
  也就是说，一个表的段数，就是索引的个数乘以 2。
@@ -42,7 +42,7 @@ MySQL 的存储结构分为 5 级:**表空间**、段、区、页、行。
 
 操作系统和内存打交道，最小的单位是页 Page。文件系统的内存页通常是 4K。
 
-![image-20200315145628202](assets/image-20200315145628202.png)
+![image-20200315145628202](../../../assets/image-20200315145628202.png)
 
 查看页大小
 
@@ -54,7 +54,7 @@ SHOW VARIABLES LIKE 'innodb_page_size';
 
 举例:一个页放 3 行数据。
 
-![image-20200315145712821](assets/image-20200315145712821.png)
+![image-20200315145712821](../../../assets/image-20200315145712821.png)
 
 往表中插入数据时，如果一个页面已经写完，产生一个新的叶页面。如果一个簇的 所有的页面都被用完，会从当前页面所在段新分配一个簇。
 
@@ -62,11 +62,11 @@ SHOW VARIABLES LIKE 'innodb_page_size';
 
 连续
 
-![image-20200315145813584](assets/image-20200315145813584.png)
+![image-20200315145813584](../../../assets/image-20200315145813584.png)
 
 不连续
 
-![image-20200315145842402](assets/image-20200315145842402.png)
+![image-20200315145842402](../../../assets/image-20200315145842402.png)
 
 #### 行 Row
 
@@ -83,7 +83,7 @@ https://dev.mysql.com/doc/refman/5.7/en/innodb-row-format.html
 
 
 
-![image-20200315150008391](assets/image-20200315150008391.png)
+![image-20200315150008391](../../../assets/image-20200315150008391.png)
 
 - innodb_file_format 在配置文件中指定;
 
@@ -107,7 +107,7 @@ CREATE TABLE tf1
 SHOW TABLE STATUS LIKE 'student' \G;
 ```
 
-![image-20200315150144942](assets/image-20200315150144942.png)
+![image-20200315150144942](../../../assets/image-20200315150144942.png)
 
 #### 选型
 
