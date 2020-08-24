@@ -1,6 +1,20 @@
 # Redo Log - Log buffer
 
-![image-20200313211319713](../../../assets/image-20200313211319713.png)
+> ![image-20200313211319713](../../../assets/image-20200313211319713.png)
+>
+> - 内存内结构
+>   - [Buffer-Pool ](08-缓冲池-buffer-pool.md) 
+>     - [Adaptive-Hash-Index](../07-存储引擎/010-InnoDB/04-自适应哈希.md) 
+>     - [Change-Buffer](11-写缓冲-ChangeBuffer.md) 
+>     -  [Log-Buffer](12-Redolog-LogBuffer.md) 
+> - 磁盘上结构
+>   - 表空间 
+>     - [系统表空间 (ibdata1) ](../06-磁盘结构/020-系统表空间.md) 
+>     - [独立表空间 ](../06-磁盘结构/030-独占表空间.md) 
+>     -  [通用表空间](../06-磁盘结构/040-通用表空间.md) 
+>     -  [Undo表空间](../06-磁盘结构/060-UndoLog.md) 
+>     -  [临时表空间](../06-磁盘结构/050-临时表空间.md) 
+>   -  [RedoLog](12-Redolog-LogBuffer.md) 
 
 > InnoDB ,物理日志
 

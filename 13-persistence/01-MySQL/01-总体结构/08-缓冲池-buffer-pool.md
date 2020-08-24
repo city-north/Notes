@@ -21,13 +21,23 @@ InnoDB 会有专门的后台线程把缓冲池中的数据刷新到磁盘,这个
 
 #### Buffer Pool 的组成
 
-buffer pool 主要分为 3 个部分: 
+- 内存内结构
+  - [Buffer-Pool ](08-缓冲池-buffer-pool.md) 
+    - [Adaptive-Hash-Index](../07-存储引擎/010-InnoDB/04-自适应哈希.md) 
+    - [Change-Buffer](11-写缓冲-ChangeBuffer.md) 
+    -  [Log-Buffer](12-Redolog-LogBuffer.md) 
+- 磁盘上结构
+  - 表空间 
+    - [系统表空间 (ibdata1) ](../06-磁盘结构/020-系统表空间.md) 
+    - [独立表空间 ](../06-磁盘结构/030-独占表空间.md) 
+    -  [通用表空间](../06-磁盘结构/040-通用表空间.md) 
+    -  [Undo表空间](../06-磁盘结构/060-UndoLog.md) 
+    -  [临时表空间](../06-磁盘结构/050-临时表空间.md) 
+  -  [RedoLog](12-Redolog-LogBuffer.md) 
 
-内存内的Buffer Pool:
 
-- Change buffer
-- Adaptive Hash Index 
-- Log buffer
+
+> LogBuffer 在内存中, Redo Log 在磁盘中
 
 #### BufferPool
 
@@ -41,8 +51,3 @@ InnoDB 用 LRU 算法来管理缓冲池(链表实现，不是传统的 LRU，分
 
 
 
-## Adaptive Hash Index
-
-## LoggerBuffer
-
- [12-日志缓冲-LogBuffer.md](12-日志缓冲-LogBuffer.md) 

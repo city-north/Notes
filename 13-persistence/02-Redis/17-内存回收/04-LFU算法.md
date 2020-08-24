@@ -1,4 +1,4 @@
-# ````````Reids淘汰算法-LFU
+# Reids淘汰算法-LFU
 
 ## 什么是 LFU
 
@@ -59,11 +59,11 @@ typedef struct redisObject {
 
 - 高 16 位用来记录访问时间 (单位为分钟，ldt，last decrement time) 
 
-- 低 8 位用来记录访问频率，简称 counter(logc，logistic counter) counter 是用基于概率的对数计数器实现的，8 位可以表示百万次的访问频率。 对象被读写的时候，lfu 的值会被更新。
+- 低 8 位用来记录访问频率，简称 counter (logc，logistic counter) counter 是用基于概率的对数计数器实现的，8 位可以表示百万次的访问频率。 对象被读写的时候，lfu 的值会被更新。
 
 对象被读写的时候，lfu 的值会被更新。
 
-增长的速率由，lfu-log-factor越大，counter 增长的越慢 redis.conf 配置文件
+增长的速率由，lfu-log-factor 越大，counter 增长的越慢 redis.conf 配置文件
 
 > lfu-log-factor 10
 
