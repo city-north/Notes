@@ -4,6 +4,8 @@
 
 事务是以一种可靠、一致的方式,访问和操作数据库中的数据的程序单元(要么都完成,要么都不完成)
 
+> 事务实际上是一组 DML (insert , delete, update) 语句的集合 
+
 ## 原则
 
 一般来说，事务是必须满足4个条件（ACID）：：原子性（**A**tomicity，或称不可分割性）、一致性（**C**onsistency）、隔离性（**I**solation，又称独立性）、持久性（**D**urability）。
@@ -30,10 +32,6 @@ MySQL数据库针对这四种特性，为我们提供的四种隔离级别，这
 SELECT @@GLOBAL.tx_isolation, @@tx_isolation;
 ```
 
-![image-20191229135502621](assets/image-20191229135502621.png)
-
-
-
 可以看到默认的隔离级别是可重复度
 
 ##### 设置本次查询 session 的隔离级别为 Read Uncommited
@@ -48,7 +46,29 @@ SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 SET GLOBAL TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 ```
 
+##### 开启事务
 
+```
+start transaction;
+```
+
+或者
+
+```
+begin;
+```
+
+##### 提交
+
+```
+commit;
+```
+
+
+
+```
+rollback;
+```
 
 ## 默认隔离级别
 
