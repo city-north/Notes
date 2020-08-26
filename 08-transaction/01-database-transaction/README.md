@@ -4,7 +4,7 @@
 
 事务是以一种可靠、一致的方式,访问和操作数据库中的数据的程序单元(要么都完成,要么都不完成)
 
-> 事务实际上是一组 DML (insert , delete, update) 语句的集合 
+> 事务实际上是一组 DML (insert , delete, update) 语句的集合 , 
 
 ## 原则
 
@@ -19,12 +19,44 @@
 
 MySQL数据库针对这四种特性，为我们提供的四种隔离级别，这四个级别可以逐个解决脏读、不可重复读、幻读这几类问题,默认的隔离级别是 可重复读（Repeatable read）
 
-|      | 隔离级别                                              | 脏读   | 不可重复读 | 幻读   |
-| ---- | ----------------------------------------------------- | ------ | ---------- | ------ |
-| 1    | [读未提交（read uncommitted)](01-read-uncommitted.md) | 脏读   | 可能       | 可能   |
-| 2    | [读已提交（read committed)](01-read-uncommitted.md)   | 不可能 | 可能       | 可能   |
-| 3    | [可重复读（repeatable read)](03-repeatable-read.md)   | 不可能 | 不可能     | 可能   |
-| 4    | [串行化 (serializable)](04-serializable.md)           | 不可能 | 不可能     | 不可能 |
+|      | 隔离级别                                              | 脏读   | 不可重复读 | 幻读          |
+| ---- | ----------------------------------------------------- | ------ | ---------- | ------------- |
+| 1    | [读未提交（read uncommitted)](01-read-uncommitted.md) | 脏读   | 可能       | 可能          |
+| 2    | [读已提交（read committed)](01-read-uncommitted.md)   | 不可能 | 可能       | 可能          |
+| 3    | [可重复读（repeatable read)](03-repeatable-read.md)   | 不可能 | 不可能     | InnoDB 不可能 |
+| 4    | [串行化 (serializable)](04-serializable.md)           | 不可能 | 不可能     | 不可能        |
+
+## InnodDB 隔离级别的实现
+
+|      | 隔离级别                                              | 锁                                                           |
+| ---- | ----------------------------------------------------- | ------------------------------------------------------------ |
+| 1    | [读未提交（read uncommitted)](01-read-uncommitted.md) | 不加锁                                                       |
+| 4    | [串行化 (serializable)](04-serializable.md)           | 所有 select 隐式转换成 共享锁(in share mode)会和 update 和 delete 互斥 |
+
+![image-20200826204259542](../../assets/image-20200826204259542.png)
+
+#### read uncommitted
+
+ 隔离级别:不加锁。
+
+#### Serializable
+
+Serializable 所有的 select 语句都会被隐式的转化为 select ... in share mode，会 和 update、delete 互斥。
+这两个很好理解，主要是 RR 和 RC 的区别?
+
+#### Repeatable Read
+
+RR 隔离级别下，普通的 select 使用快照读(snapshot read)，底层使用 MVCC 来实 现。
+加锁的 select(select ... in share mode / select ... for update)以及更新操作 update, delete 等语句使用当前读(current read)，底层使用记录锁、或者间隙锁、 临键锁。
+
+#### Read Commited
+
+RC 隔离级别下，普通的 select 都是快照读，使用 MVCC 实现。 加锁的 select 都使用记录锁，因为没有 Gap Lock。
+
+除了两种特殊情况——外键约束检查(foreign-key constraint checking)以及重复 键检查(duplicate-key checking)时会使用间隙锁封锁区间。
+所以 RC 会出现幻读的问题。
+
+## 常用设置
 
 ##### 查询MySQL 数据库的隔离级别
 
@@ -64,7 +96,7 @@ begin;
 commit;
 ```
 
-
+或者
 
 ```
 rollback;
