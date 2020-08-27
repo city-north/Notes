@@ -1,4 +1,4 @@
-# LBCC
+# LBCC 基于锁的并发控制
 
 读取数据的时候，锁定要 操作的数据，不允许其他的事务修改就行了。这种方案我们叫做基于锁的并发控制 Lock Based Concurrency Control(LBCC)。
 
