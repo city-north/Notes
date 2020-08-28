@@ -1,4 +1,4 @@
-# 插件（plugins）
+# Mybatis插件（plugins）
 
 ## 是什么
 
@@ -42,11 +42,11 @@ Mybatis 插件可以用来实现拦截器接口 Interceptor
 - `plugin` 这个方法参数 target 即使要拦截器拦截的对象,这个方法会在创建被拦截的接口实现类时被调用,这个方法非常简单,只需要调用 Mybatis 实现的`Plugin(org.apache.ibatis.plugin.plgin)`类的 wrap 静态方法就可以通过 Java 的 JDK 动态代理拦截目标对象
 
 ```java
-    @Override
-    public Object plugin(Object target) {
-    //自动判断拦截器的签名和被拦截对象的接口是否匹配,只有匹配的情况下才会使用动态代理拦截目标对象,因此不必要做额外的逻辑判断
-      return Plugin.wrap(target, this);
-    }
+@Override
+public Object plugin(Object target) {
+  //自动判断拦截器的签名和被拦截对象的接口是否匹配,只有匹配的情况下才会使用动态代理拦截目标对象,因此不必要做额外的逻辑判断
+  return Plugin.wrap(target, this);
+}
 ```
 
 - setProperties 用来传递参数改变插件的行为,通常是读取配置文件中 plugins 标签下的属性
@@ -171,8 +171,6 @@ MyBatis 通过提供插件机制,让我们可以根据自己的需要去增强 M
    void setProperties(Properties properties);
    ```
 
-   
-
 2. 插件注册
 
    ```xml
@@ -183,38 +181,36 @@ MyBatis 通过提供插件机制,让我们可以根据自己的需要去增强 M
    </plugins>
    ```
 
-   
-
 3. 插件登记
 
    MyBatis 启动的时候回扫描`<plugins>`标签,注册到 Configuration 对象的 InterceptorChain 中,property 里面的参数会调用 `setProperties()`方法处理
 
 #### 代理和拦截是怎么实现的
 
-- ##### 四大对象是什么时候被代理的,代理对象是什么时候创建的
+- [四大对象是什么时候被代理的,代理对象是什么时候创建的](#四大对象是什么时候被代理的,代理对象是什么时候创建的)
 
-- 多个插件的情况下,代理能不能被代理?代理的调用顺序的关系
+- [多个插件的情况下,代理能不能被代理?代理的调用顺序的关系](#多个插件的情况下,代理能不能被代理?代理的调用顺序的关系)
 
-- 谁来创建代理对象
+- [谁来创建代理对象](#谁来创建代理对象)
 
-- 被代理后,调用的是什么方法,怎么调用的原被代理对象的方法
+- [被代理后,调用的是什么方法,怎么调用的原被代理对象的方法](#被代理后,调用的是什么方法,怎么调用的原被代理对象的方法)
 
-##### 四大对象是什么时候被代理的,代理对象是什么时候创建的
+## 四大对象是什么时候被代理的,代理对象是什么时候创建的
 
 - Executor 是 openSession() 的 时 候 创 建 的 ; 
 
 - StatementHandler 是 SimpleExecutor.doQuery()创建的;
 - 里面包含了处理参数的 ParameterHandler 和处理 结果集的 ResultSetHandler 的创建，创建之后即调用 InterceptorChain.pluginAll()， 返回层层代理后的对象。
 
-##### 多个插件的情况下,代理能不能被代理?代理的调用顺序的关系
+## 多个插件的情况下,代理能不能被代理?代理的调用顺序的关系
 
 ![image-20200223143929767](../../assets/image-20200223143929767.png)
 
-##### 谁来创建代理对象
+## 谁来创建代理对象
 
 Plugin 类。在我们重写的 plugin()方法里面可以直接调用 return Plugin.wrap(target, this);返回代理对象。
 
-##### 被代理后,调用的是什么方法,怎么调用的原被代理对象的方法
+## 被代理后,调用的是什么方法,怎么调用的原被代理对象的方法
 
 因为代理类是 `Plugin`，所以最后调用的是 Plugin 的 `invoke() `方法。它先调用了定义
 的拦截器的` intercept()`方法。可以通过 `invocation.proceed()`调用到被代理对象被拦截 的方法。

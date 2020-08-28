@@ -4,8 +4,6 @@
 
 - [代理四大对象](#代理四大对象)
 
-  
-
 ## 注册阶段
 
 我们使用 SqlSessionFactoryBuilder 构建一个 SqlSessionFactory
@@ -80,7 +78,7 @@ private void parseConfiguration(XNode root) {
 我们使用 sqlSessionFactory 创建一个 SqlSessions , 
 
 ```java
-        SqlSession session = sqlSessionFactory.openSession();
+SqlSession session = sqlSessionFactory.openSession();
 ```
 
 configuration.newExecutor 实际上是创建了一个执行器, 在里面进行了代理
