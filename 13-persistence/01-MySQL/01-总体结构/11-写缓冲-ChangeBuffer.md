@@ -1,17 +1,28 @@
-# InnoDB Change Buffer
+# InnoDB Change Buffer 写缓冲
 
 写缓冲是 buffer-pool 的一部分 
 
 > https://dev.mysql.com/doc/refman/5.7/en/innodb-change-buffer.html
 
-- [buffer-pool ](11-写缓冲-ChangeBuffer.md) 
+- [缓冲池-buffer-pool.md](08-缓冲池-buffer-pool.md) 
 
-## ChangeBuffer 写缓冲
+## 目录
 
 - [为什么要有写缓冲](#为什么要有写缓冲)
 - [为什么主键修改不需要ChangeBuffer](#为什么主键修改不需要ChangeBuffer)
 - [为什么辅助索引修改时需要ChangeBuffer](#为什么辅助索引修改时需要ChangeBuffer)
 - [使用ChangeBuffer的两个同时满足的条件](#使用ChangeBuffer的两个同时满足的条件)
+
+![image-20200313211319713](../../../assets/image-20200313211319713-7629580.png)
+
+## 使用ChangeBuffer的两个同时满足的条件
+
+- 索引是辅助索引 (Secondary index)
+- 索引不是唯一的 (Unique)
+
+当满足这两个条件的时候 , InnoDb 会使用 ChangeBuffer , 从而减少随机 IO
+
+辅助索引不能是唯一的,因为在插入缓冲时,数据库并不去查找索引页来判断插入的记录的唯一性,如果去查找肯定又会有离散读取的情况发生,从而导致 ChangeBuffer 失去意义
 
 ## 为什么要有写缓冲
 
@@ -41,25 +52,16 @@ a 是自增长的 , 同时页中的行记录 按照 a 的值的顺序存放,在�
 
 ## 为什么辅助索引修改时需要ChangeBuffer
 
-并不是每个表上只有一个聚集索引,更多情况下,一张表上有多个辅助索引,在进行插入操作时,数据页的存放还是按照主键 a 进行顺序存放的, 但是对于非聚集索引叶子节点的插入不再是顺序的了
+并不是每个表上只有一个聚集索引,更多情况下 , 一张表上有多个辅助索引 , 在进行插入操作时, 数据页的存放还是按照主键 a 进行顺序存放的, 但是对于非聚集索引叶子节点的插入不再是顺序的了
 
 - 辅助索引在插入操作时, 不是顺序 IO, 需要离散地访问非聚集索引页,由于随机读取的存在而导致了插入操作
-
-## 使用ChangeBuffer的两个同时满足的条件
-
-- 索引是辅助索引(Secondary index)
-- 索引不是唯一的(Unique)
-
-当满足这两个条件的时候,InnoDb 会使用ChangeBuffer,从而减少随机 IO
-
-辅助索引不能是唯一的,因为在插入缓冲时,数据库并不去查找索引页来判断插入的记录的唯一性,如果去查找肯定又会有离散读取的情况发生,从而导致 ChangeBuffer 失去意义
 
 ## 原理
 
 工作原理非常简单，就是先判断插入的普通索引页是否在缓冲池中，
 
 - 如果在就直接插入
-- 如果不在就先放到 changebuffer 中，然后进行 change buffer 和普通索引的合并操作，可以将多个插入合并到一个操作中，一下子提高了普通索引的插入性能
+- 如果不在就先放到 changebuffer 中，然后进行 **change buffer 和普通索引**的合并操作，可以将多个插入合并到一个操作中，一下子提高了 普通索引 的插入性能
 
 如果数据页**不是唯一索引**,不存在数据重复的情况(不需要重磁盘查索引页判断数据是不是重复),这种情况先对缓冲池进行修改,从而提高了 Insert , Delete , Update 的执行速度
 
@@ -74,9 +76,9 @@ a 是自增长的 , 同时页中的行记录 按照 a 的值的顺序存放,在�
 
 图中详细的描述了 Change Buffer 的功能，Change Buffer 中的数据最终还是会刷回到数据所在的原始数据页中，Change Buffer 数据应用到原始数据页，得到新的数据页的过程称之为 merge。merge 过程中只会将 Change Buffer 中与原始数据页有关的数据应用到原始数据页，以下三种情况会发生 merge 操作：
 
-- **1、原始数据页加载到 Buffer Pool 时。**
-- **2、系统后台定时触发 merge 操作。**
-- **3、MySQL 数据库正常关闭时。**
+- **原始数据页加载到 Buffer Pool 时**
+- **系统后台定时触发 merge 操作**
+- **MySQL 数据库正常关闭时**
 
 ## 相关设置
 
