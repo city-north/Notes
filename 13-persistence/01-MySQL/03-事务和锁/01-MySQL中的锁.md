@@ -23,7 +23,7 @@ MySQL的锁机制比较简单,最显著的特点是不同的数据引擎支持�
 
 - 行锁的算法(种类)
 
-  -  RecordLocks(单记录锁)
+  -  Record Locks(单记录锁)
 
   - [Gap(间隙锁)](03-MySQL间隙锁.md) 
 
