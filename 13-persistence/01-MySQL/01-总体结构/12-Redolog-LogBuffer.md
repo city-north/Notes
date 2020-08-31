@@ -1,55 +1,69 @@
-# Redo Log - Log buffer
+# Redo Log - Log buffer-重做日志
 
-> ![image-20200313211319713](../../../assets/image-20200313211319713.png)
->
-> - 内存内结构
->   - [Buffer-Pool ](08-缓冲池-buffer-pool.md) 
->     - [Adaptive-Hash-Index](../07-存储引擎/010-InnoDB/04-自适应哈希.md) 
->     - [Change-Buffer](11-写缓冲-ChangeBuffer.md) 
->     -  [Log-Buffer](12-Redolog-LogBuffer.md) 
-> - 磁盘上结构
->   - 表空间 
->     - [系统表空间 (ibdata1) ](../06-磁盘结构/020-系统表空间.md) 
->     - [独立表空间 ](../06-磁盘结构/030-独占表空间.md) 
->     -  [通用表空间](../06-磁盘结构/040-通用表空间.md) 
->     -  [Undo表空间](../06-磁盘结构/060-UndoLog.md) 
->     -  [临时表空间](../06-磁盘结构/050-临时表空间.md) 
->   -  [RedoLog](12-Redolog-LogBuffer.md) 
+所属位置:   [LogBuffer-redoLog在MySQL的位置](12-Redolog-LogBuffer.md#BufferPool的组成) 
 
-> InnoDB ,物理日志
+## 目录
 
-如果 Buffer Pool里面的脏页还没有刷入磁盘时,数据库宕机或者重启,那么这些数据会丢失 ,会写入 redoLog
+- [什么是重做日志](#什么是重做日志)
+- [什么时候刷新缓冲到日志文件](#什么时候刷新缓冲到日志文件)
 
-为了避免这个问题:
+- [重做日志具体在哪里](#重做日志具体在哪里)
 
-## redoLog 重做日志
+## 什么是重做日志
 
-![image-20200820101117291](../../../assets/image-20200820101117291.png)
+![image-20200313211659949](../../../assets/image-20200313211659949-7629590.png)
+
+> 实现持久性
+
+如果 Buffer Pool里面的脏页还没有刷入磁盘时,数据库宕机或者重启,那么这些数据会丢失 ,使用 redo log 可以将未写入的数据写入
+
+- InnoDB 存储引擎先将重做日志信息先写入到缓冲区(Log buffer)
+- 按照一定的频率将缓冲刷新到重做日志文件
+
+重做日志一般不需要设置很大,因为一般情况下每一秒会将重做日志缓冲刷新到日志文件,因此 ,用户只要保证每秒产生的事务量在缓冲之内即可
+
+```
+show variables like '%innodb_log_buffer%'
+```
+
+| Variable\_name            | Value    |
+| :------------------------ | :------- |
+| innodb\_log\_buffer\_size | 16777216 |
+
+## 什么时候刷新缓冲到日志文件
+
+![image-20200313211941999](../../../assets/image-20200313211941999-7629597.png)
+
+log buffer 写入 磁盘的时机，由一个参数控制，默认是 1。
+
+```
+SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit';
+```
+
+- 0 (延迟写)
+  log buffer 将每秒一次地写入 log file 中，并且 log file 的 flush 操作同时进行。 
+
+  > 该模式下，在事务提交的时候，不会主动触发写入磁盘的操作。
+
+- 1 (默认，实时写，实时刷)
+
+  > 每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file，并且刷到磁盘 中去。
+
+- 2 ( 实时写，延迟刷)
+  每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file。但是 flush 操作并不会同时进行。
+
+  > 该模式下，MySQL 会每秒执行一次 flush 操作。
+
+flush 就是把操作系统缓冲区写入到磁盘。当重做日志缓冲池的剩余空间小于 1/2 时, 重做日志缓冲刷新到重做日志文件
+
+## 重做日志具体在哪里
 
 在默认情况下,在 InnoDB 存储引擎的数据目录下会有两个名为
 
 - ib_logfile0
 - ib_logfile1
 
-这两个文件就是重做日志文件 redo log file 
-
-## 什么时候会用得到 redolog
-
-当数据库由于主机断电,宕机导致实例失败, InnoDB 会使用重做日志恢复到掉电前的时刻,以此来保证数据的完整性
-
-## 记录的是什么
-
-redoLog 记录数据页更新之后的状态，而是记录这个页做了什么改动，属于物理日志
-
-redolog 又称重做日志, 用于记录事务操作的变化,InnoDB 把所有对页的**修改**操作专门写入一个日志文件，并且 在数据库启动时从这个文件进行**恢复操作**(实现 crash-safe) —— 用它来实现事务的持久性。
-
-
-
-
-
-![image-20200313211659949](../../../assets/image-20200313211659949-7629590.png)
-
-存在 /var/lib/mysql 目录下的 ib_logfile0 和 ib_logfile1 每个 48M
+重做日志文件对于 InnoDB存储引擎至关重要, 他们记录了 InnoDB 存储引擎的事务日志
 
 这种日志和磁盘配合的整个过程，其实就是 MySQL 里的 WAL 技术 (Write-Ahead Logging)，它的关键点就是先写日志，再写磁盘。
 
@@ -63,9 +77,13 @@ show variables like 'innodb_log%';
 | innodb_log_files_in_group | 指定文件的数量，默认为 2                                     |
 | innodb_log_group_home_dir | 指定文件所在路径，相对或绝对。如果不指定，则为 datadir 路径。 |
 
+## 记录的是什么
+
+redoLog 记录数据页更新之后的状态，而是记录这个页做了什么改动，属于物理日志
+
 **同样是写磁盘，为什么不直接写到 db file 里面去?为什么先写日志再写磁盘?**
 
-#### redolog 减少了随机 IO
+## logbuffer减少了写入redo-log的随机IO
 
 为什么要写在 redolog 中,而不是直接写到 db file 中呢?
 
@@ -89,25 +107,6 @@ show variables like 'innodb_log%';
 
 #### Log Buffer 什么时候写入 redolog 的磁盘文件 logFile 中?
 
-log buffer 写入 磁盘的时机，由一个参数控制，默认是 1。
-
-```
-SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit';
-```
-
-- 0 (延迟写)
-  log buffer 将每秒一次地写入 log file 中，并且 log file 的 flush 操作同时进行。 该模式下，在事务提交的时候，不会主动触发写入磁盘的操作。
-- 1 (默认，实时写，实时刷)
-  每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file，并且刷到磁盘 中去。
-- 2 ( 实时写，延迟刷)
-  每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file。但是 flush 操 作并不会同时进行。该模式下，MySQL 会每秒执行一次 flush 操作。
-
-flush 就是把操作系统缓冲区写入到磁盘。
-
-![image-20200313211941999](../../../assets/image-20200313211941999-7629597.png)
-
-## 
-
 这是内存结构的第 4 块内容，redo log，它又分成内存和磁盘两部分。redo log 有 什么特点?
 
 - redo log 是 InnoDB 存储引擎实现的，并不是所有存储引擎都有。
@@ -117,9 +116,4 @@ flush 就是把操作系统缓冲区写入到磁盘。
 ![image-20200820103156906](../../../assets/image-20200820103156906.png)
 
 check point 是当前要覆盖的位置。如果 write pos 跟 check point 重叠，说明 redolog 已经写满，这时候需要同步 redo log 到磁盘中。
-这是 MySQL 的内存结构，总结一下，分为:
 
-- Buffer pool
-- change buffer
-- Adaptive Hash Index
-- log buffer

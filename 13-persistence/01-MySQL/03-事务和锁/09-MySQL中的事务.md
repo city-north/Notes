@@ -1,10 +1,6 @@
 # MySQL 中的事务
 
-- 什么是数据库事务
-- MySQL InnoDB 锁的基本类型
-- 行锁的原理
-- 锁的算法
-- 事务隔离
+- [什么是事务](#什么是事务)
 
 ## 什么是事务
 
@@ -36,7 +32,7 @@ show variables like 'autocommit';
 
 #### 手动开启事务
 
-有几种方式，一种是用 begin;一种是用 start transaction。
+有几种方式，一种是用 begin; 一种是用 start transaction
 
 #### 结束事务
 
@@ -69,7 +65,11 @@ InnoDB存储引擎对ACID的实现方式
 
 在执行事务的每条SQL时，会先将数据原值写入undo log 中， 然后执行SQL对数据进行修改，最后将修改后的值写入redo log中。
 
-redo log 重做日志包括两部分：1 是内存中的重做日志缓冲 ；2 是重做日志文件。在事务提交时，必须先将该事务的所有日志写入到重做日志文件进行持久化，待事务commit操作完成才算完成。
+redo log 重做日志包括两部分：
+
+1. 内存中的重做日志缓冲 
+2. 是磁盘上重做日志文件
+3. 在事务提交时，必须先将该事务的所有日志写入到重做日志文件进行持久化，待事务commit操作完成才算完成。
 
 当一个事务中的所有SQL都执行成功后，会将redo log 缓存中的数据刷入磁盘，然后提交。
 
@@ -80,3 +80,26 @@ redo log 重做日志包括两部分：1 是内存中的重做日志缓冲 ；2 
 | 隔离性（I） | 锁：用于资源隔离，分为共享锁和排它锁；           |
 | 持久性（D） | 重做日志（redo log） + 回滚日志（undo log）；    |
 
+## InnodDB 隔离级别的实现
+
+|      | 隔离级别                    | 读     | 写                                                           |
+| ---- | --------------------------- | ------ | ------------------------------------------------------------ |
+| 1    | 读未提交（read uncommitted) | 不加锁 | 不加锁                                                       |
+| 2    | 读已提交（read committed)   | MVCC   | 记录锁                                                       |
+| 3    | 可重复读（repeatable read)  | MVCC   | 记录锁/间隙锁/临键锁                                         |
+| 4    | 串行化 (serializable)       | 共享锁 | 所有 select 隐式转换成 共享锁(in share mode)会和 update 和 delete 互斥 |
+
+![image-20200826204259542](../../../assets/image-20200826204259542.png)
+
+
+
+
+
+
+
+#### Read Commited
+
+RC 隔离级别下，普通的 select 都是快照读，使用 MVCC 实现。 加锁的 select 都使用记录锁，因为没有 Gap Lock。
+
+除了两种特殊情况——外键约束检查(foreign-key constraint checking)以及重复 键检查(duplicate-key checking)时会使用间隙锁封锁区间。
+所以 RC 会出现幻读的问题。
