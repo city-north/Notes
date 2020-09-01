@@ -1,6 +1,6 @@
 # explain详解
 
-
+https://mp.weixin.qq.com/s/8Gvw-JhNjZDZWCB3ic8gsw
 
 ### 查询执行计划
 
@@ -35,12 +35,12 @@ WHERE tcid = (
 | 2    | [select_type](#select_type)     |                                                              |
 | 3    | [table](#table)                 |                                                              |
 | 4    | partitions                      |                                                              |
-| 5    | type                            |                                                              |
+| 5    | [type](#type)                   |                                                              |
 | 6    | [possible_keys](#possible_keys) | 可能用到的索引  , 如果是 NULL 就代表没有用到索引             |
 | 7    | [key](#key)                     | 实际用到的索引  , 如果是 NULL 就代表没有用到索引             |
-| 8    | key_len                         | 索引的长度(使用的字节数)。跟索引字段的类型、长度有关。       |
-| 9    | ref                             | 使用哪个列或者常数和索引一起从表中筛选数据。                 |
-| 10   | rows                            | MySQL 认为扫描多少行才能返回请求的数据，是一个预估值。一般来说行数越少越好。 |
+| 8    | [key_len](#key_len)             | 索引的长度(使用的字节数)。跟索引字段的类型、长度有关。       |
+| 9    | [ref](#ref)                     | 使用哪个列或者常数和索引一起从表中筛选数据。                 |
+| 10   | [rows](#rows)                   | MySQL 认为扫描多少行才能返回请求的数据，是一个预估值。一般来说行数越少越好。 |
 | 11   | filtered                        | 这个字段表示存储引擎返回的数据在 server 层过滤后，剩下多少满足查询的记录数量的比例，它是一个百分比。 |
 | 12   | [Extra](#Extra)                 | 执行计划给出的额外的信息说明。                               |
 
@@ -116,15 +116,15 @@ DELETE FROM teacher where tid in (4,5,6); COMMIT;
 
 #### 常用的有
 
-| table  | 解释                                                         |
-| ------ | ------------------------------------------------------------ |
-| system | system 是 const 的一种特例，只有一行满足条件。例如:只有一条数据的系统表 |
-| const  | 主键索引或者唯一索引，只能查到一条数据的 SQL。               |
-| eq_ref | 通常出现在多表的 join 查询，表示对于前表的每一个结果,，都只能匹配到后表的 一行结果。一般是唯一性索引的查询(UNIQUE 或 PRIMARY KEY)。eq_ref 是除 const 之外最好的访问类型。 |
-| ref    | 查询用到了非唯一性索引，或者关联操作只使用了索引的最左前缀。 |
-| range  | 索引范围扫描。                                               |
-| index  | Full Index Scan，查询全部索引中的数据(比不走索引要快)        |
-| all    | Full Table Scan，如果没有索引或者没有用到索引，type 就是 ALL。代表全表扫描 |
+| table           | 解释                                                         |
+| --------------- | ------------------------------------------------------------ |
+| system          | system 是 const 的一种特例，只有一行满足条件。例如:只有一条数据的系统表 |
+| const           | 主键索引或者唯一索引，只能查到一条数据的 SQL。               |
+| eq_ref          | 通常出现在多表的 join 查询，表示对于前表的每一个结果,，都只能匹配到后表的 一行结果。一般是唯一性索引的查询(UNIQUE 或 PRIMARY KEY)。eq_ref 是除 const 之外最好的访问类型。 |
+| ref             | 查询用到了非唯一性索引，或者关联操作只使用了索引的最左前缀。 |
+| [range](#range) | 主键索引范围扫描。做优化尽量达到                             |
+| [index](#index) | Full Index Scan，查询全部索引中的数据(比不走索引要快)        |
+| [all](#all)     | Full Table Scan，如果没有索引或者没有用到索引，type 就是 ALL。代表全表扫描 |
 
 #### 不常用的有
 
@@ -140,7 +140,53 @@ DELETE FROM teacher where tid in (4,5,6); COMMIT;
 
 一般来说，需要保证查询至少达到 range 级别，最好能达到 ref。 ALL(全表扫描)和 index(查询全部索引)都是需要优化的。
 
+#### range
+
+```sql
+explain select * from actor where id > 1;
+```
+
+| id   | select\_type | table | partitions | type  | possible\_keys | key     | key\_len | ref  | rows | filtered | Extra       |
+| :--- | :----------- | :---- | :--------- | :---- | :------------- | :------ | :------- | :--- | :--- | :------- | :---------- |
+| 1    | SIMPLE       | actor | NULL       | range | PRIMARY        | PRIMARY | 4        | NULL | 2    | 100      | Using where |
+
+#### index
+
+扫描全表索引，这通常比ALL快一些。（index是从索引中读取的，而all是从硬盘中读取）
+
+前提是需要表里面的所有字段都是索引。
+
+如果所有字段都是索引，那么我们可以借助对于B+Tree的理解，读取数据直接从叶子节点读取key，不再去读取对应的value，提高效率。
+
+```
+explain select id from film;
+```
+
+| id   | select\_type | table | partitions | type  | possible\_keys | key       | key\_len | ref  | rows | filtered | Extra       |
+| :--- | :----------- | :---- | :--------- | :---- | :------------- | :-------- | :------- | :--- | :--- | :------- | :---------- |
+| 1    | SIMPLE       | film  | NULL       | index | NULL           | idx\_name | 33       | NULL | 3    | 100      | Using index |
+
+#### all
+
+即全表扫描，意味着mysql需要从头到尾去查找所需要的行。通常情况下这需要增加索引来进行优化了
+
+```
+explain select * from actor;
+```
+
+| id   | select\_type | table | partitions | type | possible\_keys | key  | key\_len | ref  | rows | filtered | Extra |
+| :--- | :----------- | :---- | :--------- | :--- | :------------- | :--- | :------- | :--- | :--- | :------- | :---- |
+| 1    | SIMPLE       | actor | NULL       | ALL  | NULL           | NULL | NULL     | NULL | 3    | 100      | NULL  |
+
+
+
 ## possible_keys
+
+这一列的含义是显示查询可能使用哪些索引来查找。 
+
+explain 时可能出现 possible_keys 有列，而 key 显示 NULL 的情况，这种情况是因为表中数据不多，mysql认为索引对此查询帮助不大，选择了全表查询。 如果该列是NULL，则没有相关的索引。
+
+在这种情况下，可以通过检查 where 子句看是否可以创造一个适当的索引来提高查询性能，然后用 explain 查看效果。
 
 ## key
 
@@ -153,6 +199,26 @@ possible_key 可以有一个或者多个，可能用到索引不代表一定用�
 是有可能的(这里是覆盖索引的情况)。
 
 如果通过分析发现没有用到索引，就要检查 SQL 或者创建索引。
+
+如果想强制mysql使用或忽视possible_keys列中的索引，在查询中使用 force index、ignore index。
+
+## key_len列
+
+这一列显示了mysql在索引里使用的字节数，通过这个值可以算出具体使用了索引中的哪些列。 
+
+举例来说，film_actor的联合索引 idx_film_actor_id 由 film_id 和 actor_id 两个int列组成，并且每个int是4字节。通过结果中的key_len=4可推断出查询使用了第一个列：film_id列来执行索引查找。
+
+```sql
+explain select * from film_actor where film_id = 2;
+```
+
+## rows
+
+这一列是mysql估计要读取并检测的行数，注意这个不是结果集里的行数。
+
+## ref列
+
+这一列显示了在key列记录的索引中，表查找值所用到的列或常量，常见的有：const（常量），字段名（例：film.id）
 
 ## Extra
 

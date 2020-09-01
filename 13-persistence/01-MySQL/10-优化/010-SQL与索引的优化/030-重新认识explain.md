@@ -31,3 +31,4 @@ MySQL 5.7 的执行计划会默认添加 filterred 列, MySQL 5.6 使用 explain
 select count(distinct name)/count(*) from user_innodb;
 ```
 
+ [040-explain详解.md](040-explain详解.md) 
