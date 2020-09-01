@@ -10,7 +10,22 @@ ThreadPoolExecutor 继承了 AbstractExecutorService , 成员变量 ctl 是一�
 
 ![image-20200712115749599](../../../assets/image-20200712115749599.png)
 
+## 图中的重点
+
+我们从图中可以看到,线程池大体可以分为
+
+- `RejectedExecutionHandler`以及其实现类 : 代表的是拒绝策略
+- `ThreadFactory` 以及其实现类 : 用于创建线程
+- `ThreadPoolExecutor` 为代表的 线程池执行器,相当于接口层,对外提供方法
+
 ## 位图
+
+很明显我们可以看出 ThreadPoolExecutor 继承了 AbstratExecutorService , 成员变量 ctl 是一个 Integer 的原子变量,记录线程池状态和线程个数
+
+这一点的设计思想和 [ReentrantReadWriteLock](../07-线程中的锁/041-读写锁ReentrantReadWriteLock.md) 一致, 它是使用高 16 位记录, 低16 位记录
+
+- 高16 位表示获取到读锁的次数
+- 低16 位 表示获取到写锁的线程的可重入次数
 
 ```java
 // 高3 位 用来表示线程池状态 , 低 29 位用来标识线程个数
@@ -55,14 +70,20 @@ private static int ctlOf(int rs, int wc) { return rs | wc; }
 ## 线程池参数如下
 
 - corePoolSize : 线程池核心线程个数
-- workQueue : 用于保存等待执行的任务的阻塞队列, 比如基于数组的有界 ArrayBlockingQueue , 基于链表的无界 LinkedBlockingQueue , 最多只有一个元素的同步队列 SynchronousQueue 队列 PriorityBlockingQueue
+- workQueue : 用于保存等待执行的任务的阻塞队列, 比如
+  - 基于数组的有界 ArrayBlockingQueue 
+  - 基于链表的无界 LinkedBlockingQueue
+  - 最多只有一个元素的同步队列 SynchronousQueue 
+  - 优先级队列 PriorityBlockingQueue
 - maximunPoolSize : 线程池最大线程数量
 - ThreadFactory : 创建线程工厂
 - RejectedExecutionHandler : 饱和策略, 当队列满并且线程个数达到 maxmunPoolSize 后采取的策略, 比如 
-  - AbortPolicy 抛出异常, 
-  - CallerRunsPolicy 使用调用者所在线程来运行任务 , 
+  - AbortPolicy 抛出异常
+  - CallerRunsPolicy 使用调用者所在线程来运行任务 ,
   - DiscardOldestPolicy 调用 poll 丢弃一个任务,执行当前任务
   - DiscardPolicy 默默丢弃, 不抛出异常
+- keepAliveTime 存活时间, 如果当前线程池中的线程数量比核心线程数量多,并且是闲置状态,则这些限制的线程能存活的最大时间
+- TimeUnit : 存活时间的单位
 
 ## 工厂方法
 

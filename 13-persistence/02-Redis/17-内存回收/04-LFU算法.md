@@ -63,12 +63,12 @@ typedef struct redisObject {
 
 对象被读写的时候，lfu 的值会被更新。
 
-增长的速率由，lfu-log-factor 越大，counter 增长的越慢 redis.conf 配置文件
+增长的速率由 lfu-log-factor 决定, 该值越大，counter 增长的越慢 redis.conf 配置文件
 
 > lfu-log-factor 10
 
 如果计数器只会递增不会递减，也不能体现对象的热度。没有被访问的时候， 计数器怎么递减呢?
-减少的值由**衰减因子** lfu-decay-time (分钟)来控制，如果值是 1 的话，N 分 钟没有访问就要减少 N。
+减少的值由**衰减因子** lfu-decay-time (分钟)来控制，如果值是 1 的话，N 分钟没有访问就要减少 N。
 
 redis.conf 配置文件
 

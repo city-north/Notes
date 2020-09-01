@@ -141,3 +141,74 @@ private boolean addWorker(Runnable firstTask, boolean core) {
     return workerStarted;
 }
 ```
+
+## 工作线程的执行
+
+用户线程提交任务到线程池后,由 Worker 来执行, 先看下 Work 的构造函数
+
+```
+Worker(Runnable firstTask) {
+//① 在调用 runwirker 前禁止中断
+    setState(-1); // inhibit interrupts until runWorker
+    this.firstTask = firstTask;
+    this.thread = getThreadFactory().newThread(this);
+}
+```
+
+- 代码① 在构造函数内首先设置了 Worker 的状态是 -1, 这是为了避免当前 Wroker 在调用 runWorker 方法前被中断(当前其他线程调用了线程池的 shutdownNow时. 如果 Worker 状态 >  0 , 则会中断该线程), 这里设置了线程的状态为 -1, 所以该线程就不会被中断了
+
+
+
+````
+   final void runWorker(Worker w) {
+        Thread wt = Thread.currentThread();
+        Runnable task = w.firstTask;
+        w.firstTask = null;
+        w.unlock(); // allow interrupts
+        //⑨ 将 state 设置为0 , 允许中断
+        boolean completedAbruptly = true;
+        try {
+        //⑩ 
+            while (task != null || (task = getTask()) != null) {
+                w.lock();
+                // If pool is stopping, ensure thread is interrupted;
+                // if not, ensure thread is not interrupted.  This
+                // requires a recheck in second case to deal with
+                // shutdownNow race while clearing interrupt
+                if ((runStateAtLeast(ctl.get(), STOP) ||
+                     (Thread.interrupted() &&
+                      runStateAtLeast(ctl.get(), STOP))) &&
+                    !wt.isInterrupted())
+                    wt.interrupt();
+                try {
+                //(10.2) 执行任务前干一些事
+                    beforeExecute(wt, task);
+                    Throwable thrown = null;
+                    try {
+                    //(10.3)执行任务
+                        task.run();
+                    } catch (RuntimeException x) {
+                        thrown = x; throw x;
+                    } catch (Error x) {
+                        thrown = x; throw x;
+                    } catch (Throwable x) {
+                        thrown = x; throw new Error(x);
+                    } finally {
+                    // (10.4) 执行任务完毕后干一些事
+                        afterExecute(task, thrown);
+                    }
+                } finally {
+                    task = null;
+                    //(10.5) 统计当前 worker 完成了多少任务
+                    w.completedTasks++;
+                    w.unlock();
+                }
+            }
+            completedAbruptly = false;
+        } finally {
+        //(11) 执行清理工作
+            processWorkerExit(w, completedAbruptly);
+        }
+    }
+````
+
