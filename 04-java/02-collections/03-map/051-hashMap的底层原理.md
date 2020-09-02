@@ -262,8 +262,6 @@ Hashtable 是不允许键或值为 null 的，HashMap 的键值则都可以为 n
 
   所以，当其他线程改变了HashMap 的结构，如：增加、删除元素，将会抛出ConcurrentModificationException 异常，而 Hashtable 则不会。
 
-
-
 ## 为什么初始化的值为 16
 
 > 16是2的幂，8也是，32也是，为啥偏偏选了16？
