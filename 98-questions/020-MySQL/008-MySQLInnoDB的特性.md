@@ -1,5 +1,44 @@
 # MySQL InnoDB 的特性
 
+> InnoDB的体系结构
+
+首先 MySQL的体系结构是分为 server 层和 存储引擎层, 存储引擎层才有可插拔的插件形式 ,InnoDB 就是一个插件
+
+三个方向介绍 InnoDB
+
+- 内存
+- 线程
+- 磁盘
+
+## 内存
+
+- changeBuffer
+- dataBuffer
+- indexBuffer
+- redoLogBuffer
+- doubleWriteBuffer
+
+## 内存刷新到磁盘的机制
+
+- redoLogbuffer 的刷新条件
+- 脏页 的刷新条件
+- binlog cache 的刷新条件
+
+## 各种线程的作用
+
+- masterThread
+- purgeThread
+- redoLogThread
+- readThread
+- writeThread
+- pageCleanerThread
+
+## 磁盘中存放的文件
+
+- redoLog
+- undoLog
+- binLog
+
 | 序号 | 特性       | 实现方式                                                     |
 | ---- | ---------- | ------------------------------------------------------------ |
 | 1    | 支持事务   | 1. 通过 UndoLog 实现原子性<br />2. 通过 MVCC 和 LBCC 来实现隔离性<br />3. 通过 redoLog 和 doubleWrite机制 实现持久性 |
