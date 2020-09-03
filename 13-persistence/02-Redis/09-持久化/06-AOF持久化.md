@@ -28,7 +28,7 @@ appendfilename "appendonly.aof"
 
 | 参数                 | 说明                                                         |
 | -------------------- | ------------------------------------------------------------ |
-| appendfsync everysec | AOF 持久化策略(硬盘缓存到磁盘)，默认 everysec<br/>no表示不执行fsync，由操作系统保证数据同步到磁盘，速度最快，但是不太安全;  always表示每次写入都执行fsync，以保证数据同步到磁盘，效率很低;<br/>everysec 表示每秒执行一次 fsync，可能会导致丢失这 1s 数据。通常选择 everysec ，<br/>兼顾安全性和效率。 |
+| appendfsync everysec | AOF 持久化策略(硬盘缓存到磁盘)，默认 everysec<br/>1. no 表示不执行fsync，由操作系统保证数据同步到磁盘，速度最快，但是不太安全; <br />2. always 表示每次写入都执行 fsync，以保证数据同步到磁盘，效率很低;<br/>3. everysec 表示每秒执行一次 fsync，可能会导致丢失这 1s 数据。通常选择 everysec <br/>兼顾安全性和效率。 |
 
 ## 文件越来越大，怎么办?
 

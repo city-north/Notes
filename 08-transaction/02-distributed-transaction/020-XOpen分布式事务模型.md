@@ -1,32 +1,28 @@
 # X/Open 分布式模型
 
-x/open DTP (Distibuted Transaction Processing Reference Model)  是 X/Open 组织定义的一套分布式事务标准
+## 目录
 
-**这个标准提出了两阶段提交**来保证分布式事务的完整性
+- [X/Open模型是什么](#X/Open模型是什么)
+- [X/Open三种角色](#X/Open三种角色)
+- [事务执行流程](#事务执行流程)
+
+## X/Open模型是什么
+
+X/Open DTP（X/Open Distributed Transaction Processing Reference Model）是X/Open这个组织定义的一套分布式事务的标准。
+
+**这个标准提出了使用两阶段提交（2PC，Two-Phase-Commit）来保证分布式事务的完整性。**
 
 >  [030-两阶段提交协议.md](030-两阶段提交协议.md) 
 
-## 三种角色
+## X/Open三种角色
 
-在这个标准下, 有三种角色:
+如下图所示，X/Open DTP中包含以下三种角色。
 
-- AP
+- AP：Application，表示应用程序。
+- RM：Resource Manager，表示资源管理器，比如数据库。
+- TM：Transaction Manager，表示事务管理器，一般指事务协调者，负责协调和管理事务，提供AP编程接口或管理RM。可以理解为Spring中提供的Transaction Manager。
 
-  > application 表示应用服务器
-
-- RM 
-
-  > ResourceManager 资源管理器
-
-- TM
-
-  > Transaction Manager 标识事务管理器 , 一般指的是事务协调者 , 负责协调和管理事务
-  >
-  > 提供 AP 编程接口或者 管理 RM , 可以理解为 Spring 的事务管理器 Transaction Manager
-
-## 基本原理
-
-![image-20200712171804735](../../assets/image-20200712171804735.png)
+<img src="../../assets/image-20200903104200379.png" alt="image-20200903104200379" style="zoom:50%;" />
 
 - 多个 资源管理器 RM 注册到事务管理器 TM 上
 
@@ -41,11 +37,27 @@ x/open DTP (Distibuted Transaction Processing Reference Model)  是 X/Open 组�
 - 应用 AP 结束事务请求, 事务管理器 TM 会通知各个 RM
 - 根据各个 RM 的事务执行结果,执行提交或者回滚
 
-### 值得注意的是
 
-事务管理器 TM 和它的多个资源管理器 RM 之间使用的是 XA 协议来完成的, 当然它是 X/Open 组织提出的
 
-像 Oracle / MySQL /BD2 都实现了 XA接口	
+## 事务执行流程
 
-<img src="../../assets/image-20200712172641730.png" alt="image-20200712172641730" style="zoom: 67%;" />
+<img src="../../assets/image-20200903105534033.png" alt="image-20200903105534033" style="zoom:50%;" />
 
+
+
+如果此时RM代表数据库，那么TM需要能够管理多个数据库的事务，大致实现步骤如下：
+
+- 配置TM，把多个RM注册到TM，相当于TM注册RM作为数据源。
+- AP从TM管理的RM中获取连接，如果RM是数据库则获取JDBC连接。
+- AP向TM发起一个全局事务，生成全局事务ID（XID），XID会通知各个RM。
+- AP通过第二步获得的连接直接操作RM完成数据操作。这时，AP在每次操作时会把XID传递给RM。
+-  AP结束全局事务，TM会通知各个RM全局事务结束。
+- 根据各个RM的事务执行结果，执行提交或者回滚操作。
+
+实际上这里会涉及全局事务的概念。也就是说，在原本的单机事务下，会存在跨库事务的可见性问题，导致无法实现多节点事务的全局可控。而TM就是一个全局事务管理器，它可以管理多个资源管理器的事务。TM最终会根据各个分支事务的执行结果进行提交或者回滚，如果注册的所有分支事务中任何一个节点事务执行失败，为了保证数据的一致性，TM会触发各个RM的事务回滚操作。
+
+#### 值得注意的是
+
+需要注意的是，TM和多个RM之间的事务控制，是基于XA协议（XA Specification）来完成的。
+
+XA协议是X/Open提出的分布式事务处理规范，也是分布式事务处理的工业标准，它定义了xa_和ax_系列的函数原型及功能描述、约束等。目前Oracle、MySQL、DB2都实现了XA接口，所以它们都可以作为RM
