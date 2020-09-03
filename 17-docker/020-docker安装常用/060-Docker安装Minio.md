@@ -6,3 +6,4 @@
 # docker run -d -p 9000:9000 --name minio -v /hzero/data-server/minio/data:/data -v /hzero/data-server/minio/config:/root/.minio 324b server /data
 ```
  -获取用户名和密钥：# docker logs minio
+
