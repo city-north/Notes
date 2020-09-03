@@ -56,10 +56,6 @@ Keepalived 利用 VRRP 协议可以实现 MySQL 高可用集群方案,避免单�
 - master 会像 backip 节点发送广播信号,当 backup 节点接受不到 master 发送的 VRRP 包时,会认为 master 宕机
 - 根据 MRRP 的优先级选举出一个 backup充当 master , 则这个 master 就会持有 vip (vip 是对外应用连接的 ip 地址), 从而保证了线上现有业务的正常运行
 
-
-
-
-
 ## NDB Cluster
 
 https://dev.mysql.com/doc/mysql-cluster-excerpt/5.7/en/mysql-cluster-overview.html
@@ -72,8 +68,6 @@ https://dev.mysql.com/doc/mysql-cluster-excerpt/5.7/en/mysql-cluster-overview.ht
 
 https://galeracluster.com/
   一种多主同步复制的集群方案。
-
-
 
 
 ## MGR
