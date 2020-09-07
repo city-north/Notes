@@ -2,32 +2,132 @@
 
 ![img](assets/1671546-20190427141310333-343604547.png)
 
-#### 是什么
+## 是什么
 
 **虚拟机栈描述了 Java 方法执行的内存模型,每一个方法从调用直至执行完成,就会对应着一个栈帧在虚拟机栈中从入栈到出栈的过程,每个方法执行都会创建一个栈帧用于**
 
-- 存储局部变量	
+<img src="../../assets/image-20200907090325753.png" alt="image-20200907090325753" style="zoom:50%;" />
+
+#### 栈帧有可能是
+
+- [局部变量表(Local Variables)](#局部变量表)
   - 存放编译器可知的各种基本数据类型 (boolean, byte, char, short, int, float, long, double)
   - 引用对象 reference 类型,通常是指向对象起始位置的指针
-- 操作数栈
-- 动态链接
-- 方法出口
-- 等等信息
+- [操作数栈(Operand Stack)](#操作数栈)
+- [动态链接](#动态链接)
+- [方法返回地址](#方法返回地址)
+- [帧数据](#帧数据)
+- [附加信息](#附加信息)
 
-#### 解决了什么问题
+## 图示
+
+<img src="../../assets/image-20200907090931097.png" alt="image-20200907090931097" style="zoom:50%;" />
+
+![image-20200907091429619](../../assets/image-20200907091429619.png)
+
+## 局部变量表
+
+局部变量表 : 方法中定义的局部变量以及方法的参数存放在这张表中 
+
+局部变量表中的变量不可直接使用，如需要使用的话，必须通过相关指令将其加载至操作数栈中作为操作数使用。
+
+<img src="../../assets/image-20200907095347796.png" alt="image-20200907095347796" style="zoom: 67%;" />
+
+
+
+## 动态链接
+
+##### 每个栈帧都包含一个执行运行时常量池中该栈帧所属方法的引用，持有这个引用是为了支持方法调用过程中的动态连接（Dynamic Linking）。
+
+Class 文件中存放了大量的符号引用，字节码中的方法调用指令就是以常量池中指向方法的符号引用作为参数。这些符号引用一部分会在类加载阶段或第一次使用时转化为直接引用，这种转化称为静态解析。另一部分将在每一次运行期间转化为直接引用，这部分称为动态连接。
+
+## 操作数栈
+
+操作数栈:以压栈和出栈的方式存储操作数的
+
+代码calc方法的第一行
+
+```
+op1=3;// 把3赋值给局部变量 对应的指令 0: iconst_3  将int类型常量3压入[操作数栈]
+```
+
+既然要赋值给局部变量,那么肯定得有这个值吧,所以虚拟机要将 3 压到操作数栈里
+
+## 指向运行时常量池的引用
+
+动态链接:每个栈帧都包含一个指向运行时常量池中该栈帧所属方法的引用，持有这个引用是为了支持方法调用过程中的动态 连接(Dynamic Linking)。
+
+## 方法返回地址
+
+方法返回地址:当一个方法开始执行后,只有两种方式可以退出，
+
+- 一种是遇到方法返回的字节码指令;
+- 一种是遇见异常，并且 这个异常没有在方法体内得到处理。
+
+## 反编译后代码实例
+
+```java
+class Person{
+    private String name="Jack";
+    private int age;
+    private final double salary=100;
+    private static String address;
+    private final static String hobby="Programming";
+    public void say(){
+        System.out.println("person say...");
+    }
+    public static int calc(int op1,int op2){
+        op1=3;
+        int result=op1+op2;
+        return result;
+    }
+    public static void order(){
+    }
+    public static void main(String[] args){
+    calc(1,2);
+    order(); }
+}
+```
+
+```java
+javap -c Person 查看反编译后的文件
+```
+
+ [编译指令宝典](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
+
+```java
+Compiled from "Person.java"
+class Person {
+  Person();
+		....
+  public static int calc(int, int);
+    Code:
+       0: iconst_3  //将int类型常量3压入[操作数栈]
+       1: istore_0  //将int类型值存入[局部变量0]
+       2: iload_0   //从[局部变量0]中装载int类型值入栈
+       3: iload_1   //从[局部变量1]中装载int类型值入栈
+       4: iadd      //将栈顶元素弹出栈，执行int类型的加法，结果入栈
+       5: istore_2  //将栈顶int类型值保存到[局部变量2]中
+       6: iload_2   //从[局部变量2]中装载int类型值入栈
+       7: ireturn   //从方法中返回int类型的数据
+
+}
+```
+
+## 解决了什么问题
 
 虚拟机在执行 java的时候,方法的相关东东存在哪? 虚拟机怎么执行一个 java 方法的?
 
-#### 怎么解决的?
+## 怎么解决的
 
 每一个方法从调用直至执行完成,就会对应着一个栈帧在虚拟机栈中从入栈到出栈的过程,里面存储了方法的各种信息
 
-#### 值得注意的是
+## 值得注意的是
 
 - 和程序计数器一样是线程私有的
 - 生命周期和线程相同
 
-#### 抛出异常
+## 抛出异常
 
 - 如果线程请求的栈深度大于虚拟机允许的深度 - StackOverflowError 
 - 如果虚拟机栈可以动态拓展,但是无法申请到足够的内存 - OutOfMemoryError 异常
@@ -61,57 +161,3 @@ JVM 只对方法栈做两件事
 
 因此，**我们可以说本地数据是线程安全的**。栈中的每个条目称为栈帧或激活记录。
 
-#### 栈帧内容
-
-- 局部变量表
-- 操作数栈
-- 帧数据
-
-当JVM调用Java方法时，首先检查类数据，以确定方法在局部变量数组和操作数堆栈中所需的单词数(**局部变量数组和操作数堆栈的大小，以每个单独方法的单词量度量**)。它为调用的方法创建大小适当的堆栈框架，并将其推入Java堆栈。
-
-#### - 局部变量表 LVA
-
-**1. Local Variable Array (LVA):**
-
-- The local variables part of stack frame is organized as a zero-based array of words.
-- It contains all parameters and local variables of the method.
-- Each slot or entry in the array is of 4 Bytes.
-- Values of type int, float, and reference occupy 1 entry or slot in the array i.e. 4 bytes.
-- Values of double and long occupy 2 consecutive entries in the array i.e. 8 bytes total.
-- **Byte, short and char values will be converted to int type before storing** and occupy 1 slot i.e. 4 Bytes.
-- But the way of storing Boolean values is varied from JVM to JVM. But most of the JVM gives 1 slot for Boolean values in the local variable array.
-- The parameters are placed into the local variable array first, in the order in which they are declared.
-- **For Example:** Let us consider a class Example having a method **bike()** then local variable array will be as shown in below diagram:
-
-```java
-// Class Declaration
-class Example
-{
-  public void bike(int i, long l, float f, 
-               double d, Object o, byte b)
-  {
-    
-  } 
-}     
-```
-
-
-
-![Local Variable Array for bike(assets/jvm-20200428104029004.jpg)](https://media.geeksforgeeks.org/wp-content/uploads/jvm.jpg)
-
-#### 2.**Operand Stack (OS):**
-
-- JVM uses operand stack as work space like rough work or we can say for storing intermediate calculation’s result.
-- Operand stack is organized as array of words like local variable array. But this is not accessed by using index like local variable array rather it is accessed by some instructions that can push the value to the operand stack and some instructions that can pop values from operand stack and some instructions that can perform required operations.
-- **For Example:** Here is how a JVM will use this below code that would subtract two local variables that contain two ints and store the int result in a third local variable:
-
-![Assembly Code Instruction for Operand Stack](assets/reading.jpg)
-
-So here first two instructions *iload_0* and *iload_1* will push the values in operand stack from local variable array. And instruction *isub* will subtract these two values and stores the result back to the operand stack and after *istore_2* the result will pop out from the operand stack and will store into local variable array at position 2.
-
-![Working of LVA and OS](assets/jvm.png)
-
-**Frame Data (FD):**
-
-- It contains all symbolic reference (*constant pool resolution)* and normal method return related to that particular method.
-- It also contains a reference to Exception table which provide the corresponding catch block information in the case of exceptions.
