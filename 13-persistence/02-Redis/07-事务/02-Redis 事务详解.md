@@ -78,6 +78,8 @@ discard
 
 ## 为什么Redis不支持回滚（rollback）
 
+> https://blog.csdn.net/yangshangwei/article/details/82866216?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param
+
 如果你有使用关系式数据库的经验， 那么 “Redis 在事务失败时不进行回滚，而是继续执行余下的命令”这种做法可能会让你觉得有点奇怪。
 
 以下是这种做法的优点：
