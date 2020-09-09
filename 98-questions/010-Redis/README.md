@@ -16,13 +16,33 @@
 
  [004-Redis内存满了怎么办.md](004-Redis内存满了怎么办.md) 
 
+#### 说一说RedisCluster的理解
+
+ [005-说一说RedisCluster的理解.md](005-说一说RedisCluster的理解.md) 
+
+
+
+# 未整理
+
 #### redis的持久化，rdb和aof区别，redis服务挂了怎么恢复数据，具体恢复过程
 
  [014-redis的持久化，rdb和aof区别，redis服务挂了怎么恢复数据，具体恢复过程.md](014-redis的持久化，rdb和aof区别，redis服务挂了怎么恢复数据，具体恢复过程.md) 
 
+#### redis中的lfu是怎么实现的
+
+单线程，epoll，，sentinel，gossip，raft，分布式锁，穿透，击穿，雪崩，数据一致性，sds，ziplist，skiplist，rehash，hyperloglog，热key，大key，过期清理，淘汰策略，主从复制，rdb，aof，aof rewrite
+
+## Finish
+
+cluster
+
+
+
+
+
 # QA-Redis
 
-
+什么是一致性Hash怎么实现
 
 > 3.Redis 有哪些架构模式？讲讲各自的特点
 >
