@@ -1,5 +1,7 @@
 # ParallelScanvenge 垃圾收集器 吞吐量优先收集器
 
+<img src="../../assets/image-20200908105903706.png" alt="image-20200908105903706" style="zoom:67%;" />
+
 - 标记-复制算法
 - 支持并行收集的多线程收集器
 - 自适应调节策略是ps 垃圾收集器区别于 parNew 的重要区别
@@ -56,8 +58,8 @@ Parallel Scanvenge 基于多线程复制算法实现,在系统吞吐量上有很
 我们要配置一些基本的参数
 
 - -Xmx 设置最大堆
-- -XX MaxGCPauseMillis 参数 ,更关注最大停顿时间
-- -XX GCTimeRatio 更关注吞吐量
+- -XX MaxGCPauseMillis 控制最大的垃圾收集停顿时间
+- -XX GCTimeRatio 直接设置吞吐量的大小
 
 给虚拟机设定一个目标,那具体细节参数由虚拟机去完成
 

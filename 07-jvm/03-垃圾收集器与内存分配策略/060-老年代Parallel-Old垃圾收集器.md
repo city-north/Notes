@@ -1,5 +1,7 @@
 # Parallel Old 收集器
 
+<img src="../../assets/image-20200908105903706.png" alt="image-20200908105903706" style="zoom:67%;" />
+
 Parallel Old 是 Parallel Scanvenge 收集器的老年代版本,
 
 - 支持多线程并发收集
