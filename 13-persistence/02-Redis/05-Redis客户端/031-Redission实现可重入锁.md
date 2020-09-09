@@ -91,15 +91,18 @@ tryLock() ——> tryAcquire() ——> tryAcquireAsync() ——> tryLockInnerAsy
 // KEYS[1] 锁名称 updateAccount // ARGV[1] key 过期时间 10000ms // ARGV[2] 线程名称
 // 锁名称不存在
 if (redis.call('exists', KEYS[1]) == 0) then
-  // 创建一个 hash，key=锁名称，field=线程名，value=1 redis.call('hset', KEYS[1], ARGV[2], 1);
+  // 创建一个 hash，key=锁名称，field=线程名，value=1 
+  redis.call('hset', KEYS[1], ARGV[2], 1);
   // 设置 hash 的过期时间
   redis.call('pexpire', KEYS[1], ARGV[1]);
   return nil;
 end;
   // 锁名称存在，判断是否当前线程持有的锁
 if (redis.call('hexists', KEYS[1], ARGV[2]) == 1) then
-  // 如果是，value+1，代表重入次数+1 redis.call('hincrby', KEYS[1], ARGV[2], 1);
-  // 重新获得锁，需要重新设置 Key 的过期时间 redis.call('pexpire', KEYS[1], ARGV[1]);
+  // 如果是，value+1，代表重入次数+1 
+  redis.call('hincrby', KEYS[1], ARGV[2], 1);
+  // 重新获得锁，需要重新设置 Key 的过期时间 
+  redis.call('pexpire', KEYS[1], ARGV[1]);
   return nil;
 end;
 // 锁存在，但是不是当前线程持有，返回过期时间(毫秒) return redis.call('pttl', KEYS[1]);
@@ -126,7 +129,8 @@ unlock——unlockInnerAsync
 // ARGV[3] 线程名称
 // 锁不存在(过期或者已经释放了)
 if (redis.call('exists', KEYS[1]) == 0) then
-	// 发布锁已经释放的消息 redis.call('publish', KEYS[2], ARGV[1]); return 1;
+	// 发布锁已经释放的消息 
+  redis.call('publish', KEYS[2], ARGV[1]); return 1;
 end;
 	// 锁存在，但是不是当前线程加的锁
 if (redis.call('hexists', KEYS[1], ARGV[3]) == 0) then
