@@ -1,4 +1,12 @@
-# 内存映射工具
+# 内存映射工具Jmap
+
+## 目录
+
+- 使用jmap导出dump
+
+
+
+## 使用jmap导出dump
 
 jmap (Memory map for java) 命令用于生成堆转储文件 
 
@@ -8,6 +16,7 @@ jmap (Memory map for java) 命令用于生成堆转储文件
 
 ```
 -XX: +HeapDumpOnOutOfMemoryError 参数可以在虚拟机溢出的出现之后自动生成dump
+-XX: HeapDumpPath=dump.hprof //指定dump路径
 ```
 
 或者通过
@@ -26,11 +35,15 @@ kill -3 命令
 
 <img src="../../assets/image-20200612234853160.png" alt="image-20200612234853160" style="zoom: 67%;" />
 
+#### 手动导出一个dump
+
 ```
-jmap -dump:format=b,file=eclipse.bin 3500
+jmap -dump:format=b,file=dump.hprof 3500
 -> Dumping heap to ....
 Heap dumpfile created
 ```
+
+
 
 #### ` jmap -histo[:live] <pid>`
 
@@ -146,62 +159,53 @@ jmap -heap <pid>
 ```
 
 ```
-[root@test01 ~]# jmap -heap 549 
-Attaching to process ID 549, please wait...
+[root@node1 ~]# jmap -heap 66102
+Attaching to process ID 66102, please wait...
 Debugger attached successfully.
 Server compiler detected.
-JVM version is 24.79-b02
+JVM version is 25.171-b11
 
-using parallel threads in the new generation.
 using thread-local object allocation.
-Concurrent Mark-Sweep GC
+Parallel GC with 8 thread(s)
 
 Heap Configuration:
-   MinHeapFreeRatio = 40
-   MaxHeapFreeRatio = 70
-   MaxHeapSize      = 4294967296 (4096.0MB)
-   NewSize          = 2621440000 (2500.0MB)
-   MaxNewSize       = 2621440000 (2500.0MB)
-   OldSize          = 5439488 (5.1875MB)
-   NewRatio         = 2
-   SurvivorRatio    = 8
-   PermSize         = 536870912 (512.0MB)
-   MaxPermSize      = 1073741824 (1024.0MB)
-   G1HeapRegionSize = 0 (0.0MB)
+   MinHeapFreeRatio         = 0
+   MaxHeapFreeRatio         = 100
+   MaxHeapSize              = 1073741824 (1024.0MB)
+   NewSize                  = 178782208 (170.5MB)
+   MaxNewSize               = 357564416 (341.0MB)
+   OldSize                  = 358088704 (341.5MB)
+   NewRatio                 = 2
+   SurvivorRatio            = 8
+   MetaspaceSize            = 21807104 (20.796875MB)
+   CompressedClassSpaceSize = 1073741824 (1024.0MB)
+   MaxMetaspaceSize         = 17592186044415 MB
+   G1HeapRegionSize         = 0 (0.0MB)
 
 Heap Usage:
-New Generation (Eden + 1 Survivor Space):
-   capacity = 2359296000 (2250.0MB)
-   used     = 605297248 (577.2564392089844MB)
-   free     = 1753998752 (1672.7435607910156MB)
-   25.65584174262153% used
+PS Young Generation
 Eden Space:
-   capacity = 2097152000 (2000.0MB)
-   used     = 468670096 (446.95863342285156MB)
-   free     = 1628481904 (1553.0413665771484MB)
-   22.34793167114258% used
+   capacity = 207618048 (198.0MB)
+   used     = 185767680 (177.161865234375MB)
+   free     = 21850368 (20.838134765625MB)
+   89.47568951231061% used
 From Space:
-   capacity = 262144000 (250.0MB)
-   used     = 136627152 (130.2978057861328MB)
-   free     = 125516848 (119.70219421386719MB)
-   52.11912231445312% used
+   capacity = 6815744 (6.5MB)
+   used     = 3847024 (3.6688079833984375MB)
+   free     = 2968720 (2.8311920166015625MB)
+   56.44319974459135% used
 To Space:
-   capacity = 262144000 (250.0MB)
+   capacity = 6815744 (6.5MB)
    used     = 0 (0.0MB)
-   free     = 262144000 (250.0MB)
+   free     = 6815744 (6.5MB)
    0.0% used
-concurrent mark-sweep generation:
-   capacity = 1673527296 (1596.0MB)
-   used     = 95869752 (91.42852020263672MB)
-   free     = 1577657544 (1504.5714797973633MB)
-   5.728604022721599% used
-Perm Generation:
-   capacity = 536870912 (512.0MB)
-   used     = 96785824 (92.30215454101562MB)
-   free     = 440085088 (419.6978454589844MB)
-   18.027764558792114% used
+PS Old Generation
+   capacity = 587202560 (560.0MB)
+   used     = 133345768 (127.1684341430664MB)
+   free     = 453856792 (432.8315658569336MB)
+   22.708648954119003% used
 
-33025 interned Strings occupying 3477008 bytes.
+38087 interned Strings occupying 4891976 bytes.
 ```
 
 ```
