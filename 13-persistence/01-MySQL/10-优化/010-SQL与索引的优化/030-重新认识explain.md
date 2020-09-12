@@ -5,7 +5,7 @@
 - **先看 type , 如果出现 all 关键字,后面的内容就不用看了, 全表扫描**
 - 再看 key 列, 看是否使用了索引, null 代表没有使用索引, 
 - 然后看 rows 列, 该列用来表示在 SQL 执行过程中被扫描的行数,该数值越大,意味着需要扫描的行数越多,相应的耗时就会越长
-- 最后看 extra 列, 在这个列中要观察是否有 Using filesort 或者 Using temporary 这样的关键字出现,这是很影响数据库性讷讷个
+- 最后看 extra 列, 在这个列中要观察是否有 Using filesort 或者 Using temporary 这样的关键字出现,这是很影响数据库性能
 
 MySQL 5.7 的执行计划会默认添加 filterred 列, MySQL 5.6 使用 explain extended 也会增加此列,它指返回结果的行占需要读到的行(rows 列 的值) 的百分比 , 
 

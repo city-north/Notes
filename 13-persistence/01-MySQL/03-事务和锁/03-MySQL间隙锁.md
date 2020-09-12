@@ -15,8 +15,6 @@
 当我们查询的记录不存在，没有命中任何一个 record，无论是用等值 查询还是范围查询的时候，它使用的都是间隙锁。
 举个例子，where id >4 and id <7，where id = 6。
 
-
-
 ## 为什么有间隙锁
 
 **解决幻读**
@@ -25,5 +23,5 @@
 
 当出现 n 个 record  就有 n+1 个 gap
 
-Gap Lock 只在 RR 中存在。如果要关闭间隙锁，就是把事务隔离级别设置成 RC， 并且把 innodb_locks_unsafe_for_binlog 设置为 ON。
+Gap Lock 只在 RR 中存在。如果要关闭间隙锁，就是把事务隔离级别设置成 RC， 并且把innodb_locks_unsafe_for_binlog 设置为 ON。
 这种情况下除了外键约束和唯一性检查会加间隙锁，其他情况都不会用间隙锁。

@@ -13,8 +13,6 @@
 - create 调用有参数的构造函数
 - isCoolection 是否是集合
 
-
-
 ## 详细介绍
 
 往往这种接口在框架中都会提供一个标注的实现类, Mybatis 提供的是一个`DefaultObjectFactory`,一般情况下,需要修改对象工厂的行为,直接继承和这个类,

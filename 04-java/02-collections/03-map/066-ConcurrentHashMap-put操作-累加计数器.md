@@ -1,117 +1,46 @@
-# put方法第二阶段-累加元素计数器
+# put方法第四阶段-累加元素计数器
+
+ [010-LongAdder.md](..\..\03-concurrency\09-Java中13个原子类\010-LongAdder.md)  伪共享
 
 - [addCount方法初始化阶段](#addCount方法初始化阶段)
+  - 直接cas BaseCount 累加元素的个数
+  - 找到CounterCell[] 的某个下标位置， value = v +x() -> 表示记录元素个数
+  - 如果前面全部失败，则走fullAndCount
 - [addCount方法添加元素个数阶段](#addCount方法添加元素个数阶段)
+  - CountCell[]为null
+  - 已经初始化了，然后存在竞争，cas进行更新
+  - 如果cas失败，触发counterCell扩容
+
+## 图示
 
 ![image-20200909121018928](../../../assets/image-20200909121018928.png)
 
-#### addCount方法初始化阶段
+## addCount方法初始化阶段
+
+#### 核心两大件
+
+![image-20200912230044482](../../../assets/image-20200912230044482.png)
+
+
+
+- baseCount - 没有竞争的情况下，通过CAS更新元素个数
+- CounterCell[] ：存在线程竞争的情况下，累加元素个数
+- 汇总的计算  size() = baseCount + 遍历 counterCells
+
+### 源码
 
 ```java
 private transient volatile long baseCount; //在没有竞争的情况下,去通过cas操作更新元素 个数
 private transient volatile CounterCell[] counterCells;//在存在线程竞争的情况下，存储 元素个数
-hashmap 的元素个数 size() = baseCount + 遍历 counterCells
 ```
-
-
 
 - 直接访问baseCount累加元素个数
-- 如果累计失败,找到CountCell[]随机的某个下标位置, value = v + x() -> 表示记录元素个数
+- 如果累计失败,找到CountCell[] 随机的某个下标位置, value = v + x() -> 表示记录元素个数
 - 如果还是失败则进入到fullAndCount()
 
+## addCount方法添加元素个数阶段
 
-
-
-
-```java
-// See LongAdder version for explanation
-private final void fullAddCount(long x, boolean wasUncontended) {
-    int h;
-    if ((h = ThreadLocalRandom.getProbe()) == 0) {
-        ThreadLocalRandom.localInit();      // force initialization
-        h = ThreadLocalRandom.getProbe();
-        wasUncontended = true;
-    }
-    boolean collide = false;                // True if last slot nonempty
-    for (;;) {
-        CounterCell[] as; CounterCell a; int n; long v;
-        if ((as = counterCells) != null && (n = as.length) > 0) {
-            if ((a = as[(n - 1) & h]) == null) {
-                if (cellsBusy == 0) {            // Try to attach new Cell
-                    CounterCell r = new CounterCell(x); // Optimistic create
-                    if (cellsBusy == 0 &&
-                        U.compareAndSwapInt(this, CELLSBUSY, 0, 1)) {
-                        boolean created = false;
-                        try {               // Recheck under lock
-                            CounterCell[] rs; int m, j;
-                            if ((rs = counterCells) != null &&
-                                (m = rs.length) > 0 &&
-                                rs[j = (m - 1) & h] == null) {
-                                rs[j] = r;
-                                created = true;
-                            }
-                        } finally {
-                            cellsBusy = 0;
-                        }
-                        if (created)
-                            break;
-                        continue;           // Slot is now non-empty
-                    }
-                }
-                collide = false;
-            }
-            else if (!wasUncontended)       // CAS already known to fail
-                wasUncontended = true;      // Continue after rehash
-            else if (U.compareAndSwapLong(a, CELLVALUE, v = a.value, v + x))
-                break;
-            else if (counterCells != as || n >= NCPU)
-                collide = false;            // At max size or stale
-            else if (!collide)
-                collide = true;
-            else if (cellsBusy == 0 &&
-                     U.compareAndSwapInt(this, CELLSBUSY, 0, 1)) {
-                try {
-                    if (counterCells == as) {// Expand table unless stale
-                        CounterCell[] rs = new CounterCell[n << 1];
-                        for (int i = 0; i < n; ++i)
-                            rs[i] = as[i];
-                        counterCells = rs;
-                    }
-                } finally {
-                    cellsBusy = 0;
-                }
-                collide = false;
-                continue;                   // Retry with expanded table
-            }
-            h = ThreadLocalRandom.advanceProbe(h);
-        }
-        else if (cellsBusy == 0 && counterCells == as &&
-                 U.compareAndSwapInt(this, CELLSBUSY, 0, 1)) {
-            boolean init = false;
-            try {                           // Initialize table
-                if (counterCells == as) {
-                    CounterCell[] rs = new CounterCell[2];
-                    rs[h & 1] = new CounterCell(x);
-                    counterCells = rs;
-                    init = true;
-                }
-            } finally {
-                cellsBusy = 0;
-            }
-            if (init)
-                break;
-        }
-        else if (U.compareAndSwapLong(this, BASECOUNT, v = baseCount, v + x))
-            break;                          // Fall back on using base
-    }
-}
-```
-
-
-
-#### addCount方法添加元素个数阶段
-
-
+![image-20200912231203253](../../../assets/image-20200912231203253.png)
 
 > 在 putVal 方法执行完成以后，会通过 addCount 来增加 ConcurrentHashMap 中的元素个数， 并且还会可能触发扩容操作。这里会有两个非常经典的设计
 >
@@ -187,9 +116,11 @@ private transient volatile CounterCell[] counterCells;/ /counterCells数组，�
 
 值得注意的是 **@sun.misc.Contended** 注解 是为了解决伪共享问题  [100-伪共享.md](../../03-concurrency/05-Java内存模型/100-伪共享.md) 
 
-#### fullAddCount 源码分析
+#### fullAddCount源码分析
 
 fullAddCount 主要是用来初始化 CounterCell，来记录元素个数，里面包含扩容，初始化等 操作
+
+
 
 #### sumCount
 
@@ -209,4 +140,5 @@ size 实际上调用的额就是 sumCount 进行操作的
     }
 ```
 
-## 
+
+

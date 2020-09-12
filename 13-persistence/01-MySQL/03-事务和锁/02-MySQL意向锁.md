@@ -20,8 +20,6 @@
 select * from t2 where id =4 for update;
 ```
 
-
-
 ## 为什么需要意向锁
 
 - 我们有了表级别的锁，在 InnoDB 里面就可以支持更多粒度的锁。

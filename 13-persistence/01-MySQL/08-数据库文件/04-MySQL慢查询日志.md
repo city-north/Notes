@@ -57,8 +57,6 @@ long_query_time=2
 slow_query_log_file =/var/lib/mysql/localhost-slow.log
 ```
 
-
-
 首先我们要把慢的 SQL 语句录下来,MySQL 提供了一个 SlowQueryLog 的东西
 
 ## 实例:模拟慢查询

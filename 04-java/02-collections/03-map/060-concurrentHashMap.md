@@ -4,9 +4,11 @@
 
 ## 1.7版本
 
-ConcurrentHashMap 和 HashMap 的实现原理是差不多的，但是因为 **ConcurrentHashMap** 需要支持并发操作，所以在实现上要比 hashmap 稍微复杂一些。
+1.7中的CHM采用分段锁的思想减少锁的竞争，从而提高put速度
 
 在 JDK1.7 的实现上， **ConcurrentHashMap 是一个 Segment 数组**, **默认是 16 个**，它通过继承 **ReentrantLock** 来进行加锁，通过 每次锁住一个 segment 来保证每个 segment 内的操作的线程安全性从而实现全局线程安全。 整个结构图如下
+
+> Segment 默认是16个，也就是说同时支持16个线程的增删改操作
 
 ![image-20200714170752107](../../../assets/image-20200714170752107.png)
 
