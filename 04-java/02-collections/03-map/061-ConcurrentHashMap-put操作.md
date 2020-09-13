@@ -39,9 +39,10 @@ for (Node<K,V>[] tab = table;;) {
 
 ![image-20200912222629985](../../../assets/image-20200912222629985.png)
 
-## put方法第三阶段-碰撞插入
+##  [put方法第三阶段-碰撞插入](065-ConcurrentHashMap-操作-碰撞插入.md) 
 
 ![image-20200912223702347](../../../assets/image-20200912223702347.png)
 
+##  [ConcurrentHashMap-put操作-累加计数器.md](066-ConcurrentHashMap-put操作-累加计数器.md) 
 
-
+## [ConcurrentHashMap-put操作-扩容](067-ConcurrentHashMap-put操作-扩容) 

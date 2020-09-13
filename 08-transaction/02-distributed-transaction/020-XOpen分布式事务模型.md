@@ -10,9 +10,10 @@
 
 X/Open DTP（X/Open Distributed Transaction Processing Reference Model）是X/Open这个组织定义的一套分布式事务的标准。
 
-**这个标准提出了使用两阶段提交（2PC，Two-Phase-Commit）来保证分布式事务的完整性。**
+这个标准提出了使用两阶段提交（2PC，Two-Phase-Commit）来保证分布式事务的完整性。
 
->  [030-两阶段提交协议.md](030-两阶段提交协议.md) 
+- [两阶段提交协议.md](030-两阶段提交协议.md) 
+- [三阶段提交协议.md](040-三阶段提交协议.md) 
 
 ## X/Open三种角色
 
@@ -37,13 +38,9 @@ X/Open DTP（X/Open Distributed Transaction Processing Reference Model）是X/Op
 - 应用 AP 结束事务请求, 事务管理器 TM 会通知各个 RM
 - 根据各个 RM 的事务执行结果,执行提交或者回滚
 
-
-
 ## 事务执行流程
 
 <img src="../../assets/image-20200903105534033.png" alt="image-20200903105534033" style="zoom:50%;" />
-
-
 
 如果此时RM代表数据库，那么TM需要能够管理多个数据库的事务，大致实现步骤如下：
 
@@ -61,3 +58,4 @@ X/Open DTP（X/Open Distributed Transaction Processing Reference Model）是X/Op
 需要注意的是，TM和多个RM之间的事务控制，是基于XA协议（XA Specification）来完成的。
 
 XA协议是X/Open提出的分布式事务处理规范，也是分布式事务处理的工业标准，它定义了xa_和ax_系列的函数原型及功能描述、约束等。目前Oracle、MySQL、DB2都实现了XA接口，所以它们都可以作为RM
+
