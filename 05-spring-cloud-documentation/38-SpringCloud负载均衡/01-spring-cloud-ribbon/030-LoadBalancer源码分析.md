@@ -2,6 +2,25 @@
 
 ## 核心问题
 
+
+
+## LoadBalancer
+
+#### 声明
+
+```java
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder){
+        return restTemplateBuilder.build();
+    }
+
+```
+
+
+
+
+
 ```
         return restTemplate.getForObject("http://spring-cloud-order-service/orders",String.class);
 ```
