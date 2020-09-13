@@ -31,8 +31,6 @@ public class AppConfig {
 
 ```
 
-
-
 配置文件方式:
 
 ```xml

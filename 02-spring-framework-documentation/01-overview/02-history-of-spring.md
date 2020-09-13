@@ -1,4 +1,4 @@
-## History of Spring
+# History of Spring
 
 - 2003年诞生,针对 J2EE 标准的复杂性提出
 - 有人认为 Spring 和 J2EE 是竞争对手,实际上,不仅仅是竞争对手,更像是互补

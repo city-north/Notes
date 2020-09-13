@@ -214,6 +214,4 @@ public class SpringConfig {
 
 ## @ComponentScan
 
-
-
 到目前为止，我们看到JavaConfig使用工厂方法(用`@Bean`注释)来提供bean实现。使用这种方法，我们必须自己创建bean实现实例。我们可以让spring扫描提供的包并自动创建所有实现，然后注入依赖项，而不是使用这种工厂方法。我们可以通过使用`@ComponentScan`和`@Configuration`来实现这一点。我们仍然不需要使用任何XML。
