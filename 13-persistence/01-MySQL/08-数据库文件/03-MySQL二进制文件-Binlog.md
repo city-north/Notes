@@ -133,7 +133,7 @@ sync_binlog 参数来决定的
 
 如果 cache 满了才会同步到磁盘
 
-> 当sync_binlog = 1 , innodb_flush_log_at_trx_commit = 1 , 是双鞋模式,确保数据库更安全
+> 当 sync_binlog = 1 , innodb_flush_log_at_trx_commit = 1 , 是双写模式,确保数据库更安全
 
 #### sync_binlog = n 时 ,更关注性能
 
@@ -145,11 +145,12 @@ sync_binlog 参数来决定的
 
 ![image-20200820110307534](../../../assets/image-20200820110307534.png)
 
-例如一条语句:update teacher set name='盆鱼宴' where id=1; 1、先查询到这条数据，如果有缓存，也会用到缓存。
-2、把 name 改成盆鱼宴，然后调用引擎的 API 接口，写入这一行数据到内存，同时
-记录 redo log。这时 redo log 进入 prepare 状态，然后告诉执行器，执行完成了，可 以随时提交。
-3、执行器收到通知后记录 binlog，然后调用存储引擎接口，设置 redo log 为 commit 状态。
-4、更新完成。
+例如一条语句:update teacher set name='盆鱼宴' where id=1; 
+
+1. 先查询到这条数据，如果有缓存，也会用到缓存。
+2. 把 name 改成盆鱼宴，然后调用引擎的 API 接口，写入这一行数据到内存，同时记录 redo log。这时 redo log 进入 prepare 状态，然后告诉执行器，执行完成了，可 以随时提交。
+3. 执行器收到通知后记录 binlog，然后调用存储引擎接口，设置 redo log 为 commit 状态。
+4. 更新完成。
 
 ## 流程
 
@@ -162,7 +163,7 @@ sync_binlog 参数来决定的
 
 - 恢复(recovery) : 某些数据的恢复需要二进制日志, 例如, 在一个数据库全备文件恢复后,用户可以通过而二进制日志进行 point-in-time 的恢复
 - 复制(replication): 其原理与恢复类似,通过复制和执行二进制日志使一台远程的 MySQL 数据库(slave) 实时同步
-- 审计(audit) 用户可以通过二进制日志中的信息来进行审计,判断是否对数据库进行诸如攻击
+- 审计(audit): 用户可以通过二进制日志中的信息来进行审计,判断是否对数据库进行诸如攻击
 
 ## 区别
 

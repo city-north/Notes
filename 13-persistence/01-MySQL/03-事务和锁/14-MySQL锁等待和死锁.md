@@ -5,7 +5,7 @@
 锁等待是指一个事务过程中产生的锁,其他事务需要等待上一个事务释放它的锁才能占用该资源
 
 - 如果该事物一直不释放,就会持续等待下去, 知道超过了锁等待时间, 会报一个等待超时的错误
-- MySQL 中通过 innodb_lock_wait_timeout 参数控制, 单位是秒
+- MySQL 中通过 **innodb_lock_wait_timeout** 参数控制, 单位是秒
 
 ## 死锁是什么
 
@@ -13,19 +13,16 @@
 
 - InnoDB 存储引起可以自动检测死锁,并且自动回滚事务
 
-
-
 锁什么时候释放? 事务结束(commit，rollback);客户端连接断开。
 
 如果一个事务一直未释放锁，其他事务会被阻塞多久?会不会永远等待下去?如果 是，在并发访问比较高的情况下，如果大量事务因无法立即获得所需的锁而挂起，会占 用大量计算机资源，造成严重性能问题，甚至拖跨数据库。
 
-[Err] 1205 - Lock wait timeout exceeded; try restarting transaction
+> [Err] 1205 - Lock wait timeout exceeded; try restarting transaction
 
 MySQL 有一个参数来控制获取锁的等待时间，默认是 50 秒。
 
 ```
 show VARIABLES like 'innodb_lock_wait_timeout';
-
 ```
 
 对于死锁，是无论等多久都不能获取到锁的，这种情况，也需要等待 50 秒钟吗?那 不是白白浪费了 50 秒钟的时间吗?
@@ -36,16 +33,16 @@ show VARIABLES like 'innodb_lock_wait_timeout';
 
 在第一个事务中，检测到了死锁，马上退出了，第二个事务获得了锁，不需要等待 50 秒:
 
-[Err] 1213 - Deadlock found when trying to get lock; try restarting transaction
+> [Err] 1213 - Deadlock found when trying to get lock; try restarting transaction
 
 为什么可以直接检测到呢?是因为死锁的发生需要满足一定的条件，所以在发生死 锁时，InnoDB 一般都能通过算法(wait-for graph)自动检测到。
 
  那么死锁需要满足什么条件?死锁的产生条件:
 因为锁本身是互斥的，
 
-- (1)同一时刻只能有一个事务持有这把锁，
-- (2)其他的事 务需要在这个事务释放锁之后才能获取锁，而不可以强行剥夺，
-- (3)当多个事务形成等 待环路的时候，即发生死锁。
+- 同一时刻只能有一个事务持有这把锁，
+- 其他的事 务需要在这个事务释放锁之后才能获取锁，而不可以强行剥夺，
+- 当多个事务形成等 待环路的时候，即发生死锁。
 
 如果锁一直没有释放，就有可能造成大量阻塞或者发生死锁，造成系统吞吐量下降，这时候就要查看是哪些事务持有了锁。
 

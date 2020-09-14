@@ -4,8 +4,6 @@
 
 - 使用jmap导出dump
 
-
-
 ## 使用jmap导出dump
 
 jmap (Memory map for java) 命令用于生成堆转储文件 
