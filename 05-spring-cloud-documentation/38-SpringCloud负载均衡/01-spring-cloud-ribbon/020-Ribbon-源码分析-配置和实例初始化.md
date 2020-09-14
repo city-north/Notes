@@ -32,13 +32,15 @@ public @interface RibbonClient {
 
 ## 客户端配置注册器-ClientConfigurationRegistrar
 
+![image-20200914191713693](../../../assets/image-20200914191713693.png)
+
 负责注册客户端的配置
 
 - RibbonClientConfigurationRegistrar是ImportBeanDefinitionRegistrar的实现类
 
   >  ImportBeanDefinitionRegistrar是Spring动态注册BeanDefinition的接口，可以用来注册Ribbon所需的BeanDefinition，比如说Ribbon客户端实例(Ribbon Client)。
 
-- ImportBeanDefinitionRegistrar的**registerBeanDefinitions**方法可以注册Ribbon客户端的配置类，也就是@RibbonClient的configuration属性值。registerBeanDefinitions方法的具体实现如下所示：
+-  ImportBeanDefinitionRegistrar 的 **registerBeanDefinitions** 方法可以注册Ribbon客户端的配置类，也就是 @RibbonClient 的 configuration 属性值。registerBeanDefinitions方法的具体实现如下所示：
 
 ```java
 //RibbonClientConfigurationRegistrar.java
@@ -57,12 +59,11 @@ public void registerBeanDefinitions(AnnotationMetadata metadata,
 
 ## Ribbon对于组件实例的管理配置机制
 
-Ribbon对于组件实例的管理配置机制，都是通过NamedContextFactory创建带名称的**AnnotationConfigApplicationContext** 子上下文来存储并管理不同的组件实例
+Ribbon对于组件实例的管理配置机制，都是通过 NamedContextFactory 创建带名称的**AnnotationConfigApplicationContext** 子上下文来存储并管理不同的组件实例
 
 ```java
 //RibbonClientConfigurationRegistrar.java
-private void registerClientConfiguration(BeanDefinitionRegistry registry,
-        Object name, Object configuration) {
+private void registerClientConfiguration(BeanDefinitionRegistry registry, Object name, Object configuration) {
     BeanDefinitionBuilder builder = BeanDefinitionBuilder
             .genericBeanDefinition(RibbonClientSpecification.class);
     builder.addConstructorArgValue(name);
@@ -72,13 +73,13 @@ private void registerClientConfiguration(BeanDefinitionRegistry registry,
 }
 ```
 
-如上代码所示，registerClientConfiguration方法会向BeanDefinitionRegistry注册
-一个 **RibbonClientSpecification** 的 **BeanDefinition** ，其名称为 RibbonClient 的名称加上
-.RibbonClientSpecification 。
+如上代码所示，registerClientConfiguration方法会向BeanDefinitionRegistry注册一个 **RibbonClientSpecification** 的 **BeanDefinition** ，其名称为 RibbonClient 的名称加上`.RibbonClientSpecification` 。
 
 >  RibbonClientSpecification是 **NamedContextFactory.Specification** 的实现类，是供 SpringClientFactory 使用的。
 
 在 **RibbonAutoConfiguration** 里会进行 **SpringClientFactory** 实例的初始化，并将所有的 **RibbonClientSpecification** 实例都设置给 **SpringClientFactory** ，供其在初始化Ribbon相关组件实例时使用。
+
+
 
 ```java
 @Configuration
@@ -109,5 +110,4 @@ public class RibbonAutoConfiguration {
 }
 ```
 
-如上代码所示，RibbonAutoConfiguration配置类也会进行 LoadBalancerClient 接口的默认实例的初始化。loadBalancerClient方法被@ConditionalOnMissingBean注解修饰，意味着只有当Spring容器中没有LoadBalancerClient实例时，该方法才会初始化 RibbonLoadBalancerClient 对象， 再将其作为LoadBalancerClient 的实例
-
+如上代码所示，RibbonAutoConfiguration配置类也会进行 LoadBalancerClient 接口的默认实例的初始化。loadBalancerClient方法被@ConditionalOnMissingBean 注解修饰，意味着只有当Spring容器中没有LoadBalancerClient实例时，该方法才会初始化 RibbonLoadBalancerClient 对象， 再将其作为LoadBalancerClient 的实例

@@ -10,6 +10,5 @@ import java.lang.reflect.Method;
  * @author qiang.chen04@hand-china.com 2020/08/15 20:57
  */
 public interface ECInvocationHandler {
-    Object invoke(Object proxy, Method method, Object[] args)
-            throws Throwable;
+    Object invoke(Object proxy, Method method, Object[] args) throws Throwable;
 }

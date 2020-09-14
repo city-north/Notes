@@ -4,7 +4,7 @@
 
 ![image-20200726172400638](../../../assets/image-20200726172400638.png)
 
-任务分为三种
+## 任务分为三种
 
 - 一次性执行任务 , 执行完成之后就结束了
 - fixed-delay 任务保证了同一个任务在多次执行之间间隔固定时间
@@ -123,10 +123,6 @@ public ThreadPoolExecutor(int corePoolSize,
 其中 initialDelay 标识提交任务后延迟多少时间开始执行任务command, delay 标识当任务执行完毕之后延长多长时间后再次运行 command 任务, unit 是 initialDelay 和 delay的时间单位
 
 #### scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit);
-
-
-
-ScheduledFutureTask 是具有返回值的任务 ,继承自 FutureTask , FutureTask 的内部有一个变量 state 用来表示任务的状态, 一开始状态为 NEW , 所有状态为
 
 
 

@@ -1,31 +1,47 @@
-## Ribbon-源码分析-集成RestTemplate
+# Ribbon-源码分析-集成RestTemplate
 
-@RibbonClient注解可以声明Ribbon客户端，设置Ribbon客户端的名称和配置类，configuration属性可以指定@Configuration的配置类，进行Ribbon相关的配置。@RibbonClient还会导入(import)RibbonClientConfigurationRegistrar类来动态注册Ribbon相关的BeanDefinition。@RibbonClient注解的具体实现如下所示：
-@Import(RibbonClientConfigurationRegistrar.class)
-public @interface RibbonClient {
-    String value() default "";
-    /**
-     * 配置Ribbon客户端名称
-     */
-    String name() default "";
-    /**
-     * Ribbon客户端的自定义配置，可以配置生成客户端的各个组件，比如说ILoadBalancer、ServerListFilter和IRule。默认的配置为RibbonClientConfiguration.java
-     */
-    Class〈?〉[] configuration() default {};
-}
+## 目录
 
-RibbonClientConfigurationRegistrar是ImportBeanDefinitionRegistrar的实现类，ImportBeanDefinitionRegistrar是Spring动态注册BeanDefinition的接口，可以用来注册Ribbon所需的BeanDefinition，比如说Ribbon客户端实例(Ribbon Client)。ImportBeanDefinitionRegistrar的registerBeanDefinitions方法可以注册Ribbon客户端的配置类，也就是@RibbonClient的configuration属性值。registerBeanDefinitions方法的具体实现如下所示：
-//RibbonClientConfigurationRegistrar.java
-public void registerBeanDefinitions(AnnotationMetadata metadata,
-        BeanDefinitionRegistry registry) {
-    ...
-    //获取@RibbonClient的参数数值，获取clientName后进行configuration的注册
-    Map〈String, Object〉 client = metadata.getAnnotationAttributes(
-            RibbonClient.class.getName(), true);
-    String name = getClientName(client);//获取RibbonClient的value或者name数值。
-    if (name != null) {
-        registerClientConfiguration(registry, name, client.get("configuration"));
-    }
-}
+- [服务调用简图](#服务调用简图)
+- [装配流程](#装配流程)
+- 
 
-Ribbon对于组件实例的管理配置机制和OpenFeign相同，都是通过NamedContextFactory创建带名称的AnnotationConfigApplicationContext子上下文来存
+## 服务调用简图
+
+- 订单服务调用 RestTemplate 进行请求
+- Ribbon 在发送网络请求时 替换成 RibbonLoadBalancerClient 进行调用
+
+![image-20200914192629990](../../../assets/image-20200914192629990.png)
+
+## 装配流程
+
+- `LoadBalancerClient`接口在 spring-cloud-commons 项目中,定义了负载均衡客户端的抽象行为,不同的组件可以有不同的实现
+- `RibbonLoadBalancerClient`是Ribbon 中的实现
+
+RibbonLoadBalancerClient 通过使用 RibbonAutoConfiguration 配置类将注入到Spring容器中
+
+
+
+![image-20200914193057986](../../../assets/image-20200914193057986.png)
+
+## LoadBalancerAutoConfiguration
+
+LoadBalancerAutoConfiguration实际上是 spring-cloud-commons包中的负载均衡配置实现,说明它是抽象的,负责初始化
+
+- LoadBalancerInterceptor 负载均衡拦截器 , 实际上就是用它作为 RestTemplate的拦截器
+
+- RestTemplateCustomizer 这个方法就是将拦截器添加到 restTemplate 
+- SmartInitializingSingleton 将 所有的RestTemplateCustomizer 执行一遍
+
+## LoadBalancerInterceptor
+
+LoadBalancerInterceptor 中持有负载均衡器 [LoadBalancerClient](023-Ribbon-源码分析-LoadBalancerClient.md) 
+
+然后使用这个负载均衡器调用
+
+![image-20200914195643549](../../../assets/image-20200914195643549.png)
+
+## ILoadBalancer
+
+ [023-Ribbon-源码分析-LoadBalancerClient.md](023-Ribbon-源码分析-LoadBalancerClient.md) 
+
