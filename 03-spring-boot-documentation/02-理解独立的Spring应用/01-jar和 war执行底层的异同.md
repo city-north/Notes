@@ -1,4 +1,4 @@
-# Jar 和 War 执行的底层异同
+# Jar和War执行的底层异同
 
 SpringBoot 程序可以打成 jar 包也可以打成 war 包
 
