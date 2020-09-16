@@ -6,8 +6,6 @@
 - 基于 Galera 协议的 Percona XtraDB cluster (PXC) 实现真正意义上的同步复制
 - 基于中间件
 
-
-
 ## 基于主从复制的方案
 
 #### MHA简介
