@@ -1,0 +1,141 @@
+# 通用核心初始化流程
+
+## 目录
+
+- 基本步骤
+
+- [初始化的核心](#初始化的核心)
+- [不同方式采用不同的子类初始化](#不同方式采用不同的子类初始化)
+
+![image-20200917215957012](../../assets/image-20200917215957012.png)
+
+
+
+## 基本步骤
+
+下面总结一下IoC容器初始化的基本步骤：
+
+1. 初始化的入口由容器实现中的refresh（）方法调用来完成。
+2. 对Bean定义载入IoC容器使用的方法是loadBeanDefinition（）。
+
+大致过程如下：
+
+- 通过 ResourceLoader 来完成资源文件的定位，DefaultResourceLoader 是默认的实现，同时上下文本身就给出了ResourceLoader的实现，可以通过类路径、文件系统、URL等方式来定位资源。
+- 如果是XmlBeanFactory作为IoC容器，那么需要为它指定Bean定义的资源，也就是说Bean定义文件时通过抽象成Resource来被IoC容器处理，容器通过BeanDefinitionReader来完成定义信息的解析和 Bean 信息的注册，往往使用 XmlBeanDefinitionReader 来解析 Bean 的XML 定义文件—实际的处理过程是委托给 BeanDefinitionParserDelegate 来完成的，从而得到Bean的定义信息，这些信息在Spring中使用BeanDefinition来表示—这个名字可以让我们想到loadBeanDefinition（）、registerBeanDefinition（）这些相关方法。它们都是为处理BeanDefinition服务的，容器解析得到BeanDefinition以后，需要在IoC容器中注册，这由IoC实现BeanDefinitionRegistry接口来实现。
+- 注册过程就是在IoC容器内部维护的一个HashMap来保存得到的BeanDefinition的过程。这个HashMap是IoC容器持有Bean信息的场所，以后对Bean的操作都是围绕这个HashMap来实现的。
+- 之后我们就可以通过BeanFactory和ApplicationContext来享受Spring IoC的服务了。在使用IoC 容器的时候我们注意到，除了少量黏合代码，绝大多数以正确 IoC 风格编写的应用程序代码完全不用关心如何到达工厂，因为容器将把这些对象与容器管理的其他对象钩在一起了。基本的策略是把工厂放到已知的地方，最好放在对预期使用的上下文有意义的地方，以及代码将实际需要访问工厂的地方。Spring本身提供了对声明式载入Web应用程序用法的应用程序上下文，并将其存储在ServletContext的框架实现中。
+
+## 初始化的核心
+
+ 初始化的核心是
+
+**org.springframework.context.support.AbstractApplicationContext#refresh** 看源码只要看到refersh方法就结束了
+
+它使用模板方法模式,定义了整体初始化流程
+
+```java
+	@Override
+	public void refresh() throws BeansException, IllegalStateException {
+		synchronized (this.startupShutdownMonitor) {
+			// Prepare this context for refreshing.
+			//1、调用容器准备刷新的方法，获取容器的当时时间，同时给容器设置同步标识
+			prepareRefresh();
+
+			// Tell the subclass to refresh the internal bean factory.
+			//2、告诉子类启动refreshBeanFactory()方法，Bean定义资源文件的载入从
+			//子类的refreshBeanFactory()方法启动
+			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+      //----到这已经初始化好了Bean
+
+			// Prepare the bean factory for use in this context.
+			//3、为BeanFactory配置容器特性，例如类加载器、事件处理器等
+			prepareBeanFactory(beanFactory);
+
+			try {
+				// Allows post-processing of the bean factory in context subclasses.
+				//4、为容器的某些子类指定特殊的BeanPost事件处理器
+				postProcessBeanFactory(beanFactory);
+
+				// Invoke factory processors registered as beans in the context.
+				//5、调用所有注册的BeanFactoryPostProcessor的Bean
+				invokeBeanFactoryPostProcessors(beanFactory);
+
+				// Register bean processors that intercept bean creation.
+				//6、为BeanFactory注册BeanPost事件处理器.
+				//BeanPostProcessor是Bean后置处理器，用于监听容器触发的事件
+				registerBeanPostProcessors(beanFactory);
+
+				// Initialize message source for this context.
+				//7、初始化信息源，和国际化相关.
+				initMessageSource();
+
+				// Initialize event multicaster for this context.
+				//8、初始化容器事件传播器.
+				initApplicationEventMulticaster();
+
+				// Initialize other special beans in specific context subclasses.
+				//9、调用子类的某些特殊Bean初始化方法
+				onRefresh();
+
+				// Check for listener beans and register them.
+				//10、为事件传播器注册事件监听器.
+				registerListeners();
+
+				// Instantiate all remaining (non-lazy-init) singletons.
+				//11、初始化所有剩余的单例Bean
+				finishBeanFactoryInitialization(beanFactory);
+        	//-----调用 InitializingBean
+
+				// Last step: publish corresponding event.
+				//12、初始化容器的生命周期事件处理器，并发布容器的生命周期事件
+				finishRefresh();
+			}
+
+			catch (BeansException ex) {
+				if (logger.isWarnEnabled()) {
+					logger.warn("Exception encountered during context initialization - " +
+							"cancelling refresh attempt: " + ex);
+				}
+
+				// Destroy already created singletons to avoid dangling resources.
+				//13、销毁已创建的Bean
+				destroyBeans();
+
+				// Reset 'active' flag.
+				//14、取消refresh操作，重置容器的同步标识。
+				cancelRefresh(ex);
+
+				// Propagate exception to caller.
+				throw ex;
+			}
+
+			finally {
+				// Reset common introspection caches in Spring's core, since we
+				// might not ever need metadata for singleton beans anymore...
+				//15、重设公共缓存
+				resetCommonCaches();
+			}
+		}
+	}
+```
+
+## 不同方式采用不同的子类初始化
+
+- [普通应用](#普通应用)
+- [web应用](#web应用)
+
+## 普通应用
+
+普通应用是 AbstractXmlApplicationContext#loadBeanDefinitions 读取的Bean定义
+
+- ClassPathXmlApplicationContext#loadBeanDefinitions 基于classpath下的xml配置文件
+- FileSystemXmlApplicationContext#loadBeanDefinitions 基于文件系统的 xml配置文件
+- AnnotationConfigApplicationContext#registerBean 基于注解
+
+## web应用
+
+Web中是 AbstractRefreshableWebApplicationContext#loadBeanDefinitions ,具体逻辑子类实现
+
+- XmlWebApplicationContext#loadBeanDefinitions 基于XML配置
+- AnnotationConfigWebApplicationContext#registerBean 基于注解
+

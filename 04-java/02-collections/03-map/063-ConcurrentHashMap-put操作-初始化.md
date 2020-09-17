@@ -7,7 +7,7 @@
 
 ## 初始化具体走的逻辑
 
-```
+```java
     final V putVal(K key, V value, boolean onlyIfAbsent) {
         if (key == null || value == null) throw new NullPointerException();
       	//① 根据对象的 hashCode 取模获取在数组中的位置
@@ -28,9 +28,7 @@
             else {
            ...
         }
-
     }
-
 ```
 
 ## 初始化核心逻辑-initTable
