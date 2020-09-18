@@ -2,7 +2,9 @@
 
 > https://redis.io/topics/cluster-tutorial/
 
-Redis Cluster 是在 Redis 3.0 的版本正式推出的，用来解决分布式的需求，同时也 可以实现高可用。跟 Codis 不一样，它是去中心化的，客户端可以连接到任意一个可用 节点。
+Redis集群是Redis提供的分布式数据库防范,集群通用分片(sharding) 来实现数据共享,并提供复制和故障转移功能
+
+> Redis Cluster 是在 Redis 3.0 的版本正式推出的，用来解决分布式的需求，同时也 可以实现高可用。跟 Codis 不一样，它是去中心化的，客户端可以连接到任意一个可用 节点。
 
 数据分片有几个关键的问题需要解决:
 

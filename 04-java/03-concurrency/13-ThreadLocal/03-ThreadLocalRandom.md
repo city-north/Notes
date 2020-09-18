@@ -1,12 +1,20 @@
 # ThreadLocalRandom
 
+## 目录
+
+- [简介](#简介)
+- [Random类的缺陷以及其局限性](#Random类的缺陷以及其局限性)
+- [源码分析](#源码分析)
+
+## 简介
+
 由于 Random 类多线程下竞争种子变量线程下 CAS 有可能会造成大量 CAS 从而影响性能
 
 所以引入了 ThreadLocalRandom 类, ThreadLocalRandom 使用 ThreadLocal 的原理,让每个线程都持有一个本地的种子变量, 该种子变量只有在使用随机数的时候才会被初始化, 在多线程下计算新种子时是根据自己线程内维护的种子变量进行更新,从而避免了竞争
 
 **ThreadLocalRandom** 是 JDK 7 在 JUC 包下新增的额随机数生成器, 它弥补了 Random 类在多线程下的缺陷
 
-## Random 类的缺陷以及其局限性
+## Random类的缺陷以及其局限性
 
 java.util.Random 用于产生随机数
 

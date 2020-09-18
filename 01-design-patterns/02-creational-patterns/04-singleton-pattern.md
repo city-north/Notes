@@ -31,7 +31,7 @@
 - **[枚举式](#枚举单例)**：使用枚举类完成线程的安全性
 - [序列化单例](#序列化单例)
 - **ThreadLocal 单例**
-- 容器单例 : Ioc 容器中类似的单例
+-  [容器单例](010-单例模式-容器单例.md) 
 
 ## 单例模式的结构
 
@@ -278,38 +278,6 @@ public class InnerClassSingleton {
 ### 枚举单例
 
  [07-枚举单例.md](07-枚举单例.md) 
-
-## 容器单例
-
-适用于需要大量创建单例对象的场景(Spring BeanFactory)
-
-```java
-public class ContainerSingleton {
-    private static final Map<String, Object> CONTAINER = new ConcurrentHashMap<>();
-
-
-    private ContainerSingleton() {
-        //防止反射攻击
-        throw new IllegalArgumentException("HungrySingleton not allow be constructed");
-    }
-
-
-    public static Object getInstance(String qualifiedName) {
-        synchronized (CONTAINER) {
-            try {
-                if (!CONTAINER.containsKey(qualifiedName)) {
-                    Object o = Class.forName(qualifiedName).newInstance();
-                    CONTAINER.put(qualifiedName, CONTAINER);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return CONTAINER.get(qualifiedName);
-        }
-    }
-
-}
-```
 
 ## 序列化单例
 

@@ -1,7 +1,12 @@
 # ThreadLocal
 
->  [100-使用ThreadLocal不当可能会导致内存泄漏.md](../15-并发编程实战/100-使用 ThreadLocal不当可能会导致内存泄漏.md) 
->
+ [100-使用ThreadLocal不当可能会导致内存泄漏.md](../15-并发编程实战/100-使用ThreadLocal不当可能会导致内存泄漏.md) 
+
+## 目录
+
+- [是什么](#是什么)
+
+- [源码分析](#源码分析)
 
 ## 是什么
 
@@ -13,7 +18,7 @@ ThreadLocal 是 JDK 包提供的,它提供了线程本地变量,也就是如果�
 
 ![image-20200720075559520](../../../assets/image-20200720075559520.png)
 
-## 总结
+#### 总结
 
 每个线程内部都维护了一个名为 threadLocals 的成员变量,该变量的类型为 ThreadLocalMap , 其中 key 为我们定义的 ThreadLocal 变量的 this 引用,value 则为我们使用 set 方法设置的值
 
