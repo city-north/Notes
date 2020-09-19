@@ -1,10 +1,21 @@
-# SPI 在 JDBC 中的应用
+# SPI在 JDBC中的应用
 
-### 什么是 SPI
+## 目录
+
+- [什么是SPI](#什么是SPI)
+- [加载过程](#加载过程)
+
+---
+
+### 什么是SPI
 
 >  [spi-service-provider-interface.md](../../04-java/01-basic/spi-service-provider-interface.md) 
 
 > SPI全称Service Provider Interface，是Java提供的一套用来被第三方实现或者扩展的API，它可以用来启用框架扩展和替换组件。
+
+## 图示
+
+![image-20200919121117772](../../assets/image-20200919121117772.png)
 
 ## 如何实现
 
