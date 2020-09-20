@@ -61,8 +61,6 @@ InnoDB 存储引擎时基于磁盘存储的,其中的记录按照页的方式来
 
 > LogBuffer 在内存中, Redo Log 在磁盘中
 
-
-
 ## 设置buffer_pool的大小
 
 ```sql
@@ -75,7 +73,7 @@ show variables like 'innodb_buffer_pool_size'
 
 ## 查看有多少个实例
 
-```
+```sql
 show variables like 'innodb_buffer_pool_instances'
 ```
 
