@@ -1,5 +1,12 @@
 # HyperLogLog 原理
 
+## 目录
+
+- [为什么使用](#为什么使用)
+- [为什么HyperLogLog只占用12kb](#为什么HyperLogLog只占用12kb)
+
+----
+
 > https://mp.weixin.qq.com/s/AvPoG8ZZM8v9lKLyuSYnHQ
 
 ## 总结
@@ -18,7 +25,7 @@ Redis 统计技术一般有三种方式, 分别是
 
 HashMap 和 BitMap 随着集合的数量增长,所消耗的内存也会大量增加,但是 hyperLogLog 不会
 
-## 为什么HyperLogLog只占用 12kb
+## 为什么HyperLogLog只占用12kb
 
 Redis 的 HyperLogLog 通过牺牲准确率来减少内存空间的消耗，只需要12K内存，在标准误差0.81%的前提下，能够统计`2^64`个数据。所以 HyperLogLog 是否适合在比如统计日活月活此类的对精度要不不高的场景。
 
@@ -28,15 +35,15 @@ Redis 的 HyperLogLog 通过牺牲准确率来减少内存空间的消耗，只�
 
 下面是 Lua 的脚本，不了解 Redis 执行 Lua 脚本的同学可以看一下我之前写的文章[《基于Redis和Lua的分布式限流》](https://mp.weixin.qq.com/s?__biz=Mzg2NjE5NDQyOA==&mid=2247483767&idx=1&sn=eb9d22513ec856eabe9a14dbbe9b41a2&scene=21#wechat_redirect)。
 
-<img src="../../../assets/image-20200625171523164.png" alt="image-20200625171523164" style="zoom: 50%;" />
+<img src="../../../assets/image-20200625171523164.png" alt="image-20200625171523164" style="zoom: 33%;" />
 
 我们通过 redis-cli 的 script load 命令将 Lua 脚本加载到 Redis 中, 然后 `evalsha`命令分别向 HashMap, HyperLogLog 和 BitMap 三种数据结构中插入一千万个数,然后使用 rdb 命令查看内存消耗
 
-![image-20200625171755716](../../../assets/image-20200625171755716.png)
+<img src="../../../assets/image-20200625171755716.png" alt="image-20200625171755716" style="zoom:50%;" />
 
 我们进行了两轮实验，分别插入一万数字和一千万数字，三种数据结构消耗的内存统计如下所示。
 
-![image-20200625171828233](../../../assets/image-20200625171828233.png)
+<img src="../../../assets/image-20200625171828233.png" alt="image-20200625171828233" style="zoom:33%;" />
 
 从表中可以明显看出，一万数量级时 BitMap 消耗内存最小， 一千万数量级时 HyperLogLog 消耗内存最小，但是总体来看，HyperLogLog 消耗的内存都是 14392 字节，可见 HyperLogLog 在内存消耗方面有自己的独到之处。
 

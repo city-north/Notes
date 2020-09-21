@@ -1,55 +1,27 @@
-## Volatile内存语义
+# Volatile内存语义
 
-声明变量为 volatile 后,对这个变量的读和写可以看成是使用了同一个锁对这些单个读/写操作做了同步
+## 目录
+
+- [Volatile实现原理](#Volatile实现原理)
+
+- [内存屏障步骤](#内存屏障步骤)
+
+---
+
+## Volatile实现原理
+
+声明变量为 volatile 后,对这个变量的读和写可以看成是使用了内存屏障
 
 确保了变量自身的:
 
 - 可见性 : 对一个 volatile 变量的读, happens-before (任意线程)对这个 volatile 变量最后的写入
 - 原子性 : 对任意单个 volatile 变量的读/写具有原子性,但类似于 volatile++ 这种复合操作不具备原子性
 
-```java
-class VolatileFeaturesExample {
-    volatile long vl = 0L; //使用volatile声明64位的long型变量
+## 内存屏障步骤
 
-    public void set(long l) {
-        vl = l; //单个volatile变量的写
-    }
-
-    public void getAndIncrement() {
-        vl++; //复合（多个）volatile变量的读/写
-    }
-
-    public long get() {
-        return vl; //单个volatile变量的读
-    }
-}
-
-```
-
- 使用 volatile 修饰后,就相当于 在 set 方法和 get 方法上加了`synchronized`
-
-```java
-class VolatileFeaturesExample1 {
-    long vl = 0L; // 64位的long型普通变量
-
-    public synchronized void set(long l) {//对单个的普通变量的写用同一个锁同步
-        vl = l;
-    }
-
-    public void getAndIncrement() { //普通方法调用
-        long temp = get(); //调用已同步的读方法
-        temp += 1L; //普通写操作
-        set(temp); //调用已同步的写方法
-    }
-
-    public synchronized long get() { //对单个的普通变量的读用同一个锁同步
-        return vl;
-    }
-}
-
-```
-
-锁的 happens-before 规则保证释放锁和获取锁的两个线程之间的内存可见性,这意味着对一个 volatile 变量的读总能看到(任意线程)对这个 volatile 变量的最后的写
+- 在volatile写操作的前面插入一个StoreStore屏障。保证volatile写操作不会和之前的写操作重排序。
+- 在volatile写操作的后面插入一个StoreLoad屏障。保证volatile写操作不会和之后的读操作重排序。
+- 在volatile读操作的后面插入一个LoadLoad屏障+LoadStore屏障。保证volatile读操作不会和之后的读操作、写操作重排序。
 
 ## 内存语义
 

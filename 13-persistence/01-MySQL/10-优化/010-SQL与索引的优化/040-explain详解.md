@@ -112,7 +112,7 @@ DELETE FROM teacher where tid in (4,5,6); COMMIT;
 | UNION        | 用到了 UNION 查询                                            |
 | UNION RESULT | 主要是显示哪些表之间存在 UNION 查询。<union2,3>代表 id=2 和 id=3 的查询 存在 UNION |
 
-## table
+## type
 
 #### 常用的有
 
