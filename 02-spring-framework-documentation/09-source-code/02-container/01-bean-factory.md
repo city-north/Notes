@@ -42,7 +42,7 @@ BeanFactory 方法如下图:
 
 对 BeanFactory 进行如此多的层次的子接口,体现了单一职责原则和迪米特法则
 
-那为何要定义这么多层次的接口呢?查阅这些接口的源码和说明发现，每个接口都有它使用的场合，它主要是为了区分在 Spring 内部在操作过程中对象的传递和转化过程时，对对象的数据访问所做的限制。 例如 `ListableBeanFactory` 接口表示这些 Bean 是可列表化的，而 `HierarchicalBeanFactory `表示的是 这些 Bean 是有继承关系的，也就是每个 Bean 有可能有父 Bean。`AutowireCapableBeanFactory `接 口定义 Bean 的自动装配规则。这三个接口共同定义了 Bean 的集合、Bean 之间的关系、以及 Bean 行 为。
+那为何要定义这么多层次的接口呢?查阅这些接口的源码和说明发现，每个接口都有它使用的场合，它主要是为了区分在 Spring 内部在操作过程中对象的传递和转化过程时，对对象的数据访问所做的限制。 例如 `ListableBeanFactory` 接口表示这些 Bean 是可列表化的，而 `HierarchicalBeanFactory `表示的是 这些 Bean 是有继承关系的，也就是每个 Bean 有可能有父 Bean。`AutowireCapableBeanFactory `接口定义 Bean 的自动装配规则。这三个接口共同定义了 Bean 的集合、Bean 之间的关系、以及 Bean 行 为。
 
 ## 源码
 

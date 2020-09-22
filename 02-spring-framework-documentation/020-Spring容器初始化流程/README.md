@@ -1,4 +1,4 @@
-# ApplicationContext初始化流程
+# Spring容器初始化流程
 
 ## 初始化流程分类
 

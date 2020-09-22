@@ -1,9 +1,15 @@
 # 应用上下文-ApplicationContext
 
+- [ApplicationContext简介](#ApplicationContext简介)
 - [提供的核心功能](#提供的核心功能)
 - [生命周期回调](#生命周期回调)
 - [层级结构](#层级结构)
 - [儿子委派机制](#儿子委派机制)
+
+## ApplicationContext简介
+
+- ApplicationContext 是一个BeanFactory , 提供了 BeanFactory 的所有的所有功能, 主要负责对外 ,相当于外交部 ,
+- 通过继承接口, 它拥有比 Bean工厂更多的功能
 
 ## 提供的核心功能
 
@@ -31,10 +37,13 @@ ApplicationContext 提供的核心功能
 
 ![image-20200917215957012](../../../assets/image-20200917215957012.png)
 
+![image-20200919224648982](../../../assets/image-20200919224648982.png)
+
 ## 儿子委派机制
 
 ApplicationContext允许上下文嵌套，通过保持父上下文可以维持一个上下文体系。对于Bean的查找可以在这个上下文体系中进行，首先检查当前上下文，其次检查父上下文，逐级向上，这样可以为不同的Spring应用提供一个共享的Bean定义环境。
 
+## 不同子类的应用
 
-
+ [000-IOC容器初始化流程.md](../../020-Spring容器初始化流程/000-IOC容器初始化流程.md) 
 

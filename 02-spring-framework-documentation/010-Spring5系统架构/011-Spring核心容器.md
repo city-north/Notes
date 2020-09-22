@@ -1,6 +1,6 @@
 # Spring核心容器
 
-<img src="../../../assets/image-20200913134852082.png" alt="image-20200913134852082" style="zoom:50%;" />
+<img src="../../assets/image-20200913134852082.png" alt="image-20200913134852082" style="zoom:50%;" />
 
 核心容器由四个模块组成
 
