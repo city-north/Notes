@@ -92,13 +92,7 @@ redo log 重做日志包括两部分：
 | 3    | 可重复读（repeatable read)  | MVCC   | 记录锁/间隙锁/临键锁                                         |
 | 4    | 串行化 (serializable)       | 共享锁 | 所有 select 隐式转换成 共享锁(in share mode)会和 update 和 delete 互斥 |
 
-![image-20200826204259542](../../../assets/image-20200826204259542.png)
-
-
-
-
-
-
+![](../../../assets/image-20200826204259542.png)
 
 #### Read Commited
 

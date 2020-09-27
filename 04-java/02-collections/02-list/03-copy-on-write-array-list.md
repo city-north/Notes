@@ -1,6 +1,12 @@
 # CopyOnWriteArrayList
 
-> [COW-CopyOnWrite写时复制机制.md](../../../99-unclassified/01-COW-CopyOnWrite写时复制机制.md) 
+## 目录
+
+[COW-CopyOnWrite写时复制机制.md](../../../99-unclassified/01-COW-CopyOnWrite写时复制机制.md) 
+
+
+
+----
 
 CopyOnWriteArrayList 是一个线程安全的无界数组 , 使用CopyOnWrite 写时复制的策略来保证 list 的一致性, 而
 
@@ -15,7 +21,7 @@ CopyOnWriteArrayList 提供了弱一致性的迭代器,从而保证了获取迭�
 
 CopyOnWriteArraySet 底层也是用它实现的
 
-## Copy On WriteArrayList 的类图结构
+## CopyOnWriteArrayList 的类图结构
 
 ![image-20200724110811010](../../../assets/image-20200724110811010.png)
 
@@ -29,6 +35,8 @@ CopyOnWriteArraySet 底层也是用它实现的
 - 何时初始化 list, 初始化的 list 元素个数为多少, list 是有限大小吗 ?
 - 如何保证线程安全, 比如多个线程进行读写时如何保证是线程安全的 ?
 - 如何保证使用迭代器遍历 list 的数据一致性
+
+
 
 ## 源码解析
 
@@ -69,7 +77,7 @@ public CopyOnWriteArrayList(Collection<? extends E> c) {
 
 ```java
     public boolean add(E e) {
-      //获取独占锁
+      //①获取独占锁
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {

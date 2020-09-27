@@ -5,6 +5,8 @@
 - [createBeanInstance](#createBeanInstance)，生成Bean所包含的Java对象实例。
 - [populateBean](#populateBean)，对Bean属性的依赖注入进行处理
 
+![一步一步手绘Spring DI运行时序图](../../../assets/一步一步手绘Spring DI运行时序图.png)
+
 ## createBean
 
 ```java
@@ -210,8 +212,6 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
 		return instantiateBean(beanName, mbd);
 	}
 ```
-
-
 
 ## populateBean
 

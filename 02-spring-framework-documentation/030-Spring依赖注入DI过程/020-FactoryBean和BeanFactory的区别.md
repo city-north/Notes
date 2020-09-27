@@ -1,4 +1,4 @@
-# FactoryBean和BeanFactory的区别
+#  FactoryBean和BeanFactory的区别
 
 ## 目录
 
@@ -6,8 +6,6 @@
 
 - [为什么要有FactoryBean接口](#为什么要有FactoryBean接口)
 - [FactoryBean实例](#FactoryBean实例)
-
-
 
 ## 为什么要有FactoryBean接口
 

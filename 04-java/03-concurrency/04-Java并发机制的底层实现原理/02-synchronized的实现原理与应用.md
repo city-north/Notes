@@ -1,4 +1,4 @@
-# Synchronzied 的实现原理
+# Synchronzied的实现原理
 
 ## 目录
 
