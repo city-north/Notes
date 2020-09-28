@@ -65,18 +65,18 @@
 
  [012-从bean的实例中获取对象.md](012-从bean的实例中获取对象.md) 
 
-如果从缓存中得到了bean的原始状态，则需要对bean进行实例化。这里有必要强调一下，缓存中记录的只是最原始的bean状态，并不一定是我们最终想要的bean。举个例子，假如我们需要对工厂bean进行处理，那么这里得到的其实是工厂bean的初始状态，但是我们真正需要的是工厂bean中定义的factory-method方法中返回的bean，而getObjectForBeanInstance就是完成这个工作的，后续会详细讲解。
+如果从缓存中得到了bean的原始状态，则需要对bean进行实例化。这里有必要强调一下，缓存中记录的只是最原始的bean状态，并不一定是我们最终想要的bean。举个例子，假如我们需要对工厂bean进行处理，那么这里得到的其实是工厂bean的初始状态，但是我们真正需要的是工厂bean中定义的 factory-method方法中返回的 bean，而 getObjectForBeanInstance 就是完成这个工作的，后续会详细讲解。
 
 ### 原型模式的依赖检查
 
-只有在单例情况下才会尝试解决循环依赖，如果存在A中有B的属性，B中有A的属性，那么当依赖注入的时候，就会产生当A还未创建完的时候因为对于B的创建再次返回创建A，造成循环依赖，也就是情况：isPrototypeCurrentlyInCreation(beanName)判断true。
+只有在单例情况下才会尝试解决循环依赖，如果存在A中有B的属性，B中有A的属性，那么当依赖注入的时候，就会产生当A还未创建完的时候因为对于B的创建再次返回创建A，造成循环依赖，也就是情况：isPrototypeCurrentlyInCreation(beanName) 判断true。
 
 ### 检测parentBeanFactory
 
 从代码上看，如果缓存没有数据的话直接转到父类工厂上去加载了，这是为什么呢？
 可能读者忽略了一个很重要的判断条件：parentBeanFactory != null && !containsBean Definition (beanName)，parentBeanFactory != null。parentBeanFactory如果为空，则其他一切都是浮云，这个没什么说的，但是!containsBeanDefinition(beanName)就比较重要了，它是在检测如果当前加载的XML配置文件中不包含beanName所对应的配置，就只能到parentBeanFactory去尝试下了，然后再去递归的调用getBean方法。
 
-#### 将存储XML配置文件的GernericBeanDefinition转换为RootBeanDefinition
+### 将存储XML配置文件的GernericBeanDefinition转换为RootBeanDefinition
 
 因为从XML配置文件中读取到的bean信息是存储在GernericBeanDefinition中的，但是所有的bean后续处理都是针对于RootBeanDefinition的，所以这里需要进行一个转换，转换的同时如果父类bean不为空的话，则会一并合并父类的属性。
 
@@ -90,11 +90,11 @@
 
 ### 类型转换
 
-程序到这里返回bean后已经基本结束了，通常对该方法的调用参数requiredType是为空的，但是可能会存在这样的情况，返回的bean其实是个String，但是requiredType却传入Integer类型，那么这时候本步骤就会起作用了，它的功能是将返回的bean转换为requiredType所指定的类型。当然，String转换为Integer是最简单的一种转换，在Spring中提供了各种各样的转换器，用户也可以自己扩展转换器来满足需求。
+程序到这里返回bean后已经基本结束了，通常对该方法的调用参数 requiredType 是为空的，但是可能会存在这样的情况，返回的bean其实是个String，但是requiredType 却传入Integer类型，那么这时候本步骤就会起作用了，它的功能是将返回的bean转换为requiredType所指定的类型。当然，String转换为Integer是最简单的一种转换，在Spring中提供了各种各样的转换器，用户也可以自己扩展转换器来满足需求。
 
-经过上面的步骤后bean的加载就结束了，这个时候就可以返回我们所需要的bean了，下图直观地反映了整个过程。
+经过上面的步骤后 bean 的加载就结束了，这个时候就可以返回我们所需要的 bean了，下图直观地反映了整个过程。
 
-其中最重要的就是步骤8，针对不同的scope进行bean的创建，你会看到各种常用的Spring特性在这里的实现。
+其中最重要的就是步骤8，针对不同的 scope 进行 bean 的创建，你会看到各种常用的 Spring 特性在这里的实现。
 
 ## 源码分析
 
