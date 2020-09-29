@@ -23,5 +23,6 @@ Parallel Old 是 Parallel Scanvenge 收集器的老年代版本,
 
 ![image-20200819184550793](../../assets/image-20200819184550793.png)
 
+使用参数-XX:+UseParallelOldGC 新生代使用ParallelGC回收期,来年代使用ParallelOldGC回收器,ParallelGC回收器提供了两个重要的参数用于控制系统的吞吐量
 
-
+在吞吐量敏感的系统中,可以考虑使用

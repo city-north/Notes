@@ -1,8 +1,4 @@
-## 
-
-
-
-
+#远程调试tomcat
 
 ### 创建文件jmxremote.access
 
