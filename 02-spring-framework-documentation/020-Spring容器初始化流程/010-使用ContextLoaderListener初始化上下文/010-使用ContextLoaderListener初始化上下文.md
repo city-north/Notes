@@ -48,5 +48,6 @@ public interface ServletContextListener extends EventListener {
 
 #### 看到了refresh,基本就走的通用流程,仅仅只是获取BeanDefination的方式不同而已
 
-[000-refresh-通用核心初始化流程.md](../000-refresh-通用核心初始化流程.md) 
 
+
+ [000-IOC容器初始化流程.md](../000-IOC容器初始化流程.md) 

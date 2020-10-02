@@ -416,8 +416,6 @@ public class Counter {
 - `ReadWriteLock`允许多个线程在没有写入时同时读取；
 - `ReadWriteLock`适合读多写少的场景。
 
-## 
-
 ```java
 /**
  * <p>
