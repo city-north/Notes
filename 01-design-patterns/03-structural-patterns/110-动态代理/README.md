@@ -20,9 +20,8 @@
 - JDK 和 CGlib 都是通过动态生成字节码的方式
   - JDK 是直接写 class 字节码
   - CGlib 使用 ASM 框架写字节码
-- CGlib 代理实现更加复杂,生成代理类比JDK 效率低
+- CGlib 代理实现更加复杂,生成代理类比JDK 效率低, 但是执行效率高
 - JDK调用代理都是通过反射
 - CGlib 是通过FastClass机制调用方法
-- CGlib 执行效率更高
 
  [050-为什么CGLIB 动态代理效率高于JDK代理.md](050-为什么CGLIB 动态代理效率高于JDK代理.md) 

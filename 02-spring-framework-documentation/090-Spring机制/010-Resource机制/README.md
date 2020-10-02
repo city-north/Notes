@@ -55,8 +55,6 @@ public interface Resource extends InputStreamSource {
 - ByteArrayResource
 - InputStreamResource
 
-
-
 有了Resource接口便可以对所有资源文件进行统一处理。至于实现，其实是非常简单的，
 
 以getInputStream为例，

@@ -16,25 +16,69 @@
 
 ![image-20200815220708484](../../../assets/image-20200815220708484.png)
 
-
-
 ![image-20200815220604106](../../../assets/image-20200815220604106.png)
+
+## 生成三个class文件
+
+![image-20201001175825302](../../../assets/image-20201001175825302.png)
+
+一个代理类, 继承了被代理对象, 实现了Factory接口, factory接口主要是用来设置拦截器, 
+
+- [步骤1](#步骤1),调用被代理类的接口时, `Customer$$EnhancerByCGLIB$$79b3655f` 里的findLove方法
+- [步骤2](#步骤2), 找到拦截器(我们自定义的实现 MethodInterceptor的 CGlibMeipo) ,并执行
+- 步骤3, 寻找
+
+#### 步骤1
+
+![image-20201001180604582](../../../assets/image-20201001180604582.png)
+
+可以看到这里是调用的代理类的finLove方法
+
+![image-20201001180114897](../../../assets/image-20201001180114897.png)
+
+### 步骤2
+
+![image-20201001180308696](../../../assets/image-20201001180308696.png)
+
+
+
+
+
+
 
 这三个类的作用
 
-- Customer$$EnhancerByCGLIB$$79b3655f$$FastClassByCGLIB$$93d1a304
+- [生成的字节码1:代理类](#生成的字节码1:代理类)
+- [生成的字节码2:被代理类的FastClass](#生成的字节码2:被代理类的FastClass)
+- [生成的字节码3:代理类的FastClass](#生成的字节码3:代理类的FastClass)
 
-  > 继承自 FastClass
+- Customer$$EnhancerByCGLIB$$79b3655f$$FastClassByCGLIB$$93d1a304`
 
-- Customer$$EnhancerByCGLIB$$79b3655f  是代理类
+  
 
-  > extends Customer implements Factory 
+- `Customer$$FastClassByCGLIB$$d750a665` extends FastClass 
 
-- Customer$$FastClassByCGLIB$$d750a665 extends FastClass 
+## 生成的字节码1:代理类
 
-我们在实际调用时,是调用的 代理类`Customer$$EnhancerByCGLIB$$79b3655f.class`,创建的也是这个代理类
+`Customer$$EnhancerByCGLIB$$79b3655f ` 是代理类
+
+![image-20201001182524541](../../../assets/image-20201001182524541.png)
+
+## 生成的字节码2:被代理类的FastClass
+
+主要对所有
+
+![image-20201001183026381](../../../assets/image-20201001183026381.png)
+
+## 生成的字节码3:代理类的FastClass
+
+最长的一个class文件
+
+![image-20201001183014858](../../../assets/image-20201001183014858.png)
 
 
+
+我们在实际调用时,是调用的代理类`Customer$$EnhancerByCGLIB$$79b3655f.class`,创建的也是这个代理类
 
 ![image-20200815221140481](../../../assets/image-20200815221140481.png)
 

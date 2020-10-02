@@ -100,8 +100,6 @@ BeanPostProcessor的调用时机也能在这里体现，包围住invokeInitMetho
 
 ## 实例化 (Instantiation)
 
-
-
 ## 属性赋值(Populate)
 
 ## 初始化(Initialization)

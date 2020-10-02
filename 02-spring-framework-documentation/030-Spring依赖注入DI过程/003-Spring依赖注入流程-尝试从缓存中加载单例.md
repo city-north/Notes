@@ -8,6 +8,10 @@
 
 首先尝试从缓存中加载，如果加载不成功则再次尝试从singletonFactories中加载。
 
+> org.springframework.beans.factory.support.AbstractBeanFactory#doGetBean
+>
+> org.springframework.beans.factory.support.DefaultSingletonBeanRegistry#getSingleton(java.lang.String, boolean)
+
 ![image-20200929210852563](../../assets/image-20200929210852563.png)
 
 因为在创建单例bean的时候会存在依赖注入的情况，而在创建依赖的时候为了避免循环依赖，在Spring中创建bean的原则是不等bean创建完成就会将创建bean的ObjectFactory提早曝光加入到缓存中，一旦下一个bean创建时候需要依赖上一个bean则直接使用ObjectFactory。

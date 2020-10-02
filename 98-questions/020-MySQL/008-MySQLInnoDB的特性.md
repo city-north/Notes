@@ -20,9 +20,9 @@
 
 ## 内存刷新到磁盘的机制
 
-- redoLogbuffer 的刷新条件
-- 脏页 的刷新条件
-- binlog cache 的刷新条件
+- redoLogbuffer的刷新条件
+- 脏页的刷新条件
+- binlogcache的刷新条件
 
 ## 各种线程的作用
 

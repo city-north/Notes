@@ -1,5 +1,7 @@
 # Spring依赖注入过程
 
+<img src="../../assets/image-20200919224648982.png" alt="image-20200919224648982" style="zoom:80%;" />
+
 1. [转换对应beanName](#转换对应beanName)
 
 2. [尝试从缓存中加载单例](#尝试从缓存中加载单例)
