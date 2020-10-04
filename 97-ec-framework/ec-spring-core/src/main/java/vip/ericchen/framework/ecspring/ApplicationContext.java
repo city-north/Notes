@@ -7,5 +7,8 @@ package vip.ericchen.framework.ecspring;
  *
  */
 public class ApplicationContext {
+    public static void main(String[] args) {
+        sun.net.www.protocol.file.Handler
+    }
 
 }

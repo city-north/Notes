@@ -16,3 +16,4 @@ sudo docker commit cb6eb1d64a6d hand/documentserver:1.8
 //存出
 sudo docker save -o /images/hand-documentserver-1.8.tar hand/documentserver:1.8
 ```
+
