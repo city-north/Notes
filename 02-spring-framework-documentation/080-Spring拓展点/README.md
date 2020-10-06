@@ -38,7 +38,7 @@
    invokeBeanFactoryPostProcessors(beanFactory);
    ```
 
-6. 注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候
+6. [注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候](#注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候)
 
    ```java
    //6、为BeanFactory注册BeanPost事件处理器.
@@ -46,35 +46,35 @@
    registerBeanPostProcessors(beanFactory);
    ```
 
-7. 为上下文初始化Message源，即对不同语言的消息体进行国际化处理
+7. [为上下文初始化Message源，即对不同语言的消息体进行国际化处理](#为上下文初始化Message源，即对不同语言的消息体进行国际化处理)
 
    ```java
    //7、初始化信息源，和国际化相关.
    initMessageSource();
    ```
 
-8. 初始化应用消息广播器，并放入“applicationEventMulticaster”bean中。
+8. [初始化应用消息广播器，并放入“applicationEventMulticaster”bean中](#初始化应用消息广播器，并放入"applicationEventMulticaster"bean中)
 
    ```java
    //8、初始化容器事件传播器.
    initApplicationEventMulticaster();
    ```
 
-9. 留给子类来初始化其他的bean。
+9. 留给子类来初始化其他的bean
 
    ```java
    //9、调用子类的某些特殊Bean初始化方法
    onRefresh();
    ```
 
-10. 在所有注册的bean中查找listener bean，注册到消息广播器中。
+10. [注册监听器](#注册监听器),在所有注册的bean中查找listener bean，注册到消息广播器中。
 
-    ```java
-    //10、为事件传播器注册事件监听器.
-    registerListeners();
-    ```
+   ```java
+   //10、为事件传播器注册事件监听器.
+   registerListeners();
+   ```
 
-11. 初始化剩下的单实例（非惰性的）。
+11. [初始化剩下的单实例（非惰性的）](#初始化剩下的单实例（非惰性的）)
 
     ```java
     //11、初始化所有剩余的单例Bean
@@ -170,12 +170,6 @@
 
  [020-拓展点-加载BeanFactory.md](020-拓展点-加载BeanFactory.md) 
 
-
-
-
-
-
-
 ## 对BeanFactory进行各种功能填充
 
 @Qualifier与@Autowired应该是大家非常熟悉的注解，那么这两个注解正是在这一步骤中增加的支持。
@@ -184,5 +178,22 @@
 
 Spring之所以强大，为世人所推崇，除了它功能上为大家提供了便例外，还有一方面是它的完美架构，开放式的架构让使用它的程序员很容易根据业务需要扩展已经存在的功能。这种开放式的设计在Spring中随处可见，例如在本例中就提供了一个空的函数实现postProcess- BeanFactory来方便程序员在业务上做进一步扩展。
 
-
 ## 激活各种BeanFactory处理器
+
+ [041-拓展点-BeanFactory的后处理-BeanFactoryPostProcessor.md](041-拓展点-BeanFactory的后处理-BeanFactoryPostProcessor.md) 
+
+## 注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候
+
+ [042-拓展点-BeanPostProcessor.md](042-拓展点-BeanPostProcessor.md) 
+
+## 为上下文初始化Message源，即对不同语言的消息体进行国际化处理
+
+ [043-拓展点-消息资源MessageSource.md](043-拓展点-消息资源MessageSource.md) 
+
+## 初始化应用消息广播器，并放入“applicationEventMulticaster”bean中
+
+## 注册监听器
+
+
+
+## 初始化剩下的单实例（非惰性的）

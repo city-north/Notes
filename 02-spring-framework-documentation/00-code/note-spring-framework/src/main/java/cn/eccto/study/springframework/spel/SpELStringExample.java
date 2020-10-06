@@ -14,13 +14,10 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 public class SpELStringExample {
 
     public static void main(String[] args) {
-
         testParseConcat();
         testParseBytes();
         testParseLength();
         testParseToUpperCase();
-
-
     }
 
     private static void testParseToUpperCase() {

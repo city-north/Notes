@@ -1,0 +1,28 @@
+# 注册依赖
+
+Spring中有了忽略依赖的功能，当然也必不可少地会有注册依赖的功能。
+
+```java
+beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
+beanFactory.registerResolvableDependency(ResourceLoader.class, this);
+beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
+beanFactory.registerResolvableDependency(ApplicationContext.class, this);
+```
+
+
+当注册了依赖解析后，例如当注册了对BeanFactory.class的解析依赖后，当bean的属性注入的时候，一旦检测到属性为BeanFactory类型便会将beanFactory的实例注入进去。
+
+6.6.1　激活注册的BeanFactoryPostProcessor
+正式开始介绍之前我们先了解下　BeanFactoryPostProcessor的用法。
+BeanFactoryPostProcessor接口跟BeanPostProcessor类似，可以对bean的定义（配置元数据）进行处理。也就是说，Spring IoC容器允许BeanFactoryPostProcessor在容器实际实例化任何其他的bean之前读取配置元数据，并有可能修改它。如果你愿意，你可以配置多个BeanFactoryPostProcessor。你还能通过设置“order”属性来控制BeanFactoryPostProcessor的执行次序（仅当BeanFactoryPostProcessor实现了Ordered接口时你才可以设置此属性，因此在实现BeanFactoryPostProcessor时，就应当考虑实现Ordered接口）。请参考BeanFactoryPostProcessor和Ordered接口的JavaDoc以获取更详细的信息。
+如果你想改变实际的bean实例（例如从配置元数据创建的对象），那么你最好使用BeanPostProcessor。同样地，BeanFactoryPostProcessor的作用域范围是容器级的。它只和你所使用的容器有关。如果你在容器中定义一个BeanFactoryPostProcessor，它仅仅对此容器中的bean进行后置处理。BeanFactoryPostProcessor不会对定义在另一个容器中的bean进行后置处理，即使这两个容器都是在同一层次上。在Spring中存在对于BeanFactoryPostProcessor的典型应用，比如PropertyPlaceholderConfigurer。
+1．BeanFactoryPostProcessor的典型应用：PropertyPlaceholderConfigurer
+有时候，阅读Spring的Bean描述文件时，你也许会遇到类似如下的一些配置：
+
+```xml
+<bean id="message" class="distConfig.HelloMessage">
+    <property name="mes">
+```
+
+
+
