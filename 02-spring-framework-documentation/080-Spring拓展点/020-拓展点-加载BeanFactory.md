@@ -1,5 +1,7 @@
 # 拓展点-加载BeanFactory
 
+![image-20201007151953236](../../assets/image-20201007151953236.png)
+
 refresh方法中的第二步:
 
 ```java
@@ -113,7 +115,6 @@ Object value = getAutowireCandidateResolver().getSuggestedValue(descriptor);
 //QualifierAnnotationAutowireCandidateResolver.java
 public Object getSuggestedValue(DependencyDescriptor descriptor) {
          Object value = findValue(descriptor.getAnnotations());
- ());
          if (value == null) {
              MethodParameter methodParam = descriptor.getMethodParameter();
              if (methodParam != null) {

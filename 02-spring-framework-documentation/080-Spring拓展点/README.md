@@ -2,6 +2,8 @@
 
 我们说,refresh函数包含了几乎ApplicationContext 的所有功能,而且逻辑非常清晰
 
+AbstractApplicationContext#refresh()
+
 1. [初始化优化前的准备工作,例如对系统属性或者环境变量进行准备和验证](#初始化优化前的准备工作,例如对系统属性或者环境变量进行准备和验证)
 
    ```java
@@ -89,7 +91,11 @@
     finishRefresh();
     ```
 
-    
+## 图示
+
+![image-20201007151953236](../../assets/image-20201007151953236.png)
+
+## 源代码
 
 ```java
 	@Override
@@ -180,7 +186,7 @@ Spring之所以强大，为世人所推崇，除了它功能上为大家提供�
 
 ## 激活各种BeanFactory处理器
 
- [041-拓展点-BeanFactory的后处理-BeanFactoryPostProcessor.md](041-拓展点-BeanFactory的后处理-BeanFactoryPostProcessor.md) 
+ [040-第五步-BeanFactoryPostProcessor的后处理.md](040-第五步-BeanFactoryPostProcessor的后处理.md) 
 
 ## 注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候
 

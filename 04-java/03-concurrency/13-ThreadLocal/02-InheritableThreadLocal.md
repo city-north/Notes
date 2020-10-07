@@ -70,7 +70,7 @@ public class InheritableThreadLocal<T> extends ThreadLocal<T> {
 - 代码 ⑥ 设置子线程中的 **inheritableThreadLocals** 变量
 
 ```java
-static ThreadLocalMap createInheritedMap(ThreadLocalMap parentMap) {
+static ThreadLocalMap createInheritedMap (ThreadLocalMap parentMap) {
     return new ThreadLocalMap(parentMap);
 }
 ```

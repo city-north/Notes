@@ -1,5 +1,7 @@
 # 拓展点-prepareBeanFactory
 
+![image-20201007151953236](../../assets/image-20201007151953236.png)
+
 #### refresh方法的第三步
 
 ```java
