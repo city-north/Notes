@@ -184,7 +184,7 @@ AbstractApplicationContext#refresh()
 
 ## 子类覆盖方法做额外的处理
 
-Spring之所以强大，为世人所推崇，除了它功能上为大家提供了便例外，还有一方面是它的完美架构，开放式的架构让使用它的程序员很容易根据业务需要扩展已经存在的功能。这种开放式的设计在Spring中随处可见，例如在本例中就提供了一个空的函数实现postProcess- BeanFactory来方便程序员在业务上做进一步扩展。
+Spring之所以强大，为世人所推崇，除了它功能上为大家提供了便例外，还有一方面是它的完美架构，开放式的架构让使用它的程序员很容易根据业务需要扩展已经存在的功能。这种开放式的设计在Spring中随处可见，例如在本例中就提供了一个空的函数实现postProcessBeanFactory来方便程序员在业务上做进一步扩展。
 
 ## 激活各种BeanFactory处理器
 
@@ -192,13 +192,17 @@ Spring之所以强大，为世人所推崇，除了它功能上为大家提供�
 
 ## 注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候
 
- [042-拓展点-BeanPostProcessor.md](042-拓展点-BeanPostProcessor.md) 
+ [050-第六步-registerBeanPostProcessors注册BeanPostProcessor.md](050-第六步-registerBeanPostProcessors注册BeanPostProcessor.md) 
+
+ [051-第六步-registerBeanPostProcessors源码分析.md](051-第六步-registerBeanPostProcessors源码分析.md) 
 
 ## 为上下文初始化Message源，即对不同语言的消息体进行国际化处理
 
- [043-拓展点-消息资源MessageSource.md](043-拓展点-消息资源MessageSource.md) 
+ [070-第七步-初始化消息资源MessageSource.md](070-第七步-初始化消息资源MessageSource.md) 
 
 ## 初始化应用消息广播器，并放入“applicationEventMulticaster”bean中
+
+
 
 ## 注册监听器
 
