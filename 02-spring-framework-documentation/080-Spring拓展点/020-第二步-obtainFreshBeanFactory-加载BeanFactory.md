@@ -1,4 +1,4 @@
-# 拓展点-加载BeanFactory
+# 第二步-obtainFreshBeanFactory-加载BeanFactory
 
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
@@ -127,8 +127,6 @@ public Object getSuggestedValue(DependencyDescriptor descriptor) {
 ```
 
 ## 定制加载BeanDefinition的逻辑
-
- [010-拓展点-环境准备.md](010-拓展点-环境准备.md) 
 
 在第一步中提到了将ClassPathXmlApplicationContext与XmlBeanFactory创建的对比，在实现配置文件的加载功能中除了我们在第一步中已经初始化的DefaultListableBeanFactory外，还需要XmlBeanDefinitionReader来读取XML，那么在这个步骤中首先要做的就是初始化XmlBeanDefinitionReader。
 

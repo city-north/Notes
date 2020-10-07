@@ -168,17 +168,19 @@ AbstractApplicationContext#refresh()
 
 在某种情况下项目的使用需要读取某些系统变量，而这个变量的设置很可能会影响着系统的正确性，那么ClassPathXmlApplicationContext为我们提供的这个准备函数就显得非常必要，它可以在Spring启动的时候提前对必需的变量进行存在性验证
 
- [010-拓展点-环境准备.md](010-拓展点-环境准备.md) 
+ [010-第一步-prepareRefresh-环境准备.md](010-第一步-prepareRefresh-环境准备.md) 
 
 ## 初始化BeanFactory,并进行XML文件读取
 
 之前有提到ClassPathXmlApplicationContext包含着BeanFactory所提供的一切特征，那么在这一步骤中将会复用BeanFactory中的配置文件读取解析及其他功能，这一步之后，ClassPathXmlApplicationContext实际上就已经包含了BeanFactory所提供的功能，也就是可以进行bean的提取等基础操作了。
 
- [020-拓展点-加载BeanFactory.md](020-拓展点-加载BeanFactory.md) 
+ [020-第二步-obtainFreshBeanFactory-加载BeanFactory.md](020-第二步-obtainFreshBeanFactory-加载BeanFactory.md) 
 
 ## 对BeanFactory进行各种功能填充
 
 @Qualifier与@Autowired应该是大家非常熟悉的注解，那么这两个注解正是在这一步骤中增加的支持。
+
+ [030-第三步-prepareBeanFactory-填充容器属性.md](030-第三步-prepareBeanFactory-填充容器属性.md) 
 
 ## 子类覆盖方法做额外的处理
 

@@ -1,8 +1,8 @@
-# 拓展点-环境准备
+# 010-第一步-prepareRefresh-环境准备
 
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
-####  [refresh](README.md) 的第一步
+
 
 AbstractApplicationContext#refresh()
 
@@ -61,8 +61,10 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
  				//添加验证要求
      		getEnvironment().setRequiredProperties("VAR");
  			}
-}我们自定义了继承自ClassPathXmlApplicationContext的MyClassPathXmlApplicationContext，并重写了initPropertySources方法，在方法中添加了我们的个性化需求，那么在验证的时候也就是程序走到getEnvironment().validateRequiredProperties()代码的时候，如果系统并没有检测到对应VAR的环境变量，那么将抛出异常。当然我们还需要在使用的时候替换掉原有的ClassPathXmlApplicationContext：
+}
 ```
+我们自定义了继承自ClassPathXmlApplicationContext的MyClassPathXmlApplicationContext，并重写了initPropertySources方法，在方法中添加了我们的个性化需求，那么在验证的时候也就是程序走到getEnvironment().validateRequiredProperties()代码的时候，如果系统并没有检测到对应VAR的环境变量，那么将抛出异常。当然我们还需要在使用的时候替换掉原有的ClassPathXmlApplicationContext：
+
 ```java
 public static void main(String[] args) {
          ApplicationContext bf = new MyClassPathXmlApplicationContext ("test/customtag/ test.xml"); 
