@@ -1,4 +1,4 @@
-# Spring拓展功能
+# refresh初始化详细流程
 
 我们说,refresh函数包含了几乎ApplicationContext 的所有功能,而且逻辑非常清晰
 
@@ -83,7 +83,7 @@ AbstractApplicationContext#refresh()
     finishBeanFactoryInitialization(beanFactory);
     ```
 
-12. 完成刷新过程，通知生命周期处理器lifecycleProcessor刷新过程，同时发出ContextRefreshEvent通知别人。
+12. [完成刷新过程](#完成刷新过程)，通知生命周期处理器lifecycleProcessor刷新过程，同时发出ContextRefreshEvent通知别人。
 
     ```java
     //-----调用 InitializingBean
@@ -202,10 +202,17 @@ Spring之所以强大，为世人所推崇，除了它功能上为大家提供�
 
 ## 初始化应用消息广播器，并放入“applicationEventMulticaster”bean中
 
-
+ [080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md](080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md) 
 
 ## 注册监听器
 
-
+ [100-第十步-registerListeners-注册事件监听器.md](100-第十步-registerListeners-注册事件监听器.md) 
 
 ## 初始化剩下的单实例（非惰性的）
+
+ [110-第十一步-初始化所有剩余的非lazy单例Bean.md](110-第十一步-初始化所有剩余的非lazy单例Bean.md) 
+
+## 完成刷新过程
+
+ [120-第十二步-finishRefresh-结束通知.md](120-第十二步-finishRefresh-结束通知.md) 
+

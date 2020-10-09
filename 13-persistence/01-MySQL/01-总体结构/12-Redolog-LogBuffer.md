@@ -1,4 +1,4 @@
-# Redo Log - Log buffer-重做日志
+# Redo Log -Log buffer-重做日志
 
 所属位置:   [LogBuffer-redoLog在MySQL的位置](12-Redolog-LogBuffer.md#BufferPool的组成) 
 

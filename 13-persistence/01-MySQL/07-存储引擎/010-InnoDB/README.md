@@ -19,7 +19,7 @@ MySQL  5.7 中的默认存储引擎。
 #### 特性:
 
 - [Change-Buffer](../../01-总体结构/11-写缓冲-ChangeBuffer.md) 
-- [double write ](02-双写缓冲区.md) 
+-  [02-两次写-双写模式-DoubleWrite.md](02-两次写-双写模式-DoubleWrite.md) 
 - [adaptive hash ](04-自适应哈希.md) 
 - 异步 IO
 - 刷新临接页

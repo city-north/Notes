@@ -46,13 +46,7 @@ public interface Resource extends InputStreamSource {
 
 
 
-- WritableResource
-- ContextResource
-- UrlResource
-- FileSystemResource
-- FileUrlResource
-- ClassPathResource
-- ByteArrayResource
+-  
 - InputStreamResource
 
 有了Resource接口便可以对所有资源文件进行统一处理。至于实现，其实是非常简单的，
