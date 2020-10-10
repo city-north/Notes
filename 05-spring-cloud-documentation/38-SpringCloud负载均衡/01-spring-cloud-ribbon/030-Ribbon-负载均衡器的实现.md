@@ -22,53 +22,7 @@ Ribbon的负载均衡策略既有 **RoundRobinRule** 和 **RandomRule** 这样�
 | 响应时间加全策略 | WeightedResponseTimeRule                | 根据server的响应时间分配权重,相应时间越长,权重越低,被选择到的概率就越低,响应时间越短,权重越高,被选择到的概率就越高,这个策略很贴切,总和了各种因素,如: 网络、磁盘、IO 、 等等这些因素直接影响响应时间 |
 | 区域权衡策略     | [ZoneAvoidanceRule](#ZoneAvoidanceRule) | 综合判断server所在的区域的性能和server的可用性轮询选择server,并且判定一个AWS zone的运行性能是否可用,剔除不可用的Zone中的所有server |
 
-## 程序员自定义
 
-#### 全局策略设置
-
-```
-@Configuration
-public class TestConfiguration {
-
-	@Bean
-	public IRule ribbonRule() {
-		return new RandomRule();//设置为随机
-	}
-}
-```
-
-#### 基于注解的策略设置
-
-```
-public @interface AvoidScan {
-
-}
-```
-
-```
-@RibbonClient(name = "client-a", configuration = TestConfiguration.class)
-@ComponentScan(excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {AvoidScan.class})})
-```
-
-- client 的的策略使用的是`TestConfiguration`定义的
-- ComponentScan 排除`AvoidScan`注解标注的类
-
-#### 基于配置文件的配置
-
-```yml
-client-a:
-  ribbon:
-    ConnectTimeout: 3000 #全局请求连接的超时时间,默认 5 秒
-    ReadTimeout: 60000 #全局超时是时间
-    MaxAutoRetries: 0 #对第一次请求的服务的重试次数.如果要开启,需要保证服务的幂等性 ,注意
-    MaxAutoRetriesNextServer: 1 #要重试的下一个服务的最大数量（不包括第一个服务）
-    OkToRetryOnAllOperations: true #对所有操作请求都进行充实
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule#ribbon:
-eager-load: #饥饿加载
-  enabled: true
-  clients: client-a, client-b, client-c
-    
-```
 
 ## 源码
 
@@ -86,6 +40,40 @@ ClientConfigEnabledRoundRobinRule 是比较常用的IRule的子类之一，它�
             return roundRobinRule.choose(key);
     }
 ```
+
+RoundRobinRule会以轮询的方式依次将选择不同的服务器，从序号为1的服务器开始，直到序号为N的服务器，下次选择服务器时，再从序号为1的服务器开始。但是RoundRobinRule选择服务器时没有考虑服务器的状态，而ZoneAvoidanceRule则会考虑服务器的状态，从而更好地进行负载均衡。
+
+```java
+public class ClientConfigEnabledRoundRobinRule extends AbstractLoadBalancerRule {
+
+    RoundRobinRule roundRobinRule = new RoundRobinRule();
+
+    @Override
+    public void initWithNiwsConfig(IClientConfig clientConfig) {
+        roundRobinRule = new RoundRobinRule();
+    }
+
+    @Override
+    public void setLoadBalancer(ILoadBalancer lb) {
+    	super.setLoadBalancer(lb);
+    	roundRobinRule.setLoadBalancer(lb);
+    }
+    
+    @Override
+    public Server choose(Object key) {
+        if (roundRobinRule != null) {
+            return roundRobinRule.choose(key);
+        } else {
+            throw new IllegalArgumentException(
+                    "This class has not been initialized with the RoundRobinRule class");
+        }
+    }
+
+}
+
+```
+
+
 
 ## ZoneAvoidanceRule
 
@@ -152,9 +140,13 @@ public AbstractServerPredicate getPredicate() {
     return compositePredicate;
 }
 
-CompositePredicate的chooseRoundRobinAfterFiltering方法继承父类AbstractServerPredicate的实现。它会首先调用getEligibleServers方法通过Predicate过滤服务器列表，然后使用轮询策略选择出一个服务器进行返回，如下所示：
-//AbstractServerPredicate.java
 
+```
+
+CompositePredicate的chooseRoundRobinAfterFiltering方法继承父类AbstractServerPredicate的实现。它会首先调用getEligibleServers方法通过Predicate过滤服务器列表，然后使用轮询策略选择出一个服务器进行返回，如下所示：
+
+```java
+//AbstractServerPredicate.java
 //先用Predicate来获取一个可用服务器的集合，然后用轮询算法来选择一个服务器
 public Optional〈Server〉 chooseRoundRobinAfterFiltering(List〈Server〉 servers) {
     List〈Server〉 eligible = getEligibleServers(servers);
@@ -165,6 +157,8 @@ public Optional〈Server〉 chooseRoundRobinAfterFiltering(List〈Server〉 serv
     return Optional.of(eligible.get(nextIndex.getAndIncrement() % eligible.size()));
 }
 ```
+
+
 
 当loadBalancerKey为null时，getEligibleServers方法会使用serverOnlyPredcate来依次过滤服务器列表。getEligibleServers方法的具体实现如下所示：
 
@@ -269,6 +263,8 @@ static Map〈String, ZoneSnapshot〉 createSnapshot(LoadBalancerStats lbStats) {
 
 getAvailableZones方法是用来筛选服务区列表的，首先，它会遍历一遍ZoneSnapshot哈希表，在遍历的过程中，它会做两件事情：依据ZoneSnapshot的实例数、实例的平均负载时间和实例故障率等指标将不符合标准的ZoneSnapshot从列表中删除，它会维护一个最坏ZoneSnapshot列表，当某个ZoneSnapshot的平均负载时间小于但接近全局最坏负载时间时，就会将该ZoneSnapshot加入到最坏ZoneSnapshot列表中，如果某个ZoneSnapshot的平均负载时间大于最坏负载时间时，它将会清空最坏ZoneSnapshot列表，然后以该ZoneSnapshot的平均负载时间作为全局最坏负载时间，继续最坏ZoneSnapshot列表的构建。在方法最后，如果全局最坏负载数据大于系统设定的负载时间阈值，则在最坏ZoneSnapshot列表中随机选择出一个ZoneSnapshot，将其从列表中删除。
 图7-6显示了getAvailableZone方法的筛选流程。
+
+
 
 ![image-20200914204044474](../../../assets/image-20200914204044474.png)
 

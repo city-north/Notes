@@ -11,8 +11,11 @@ public interface LoadBalancerClient extends ServiceInstanceChooser {
     // 构建网络请求URI
     URI reconstructURI(ServiceInstance instance, URI original);
 }
+```
 
 LoadBalancerClient接口继承了ServiceInstanceChooser接口，其choose方法可以从服务器列表中依据负载均衡策略选出一个服务器实例。ServiceInstanceChooser的定义如下所示：
+
+```java
 //实现该类来选择一个服务器用于发送请求
 public interface ServiceInstanceChooser {
     /**
@@ -53,14 +56,13 @@ getServer方法则是直接调用了ILoadBalancer的chooseServer方法来使用�
 
 ```java
 //RibbonLoadBalancerClient.java
-protected Server getServer(ILoadBalancer loadBalancer) {
-    if (loadBalancer == null) {
-
-) {
-        return null;
-    }
-    return loadBalancer.chooseServer("default");
-}
+	protected Server getServer(ILoadBalancer loadBalancer, Object hint) {
+		if (loadBalancer == null) {
+			return null;
+		}
+		// Use 'default' on a null hint, or just pass it on?
+		return loadBalancer.chooseServer(hint != null ? hint : "default");
+	}
 ```
 
 execute方法调用LoadBalancerRequest实例的apply方法，将之前根据负载均衡策略选择出来的服务器作为参数传递进去，进行真正的HTTP请求发送，代码如下所示：
@@ -88,3 +90,5 @@ catch (IOException ex) {
 ```
 
 LoadBalancerRequest的apply方法的具体实现本书不再详细讲解，因为Ribbon最为重要的部分就是使用负载均衡策略来选择服务器，也就是ILoadBalancer的chooseServer方法的实现，本书会在接下来的小节里对其进行详细讲解。
+
+![image-20201010204334928](../../../assets/image-20201010204334928.png)

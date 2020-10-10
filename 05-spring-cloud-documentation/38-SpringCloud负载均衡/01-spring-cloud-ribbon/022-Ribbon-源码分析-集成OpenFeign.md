@@ -30,6 +30,8 @@ public Object getObject() throws Exception {
 }
 ```
 
+![image-20201010203414441](../../../assets/image-20201010203414441.png)
+
 如OpenFeign的源码所示，loadBalance方法会生成LoadBalancerFeignClient实例进行返回。LoadBalancerFeignClient实现了OpenFeign的Client接口，负责OpenFeign网络请求的发送和响应的接收，并带有客户端负载均衡机制。loadBalance方法实现如下所示：
 
 ```java
@@ -98,27 +100,11 @@ public FeignLoadBalancer create(String clientName) {
 }
 ```
 
+FeignLoadBalancer是OpenFeign在不需要重试机制的情况下默认的负载均衡实现。
 
+它的execute方法的实现很简单，使用RibbonRequest对象的客户端来发送网络请求，然后将Response包装成RibbonResponse进行返回。RibbonRequest的request方法返回的对象就是构造RibbonRequest对象时传入的delegate参数。该参数是Client接口的实例，Client接口是OpenFeign真正发送网络请求的客户端，比如说OkHttpClient和ApacheClient。FeignLoadBalancer的execute方法如下所示：
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-FeignLoadBalancer是OpenFeign在不需要重试机制的情况下默认的负载均衡实现。它的execute方法的实现很简单，使用RibbonRequest对象的客户端来发送网络请求，然后将Response包装成RibbonResponse进行返回。RibbonRequest的request方法返回的对象就是构造RibbonRequest对象时传入的delegate参数。该参数是Client接口的实例，Client接口是OpenFeign真正发送网络请求的客户端，比如说OkHttpClient和ApacheClient。FeignLoadBalancer的execute方法如下所示：
+```java
 //FeignLoadBalancer.java
 public RibbonResponse execute(RibbonRequest request, IClientConfig configOverride)
         throws IOException {
@@ -152,8 +138,11 @@ public RibbonResponse execute(RibbonRequest request, IClientConfig configOverrid
     Response response = request.client().execute(request.toRequest(), options);
     return new RibbonResponse(request.getUri(), response);
 }
+```
 
 FeignLoadBalancer是AbstractLoadBalancerAwareClient的子类，其executeWithLoadBalancer方法会首先创建一个LoadBalancerCommand实例，然后在该实例的submit方法的回调中调用子类的execute方法，executeWithLoadBalancer方法如下代码所示：
+
+```java
 //AbstractLoadBalancerAwareClient.java
 public T executeWithLoadBalancer(final S request, final IClientConfig requestConfig) throws ClientException {
     //创建LoadBalancerCommand
@@ -176,8 +165,11 @@ public T executeWithLoadBalancer(final S request, final IClientConfig requestCon
         .toBlocking()
         .single();
 }
+```
 
 其中，buildLoadBalancerCommand方法使用了LoadBalancerCommand.Builder来创建LoadBalancerCommand实例，并将AbstractLoadBalancerAwareClient作为LoadBalancerContext接口的实例设置给LoadBalancerCommand实例，如下所示：
+
+```java
 //LoadBalancerCommand.Builder
 protected LoadBalancerCommand〈T〉 buildLoadBalancerCommand(final S request, final IClientConfig config) {
 
@@ -189,8 +181,11 @@ RequestSpecificRetryHandler handler = getRequestSpecificRetryHandler(request, co
         customizeLoadBalancerCommandBuilder(request, config, builder);
         return builder.build();
 }
+```
 
 LoadBalancerCommand的submit方法使用了响应式编程的原理，创建一个Observable实例来订阅，使用通过负载均衡器选出的服务器来进行异步的网络请求。LoadBalancerCommand的submit方法的具体实现基于Observable机制，较为复杂，笔者将submit源码进行了简化，可以让读者在不了解Observable的情况下了解源码的基本原理。submit方法调用了selectServer方法来选择一个server，这里就是OpenFeign进行负载均衡的地方，代码如下所示：
+
+```java
 //LoadBalancerCommand.java
 public Observable〈T〉 submit(final ServerOperation〈T〉 operation) {
     final ExecutionInfoContext context = new ExecutionInfoContext();
@@ -218,5 +213,8 @@ private Observable〈Server〉 selectServer() {
         }
     });
 }
+```
+
+
 
 LoadBalancerContext的getServerFromLoadBalancer方法调用了ILoadBalancer的chooseServer方法，从而完成了负载均衡中服务器的选择。这部分的具体实现，在下一节会进行详细描述。

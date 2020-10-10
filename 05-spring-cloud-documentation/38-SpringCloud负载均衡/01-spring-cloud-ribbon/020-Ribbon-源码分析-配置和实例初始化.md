@@ -79,6 +79,24 @@ private void registerClientConfiguration(BeanDefinitionRegistry registry, Object
 
 在 **RibbonAutoConfiguration** 里会进行 **SpringClientFactory** 实例的初始化，并将所有的 **RibbonClientSpecification** 实例都设置给 **SpringClientFactory** ，供其在初始化Ribbon相关组件实例时使用。
 
+![image-20201010202622705](../../../assets/image-20201010202622705.png)
+
+其名称为RibbonClient的名称加上.RibbonClientSpecification。
+
+> 我们的代码是say-hello.RibbonClientSpecification
+
+RibbonClientSpecification是NamedContextFactory.Specification的实现类，是供SpringClientFactory使用的。
+
+在RibbonAutoConfiguration里会进行SpringClientFactory实例的初始化，并将所有的RibbonClientSpecification实例都设置给SpringClientFactory，供其在初始化Ribbon相关组件实例时使用。
+
+![image-20201010202851041](../../../assets/image-20201010202851041.png)
+
+注意这里只是注册一了一个定义,真正的实例化要在后续使用AutoConfiguration机制的时候才会使用
+
+
+
+
+
 
 
 ```java

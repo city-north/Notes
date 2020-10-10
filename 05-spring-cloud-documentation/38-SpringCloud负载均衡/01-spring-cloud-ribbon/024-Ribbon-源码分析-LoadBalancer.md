@@ -18,7 +18,8 @@ Ribbon通过**SpringClientFactory**工厂类的getLoadBalancer方法可以获取
 SpringClientFactory中的实例都是RibbonClientConfiguration或者自定义Configuration配置类创建的Bean实例。
 
 RibbonClientConfiguration还创建了IRule、IPing和ServerList等相关组件的实例。使用者可以通过自定义配置类给出上述几个组件的不同实例。
-ZoneAwareLoadBalancer是ILoadBalancer接口的实现类之一，它是Ribbon默认的ILoadBalancer接口的实例。
+
+- ZoneAwareLoadBalancer是ILoadBalancer接口的实现类之一，它是Ribbon默认的ILoadBalancer接口的实例。
 
 ![image-20200914201010709](../../../assets/image-20200914201010709.png)
 
@@ -51,9 +52,14 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
 
 图7-3是IBalancer相关的类图，其中的类都是ZoneAwareLoadBalancer构造方法所需参数实例的类型。接下来按照ZoneAwareLoadBalancer构造函数的参数顺序来看一下与ILoadBalancer相关的重要的类，它们分别是IClientConfig、IRule、IPing、ServerList和ServerListFilter，默认配置如表7-1所示。
 
+## ZoneAwareLoadBalancer获取chooseServer方法
 
+- ZoneAwareLoadBalancer的chooseServer方法会首先使用DynamicPropertyFactory来获取平均负载(triggeringLoadPerServerThreshold)和实例故障率(avoidZoneWithBlackoutPercetage)两个阈值，
 
-ZoneAwareLoadBalancer的chooseServer方法会首先使用DynamicPropertyFactory来获取平均负载(triggeringLoadPerServerThreshold)和实例故障率(avoidZoneWithBlackoutPercetage)两个阈值，然后调用ZoneAvoidanceRule的getAvailableZones方法使用这两个阈值来获取所有可用的服务区(Zone)列表，每个服务区实例中包含了一定数量的服务器实例。然后调用ZoneAvoidanceRule的randomChooseZone方法从上述的服务区列表中随机选出一个服务区，最后调用该服务区对应BaseLoadBalancer实例的chooseServer方法获取到最终的服务器实例。ZoneAwareLoadBalancer会为不同的服务区调用不同的BaseLoadBalancer的chooseServer方法，这正体现了它类名的含义。chooseServer方法是其中最重要的方法，具体实现如下所示：
+- 然后调用ZoneAvoidanceRule的getAvailableZones方法使用这两个阈值来获取所有可用的服务区(Zone)列表，每个服务区实例中包含了一定数量的服务器实例。
+
+- 然后调用ZoneAvoidanceRule的randomChooseZone方法从上述的服务区列表中随机选出一个服务区，最后调用该服务区对应BaseLoadBalancer实例的chooseServer方法获取到最终的服务器实例。
+- ZoneAwareLoadBalancer会为不同的服务区调用不同的BaseLoadBalancer的chooseServer方法，这正体现了它类名的含义。chooseServer方法是其中最重要的方法，具体实现如下所示：
 
 ```java
 //ZoneAwareLoadBalancer.java
@@ -103,8 +109,11 @@ AvoidanceRule.createSnapshot (lbStats);
         return super.chooseServer(key);
     }
 }
+```
 
 BaseLoadBalancer对象的chooseServer方法实现比较简单，就是直接调用它的IRule成员变量的choose方法。IRule是负责实现负载均衡策略的接口，本书会在下一小节进行详细描述，BaseLoadBalancer的chooseServer函数的代码如下所示：
+
+```java
 //BaseLoadBalancer.java
 public Server chooseServer(Object key) {
     if (counter == null) {
@@ -136,4 +145,3 @@ public Server chooseServer(Object key) {
 
 ![image-20200811205841118](../../../assets/image-20200811205841118.png)
 
-getServer 方法就是根据负载均衡算法获取服务

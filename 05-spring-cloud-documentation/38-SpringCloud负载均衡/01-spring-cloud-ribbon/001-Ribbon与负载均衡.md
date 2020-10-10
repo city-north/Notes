@@ -6,6 +6,15 @@
 
 ## Ribbon是什么
 
+Ribbon是管理HTTP和TCP服务客户端的负载均衡器。
+
+Ribbon具有一系列带有名称的客户端(Named Client)，也就是带有名称的Ribbon客户端(Ribbon Client)。
+
+每个客户端由可配置的组件构成，负责一类服务的调用请求。Spring Cloud通过RibbonClientConfiguration为每个Ribbon客户端创建一个ApplicationContext上下文来进行组件装配。
+
+Ribbon作为Spring Cloud的负载均衡机制的实现，可以与OpenFeign和RestTemplate进行无缝对接，让二者具有负载均衡的能力。
+
+
 Ribbon 是一个客户端负载均衡器 , Feign 和 Zuul 默认集成了 Ribbon , 其核心就是
 
 - 获取到服务列表, 可以是从注册中心或者是配置文件

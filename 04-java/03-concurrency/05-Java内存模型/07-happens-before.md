@@ -98,8 +98,6 @@ Thread t1 = new Thread(()->{
 }
 ```
 
-
-
 - join 规则，如果线程 A 执行操作 ThreadB.join()并成功返 回，那么线程 B 中的任意操作 happens-before 于线程 A 从 ThreadB.join()操作成功返回。
 
 ```java
@@ -112,8 +110,6 @@ t1.join()
 // 子线程所有对共享变量的修改
 // 在主线程调用 t1.join() 之后皆可见 // 此例中，x==100
 ```
-
-
 
 - 监视器锁的规则，对一个锁的解锁，happens-before 于 随后对这个锁的加锁
 

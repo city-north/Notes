@@ -89,12 +89,6 @@ public class RibbonConfiguration {
 使用者可以在application.yml文件中对Ribbon进行配置，比如设置服务端列表或者使用Eureka来获取服务端列表，如下所示：
 
 ```yaml
-say-hello:
-  ribbon:
-    eureka:
-   # 将Eureka关闭，则Ribbon无法从Eureka中获取服务端列表信息
-  enabled: false
-   # listOfServers可以设置服务端列表
   say-hello:
     ribbon:
         eureka:
