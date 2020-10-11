@@ -28,8 +28,6 @@ SynchronousMethodHandler是MethodHandler的子类，可以在FeignClient相应�
 
 ## 关键类图
 
-
-
 ![image-20201011002712676](../../../assets/image-20201011002712676.png)
 
 ## 关键构建流程

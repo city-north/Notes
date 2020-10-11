@@ -1,14 +1,14 @@
-# 021-动态注册BeanDefinition
+# 注册FeignClient配置类和FeignClient BeanDefinition
 
 ![image-20201011002919302](../../../assets/image-20201011002919302.png)
 
-## 简介
+从启动类注解开始，来看下`@EnableFeignClients`注解：
 
-OpenFeign可以通过多种方式进行自定义配置，配置的变化会导致接口类初始化时使用不同的Bean实例，从而控制OpenFeign的相关行为，比如说网络请求的编解码、压缩和日志处理。
-
-可以说，了解OpenFeign配置和实例初始化的流程与原理对于我们学习和使用OpenFeign有着至关重要的作用，而且Spring Cloud的所有项目的配置和实例初始化过程的原理基本相同，了解了OpenFeign的原理，就可以触类旁通，一通百通了。
-
-## EnableFeignClients注解
+```
+@EnableFeignClients
+public class MyApplication {
+}
+```
 
 ```java
 @Retention(RetentionPolicy.RUNTIME)
@@ -35,44 +35,51 @@ public @interface EnableFeignClients {
 	Class<?>[] clients() default {};
 
 }
-
 ```
-
-值得注意的是
 
 ```java
 @Import(FeignClientsRegistrar.class)
-```
+public class FeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
+        ResourceLoaderAware, BeanClassLoaderAware {
 
-SpringCloud 都是采用这个套路, 通过 Import 导入注册器
+    // patterned after Spring Integration IntegrationComponentScanRegistrar
+    // and RibbonClientsConfigurationRegistgrar
+    private final Logger logger = LoggerFactory.getLogger(FeignClientsRegistrar.class);
+    private ResourceLoader resourceLoader;
 
-FeignClientsRegistrar是ImportBeanDefinitionRegistrar的子类，Spring用ImportBeanDefinitionRegistrar来动态注册BeanDefinition。
+    private ClassLoader classLoader;
 
-OpenFeign通过FeignClientsRegistrar来处理@FeignClient修饰的FeignClient接口类，将这些接口类的BeanDefinition注册到Spring容器中，**这样就可以使用@Autowired等方式来自动装载这些FeignClient接口类的Bean实例。**FeignClientsRegistrar的部分代码如下所示：
+    public FeignClientsRegistrar() {
+    }
 
-> EC有话说
->
-> 这里说明一下,我们发现 EnableFeignClients 并没有实际上使用模式注解 @Component
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
-```java
-//FeignClientsRegistrar.java
-class FeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
-        ResourceLoaderAware, BeanClassLoaderAware, EnvironmentAware {
-    ...
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+    }
+
     @Override
     public void registerBeanDefinitions(AnnotationMetadata metadata,
-        BeanDefinitionRegistry registry) {
-        //从EnableFeignClients的属性值来构建Feign的自定义Configuration进行注册
+            BeanDefinitionRegistry registry) {
+        //1、先注册默认配置 从EnableFeignClients的属性值来构建Feign的自定义Configuration进行注册
         registerDefaultConfiguration(metadata, registry);
-        //扫描package，注册被@FeignClient修饰的接口类的Bean信息
+        //2、注册所有的feignClient beanDefinition 扫描package，注册被@FeignClient修饰的接口类的Bean信息注册所有的feignClient beanDefinition
         registerFeignClients(metadata, registry);
     }
-    ...
+    //...
 }
 ```
 
-- 一是注册@EnableFeignClients提供的自定义配置类中的相关Bean实例
-- 二是根据@EnableFeignClients提供的包信息扫描@FeignClient注解修饰的FeignCleint接口类，然后进行Bean实例注册。
+我们分别来看一下上面`registerBeanDefinitions`中的两个方法：
+
+- 注册默认配置方法：`registerDefaultConfiguration`: 注册@EnableFeignClients提供的自定义配置类中的相关Bean实例
+- 注册所有的feignClient beanDefinition : 根据@EnableFeignClients提供的包信息扫描@FeignClient注解修饰的FeignCleint接口类，然后进行Bean实例注册。
+
+## 注册默认配置方法
 
 @EnableFeignClients的自定义配置类是被@Configuration注解修饰的配置类，它会提供一系列组装FeignClient的各类组件实例。这些组件包括：Client、Targeter、Decoder、Encoder和Contract等。接下来看看registerDefaultConfiguration的代码实现，如下所示：
 
@@ -116,6 +123,8 @@ private void registerClientConfiguration(BeanDefinitionRegistry registry, Object
 }
 ```
 
+
+
 BeanDefinitionRegistry是Spring框架中用于动态注册BeanDefinition信息的接口，调用其registerBeanDefinition方法可以将BeanDefinition注册到Spring容器中，其中name属性就是注册BeanDefinition的名称。
 
 FeignClientSpecification类实现了NamedContextFactory.Specification接口，它是OpenFeign组件实例化的重要一环，它持有自定义配置类提供的组件实例，供OpenFeign使用。
@@ -131,6 +140,10 @@ FeignClientSpecification类实现了NamedContextFactory.Specification接口，�
 在OpenFeign中，FeignContext继承了NamedContextFactory，用于存储各类OpenFeign的组件实例。下图是FeginContext的相关类图。
 
 ![image-20201011115622935](../../../assets/image-20201011115622935.png)
+
+
+
+
 
 ## FeignAutoConfiguration
 
@@ -218,7 +231,9 @@ public void destroy() {
 
 NamedContextFactory会创建出AnnotationConfigApplicationContext实例，并以name作为唯一标识，然后每个AnnotationConfigApplicationContext实例都会注册部分配置类，从而可以给出一系列的基于配置类生成的组件实例，这样就可以基于name来管理一系列的组件实例，为不同的FeignClient准备不同配置组件实例，比如说Decoder、Encoder等。我们会在后续的讲解中详细介绍配置类Bean实例的获取。
 
-## 扫描类信息
+
+
+## 注册所有的feignClient-beanDefinition
 
 FeignClientsRegistrar做的第二件事情是扫描指定包下的类文件，注册@FeignClient注解修饰的接口类信息，如下所示：
 
@@ -270,9 +285,59 @@ Set〈BeanDefinition〉 candidateComponents = scanner
 }
 ```
 
+```java
+private void registerFeignClient(BeanDefinitionRegistry registry,
+			AnnotationMetadata annotationMetadata, Map<String, Object> attributes) {
+		String className = annotationMetadata.getClassName();
+		BeanDefinitionBuilder definition = BeanDefinitionBuilder
+				.genericBeanDefinition(FeignClientFactoryBean.class);
+		validate(attributes);
+		definition.addPropertyValue("url", getUrl(attributes));
+		definition.addPropertyValue("path", getPath(attributes));
+		String name = getName(attributes);
+		definition.addPropertyValue("name", name);
+		String contextId = getContextId(attributes);
+		definition.addPropertyValue("contextId", contextId);
+		definition.addPropertyValue("type", className);
+		definition.addPropertyValue("decode404", attributes.get("decode404"));
+		definition.addPropertyValue("fallback", attributes.get("fallback"));
+		definition.addPropertyValue("fallbackFactory", attributes.get("fallbackFactory"));
+		definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
+
+		String alias = contextId + "FeignClient";
+		AbstractBeanDefinition beanDefinition = definition.getBeanDefinition();
+
+		boolean primary = (Boolean) attributes.get("primary"); // has a default, won't be	// null
+		beanDefinition.setPrimary(primary);
+		String qualifier = getQualifier(attributes);
+		if (StringUtils.hasText(qualifier)) {
+			alias = qualifier;
+		}
+		BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className,new String[] { alias });
+		BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
+	}
+```
+
+划重点，上面出现了一行相当关键代码:
+
+```
+BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(FeignClientFactoryBean.class);
+```
+
+springCloud FeignClient其实是利用了spring的代理工厂来生成代理类，所以这里将所有的`feignClient`的描述信息`BeanDefinition`设定为`FeignClientFactoryBean`类型，该类又继承`FactoryBean`,很明显，这是一个代理类。
+在spring中，`FactoryBean`是一个工厂bean，用作创建代理bean，所以得出结论，feign将所有的feignClient bean包装成`FeignClientFactoryBean`。扫描方法到此结束。
+
+**代理类什么时候会触发生成呢？ 在spring刷新容器时，当实例化我们的业务service时，如果发现注册了FeignClient，spring就会去实例化该FeignClient，同时会进行判断是否是代理bean，如果为代理bean，则调用`FeignClientFactoryBean`的`T getObject() throws Exception;`方法生成代理bean。**
+
+
+
 如上述代码所示，FeignClientsRegistrar的registerFeignClients方法依据@EnableFeignClients的属性获取要扫描的包路径信息，然后获取这些包下所有被@FeignClient注解修饰的接口类的BeanDefinition，最后调用registerFeignClient动态注册BeanDefinition。
+
 registerFeignClients方法中有一些细节值得认真学习，有利于加深了解Spring框架。首先是如何自定义Spring类扫描器，即如何使用ClassPathScanningCandidateComponentProvider和各类TypeFilter。
+
 OpenFeign使用了AnnotationTypeFilter，来过滤出被@FeignClient修饰的类，getScanner方法的具体实现如下所示：
+
+
 
 ```java
 //FeignClientsRegistrar.java
@@ -294,8 +359,6 @@ protected ClassPathScanningCandidateComponentProvider getScanner() {
     };
 }
 ```
-
-
 
 ClassPathScanningCandidateComponentProvider的作用是遍历指定路径的包下的所有类。
 

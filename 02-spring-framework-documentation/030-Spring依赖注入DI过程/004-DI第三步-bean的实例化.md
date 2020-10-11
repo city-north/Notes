@@ -4,10 +4,6 @@
 
 举个例子，假如我们需要对工厂bean进行处理，那么这里得到的其实是工厂bean的初始状态，但是我们真正需要的是工厂bean中定义的 factory-method方法中返回的 bean，而 getObjectForBeanInstance 就是完成这个工作的
 
-
-
-
-
 ## 总体流程
 
 当经历过resolveBeforeInstantiation方法后，程序有两个选择，
@@ -25,13 +21,7 @@
 
 ![image-20200930194706981](../../assets/image-20200930194706981.png)
 
-
-
-# 如果
-
-
-
-
+如果创建了代理或者说重写了InstantiationAwareBeanPostProcessor的postProcessBeforeInstantiation方法并在方法postProcessBeforeInstantiation中改变了bean，则直接返回就可以了
 
 ![image-20200930194817480](../../assets/image-20200930194817480.png)
 
