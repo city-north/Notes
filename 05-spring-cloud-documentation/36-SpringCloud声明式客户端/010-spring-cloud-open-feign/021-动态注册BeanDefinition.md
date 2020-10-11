@@ -40,7 +40,7 @@ public @interface EnableFeignClients {
 
 值得注意的是
 
-```
+```java
 @Import(FeignClientsRegistrar.class)
 ```
 
@@ -48,7 +48,11 @@ SpringCloud 都是采用这个套路, 通过 Import 导入注册器
 
 FeignClientsRegistrar是ImportBeanDefinitionRegistrar的子类，Spring用ImportBeanDefinitionRegistrar来动态注册BeanDefinition。
 
-OpenFeign通过FeignClientsRegistrar来处理@FeignClient修饰的FeignClient接口类，将这些接口类的BeanDefinition注册到Spring容器中，这样就可以使用@Autowired等方式来自动装载这些FeignClient接口类的Bean实例。FeignClientsRegistrar的部分代码如下所示：
+OpenFeign通过FeignClientsRegistrar来处理@FeignClient修饰的FeignClient接口类，将这些接口类的BeanDefinition注册到Spring容器中，**这样就可以使用@Autowired等方式来自动装载这些FeignClient接口类的Bean实例。**FeignClientsRegistrar的部分代码如下所示：
+
+> EC有话说
+>
+> 这里说明一下,我们发现 EnableFeignClients 并没有实际上使用模式注解 @Component
 
 ```java
 //FeignClientsRegistrar.java
@@ -124,7 +128,9 @@ FeignClientSpecification类实现了NamedContextFactory.Specification接口，�
 - 二是在子上下文中创建并获取Bean实例
 - 三是当子上下文消亡时清除其中的Bean实例。
 
-在OpenFeign中，FeignContext继承了NamedContextFactory，用于存储各类OpenFeign的组件实例。图5-4就是FeginContext的相关类图。
+在OpenFeign中，FeignContext继承了NamedContextFactory，用于存储各类OpenFeign的组件实例。下图是FeginContext的相关类图。
+
+![image-20201011115622935](../../../assets/image-20201011115622935.png)
 
 ## FeignAutoConfiguration
 
@@ -165,8 +171,7 @@ protected AnnotationConfigApplicationContext createContext(String name) {
             context.register(configuration);
         }
     }
-    // 注册default的Configuration，也就是FeignClientsRegistrar类的registerDefaultConfiguration
-       方法中注册的Configuration
+    // 注册default的Configuration，也就是FeignClientsRegistrar类的registerDefaultConfiguration方法中注册的Configuration
     for (Map.Entry〈String, C〉 entry : this.configurations.entrySet()) {
         if (entry.getKey().startsWith("default.")) {
             for (Class〈?〉 configuration : entry.getValue().getConfiguration()) {

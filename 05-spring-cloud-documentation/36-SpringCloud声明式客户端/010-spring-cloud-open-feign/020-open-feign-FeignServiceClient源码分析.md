@@ -6,6 +6,14 @@ OpenFeign相关的关键类图，其中比较重要的类为
 - [FeignContext](#FeignContext)
 - [SynchronousMethodHandler](#SynchronousMethodHandler)
 
+## 注册过程
+
+![image-20201011003233959](../../../assets/image-20201011003233959.png)
+
+- [动态注册BeanDefinition](021-动态注册BeanDefinition.md) 
+- [实例初始化](022-实例初始化.md) 
+- [函数调用和网络请求](023-函数调用和网络请求.md) 
+
 ## FeignClientFactoryBean
 
 FeignClientFactoryBean是创建@FeignClient修饰的接口类Bean实例的工厂类；
@@ -27,12 +35,4 @@ SynchronousMethodHandler是MethodHandler的子类，可以在FeignClient相应�
 ## 关键构建流程
 
 ![image-20201011002919302](../../../assets/image-20201011002919302.png)
-
-## 注册过程
-
-![image-20201011003233959](../../../assets/image-20201011003233959.png)
-
-- [动态注册BeanDefinition](021-动态注册BeanDefinition.md) 
-- [实例初始化](022-实例初始化.md) 
-- [函数调用和网络请求](023-函数调用和网络请求.md) 
 
