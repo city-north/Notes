@@ -93,12 +93,6 @@ RibbonClientSpecification是NamedContextFactory.Specification的实现类，是�
 
 注意这里只是注册一了一个定义,真正的实例化要在后续使用AutoConfiguration机制的时候才会使用
 
-
-
-
-
-
-
 ```java
 @Configuration
 @RibbonClients

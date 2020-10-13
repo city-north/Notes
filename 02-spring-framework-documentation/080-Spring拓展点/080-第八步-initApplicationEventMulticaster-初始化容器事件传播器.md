@@ -21,7 +21,6 @@ nitApplicationEventMulticaster的方式比较简单，无非考虑两种情况�
 - 如果用户没有自定义事件广播器，那么使用默认的ApplicationEventMulticaster。
 
 ```java
-
 protected void initApplicationEventMulticaster() {
          ConfigurableListableBeanFactory beanFactory = getBeanFactory();
          if (beanFactory.containsLocalBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME)) {
@@ -40,8 +39,6 @@ protected void initApplicationEventMulticaster() {
              }
          }
 }
-
-
 ```
 
 按照之前介绍的顺序及逻辑，我们推断，作为广播器，一定是用于存放监听器并在合适的时候调用监听器，那么我们不妨进入默认的广播器实现SimpleApplicationEventMulticaster来一探究竟。
