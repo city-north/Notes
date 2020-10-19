@@ -1,7 +1,8 @@
 #数据库表
 
-Activiti 默认有 28 张表
-![](https://www.showdoc.cc/server/api/common/visitfile/sign/65f981e4ab9e5b499b21aee65450427f?showdoc=.jpg)
+## Activiti 默认有 28 张表
+
+![](../../assets/65f981e4ab9e5b499b21aee65450427f.jpg)
 
 ## 分类
 
