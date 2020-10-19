@@ -22,8 +22,6 @@ Ribbon的负载均衡策略既有 **RoundRobinRule** 和 **RandomRule** 这样�
 | 响应时间加全策略 | WeightedResponseTimeRule                | 根据server的响应时间分配权重,相应时间越长,权重越低,被选择到的概率就越低,响应时间越短,权重越高,被选择到的概率就越高,这个策略很贴切,总和了各种因素,如: 网络、磁盘、IO 、 等等这些因素直接影响响应时间 |
 | 区域权衡策略     | [ZoneAvoidanceRule](#ZoneAvoidanceRule) | 综合判断server所在的区域的性能和server的可用性轮询选择server,并且判定一个AWS zone的运行性能是否可用,剔除不可用的Zone中的所有server |
 
-
-
 ## 源码
 
 IRule是定义Ribbon负载均衡策略的接口，你可以通过实现该接口来自定义自己的负载均衡策略，RibbonClientConfiguration配置类则会给出IRule的默认实例。IRule接口的choose方法就是从一堆服务器中根据一定规则选出一个服务器。IRule有很多默认的实现类，这些实现类根据不同的算法和逻辑来进行负载均衡。
@@ -73,8 +71,6 @@ public class ClientConfigEnabledRoundRobinRule extends AbstractLoadBalancerRule 
 
 ```
 
-
-
 ## ZoneAvoidanceRule
 
 ZoneAvoidanceRule则会考虑服务器的状态，从而更好地进行负载均衡。
@@ -116,6 +112,8 @@ Optional〈Server〉 server = getPredicate().chooseRoundRobinAfterFiltering(lb.g
     }
 }
 ```
+
+
 
 PredicateBasedRule接口的getPredicate抽象接口需要子类实现，不同的子类提供不同的AbstractServerPredicate实例来实现不同的服务器过滤策略。而ZoneAvoidanceRule使用的是由ZoneAvoidancePredicate和AvailabilityPredicate组成的复合策略CompositePredicate，前一个判断判定一个服务区的运行状况是否可用，去除不可用的服务区的所有服务器，后一个用于过滤掉连接数过多的服务器。ZoneAvoidanceRule的getPredicate方法的相关实现如下所示：
 

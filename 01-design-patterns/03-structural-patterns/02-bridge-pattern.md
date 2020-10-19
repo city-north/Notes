@@ -4,19 +4,15 @@
 
 一个抽象类，聚合一个接口实现类
 
-桥接模式用一种巧妙的方式，处理多层继承存在的问题，用抽象关联取代了传统的多层继承，将类之间的静态继承关系转化为动态的对象组合关系，使得系统更加灵活，并易于拓展，同时有效控制了系统中类的个数。
+- 桥接模式的主要目的是通过组合的方式建立两个类的关系,而不是继承,但是又类似于多重继承的方案
 
-## 简介
-
-我们常用的JDBC 和 **DriverManager** 就使用了桥接模式，JDBC在连接数据库时， 在各个数据库之间进行切换而不需要修改代码，因为JDBC 已经提供了提供了统一的接口，每个数据库都提供了各自的实现，通过一个叫做 **数据库驱动** 的程序来桥接即可
-
-<img src="../../assets/image-20200727233625594.png" alt="image-20200727233625594" style="zoom:50%;" />
-
-一个抽象类 DriverManagerBridge 作为桥接器，注入不同的驱动器，以实现对不同类型的数据库中实现驱动的切换和数据库SQL语句的执行
+- 但是多重继承的方案往往违背了类的单一职责原则,复用性差
+- 桥接模式是比多重继承方案更好的替代方案
+- 桥接模式的核心在于 将抽象与实现解耦
 
 ## UML
 
-![](assets/5bb9816001f28.png)
+![](../../assets/5bb9816001f28.png)
 
 ## 角色：
 
@@ -26,15 +22,19 @@
 
 **实现类接口**：（Implementor）：定义实现类的接口，这个接口可以与Abstraction的接口不同。一般而言，Implementor接口仅提供基本操作，而Abstraction定义的接口可能可以会做更加复杂的操作。
 
-具体实现类：（ConcreteImplemetor）：具体操作
+**具体实现类**：（ConcreteImplemetor）：具体操作
 
+## 通用写法
 
+#### 实现类接口
 
 ```java
 public interface Implementor {
    public void operation();
 }
 ```
+
+#### 具体实现类A
 
 ```java
 public class ConcreateImplementorA implements Implementor {
@@ -45,6 +45,8 @@ public class ConcreateImplementorA implements Implementor {
  }
 ```
 
+#### 具体实现类B
+
 ```java
 public class ConcreateImplementorB implements Implementor {
      @Override
@@ -53,6 +55,10 @@ public class ConcreateImplementorB implements Implementor {
      }
 }
 ```
+
+#### 抽象类
+
+可以看到抽象类里面引用了实现接口
 
 ```java
 public abstract class Abstraction {
@@ -71,6 +77,10 @@ public abstract class Abstraction {
      }
  }
 ```
+
+### 抽象修正类
+
+实际上通过重写父类的方法,父类的实现算是一种兜底
 
 ```java
 public class RefinedAbstraction extends Abstraction {
@@ -97,6 +107,88 @@ public class BridgeTest {
      }
  }
 ```
+
+## 使用桥接模式设计消息复杂系统
+
+![image-20201013202623238](../../assets/image-20201013202623238.png)
+
+
+
+```java
+public interface IMessage {
+
+    void send(String message, String address);
+}
+```
+
+```
+public class EmailMessage implements IMessage {
+
+    @Override
+    public void send(String message, String address) {
+        System.out.println("发送邮件Message");
+    }
+}
+public class SmsMessage implements IMessage {
+
+    @Override
+    public void send(String message, String address) {
+        System.out.println("发送短信");
+    }
+}
+
+```
+
+```java
+public abstract class AbstractMessage {
+
+    IMessage message;
+
+    public AbstractMessage(IMessage message) {
+        this.message = message;
+    }
+
+    public void sendMessage(String message, String user) {
+        //这里有点像代理模式,差距是这里是抽象类
+        this.message.send(message, user);
+    }
+}
+
+```
+
+```java
+public class UrgencyMessage extends AbstractMessage {
+
+    public UrgencyMessage(IMessage message) {
+        super(message);
+    }
+
+    public void send(String message, String address) {
+        System.out.println("加急");
+        this.message.send(message, address);
+    }
+}
+```
+
+
+
+
+
+
+
+## JDBC中的桥接
+
+![image-20201013200553475](../../assets/image-20201013200553475.png)
+
+一个抽象类 DriverManagerBridge 作为桥接器，注入不同的驱动器，以实现对不同类型的数据库中实现驱动的切换和数据库SQL语句的执行
+
+## 
+
+我们常用的JDBC 和 **DriverManager** 就使用了桥接模式，JDBC在连接数据库时， 在各个数据库之间进行切换而不需要修改代码，因为JDBC 已经提供了提供了统一的接口，每个数据库都提供了各自的实现，通过一个叫做 **数据库驱动** 的程序来桥接即可
+
+
+
+
 
 ## 优点：
 

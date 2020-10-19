@@ -83,14 +83,14 @@ public class FutureTest {
 要分析这个问题,需要看线程池的 submit 方法都做了什么, submit 方法的代码如下
 
 ```java
-    public Future<?> submit(Runnable task) {
-			....
-        // 装饰 Runnable为 Future 对象
-        RunnableFuture<Void> ftask = newTaskFor(task, null);
-        execute(ftask);
-      // ⑥ 返回 Future 对象
-        return ftask;
-    }
+public Future<?> submit(Runnable task) {
+  ....
+    // 装饰 Runnable为 Future 对象
+    RunnableFuture<Void> ftask = newTaskFor(task, null);
+  execute(ftask);
+  // ⑥ 返回 Future 对象
+  return ftask;
+}
 ```
 
 问题出现主要是在拒绝任务的影响
@@ -98,8 +98,8 @@ public class FutureTest {
 DiscardPolicy 的代码
 
 ```java
-        public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
-        }
+public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
+}
 ```
 
 可以看到拒绝策略什么都没做 ,返回的 Future 的状态还是 NEW 
@@ -107,23 +107,23 @@ DiscardPolicy 的代码
 而当我们调用 Future 的无参get 方法时 Future只有 在 **COMPLETING** 状态才会返回,所以会等待状态改变
 
 ```java
-    public V get() throws InterruptedException, ExecutionException {
-        int s = state;
-        if (s <= COMPLETING)
-            s = awaitDone(false, 0L);
-        return report(s);
-    }
+public V get() throws InterruptedException, ExecutionException {
+  int s = state;
+  if (s <= COMPLETING)
+    s = awaitDone(false, 0L);
+  return report(s);
+}
 
-    private V report(int s) throws ExecutionException {
-        Object x = outcome;
-      //状态为 NORMAL 正常返回
-        if (s == NORMAL)
-            return (V)x;
-      //状态值大于等待与 CANCELLED 则抛出异常
-        if (s >= CANCELLED)
-            throw new CancellationException();
-        throw new ExecutionException((Throwable)x);
-    }
+private V report(int s) throws ExecutionException {
+  Object x = outcome;
+  //状态为 NORMAL 正常返回
+  if (s == NORMAL)
+    return (V)x;
+  //状态值大于等待与 CANCELLED 则抛出异常
+  if (s >= CANCELLED)
+    throw new CancellationException();
+  throw new ExecutionException((Throwable)x);
+}
 ```
 
 也就是说 Future 的状态 >  COMPLETING 时调用 get方法才会返回 
@@ -138,11 +138,11 @@ DiscardPolicy 的代码
 因为 AbortPolicy 当线程池满的时候,会直接抛出异常 
 
 ```java
-        public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
-            throw new RejectedExecutionException("Task " + r.toString() +
-                                                 " rejected from " +
-                                                 e.toString());
-        }
+public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
+  throw new RejectedExecutionException("Task " + r.toString() +
+                                       " rejected from " +
+                                       e.toString());
+}
 ```
 
 也就是 submit 方法并没有返回 Future 对象, 这个时候 future返回的实际是 null

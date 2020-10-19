@@ -19,7 +19,7 @@ RestTemplate是Spring提供的同步HTTP网络客户端接口，它可以简化�
 
 - Spring Cloud为客户端负载均衡创建了特定的注解 **@LoadBalanced**，我们只需要使用该注解修饰创建RestTemplate实例的@Bean函数，Spring Cloud就会让RestTemplate使用相关的负载均衡策略，默认情况下是使用Ribbon。
 
-- 除了@LoadBalanced之外，Ribbon还提供@RibbonClient注解。该注解可以为Ribbon客户端声明名称和自定义配置。name属性可以设置客户端的名称，configuration属性则会设置Ribbon相关的自定义配置类，如下所示：
+- 除了@LoadBalanced之外，Ribbon还提供**@RibbonClient**注解。该注解可以为Ribbon客户端声明名称和自定义配置。name属性可以设置客户端的名称，configuration属性则会设置Ribbon相关的自定义配置类，如下所示：
 
 ```java
 @SpringBootApplication

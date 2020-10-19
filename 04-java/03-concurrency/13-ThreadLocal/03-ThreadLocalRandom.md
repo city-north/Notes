@@ -33,24 +33,24 @@ public class RandomTest {
 #### 为什么 Random 效率有缺陷
 
 ```java
-    public int nextInt(int bound) {
-      //③ 参数检查
-        if (bound <= 0)
-            throw new IllegalArgumentException(BadBound);
-				//④ 根据老的种子生成新的种子
-        int r = next(31);
-      // ⑤ 根据新的种子计算随机数
-        int m = bound - 1;
-        if ((bound & m) == 0)  // i.e., bound is a power of 2
-            r = (int)((bound * (long)r) >> 31);
-        else {
-            for (int u = r;
-                 u - (r = u % bound) + m < 0;
-                 u = next(31))
-                ;
-        }
-        return r;
-    }
+public int nextInt(int bound) {
+  //③ 参数检查
+  if (bound <= 0)
+    throw new IllegalArgumentException(BadBound);
+  //④ 根据老的种子生成新的种子
+  int r = next(31);
+  // ⑤ 根据新的种子计算随机数
+  int m = bound - 1;
+  if ((bound & m) == 0)  // i.e., bound is a power of 2
+    r = (int)((bound * (long)r) >> 31);
+  else {
+    for (int u = r;
+         u - (r = u % bound) + m < 0;
+         u = next(31))
+      ;
+  }
+  return r;
+}
 ```
 
 新的随机数的生成需要两个步骤
@@ -67,19 +67,19 @@ public class RandomTest {
 #### Random 如何确保获取的新的种子每次都是不一样的
 
 ```java
-    protected int next(int bits) {
-        long oldseed, nextseed;
-        AtomicLong seed = this.seed;
-        do {
-          // 6 获取当前原子变量种子的值
-            oldseed = seed.get();
-          //7 根据当前的种子计算新的种子
-            nextseed = (oldseed * multiplier + addend) & mask;
-          //8 使用 CAS 操作, 用新的种子去替换老的种子,
-        } while (!seed.compareAndSet(oldseed, nextseed));
-      //使用固定的算法根据新的种子计算随机数
-        return (int)(nextseed >>> (48 - bits));
-    }
+protected int next(int bits) {
+  long oldseed, nextseed;
+  AtomicLong seed = this.seed;
+  do {
+    // 6 获取当前原子变量种子的值
+    oldseed = seed.get();
+    //7 根据当前的种子计算新的种子
+    nextseed = (oldseed * multiplier + addend) & mask;
+    //8 使用 CAS 操作, 用新的种子去替换老的种子,
+  } while (!seed.compareAndSet(oldseed, nextseed));
+  //使用固定的算法根据新的种子计算随机数
+  return (int)(nextseed >>> (48 - bits));
+}
 ```
 
 - 6 代码如果有多个线程都执行到了,那么可能多个线程拿到的当前种子的值是同一个
@@ -148,29 +148,29 @@ ThreadLocalRandom 的原理和 ThreadLocal 类似, Random 的缺点是多个线�
 #### ThreadLocalRandom 中的Unsafe
 
 ```java
-    // Unsafe mechanics
-    private static final sun.misc.Unsafe UNSAFE;
-    private static final long SEED;
-    private static final long PROBE;
-    private static final long SECONDARY;
-    static {
-        try {
-          //获取 Unsafe 实例
-            UNSAFE = sun.misc.Unsafe.getUnsafe();
-            Class<?> tk = Thread.class;
-          	//获取到 Thread 类中的 threadLocalRandomSeed 变量的偏移量
-            SEED = UNSAFE.objectFieldOffset
-                (tk.getDeclaredField("threadLocalRandomSeed"));
-          	//获取到 Thread 类中的 threadLocalRandomProbe 的偏移量
-            PROBE = UNSAFE.objectFieldOffset
-                (tk.getDeclaredField("threadLocalRandomProbe"));
-          //获取到 Thread 类中的 threadLocalRandomSecondarySeed 的偏移量
-            SECONDARY = UNSAFE.objectFieldOffset
-                (tk.getDeclaredField("threadLocalRandomSecondarySeed"));
-        } catch (Exception e) {
-            throw new Error(e);
-        }
-    }
+// Unsafe mechanics
+private static final sun.misc.Unsafe UNSAFE;
+private static final long SEED;
+private static final long PROBE;
+private static final long SECONDARY;
+static {
+  try {
+    //获取 Unsafe 实例
+    UNSAFE = sun.misc.Unsafe.getUnsafe();
+    Class<?> tk = Thread.class;
+    //获取到 Thread 类中的 threadLocalRandomSeed 变量的偏移量
+    SEED = UNSAFE.objectFieldOffset
+      (tk.getDeclaredField("threadLocalRandomSeed"));
+    //获取到 Thread 类中的 threadLocalRandomProbe 的偏移量
+    PROBE = UNSAFE.objectFieldOffset
+      (tk.getDeclaredField("threadLocalRandomProbe"));
+    //获取到 Thread 类中的 threadLocalRandomSecondarySeed 的偏移量
+    SECONDARY = UNSAFE.objectFieldOffset
+      (tk.getDeclaredField("threadLocalRandomSecondarySeed"));
+  } catch (Exception e) {
+    throw new Error(e);
+  }
+}
 ```
 
 ### ThreadLocalRandom#current() 方法
@@ -180,25 +180,23 @@ ThreadLocalRandom 的原理和 ThreadLocal 类似, Random 的缺点是多个线�
 threadLocalRandomProbe 变量
 
 ```java
-    public static ThreadLocalRandom current() {
-      //12
-        if (UNSAFE.getInt(Thread.currentThread(), PROBE) == 0)
-          //13 
-            localInit();
-      //14
-        return instance;
-    }
-    static final void localInit() {
-        int p = probeGenerator.addAndGet(PROBE_INCREMENT);
-        int probe = (p == 0) ? 1 : p; // skip 0
-        long seed = mix64(seeder.getAndAdd(SEEDER_INCREMENT));
-        Thread t = Thread.currentThread();
-        UNSAFE.putLong(t, SEED, seed);
-        UNSAFE.putInt(t, PROBE, probe);
-    }
+public static ThreadLocalRandom current() {
+  //12
+  if (UNSAFE.getInt(Thread.currentThread(), PROBE) == 0)
+    //13 
+    localInit();
+  //14
+  return instance;
+}
+static final void localInit() {
+  int p = probeGenerator.addAndGet(PROBE_INCREMENT);
+  int probe = (p == 0) ? 1 : p; // skip 0
+  long seed = mix64(seeder.getAndAdd(SEEDER_INCREMENT));
+  Thread t = Thread.currentThread();
+  UNSAFE.putLong(t, SEED, seed);
+  UNSAFE.putInt(t, PROBE, probe);
+}
 ```
-
-
 
 - 代码 12 , 如果当前线程中的 threadLocalRandomRrobe 的变量为 0 (默认值) ,则说明当前线程是第一调用 current 方法, 那么久需要调用 localInit 方法计算当前线程的初始化种子变量
 - 代码 13 首先根据 probeGenerator 计算当前线程中 threadLocalRandomProbe 的初始化值,然后根据 seeder 计算当前线程的初始化种子,而后把这两个变量设置到当前线程
@@ -207,33 +205,33 @@ threadLocalRandomProbe 变量
 #### int nextInt(int bound)方法
 
 ```java
-    public int nextInt(int bound) {
-      //参数校验
-        if (bound <= 0)
-            throw new IllegalArgumentException(BadBound);
-      //16 根据当前线程中的种子计算新种子
-        int r = mix32(nextSeed());
-      // 根据新种子和 bound 计算随机值
-        int m = bound - 1;
-        if ((bound & m) == 0) // power of two
-            r &= m;
-        else { // reject over-represented candidates
-            for (int u = r >>> 1;
-                 u + m - (r = u % bound) < 0;
-                 u = mix32(nextSeed()) >>> 1)
-                ;
-        }
-        return r;
-    }
+public int nextInt(int bound) {
+  //参数校验
+  if (bound <= 0)
+    throw new IllegalArgumentException(BadBound);
+  //16 根据当前线程中的种子计算新种子
+  int r = mix32(nextSeed());
+  // 根据新种子和 bound 计算随机值
+  int m = bound - 1;
+  if ((bound & m) == 0) // power of two
+    r &= m;
+  else { // reject over-represented candidates
+    for (int u = r >>> 1;
+         u + m - (r = u % bound) < 0;
+         u = mix32(nextSeed()) >>> 1)
+      ;
+  }
+  return r;
+}
 ```
 
 ```java
-    final long nextSeed() {
-        Thread t; long r; // read and update per-thread seed
-        UNSAFE.putLong(t = Thread.currentThread(), SEED,
-                       r = UNSAFE.getLong(t, SEED) + GAMMA);
-        return r;
-    }
+final long nextSeed() {
+  Thread t; long r; // read and update per-thread seed
+  UNSAFE.putLong(t = Thread.currentThread(), SEED,
+                 r = UNSAFE.getLong(t, SEED) + GAMMA);
+  return r;
+}
 ```
 
 可以看出和 Random类的区别了,这里是使用` UNSAFE.getLong(t, SEED) + GAMMA)` 获取当前线程中的 threadLocalRandomSeed 变量的值, 然后再种子的基础上累加 GAMMA 作为新种子

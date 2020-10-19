@@ -46,11 +46,15 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
 }
 ```
 
+## IBalancer相关的类图
+
 ![image-20200914201408575](../../../assets/image-20200914201408575.png)
 
+其中的类都是ZoneAwareLoadBalancer构造方法所需参数实例的类型。
+
+接下来按照ZoneAwareLoadBalancer构造函数的参数顺序来看一下与ILoadBalancer相关的重要的类，它们分别是IClientConfig、IRule、IPing、ServerList和ServerListFilter
 
 
-图7-3是IBalancer相关的类图，其中的类都是ZoneAwareLoadBalancer构造方法所需参数实例的类型。接下来按照ZoneAwareLoadBalancer构造函数的参数顺序来看一下与ILoadBalancer相关的重要的类，它们分别是IClientConfig、IRule、IPing、ServerList和ServerListFilter，默认配置如表7-1所示。
 
 ## ZoneAwareLoadBalancer获取chooseServer方法
 
