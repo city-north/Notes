@@ -39,13 +39,3 @@ BeanFactory作为最顶层的一个接口类，定义了IoC容器的基本功能
 
 
 
-## ApplicationContext
-
-ApplicationContext是Spring提供的一个高级的IoC容器，它除了能够提供IoC容器的基本功能，还为用户提供了以下附加服务。
-
-- 支持信息源，可以实现国际化 [020-MessageSource-国际化消息机制](../090-Spring机制/020-MessageSource-国际化消息机制) 
-
-- 访问资源（实现ResourcePatternResolver接口)  [010-Resource机制](../090-Spring机制/010-Resource机制) 
-
-- 支持应用事件（实现ApplicationEventPublisher接口） [0ApplicationEvent-事件机制](../090-Spring机制/030-ApplicationEvent-事件机制) 
-

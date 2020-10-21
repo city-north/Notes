@@ -102,7 +102,6 @@ public abstract class PredicateBasedRule extends ClientConfigEnabledRoundRobinRu
     @Override
     public Server choose(Object key) {
         ILoadBalancer lb = getLoadBalancer();
-
 Optional〈Server〉 server = getPredicate().chooseRoundRobinAfterFiltering(lb.getServerList(false), key);
         if (server.isPresent()) {
             return server.get();

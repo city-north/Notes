@@ -1,9 +1,5 @@
 ## 编程方式使用 ObjectProvider 获取依赖
 
-> 版权声明
->
-> 此篇文章参考于[logicbig](https://www.logicbig.com/),引用其文字/代码/图片仅用于学习笔记,不用于商业用途
-
 Spring 框架 4.3 以后介绍了一个类`ObjectProvider<T>` 拓展自`ObjectFactory<T>`接口.这个新的接口提供了编程方式获取依赖
 
 ## 通过 ObjectProvider 获取实例

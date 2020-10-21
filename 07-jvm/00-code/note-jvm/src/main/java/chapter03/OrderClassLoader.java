@@ -34,35 +34,32 @@ public class OrderClassLoader extends ClassLoader {
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        final Class<?> loadedClass = this.findLoadedClass(name);
-        if ("java.lang.Object".equalsIgnoreCase(name)) {
-            super.findClass(name);
-        }
-        if (null == loadedClass) {
+        final Class<?> clazz = this.findLoadedClass(name);
+        if (null == clazz) {
             try {
                 String classFile = getClassFile(name);
                 FileInputStream fileInputStream = new FileInputStream(classFile);
-                final FileChannel channel = fileInputStream.getChannel();
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                WritableByteChannel writableByteChannel = Channels.newChannel(byteArrayOutputStream);
-                final ByteBuffer byteBuffer = ByteBuffer.allocateDirect(1024);
+                final FileChannel fileC = fileInputStream.getChannel();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                WritableByteChannel outC = Channels.newChannel(baos);
+                final ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
                 while (true) {
-                    final int i = channel.read(byteBuffer);
+                    final int i = fileC.read(buffer);
                     if (i == 0 || i == -1) {
                         break;
                     }
-                    byteBuffer.flip();
-                    writableByteChannel.write(byteBuffer);
-                    byteBuffer.clear();
+                    buffer.flip();
+                    outC.write(buffer);
+                    buffer.clear();
                 }
                 fileInputStream.close();
-                final byte[] bytes = byteArrayOutputStream.toByteArray();
+                final byte[] bytes = baos.toByteArray();
                 return defineClass(name, bytes, 0, bytes.length);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return loadedClass;
+        return clazz;
 
     }
 

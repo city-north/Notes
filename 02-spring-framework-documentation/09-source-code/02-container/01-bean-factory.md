@@ -18,10 +18,6 @@ BeanFactory 方法如下图:
 - 通过各种途径获取 bean 的方法
 - 判断 Bean 的属性的方法
 
-```java
-
-```
-
 ## BeanFactory hierarchy 层级结构
 
 ![image-20200107123756857](assets/image-20200107123756857.png)

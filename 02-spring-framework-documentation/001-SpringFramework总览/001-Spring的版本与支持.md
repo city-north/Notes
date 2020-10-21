@@ -16,4 +16,13 @@
 - 事件驱动
 - AOP的支持
 
-![image-20201013205750609](../../assets/image-20201013205750609.png)
+为什么3版本引入Java5
+
+| 语法特性              | Spring支持版本 | 代表实现                   |
+| --------------------- | -------------- | -------------------------- |
+| 注解 Annotation       | 1.2 +          | @Transactional             |
+| 枚举 Enumeration      | 1.2 +          | Propagation                |
+| for-each 语法         | 3.0 +          | AbstractApplicationContext |
+| 自动装箱 (AutoBoxing) | 3.0+           |                            |
+| 泛型(Generic)         | 3.0+           | ApplicationListener        |
+

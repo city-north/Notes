@@ -2,8 +2,6 @@
 
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
-
-
 AbstractApplicationContext#refresh()
 
 ```java

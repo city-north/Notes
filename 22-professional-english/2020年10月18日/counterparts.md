@@ -34,6 +34,6 @@ private static final AtomicInteger nextId = new AtomicInteger(0);
 ```
 
 
-Each thread holds an w reference to its copy of a thread-local variable as long as the thread is alive and the ThreadLocal instance is accessible; 
+Each thread holds an reference to its copy of a thread-local variable as long as the thread is alive and the ThreadLocal instance is accessible; 
 
 after a thread goes away, all of its copies of thread-local instances are subject to garbage collection (unless other references to these copies exist).

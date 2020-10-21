@@ -13,6 +13,51 @@
 - 语言(language)
 - 地区(region)
 
+## Locale对象
+
+它描述了
+
+- 一种语言
+- 一个位置(通常包含)
+- 一段脚本(可选, 自 JavaEE7 开始支持)
+- 一个变体(可选)
+
+比如
+
+#### 在美国
+
+Locale 对象包含
+
+- Language=English
+- location=United States
+
+#### 在德国
+
+- language=German
+- location=Germary
+
+#### 在瑞士
+
+瑞士有四种官方语言, 德语, 法语, 意大利语, 力拓罗曼私语
+
+一个说德语的瑞士人使用的Locale是
+
+- language=German
+- location-Switzerland
+
+虽然这个Locale 和德国 的locale 很相似,但是 货币会被表示成瑞士法郎而不是欧元
+
+如果只设置了语言, 比如
+
+- language=German
+
+那么Locale 就不能处理国家相关的问题, 比如货币
+
+## Locale对象遵循的标准
+
+- 本地语言Language 遵循的标准时ISO-639-1
+- 国家代码由大写的两个字母的代码来标表示 , 它遵循 ISO-3166-1s
+
 ## 什么是locale-sensitive
 
 如果一个程序,当你传入不同的Locale对象时,会展现出不同的行为时,我们就说他是 locale-sensitive
