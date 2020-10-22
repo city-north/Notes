@@ -25,7 +25,7 @@ ResourcePatternResolver  //资源解析
 - 资源管理(Resources)
 - 事件(Events)
 - 注解(Annotations)
-- 支持信息源，可以实现国际化 [020-MessageSource-国际化消息机制](../090-Spring机制/020-MessageSource-国际化消息机制) 
+- 支持信息源，可以实现国际化  [020-MessageSource-国际化消息机制](../090-Spring机制/020-MessageSource-国际化消息机制) 
 - 访问资源（实现ResourcePatternResolver接口)  [010-Resource机制](../090-Spring机制/010-Resource机制) 
 - 支持应用事件（实现ApplicationEventPublisher接口） [0ApplicationEvent-事件机制](../090-Spring机制/030-ApplicationEvent-事件机制) 
 - 环境抽象(Envornment) 包括配置和外部化配置
@@ -35,8 +35,6 @@ ResourcePatternResolver  //资源解析
 总而言之, BeanFactory 提供的是一个配置的框架,并且是一个基本的功能,而ApplicationContext 提供了更多企业级开发的特性
 
 ApplicationContext通过聚合一个BeanFactory的方式.提供了容器的方式
-
-
 
 ## ConfigurableApplicationContext
 
@@ -53,8 +51,6 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 
 }
 ```
-
-
 
 ## 具体实现 AbstractRefreshableApplicationContext
 

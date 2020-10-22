@@ -21,7 +21,7 @@
 那么具体实现说呢,IoC有很多种实现方式
 
 - JavaBeans是一种实现方式
-- Servlet容器也是一种实现方式, 因为Serlvet可以通过依赖或者JNDI的方式获取到外部的资源, 包括DataSource 或者相关的EJB的组件
+- Servlet容器也是一种实现方式, 因为Serlvet可以通过依赖或者 JNDI 的方式获取到外部的资源, 包括DataSource 或者相关的EJB的组件
 - Spring Framework 依赖注入的框架也可以帮助我们实现IoC
 
 ## IoC主要实现策略

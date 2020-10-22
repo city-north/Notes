@@ -17,10 +17,10 @@ public class DependencyInjectionExample {
 
     public static void main(String[] args) {
         BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:tutorials/lookup/dependency-injection.xml");
-//        injectByName(beanFactory);
+        injectByName(beanFactory);
 
         //内部内建Baen
-        injectInsideBean(beanFactory);
+//        injectInsideBean(beanFactory);
     }
 
     /**
@@ -35,8 +35,11 @@ public class DependencyInjectionExample {
 
     private static void injectByName(BeanFactory beanFactory) {
         final UserRepository bean = beanFactory.getBean(UserRepository.class);
+        //能够获取到,属于内建依赖
         final ObjectFactory<ApplicationContext> objectFactory = bean.getObjectFactory();
-        final BeanFactory bean1 = beanFactory.getBean(BeanFactory.class);
+        //期直接获取
+        final ObjectFactory bean1 = beanFactory.getBean(ObjectFactory.class);
+        System.out.println(objectFactory == bean1);
         System.out.println(bean1);
 
     }

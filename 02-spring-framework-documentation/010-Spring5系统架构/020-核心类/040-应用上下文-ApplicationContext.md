@@ -11,6 +11,14 @@
 - ApplicationContext 是一个BeanFactory , 提供了 BeanFactory 的所有的所有功能, 主要负责对外 ,相当于外交部 ,
 - 通过继承接口, 它拥有比 Bean工厂更多的功能
 
+## 常用的ApplicationContext
+
+The most commonly used `ApplicationContext` implementations are:
+
+1. **[FileSystemXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you need to provide the full path of the XML bean configuration file to the constructor.
+2. **[ClassPathXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/ClassPathXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you do not need to provide the full path of the XML file but you need to set CLASSPATH properly because this container will look bean configuration XML file in CLASSPATH.
+3. **[WebXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/context/support/XmlWebApplicationContext.html)** – This container loads the XML file with definitions of all beans from within a web application.
+
 ## 提供的核心功能
 
 应用中提供配置的核心接口, 当应用运行时,它是只读read-only 的,但是如果其实现类支持reload, 则可以在运行时重新加载
