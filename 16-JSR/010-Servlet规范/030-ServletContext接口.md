@@ -1,0 +1,11 @@
+# SerlvetContext接口
+
+ServletContext接口定义了运行所有Servlet的Web应用的视图。其提供的内容包括以下几个部分。
+某个Web应用的Servlet全局存储空间，某Web应用对应的所有Servlet共有的各种资源和功能的访问。
+获取Web应用的部署描述配置文件的方法，例如getInitParameter和getInitParameterNames。
+添加Servlet到ServletContext里面的方法，例如addServlet。
+添加Filter(过滤器)到ServletContext里面的方法，例如addFilter。
+添加Listener(监听器)到ServletContext里面的方法，例如addListener。
+全局的属性保存和获取功能，例如setAttribute、getAttribute、getAttributeNames和removeAttribute等。
+访问Web应用静态内容的方法，例如getResource和getResourceAsStream，以路径作为参数进行查询，此参数要以“/”开头，相对于Web应用上下文的根或相对于Web应用WEB-INF/lib目录下jar包的META-INF/resources。
+所有Servlet及它们使用的类需要由一个单独的类加载器加载。每个实现ServletContext接口的对象都需要一个临时存储目录，Servlet容器必须为每个ServletContext分配一个临时目录，并可在ServletContext接口中通过javax.servlet.context.tempdir属性获取该目录。

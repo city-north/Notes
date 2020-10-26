@@ -1,0 +1,17 @@
+# ServletRequest接口
+
+ServletRequest接口的实现类封装了客户端请求的所有信息，如果使用HTTP协议通信则包括HTTP的请求行和请求头部。HTTP对应的请求对象类型是HttpServletRequest类。ServletRequest接口的实现类中的信息包括以下几部分。
+
+- 一些HTTP请求头部的获取方法，如getHeader、getHeaders和getHeaderNames。
+- 一些获取请求路径的方法，如
+  - getContextPath
+  - getServletPath
+  - getPathInfo
+- 对于路径变量，其中requestURI=contextPath+servletPath+pathInfo，而getRealPath方法则是获取某个相对路径对应的文件系统路径。
+
+- 获取Cookie的方法，如getCookies方法；提供了判断标识是否为HTTPS的方法，如isSecure方法。
+- 获取客户端语言环境的方法，如getLocale和getLocales，它们对应HTTP的Accept-Language头部。
+- 获取客户端编码的方法，如getCharacterEncoding，对应HTTP协议的Content-Type头部。
+- ServletRequest接口的对象只在Servlet的service方法或过滤器的doFilter方法作用域内有效，除非启用了异步处理以调用ServletRequest接口对象的startAsync方法，此时request对象会一直有效，直到调用AsyncContext的complete方法。
+
+另外，Web容器通常会出于性能原因而不销毁ServletRequest接口的对象，而是重复利用ServletRequest接口对象。
