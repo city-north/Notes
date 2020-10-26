@@ -1,6 +1,6 @@
 # Tomcat的组织结构
 
-![image-20201025233453155](../../assets/image-20201025233453155.png)
+
 
 ![image-20201018175603357](../../assets/image-20201018175603357.png)
 
@@ -30,28 +30,7 @@
 
 
 
-# Server.xml文件结构
 
-```xml
-<Server>
-    <Listener /><!-- 监听器 -->
-    <GlobaNamingResources> <!-- 全局资源 -->
-    </GlobaNamingResources
-    <Service>          <!-- 服务 用于 绑定 连接器与 Engine -->
-        <Connector 8080/> <!-- 连接器-->
-        <Connector 8010 /> <!-- 连接器-->
-        <Connector 8030/> <!-- 连接器-->
-        <Engine>      <!-- 执行引擎-->
-            <Logger />
-            <Realm />
-               <host "www.test.com" appBase="">  <!-- 虚拟主机-->
-                   <Logger /> <!-- 日志配置-->
-                   <Context "/applction" path=""/> <!-- 上下文配置-->
-               </host>
-        </Engine>
-    </Service>
-</Server>
-```
 
 - 
 
@@ -61,11 +40,22 @@
 
 #### 顶层类元素
 
-| 顶层类元素 |                                                              |
+| 顶层类元素 | 简介                                                         |
 | ---------- | ------------------------------------------------------------ |
 | Server     | <Server>元素代表整个Servlet容器组件，它是Tomcat的顶层元素。<Server>元素中可包含一个或多个<Service>元素。 |
 | Service    | <Service>元素中包含一个<Engine>元素，以及一个或多个<Connector>元素，这些<Connector>元素共享同一个<Engine>元素。 |
-|            |                                                              |
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### 连接器类元素
 
