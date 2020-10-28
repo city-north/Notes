@@ -1,0 +1,13 @@
+# ServletResponse接口
+
+ServletResponse接口的对象封装了服务器要返回客户端的所有信息。
+
+如果使用HTTP，则包含了HTTP的响应行、响应头部和响应体。
+
+为了提高效率，一般ServletResponse接口对响应提供了输出缓冲。其中，getBufferSize用于获取缓冲区大小；setBufferSize用于设置缓冲区大小；flushBuffer强制刷新缓冲区；resetBuffer将清空缓冲区中的内容，但不清空请求头部和状态码；isCommitted判断是否有任何响应字节已经返回给客户端；reset清空缓冲区内容，同时清空头部信息和状态码。
+
+- ServletResponse接口对应HTTP的实现对象为HttpServletResponse，
+  - 可以通过setHeader和addHeader方法向HttpServletResponse中添加头部；
+  - 可以通过sendRedirect将客户端重定向到另外一个地址；
+  - 可以通过sendError将错误信息输出到客户端。
+- 当ServletResponse接口关闭时，缓冲区中的内容必须立即刷新到客户端，ServletResponse接口只在Servlet的service方法或过滤器的doFilter方法的作用域内有效，除非它关联的ServletResponse接口调用了startAsync方法启用异步处理，此时ServletResponse接口会一直有效，直到调用AsyncContext的complete方法。另外，Web容器通常会出于性能原因而不销毁ServletResponse接口对象，而是重复利用ServletResponse接口对象。
