@@ -1,6 +1,6 @@
 # 对比 hibernate
 
-在使用 Hibernate 的时 候，我们需要为实体类建立一些 hbm 的 xml 映射文件(或者类似于`@Table` 的这样的注 解)。例如:
+在使用 Hibernate 的时候，我们需要为实体类建立一些 hbm 的 xml 映射文件(或者类似于`@Table` 的这样的注 解)。例如:
 
 ```xml
 <hibernate-mapping>

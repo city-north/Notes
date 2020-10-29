@@ -22,3 +22,17 @@
 
 - 老年代主要存储长生命周期的对象,适合标记整理算法
 
+## 开启老年代串行回收器
+
+```
+-XX:+UseSerialGC ： 新生代，老年代都使用串行回收器
+```
+
+```java
+-XX:+UseParNewGC (jdk9.jdk10已经删除因为ParNew需要配合CMS工作，而CMS已经被G1替代，不再支持参数)：新生代使用ParNew回收器，老年代使用串行回收器
+```
+
+```java
+-XX:UseParallelGC：新生代使用ParallelGC回收器，老年代使用串行回收器
+```
+
