@@ -23,7 +23,7 @@ There is one difference on how these colelction handle the iteration while the c
 - `ArrayList` 快速失败
 - `Vector`提供**迭代器**以及**枚举**。通过迭代器是快速失效的，枚举不是。如果我们在枚举的迭代过程中修改向量，它不会失败。
 
-```kava
+```java
     /**
      * Vector is thread safe because all its methods are synchronized 
      */
