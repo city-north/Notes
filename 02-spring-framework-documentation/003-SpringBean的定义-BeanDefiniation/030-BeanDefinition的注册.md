@@ -1,7 +1,7 @@
 # BeanDefiniation的注册
 
 - XML 配置
-- Java 注解配置元信息
+- Java注解配置元信息
   - @Bean
   - @Component
   - @Import

@@ -14,11 +14,8 @@ public class DefaultBeanNameGenerator implements BeanNameGenerator {
 	public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
 		return BeanDefinitionReaderUtils.generateBeanName(definition, registry);
 	}
-
 }
 ```
-
-
 
 ## 基于注解扫描的方式生成AnnotationBeanNameGenerator
 
