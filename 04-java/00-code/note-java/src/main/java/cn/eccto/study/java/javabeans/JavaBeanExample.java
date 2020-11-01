@@ -21,7 +21,7 @@ public class JavaBeanExample {
 
     public static void main(String[] args) throws IntrospectionException {
 //        testBeanInfo();
-        testYmlPropertiesFactoryBean2();
+//        testYmlPropertiesFactoryBean2();
 
     }
 

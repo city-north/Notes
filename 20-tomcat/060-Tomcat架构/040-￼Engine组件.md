@@ -1,0 +1,20 @@
+# ￼Engine组件
+
+Http11Protocol组件，是HTTP协议1.1版本的抽象，它包含接收客户端连接、接收客户端消息报文、报文解析处理、对客户端响应等整个过程。它主要包含JIoEndpoint组件和Http11Processor组件。
+
+启动时，JIoEndpoint组件内部的Acceptor组件将启动某个端口的监听，一个请求到来后将被扔进线程池Executor，线程池进行任务处理，处理过程中将通过Http11Processor组件对HTTP协议解析并传递到Engine容器继续处理。
+
+Mapper组件，客户端请求的路由导航组件，通过它能对一个完整的请求地址进行路由，通俗地说，就是它能通过请求地址找到对应的Servlet。
+CoyoteAdaptor组件，一个将Connector和Container适配起来的适配器。
+
+如图所示，在非阻塞I/O方式下，Connector的结构类似阻塞模式，Http11Protocol组件改成Http11NioProtocol组件，JIoEndpoint组件改成NioEndpoint，Http11Processor组件改成Http11NioProcessor组件，这些类似的组件的功能也都类似。唯独多了一个Poller组件，它的职责是在非阻塞I/O方式下轮询多个客户端连接，不断检测、处理各种事件，例如不断检测各个连接是否有可读，对于可读的客户端连接则尝试进行读取并解析消息报文。
+
+Tomcat内部有4个级别的容器，分别是Engine、Host、Context和Wrapper。Engine代表全局Servlet引擎，每个Service组件只能包含一个Engine容器组件，但Engine组件可以包含若干Host容器组件。
+
+除了Host之外，它还包含如下组件。
+
+- Listener组件：可以在Tomcat生命周期中完成某些Engine容器相关工作的监听器。
+- AccessLog组件：客户端的访问日志，所有客户端访问都会被记录。
+- Cluster组件：它提供集群功能，可以将Engine容器需要共享的数据同步到集群中的其他Tomcat实例上。
+- Pipeline组件：Engine容器对请求进行处理的管道。
+- Realm组件：提供了Engine容器级别的用户-密码-权限的数据对象，配合资源认证模块使用。

@@ -45,6 +45,10 @@ InnoDB 存储引擎时基于磁盘存储的,其中的记录按照页的方式来
 
 ![image-20200831184010422](../../../assets/image-20200831184010422.png)
 
+## 执行流程
+
+![image-20201030225933861](../../../assets/image-20201030225933861.png)
+
 - 内存内结构
   - [Buffer-Pool ](08-缓冲池-buffer-pool.md) 
     - [Adaptive-Hash-Index](../07-存储引擎/010-InnoDB/04-自适应哈希.md) 
@@ -83,7 +87,7 @@ show variables like 'innodb_buffer_pool_instances'
 
 ## 查看InnoDB存储引擎状态
 
-```
+```sql
 show engine innodb status
 ```
 

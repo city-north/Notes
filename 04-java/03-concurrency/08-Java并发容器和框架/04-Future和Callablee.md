@@ -1,34 +1,25 @@
-# 使用 Future
+# Future和Callable
 
-在执行多个任务的时候，使用Java标准库提供的线程池是非常方便的。我们提交的任务只需要实现`Runnable`接口，就可以让线程池去执行：
+## 目录
 
-```java
-class Task implements Runnable {
-    public String result;
+- [简介](#简介)
 
-    public void run() {
-        this.result = longTimeCalculation(); 
-    }
-}
-```
+## 简介
 
-`Runnable`接口有个问题，它的方法没有返回值。如果任务需要一个返回结果，那么只能保存到变量，还要提供额外的方法读取，非常不便。所以，Java标准库还提供了一个`Callable`接口，和`Runnable`接口比，它多了一个返回值：
+Runnable 接口封装了一个异步执行的任务
 
-```java
-class Task implements Callable<String> {
-    public String call() throws Exception {
-        return longTimeCalculation(); 
-    }
-}
-```
+- run没有参数, 没有返回值,不能抛出受检异常
 
-并且`Callable`接口是一个泛型接口，可以返回指定类型的结果。
+Callable 接口封装了一个异步执行的任务
 
-现在的问题是，如何获得异步执行的结果？
+- 没有参数
+- call有返回值,返回值类型,可以抛出抽检异常
+
+Future表示对异步执行结果的封装
 
 如果仔细看`ExecutorService.submit()`方法，可以看到，它返回了一个`Future`类型，一个`Future`类型的实例代表一个未来能获取结果的对象：
 
-```
+```java
 ExecutorService executor = Executors.newFixedThreadPool(4); 
 // 定义任务:
 Callable<String> task = new Task();
@@ -71,7 +62,6 @@ public class FutureExample implements Callable<String> {
     public String call() throws Exception {
         return Thread.currentThread().getName() + "线程";
     }
-
 }
 
 ```

@@ -63,6 +63,9 @@ private static int ctlOf(int rs, int wc) { return rs | wc; }
 - SHUTDOWN : 拒绝新任务但是处理阻塞队列里的任务
 - TIDYING : 所有任务都执行完 (包含阻塞队列里面的任务) 后当前线程活动线程数为 0, 将要调用 terminated 方法
 - TERMINATED: 终止状态 ,terminated 方法调用完按成之后的状态 .线程池状态转化列举如下
+
+过程
+
 - RUNING -> SHUTDOWN : 显示调用 shutdown() 方法, 或者隐式调用了 finalize()  方法里面的 showdown();
 - STOP -> TIDYING : 当线程池为空
 - TIDYING -> TERMINATED : 当 terminated()  hook 方法执行完成时
