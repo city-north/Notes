@@ -8,13 +8,29 @@
 
  [002-Spring的IOC和AOP机制.md](002-Spring的IOC和AOP机制.md) 
 
-## Spring的AOP的理解
+## Spring是如何解决循环依赖的
+
+ [003-Spring是如何解决循环依赖的.md](003-Spring是如何解决循环依赖的.md) 
+
+## SpringIoc启动的时候都做了哪些准备
+
+
 
 ## 
 
-## Spring依赖注入的方式有几种
 
-## Spring是如何解决循环依赖的
+
+## ObjectFactory与BeanFactory的区别
+
+ [005-ObjectFactory与BeanFactory的区别.md](005-ObjectFactory与BeanFactory的区别.md) 
+
+## BeanFactory中的getBean是不是线程安全的
+
+ [006-BeanFactory中的getBean是不是线程安全的.md](006-BeanFactory中的getBean是不是线程安全的.md) 
+
+## Spring依赖查找与注入的来源上的区别
+
+
 
 ----
 
