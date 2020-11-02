@@ -54,8 +54,6 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
 
 接下来按照ZoneAwareLoadBalancer构造函数的参数顺序来看一下与ILoadBalancer相关的重要的类，它们分别是IClientConfig、IRule、IPing、ServerList和ServerListFilter
 
-
-
 ## ZoneAwareLoadBalancer获取chooseServer方法
 
 - ZoneAwareLoadBalancer的chooseServer方法会首先使用DynamicPropertyFactory来获取平均负载(triggeringLoadPerServerThreshold)和实例故障率(avoidZoneWithBlackoutPercetage)两个阈值，

@@ -10,7 +10,7 @@
 
 > ReentrantLock 支持公平锁和非公平锁的实现,公平锁指的是线程竞争锁 的机制是公平的,非公平锁指的是不同的线程获取锁的机制是不公平的
 
-## ReentrantLock 的用法
+## ReentrantLock的用法
 
 我们知道Java语言直接提供了`synchronized`关键字用于加锁，但这种锁一是很重，二是获取时必须一直等待，没有额外的尝试机制。
 
@@ -202,8 +202,6 @@ public class InterruptiblyReentrantLock {
 - 底层实现原理不一样, `ReentrantLock` 是同步非阻塞,采用乐观并发策略,`synchronized`是同步阻塞,采用悲观的并发策略
 
 - Lock 是一个接口,而`synchronized`是 Java 的关键字,`synchronized`由内置的语言实现
-
-
 
 ## ReentrantLock 实现原理
 

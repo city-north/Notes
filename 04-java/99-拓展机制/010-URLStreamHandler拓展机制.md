@@ -28,7 +28,7 @@ SpringBoot的引导包中的JarFIle
 
 `org.springframework.boot.loader.jar.JarFile#registerUrlProtocolHandler`
 
-```
+```java
 	/**
 	 * Register a {@literal 'java.protocol.handler.pkgs'} property so that a
 	 * {@link URLStreamHandler} will be located to deal with jar URLs.

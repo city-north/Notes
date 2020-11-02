@@ -1,31 +1,12 @@
 # JavaBean类型转换
 
-- [JavaBean中的类型转换](#JavaBean中的类型转换)
-
-
-
-## JavaBean中的类型转换
-
 有属性赋值，必然就会有类型转换。说白了我们从配置文件读取的数据是字符串，与属性进行参数绑定的过程中势必会有类型转换，`java.beans` 中提供了相应的 API：
 
-- ```
-  PropertyEditor
-  ```
-
-  - 属性编辑器顶层接口
-
-- ```
-  PropertyEditorSupport
-  ```
-
-  - 属性编辑器实现类
-
-- ```
-  PropertyEditorManager
-  ```
-
-  - 属性编辑器管理器
-  - 在 Spring 中提供了一个 `PropertyEditorRegistrar`
+| 序号 | 核心类                | 解释                                                         |
+| ---- | --------------------- | ------------------------------------------------------------ |
+| 1    | PropertyEditor        | 属性编辑器顶层接口                                           |
+| 2    | PropertyEditorSupport | 属性编辑器实现类                                             |
+| 3    | PropertyEditorManager | 属性编辑器管理器<br />在 Spring 中提供了一个 `PropertyEditorRegistrar` |
 
 先看一个例子：
 

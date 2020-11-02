@@ -2,29 +2,17 @@
 
 先举一个的例子，在 Mac 中设置飞书通知方式的时候，当界面右侧选择“提示”的时候，那么左侧也会相应的显示为“提示”：
 
-![image-20201030224218641](../../assets/image-20201030224218641.png)
+<img src="../../assets/image-20201030224218641.png" alt="image-20201030224218641" style="zoom:50%;" />
 
 如果将右侧看成一个 Java Bean，那么这中间势必存在一个属性变化监听。`java.beans` 包中也提供了相应实现：
 
-- ```
-  PropertyChangeEvent //属性变化事件
-  ```
-
-- ```
-  PropertyChangeListener //属性（生效）变化监听器
-  ```
-
-- ```
-  PropertyChangeSupport //属性（生效）变化监听器管理器
-  ```
-
-- ```
-  VetoableChangeListener //属性（否决）变化监听器
-  ```
-
-- ```
-  VetoableChangeSupport //属性（否决）变化监听器管理器
-  ```
+| 序号 | 类                     | 解释                         |
+| ---- | ---------------------- | ---------------------------- |
+| 1    | PropertyChangeEvent    | 属性变化事件                 |
+| 2    | PropertyChangeListener | 属性（生效）变化监听器       |
+| 3    | PropertyChangeSupport  | 属性（生效）变化监听器管理器 |
+| 4    | VetoableChangeListener | 属性（否决）变化监听器       |
+| 5    | VetoableChangeSupport  | 属性（否决）变化监听器管理器 |
 
 `PropertyChangeEvent` 的构造方法：
 
@@ -40,31 +28,12 @@ public PropertyChangeEvent(Object source, String propertyName,
 
 通过这个构造方法可以看出属性变化监听的关注点：
 
-- ```
-  source
-  ```
-
-  - 事件源
-
-- ```
-  propertyName
-  ```
-
-  - 发生变化的属性名称
-
-- ```
-  oldValue
-  ```
-
-  - 旧值
-
-- ```
-  newValue
-  ```
-
-  - 新值
-
-
+| 序号 | 关注点       | 解释               |
+| ---- | ------------ | ------------------ |
+| 1    | source       | 事件源             |
+| 2    | propertyName | 发生变化的属性名称 |
+| 3    | oldValue     | 旧值               |
+| 4    | newValue     | 新值               |
 
 ## 属性（生效）变化监听器
 
@@ -155,42 +124,57 @@ java.beans.PropertyChangeEvent[propertyName=name; oldValue=lisi; newValue=wangwu
 再看看另外一种监听器 `VetoableChangeListener`。在 `User` 中添加监听器：
 
 ```java
-/**
- * 属性（否决）变化监听器
- */
-private VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
+public class User2 {
 
-/**
- * 启动属性（否决）变化
- * @param propertyName
- * @param oldValue
- * @param newValue
- */
-private void fireVetoableChange(String propertyName, String oldValue, String newValue) throws PropertyVetoException {
-    PropertyChangeEvent event = new PropertyChangeEvent(this, propertyName, oldValue, newValue);
-    vetoableChangeSupport.fireVetoableChange(event);
+    private String username;
+    private Integer age;
+    /**
+     * 属性（否决）变化监听器
+     */
+    private VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
+    /**
+     * 启动属性（否决）变化
+     * @param propertyName
+     * @param oldValue
+     * @param newValue
+     */
+    private void fireVetoableChange(String propertyName, String oldValue, String newValue) throws PropertyVetoException {
+        PropertyChangeEvent event = new PropertyChangeEvent(this, propertyName, oldValue, newValue);
+        vetoableChangeSupport.fireVetoableChange(event);
+    }
+
+    /**
+     * 添加属性（否决）变化监听器
+     */
+    public void addVetoableChangeListener(VetoableChangeListener listener){
+        vetoableChangeSupport.addVetoableChangeListener(listener);
+    }
+
+    /**
+     * 删除属性（否决）变化监听器
+     */
+    public void removeVetoableChangeListener(VetoableChangeListener listener){
+        vetoableChangeSupport.removeVetoableChangeListener(listener);
+    }
+
+    public void setUsername(String username) throws PropertyVetoException {
+        String oldValue = this.username;
+        fireVetoableChange("username",oldValue,username);
+        this.username = username;
+        firePropertyChange("username", oldValue, username);
+    }
+    /**
+     * 启动属性（生效）变化
+     * @param propertyName
+     * @param oldValue
+     * @param newValue
+     */
+    private void firePropertyChange(String propertyName, String oldValue, String newValue) throws PropertyVetoException {
+        PropertyChangeEvent event = new PropertyChangeEvent(this, propertyName, oldValue, newValue);
+        vetoableChangeSupport.fireVetoableChange(event);
+    }
 }
 
-/**
- * 添加属性（否决）变化监听器
- */
-public void addVetoableChangeListener(VetoableChangeListener listener){
-    vetoableChangeSupport.addVetoableChangeListener(listener);
-}
-
-/**
- * 删除属性（否决）变化监听器
- */
-public void removeVetoableChangeListener(VetoableChangeListener listener){
-    vetoableChangeSupport.removeVetoableChangeListener(listener);
-}
-
-public void setUsername(String username) throws PropertyVetoException {
-    String oldValue = this.username;
-    fireVetoableChange("username",oldValue,username);
-    this.username = username;
-    firePropertyChange("username", oldValue, username);
-}
 ```
 
 测试代码：

@@ -89,6 +89,6 @@ catch (IOException ex) {
 }
 ```
 
-LoadBalancerRequest的apply方法的具体实现本书不再详细讲解，因为Ribbon最为重要的部分就是使用负载均衡策略来选择服务器，也就是ILoadBalancer的chooseServer方法的实现，本书会在接下来的小节里对其进行详细讲解。
+
 
 ![image-20201010204334928](../../../assets/image-20201010204334928.png)

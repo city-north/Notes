@@ -157,8 +157,6 @@ public class InterceptorChain {
 
 Interceptor 默认的代理方式 是使用 Plugin 类的 wrap方法代理
 
- 
-
 ```java
 //org.apache.ibatis.plugin.Plugin#wrap  
 public static Object wrap(Object target, Interceptor interceptor) {

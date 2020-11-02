@@ -11,13 +11,9 @@
 - 如果创建了代理或者说重写了InstantiationAwareBeanPostProcessor的postProcessBeforeInstantiation方法并在方法postProcessBeforeInstantiation中改变了bean，则直接返回就可以了
 - 否则需要进行常规bean的创建。而这常规bean的创建就是在doCreateBean中完成的。
 
-
-
 ## 入口
 
 ### createBean方法
-
-
 
 ![image-20200930194706981](../../assets/image-20200930194706981.png)
 
