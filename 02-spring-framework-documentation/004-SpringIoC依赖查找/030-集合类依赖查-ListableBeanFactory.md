@@ -28,7 +28,7 @@ ListableBeanFactory#getBeanDefinitionNames
 ListableBeanFactory#getBeanNamesForType(ResolvableType)
 ListableBeanFactory#getBeanNamesForType(java.lang.Class<?>)
 ListableBeanFactory#getBeanNamesForType(java.lang.Class<?>, boolean, boolean)
-//@since 4.2 获取相同类型bean名称列表
+//@since 4.2 获取相同类型bean列表
 ListableBeanFactory#getBeansOfType(java.lang.Class<T>)
 ListableBeanFactory#getBeansOfType(java.lang.Class<T>, boolean, boolean)
 //@since 4.0 获取标注类型Bean名称列表
