@@ -51,8 +51,6 @@ Raft是不依赖系统的时间，它是将时间分成一个个Term，每个Ter
 
 结合Raft Term就可以进行Raft的选举。首先当系统启动后所有的节点都会进入Follow状态，Follow没有接收到任何请求的话，过一段时间就会进入Candidate状态，然后询问其他节点是否投票，如果其他节点反馈已经有新的Leader，这个Candidate就会变成Follow，而当Candidate接收到大多数的投票后就会变成Leader，之后会立即将一个log发送给其他节点开始续租Leader的时间租约。
 
-
-
 ## Leader election : Leader 选举
 
 选举超时时间是 follower 变成一个 Candidate 前等待的时间 ,一般是 150ms 到 300ms 之间的随机数

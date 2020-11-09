@@ -1,4 +1,4 @@
-# X/Open 分布式模型
+# X/Open分布式事务模型
 
 ## 目录
 
@@ -12,8 +12,8 @@ X/Open DTP（X/Open Distributed Transaction Processing Reference Model）是X/Op
 
 这个标准提出了使用两阶段提交（2PC，Two-Phase-Commit）来保证分布式事务的完整性。
 
-- [两阶段提交协议.md](030-两阶段提交协议.md) 
-- [三阶段提交协议.md](040-三阶段提交协议.md) 
+- [两阶段提交协议](030-两阶段提交协议.md) 
+- [三阶段提交协议](040-三阶段提交协议.md) 
 
 ## X/Open三种角色
 
