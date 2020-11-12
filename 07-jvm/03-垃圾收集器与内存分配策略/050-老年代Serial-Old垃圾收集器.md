@@ -29,7 +29,7 @@
 ```
 
 ```java
--XX:+UseParNewGC (jdk9.jdk10已经删除因为ParNew需要配合CMS工作，而CMS已经被G1替代，不再支持参数)：新生代使用ParNew回收器，老年代使用串行回收器
+-XX:+UseParNewGC : 新生代使用ParNew回收器，老年代使用串行回收器(jdk9.jdk10已经删除因为ParNew需要配合CMS工作，而CMS已经被G1替代，不再支持参数)
 ```
 
 ```java

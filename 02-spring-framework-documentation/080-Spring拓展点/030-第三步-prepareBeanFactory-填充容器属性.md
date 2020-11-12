@@ -35,9 +35,13 @@ spring在进入函数 prepareBeanFactory 之前, 就已经完成了对配置的�
 		beanFactory.ignoreDependencyInterface(ApplicationContextAware.class);
 
 		// 设置几个自动装配的特殊规则
+    //自动绑定的时候的游离对象
 		beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
+    //游离对象,只能依赖注入,不能依赖注入
 		beanFactory.registerResolvableDependency(ResourceLoader.class, this);
+    //游离对象,只能依赖注入,不能依赖注入
 		beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
+    //游离对象,只能依赖注入,不能依赖注入
 		beanFactory.registerResolvableDependency(ApplicationContext.class, this);
 
 

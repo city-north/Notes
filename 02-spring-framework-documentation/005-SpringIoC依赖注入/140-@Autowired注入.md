@@ -12,6 +12,12 @@
 org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessMergedBeanDefinition
 ```
 
+## AutowiredAnnotationBeanPostProcessor
+
+![image-20201111202650840](../../assets/image-20201111202650840.png)
+
+- AutowiredAnnotationBeanPostProcessor 是一个
+
 主要是将配置文件的属性进行merge , 比如配置了层级关系的user和SuperUser, 经过这个方法就会合并
 
 ```xml
@@ -50,6 +56,8 @@ org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcesso
 - 根据InjectionMetadata注入信息
   - 查找BeanFactory中要注入的Bean的实例
   - 将实例通过反射注入进去
+
+![image-20201111203512133](../../assets/image-20201111203512133.png)
 
 依赖查找和注入的核心入口
 

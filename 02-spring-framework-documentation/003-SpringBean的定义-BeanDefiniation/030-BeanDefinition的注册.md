@@ -99,3 +99,39 @@ public class AnnotationBeanDefinitionDemo {
 }
 ```
 
+## 注册中心
+
+```java
+public interface BeanDefinitionRegistry extends AliasRegistry {
+
+	//注册BeanDefinition
+	void registerBeanDefinition(String beanName, BeanDefinition beanDefinition)
+			throws BeanDefinitionStoreException;
+
+  //删除BeanDefinition
+	void removeBeanDefinition(String beanName) throws NoSuchBeanDefinitionException;
+
+	//获取BeanDefinition
+  BeanDefinition getBeanDefinition(String beanName) throws NoSuchBeanDefinitionException;
+
+  //是否包含BeanDefintion
+	boolean containsBeanDefinition(String beanName);
+
+  //获取BeanDefinition的名字
+	String[] getBeanDefinitionNames();
+	
+  //获取BeanDefinitoon个数
+	int getBeanDefinitionCount();
+
+	/**
+	 * Determine whether the given bean name is already in use within this registry,
+	 * i.e. whether there is a local bean or alias registered under this name.
+	 * @param beanName the name to check
+	 * @return whether the given bean name is already in use
+	 */
+	boolean isBeanNameInUse(String beanName);
+
+}
+
+```
+

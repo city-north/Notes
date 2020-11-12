@@ -30,3 +30,22 @@
 | 适用范围 | 新生代                                              |
 | 应用     | 运行在Server模式下的虚拟机中首选的新生代收集器      |
 
+#### 使用参数
+
+```
+XX：+UseParNewGC//新生代使用ParNew回收器，老年代使用串行回收器Serial Old ,（JDK 9、JDK 10已经删除，因为ParNew需要和CMS搭配工作，而CMS已经被G1替代，不再支持此参数）
+```
+
+```java
+-XX：+UseConcMarkSweepGC（JDK 9、JDK 10不建议使用，建议使用默认的G1垃圾回收器）：新生代使用ParNew回收器，老年代使用CMS。
+```
+
+#### 指定回收线程
+
+ParNew回收器工作时的线程数量可以使用`-XX:ParallelGCThreads`参数指定。
+
+一般，最好与CPU数量相当，避免过多的线程数影响垃圾回收性能。在默认情况下，
+
+- 当CPU数量小于8时，ParallelGCThreads的值等于CPU数量
+- 当CPU数量大于8时，ParallelGCThreads的值等于3+((5×CPU_Count)/8)
+
