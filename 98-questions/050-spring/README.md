@@ -14,11 +14,7 @@
 
 ## SpringIoc启动的时候都做了哪些准备
 
-
-
-## 
-
-
+ [004-SpringIoc启动的时候都做了哪些准备.md](004-SpringIoc启动的时候都做了哪些准备.md) 
 
 ## ObjectFactory与BeanFactory的区别
 
@@ -28,7 +24,13 @@
 
  [006-BeanFactory中的getBean是不是线程安全的.md](006-BeanFactory中的getBean是不是线程安全的.md) 
 
-## Spring依赖查找与注入的来源上的区别
+## 依赖注入和依赖查找时否相同
+
+ [008-依赖注入和依赖查找时否相同.md](008-依赖注入和依赖查找时否相同.md) 
+
+## 单例对象能否在IoC容器启动后注册
+
+ [009-单例对象能否在IoC容器启动后注册.md](009-单例对象能否在IoC容器启动后注册.md) 
 
 
 
