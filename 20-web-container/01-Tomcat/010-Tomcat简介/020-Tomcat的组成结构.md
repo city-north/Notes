@@ -1,10 +1,8 @@
-# Tomcat的组织结构
+#  Tomcat的组织结构
 
 
 
-![image-20201018175603357](../../assets/image-20201018175603357.png)
-
-![image-20201025233426355](../../assets/image-20201025233426355.png)
+![image-20201018175603357](../../../assets/image-20201018175603357.png)
 
 - Server 和 Service
 
@@ -28,12 +26,6 @@
   - pipeline (管道)
   - valve （管道中的阀）
 
-
-
-
-
-- 
-
 每个元素都代表一种Tomcat组件,大致分为四类
 
 - 顶层类元素
@@ -44,18 +36,6 @@
 | ---------- | ------------------------------------------------------------ |
 | Server     | <Server>元素代表整个Servlet容器组件，它是Tomcat的顶层元素。<Server>元素中可包含一个或多个<Service>元素。 |
 | Service    | <Service>元素中包含一个<Engine>元素，以及一个或多个<Connector>元素，这些<Connector>元素共享同一个<Engine>元素。 |
-
-
-
-
-
-
-
-
-
-
-
-
 
 #### 连接器类元素
 
@@ -126,8 +106,6 @@ compressableMimeType="text/html,text/xml,text/plain,text/javascript,text/css,app
 <Context docBase="hello" path="/h" reloadable="true"/>
 ```
 
-
-
 #### 嵌套类组件
 
 | 嵌套类组件 | 简介 |
@@ -159,7 +137,7 @@ compressableMimeType="text/html,text/xml,text/plain,text/javascript,text/css,app
 - 同一个Host组件中可以包含多个Context组件
 - Tomcat安装好以后，在它的server.xml配置文件中已经配置了<Server>、<Service>、<Connector>、<Engine>和<Host>等组件
 
-![image-20201018175913026](../../assets/image-20201018175913026.png)
+![image-20201018175913026](../../../assets/image-20201018175913026.png)
 
 可以看出默认的配置文件
 

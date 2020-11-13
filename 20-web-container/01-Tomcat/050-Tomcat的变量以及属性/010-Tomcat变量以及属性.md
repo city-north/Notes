@@ -10,7 +10,7 @@
 
 ## Tomcat、JVM及操作系统之间相关的变量属性及操作
 
-<img src="../../assets/image-20201026121259158.png" alt="image-20201026121259158" style="zoom: 67%;" />
+<img src="../../../assets/image-20201026121259158.png" alt="image-20201026121259158" style="zoom: 67%;" />
 
 
 

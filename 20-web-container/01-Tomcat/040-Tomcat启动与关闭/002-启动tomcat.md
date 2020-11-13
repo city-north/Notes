@@ -21,16 +21,6 @@ Tomcat 程序目录和部署目录分开 。我们只需要在启动时指定CAT
 | CATALINA_OUT    | 应用日志输出目录：默认$CATALINA_BASE/log                     |
 | CATALINA_TMPDIR | 应用临时目录：默认：$CATALINA_BASE/temp                      |
 
-```
-
-```
-
-
-
-
-
-
-
 可以编写一个脚本 来实现自定义配置：
 
 **「更新 启动 脚本」**：

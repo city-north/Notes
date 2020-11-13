@@ -5,6 +5,7 @@ Tomcat作为Servlet容器,有以下三种模式
 - [独立的Servlet容器](#独立的Servlet容器)
 - [其他Web服务器进程内的Servlet容器](#其他Web服务器进程内的Servlet容器)
 - [其他Web服务器进程外的Servlet容器](#其他Web服务器进程外的Servlet容器)
+- [总结](#总结)
 
 ## 独立的Servlet容器
 
@@ -12,7 +13,7 @@ Tomcat作为Servlet容器,有以下三种模式
 
 - 在这种模式下，Tomcat是一个独立运行的Java程序。和运行其他Java程序一样，运行Tomcat需要启动一个JVM进程，由该进程来运行Tomcat
 
-<img src="../../assets/image-20201018180555012.png" alt="image-20201018180555012" style="zoom:50%;" />
+<img src="../../../assets/image-20201018180555012.png" alt="image-20201018180555012" style="zoom:50%;" />
 
 ## 其他Web服务器进程内的Servlet容器
 
@@ -23,7 +24,7 @@ Tomcat分为Web服务器插件和Servlet容器组件两部分
 
 > JNI（Java Native Interface）指的是Java本地调用接口，通过这一接口，Java程序可以和采用其他语言编写的本地程序进行通信。
 
-<img src="../../assets/image-20201018180719058.png" alt="image-20201018180719058" style="zoom:50%;" />
+<img src="../../../assets/image-20201018180719058.png" alt="image-20201018180719058" style="zoom:50%;" />
 
 ## 其他Web服务器进程外的Servlet容器
 
@@ -37,7 +38,7 @@ Tomcat分为Web服务器插件和Servlet容器组件两部分
 
 > IPC（Inter-Process Communication，进程间通信）是两个进程之间进行通信的一种机制。
 
-![image-20201018180939139](../../assets/image-20201018180939139.png)
+![image-20201018180939139](../../../assets/image-20201018180939139.png)
 
 ## 总结
 

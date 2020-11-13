@@ -19,7 +19,7 @@
 
 ## Web服务器和Servlet的关系
 
-![image-20201018115318298](../../assets/image-20201018115318298.png)
+![image-20201018115318298](../../../assets/image-20201018115318298.png)
 
 - Web服务器可以访问任意一个Web应用所有实现Servlet的接口
 - Web应用通过实现Servlet接口,编写动态程序代码, 用于被Web服务器的动态调用
@@ -30,7 +30,7 @@
 
 ## Servlet响应流程
 
-![image-20201018115551606](../../assets/image-20201018115551606.png)
+![image-20201018115551606](../../../assets/image-20201018115551606.png)
 
 1. 客户发出要求访问特定Servlet的请求。
 2. Servlet容器接收到客户请求，对其解析。
@@ -43,7 +43,7 @@
 
 #### Servlet容器响应客户请求访问特定Servlet的时序图
 
-![image-20201018115825079](../../assets/image-20201018115825079.png)
+![image-20201018115825079](../../../assets/image-20201018115825079.png)
 
 ## Tomcat版本和JDK版本
 
@@ -69,6 +69,8 @@ Tomcat9.x建立在Tomcat 8.x的基础上，前者实现了Servlet 4.0和JSP 2.3�
 Tomcat 8.x建立在Tomcat 7.x的基础上，前者实现了Servlet 3.1和JSP 2.3规范。此外，它还提供了如下新特性：
 ●　采用单个公共资源的实现机制，来替代早期版本中提供多个可扩展资源的特征。
 ●　Tomcat 8.5.x实现了JASPIC1.1（Java Authentication Service Provider，Java认证服务提供者接口）规范。
+
+值得注意的是.8.5之后移除了对Java Io ,全面使用NIO的支持
 
 #### Tomcat 7.x
 
@@ -113,14 +115,3 @@ Tomcat 4.1.x是Tomcat 4.0.x的升级版本。Tomcat 4.0.x完全废弃了Tomcat 3
 ●　提高了Web管理应用与开发工具的集成。
 ●　提供客户化的Ant任务，使Ant程序根据build.xml脚本直接和Web管理应用交互。
 以上介绍中出现了很多新名词和术语，如Tag Library（标签库）、AJP和Ant等，在本书后面章节会陆续解释这些名词。
-
-
-
-
-
-
-
-
-
-
-

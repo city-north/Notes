@@ -10,11 +10,10 @@ https://mp.weixin.qq.com/s/EP3rJio8qHPCDAHUqeNIeQ
 | ------------------ | ------------------------------------------------------------ |
 | **$CATALINA_HOME** | 表示Tomcat安装的根路径                                       |
 | **$CATALINA_BASE** | Tomcat可以通过配置整个属性来配置多实例, 如果没有配置多实例,那么`$CATALINA_BASE` = `$CATALINA_HOME` |
-|                    |                                                              |
 
 ## Tomcat核心目录
 
-![image-20201018120244977](../../assets/image-20201018120244977.png)
+![image-20201018120244977](../../../assets/image-20201018120244977.png)
 
 | 目录     | 解释                                                         |
 | -------- | ------------------------------------------------------------ |
@@ -68,7 +67,7 @@ catalina.policy
 
 项目安全文件，用来防止欺骗代码或JSP执行带有像System.exit(0)这样的命令的可能影响容器的破坏性代码. 只有当Tomcat用-security命令行参数启动时这个文件才会被使用，即启动tomcat时， `startup.sh -security` 。
 
-![image-20201025232610333](../../assets/image-20201025232610333.png)
+![image-20201025232610333](../../../assets/image-20201025232610333.png)
 
 
 上图中，tomcat容器下部署两个项目，项目1和项目2。由于项目1中有代码System.exit(0)，当访问该代码时，该代码会导致整个tomcat停止，从而也导致项目2停止。
@@ -107,7 +106,7 @@ java -jar ecj-4.13.jar MyTest.java
 
 该文件夹表示tomcat日志文件，大致包括如下六类文件：
 
-<img src="../../assets/image-20201025233145328.png" alt="image-20201025233145328" style="zoom:50%;" />
+<img src="../../../assets/image-20201025233145328.png" alt="image-20201025233145328" style="zoom:50%;" />
 
 | catalina.date.log             | 表示tomcat启动文件                                           |
 | :---------------------------- | :----------------------------------------------------------- |

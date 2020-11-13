@@ -1,9 +1,5 @@
 # 优化执行器Executor
 
-
-
-## 
-
 ```xml
     <Executor name="tomcatThreadPool" 
               namePrefix="catalina-exec-"
@@ -23,7 +19,7 @@
 | 4    | maxIdleTime             | 空闲线程存活的时间，单位毫秒，默认60000=60秒                 |
 | 5    | prestartminSpareThreads | 为 true时，minSpareThreads 才有效果                          |
 
-<img src="../../assets/image-20201031214808684.png" alt="image-20201031214808684"  />
+<img src="../../../assets/image-20201031214808684.png" alt="image-20201031214808684"  />
 
 ## 如何查看线程数
 
