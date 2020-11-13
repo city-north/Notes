@@ -14,3 +14,4 @@ docker [container] rm [-f|--force] [-l|--link][-v|--volumes] CONTAINER
 ```
 docker rm ce55
 ```
+
