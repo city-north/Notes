@@ -1,6 +1,6 @@
 # Bean Scope (Bean 的作用域)
 
- [快速实战:14-bean-scopes.md](../00-tutorials/14-bean-scopes.md) 
+ 
 
 Spring 中Bean 的作用域:
 
@@ -17,7 +17,7 @@ Spring 中Bean 的作用域:
 
 Spring容器管理的一个单例 bean,所有根据 ID 获取它的请求,都会只返回这个实例
 
-![singleton](assets/singleton.png)
+![singleton](../../../assets/singleton.png)
 
 Spring 的单例与四人帮的设计模式里的单例的区别
 
