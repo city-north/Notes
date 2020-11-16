@@ -10,18 +10,49 @@
 
 
 
-       protected Object getObjectForBeanInstance( Object beanInstance, String name, String beanName, RootBeanDefinition mbd) {
-       //如果指定的name是工厂相关(以&为前缀)且beanInstance又不是FactoryBean类型则验证不通过
-         if (BeanFactoryUtils.isFactoryDereference(name) && !(beanInstance instanceof FactoryBean)) {
-             throw new BeanIsNotAFactoryException(transformedBeanName(name), beanInstance.etClass());
-             }
+```java
+   protected Object getObjectForBeanInstance( Object beanInstance, String name, String beanName, RootBeanDefinition mbd) {
+   //如果指定的name是工厂相关(以&为前缀)且beanInstance又不是FactoryBean类型则验证不通过
+     if (BeanFactoryUtils.isFactoryDereference(name) && !(beanInstance instanceof FactoryBean)) {
+         throw new BeanIsNotAFactoryException(transformedBeanName(name), beanInstance.etClass());
+         }
+     //现在我们有了个bean的实例，这个实例可能会是正常的bean或者是FactoryBean
+     //如果是FactoryBean我们使用它创建实例，但是如果用户想要直接获取工厂实例而不是工厂的  
+     //getObject方法对应的实例那么传入的name应该加入前缀&
+     if (!(beanInstance instanceof FactoryBean) || BeanFactoryUtils. IsFactoryDereference(name)) {
+             return beanInstance;
+         }
+              //加载FactoryBean
+     Object object = null;
+     if (mbd == null) {
+         //尝试从缓存中加载bean
+         object = getCachedObjectForFactoryBean(beanName);
+     }
+     if (object == null) {
+         //到这里已经明确知道beanInstance一定是FactoryBean类型
+         FactoryBean<?> factory = (FactoryBean<?>) beanInstance;
+         //containsBeanDefinition检测beanDefinitionMap中也就是在所有已经加载的类中检测  
+         //是否定义beanName
+         if (mbd == null && containsBeanDefinition(beanName)) {
+              //将存储XML配置文件的GernericBeanDefinition转换为RootBeanDefinition，如  
+          //果指定BeanName是子Bean的话同时会合并父类的相关属性
+             mbd = getMergedLocalBeanDefinition(beanName);
+         }
+         //是否是用户定义的而不是应用程序本身定义的
+         boolean synthetic = (mbd != null && mbd.isSynthetic());
+         object = getObjectFromFactostance.  
+ getClass());
+         }
+
          //现在我们有了个bean的实例，这个实例可能会是正常的bean或者是FactoryBean
          //如果是FactoryBean我们使用它创建实例，但是如果用户想要直接获取工厂实例而不是工厂的  
          //getObject方法对应的实例那么传入的name应该加入前缀&
-         if (!(beanInstance instanceof FactoryBean) || BeanFactoryUtils. IsFactoryDereference(name)) {
-                 return beanInstance;
-             }
-                  //加载FactoryBean
+         if (!(beanInstance instanceof FactoryBean) || BeanFactoryUtils. IsFactory   
+Dereference(name)) {
+             return beanInstance;
+         }
+
+         //加载FactoryBean
          Object object = null;
          if (mbd == null) {
              //尝试从缓存中加载bean
@@ -39,40 +70,11 @@
              }
              //是否是用户定义的而不是应用程序本身定义的
              boolean synthetic = (mbd != null && mbd.isSynthetic());
-             object = getObjectFromFactostance.  
-     getClass());
-             }
-    
-             //现在我们有了个bean的实例，这个实例可能会是正常的bean或者是FactoryBean
-             //如果是FactoryBean我们使用它创建实例，但是如果用户想要直接获取工厂实例而不是工厂的  
-             //getObject方法对应的实例那么传入的name应该加入前缀&
-             if (!(beanInstance instanceof FactoryBean) || BeanFactoryUtils. IsFactory   
-    Dereference(name)) {
-                 return beanInstance;
-             }
-    
-             //加载FactoryBean
-             Object object = null;
-             if (mbd == null) {
-                 //尝试从缓存中加载bean
-                 object = getCachedObjectForFactoryBean(beanName);
-             }
-             if (object == null) {
-                 //到这里已经明确知道beanInstance一定是FactoryBean类型
-                 FactoryBean<?> factory = (FactoryBean<?>) beanInstance;
-                 //containsBeanDefinition检测beanDefinitionMap中也就是在所有已经加载的类中检测  
-                 //是否定义beanName
-                 if (mbd == null && containsBeanDefinition(beanName)) {
-                      //将存储XML配置文件的GernericBeanDefinition转换为RootBeanDefinition，如  
-                  //果指定BeanName是子Bean的话同时会合并父类的相关属性
-                     mbd = getMergedLocalBeanDefinition(beanName);
-                 }
-                 //是否是用户定义的而不是应用程序本身定义的
-                 boolean synthetic = (mbd != null && mbd.isSynthetic());
-                 object = getObjectFromFactoryBean(factory, beanName, !synthetic);
-             }
-             return object;
-    }
+             object = getObjectFromFactoryBean(factory, beanName, !synthetic);
+         }
+         return object;
+}
+```
 从上面的代码来看，其实这个方法并没有什么重要的信息，大多是些辅助代码以及一些功能性的判断，而真正的核心代码却委托给了getObjectFromFactoryBean，我们来看看getObjectForBeanInstance中的所做的工作。
 
 - 对FactoryBean正确性的验证。

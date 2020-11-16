@@ -6,6 +6,8 @@
 
 ## 什么是BeanDefinition
 
+![image-20201116213208976](../../assets/image-20201116213208976.png)
+
 BeanDefinition 是Spring Framework 中定义Bean的配置元信息接口,包括:
 
 - Bean的类名
