@@ -1,0 +1,113 @@
+# 020-JavaAPI方式使用RabbitMQ
+
+## 配置文件
+
+```xml
+    <dependencies>
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.6.0</version>
+        </dependency>
+    </dependencies>
+```
+
+## 生产者
+
+```java
+/**
+ * 消息生产者
+ */
+public class MyProducer {
+    private final static String EXCHANGE_NAME = "SIMPLE_EXCHANGE";
+
+    public static void main(String[] args) throws Exception {
+        ConnectionFactory factory = new ConnectionFactory();
+        // 连接IP
+        factory.setHost("127.0.0.1");
+        // 连接端口
+        factory.setPort(5673);
+        // 虚拟机
+        factory.setVirtualHost("/");
+        // 用户
+        factory.setUsername("guest");
+        factory.setPassword("guest");
+
+        // 建立连接
+        Connection conn = factory.newConnection();
+        // 创建消息通道
+        Channel channel = conn.createChannel();
+
+        // 发送消息
+        String msg = "Hello world, Rabbit MQ";
+
+        // String exchange, String routingKey, BasicProperties props, byte[] body
+        channel.basicPublish(EXCHANGE_NAME, "gupao.best", null, msg.getBytes());
+
+        channel.close();
+        conn.close();
+    }
+}
+
+
+```
+
+## 消费者
+
+```java
+/**
+ * 消息消费者
+ */
+public class MyConsumer {
+    private final static String EXCHANGE_NAME = "SIMPLE_EXCHANGE";
+    private final static String QUEUE_NAME = "SIMPLE_QUEUE";
+
+    public static void main(String[] args) throws Exception {
+        ConnectionFactory factory = new ConnectionFactory();
+        // 连接IP
+        factory.setHost("127.0.0.1");
+        // 默认监听端口
+        factory.setPort(5673);
+        // 虚拟机
+        factory.setVirtualHost("/");
+
+        // 设置访问的用户
+        factory.setUsername("guest");
+        factory.setPassword("guest");
+        // 建立连接
+        Connection conn = factory.newConnection();
+        // 创建消息通道
+        Channel channel = conn.createChannel();
+
+        // 声明交换机
+        // String exchange, String type, boolean durable, boolean autoDelete, Map<String, Object> arguments
+        channel.exchangeDeclare(EXCHANGE_NAME, "direct", false, false, null);
+
+        // 声明队列
+        // String queue, boolean durable, boolean exclusive, boolean autoDelete, Map<String, Object> arguments
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        System.out.println(" Waiting for message....");
+
+        // 绑定队列和交换机
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "gupao.best");
+
+        // 创建消费者
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
+                                       byte[] body) throws IOException {
+                String msg = new String(body, "UTF-8");
+                System.out.println("Received message : '" + msg + "'");
+                System.out.println("consumerTag : " + consumerTag);
+                System.out.println("deliveryTag : " + envelope.getDeliveryTag());
+            }
+        };
+
+        // 开始获取消息
+        // String queue, boolean autoAck, Consumer callback
+        channel.basicConsume(QUEUE_NAME, true, consumer);
+    }
+}
+
+```
+

@@ -1,30 +1,78 @@
 # Docker 安装 RabbitMQ
 
 ## 方式一
-创建镜像(默认用户名密码),远程连接端口5672，管理系统访问端口15672，默认用户名: guest ，密
-码也是 guest
+
+1. 拉取RabbitMQ镜像（带managment）
 
 ```
-docker run -id --name=rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
-```
-## 方式二
-启动镜像(设置用户名和密码)
-
-```
-docker run -id --name=mxg_rabbitmq2 -e RABBITMQ_DEFAULT_USER=username -e
-RABBITMQ_DEFAULT_PASS=password -p 5672:5672 -p 15672:15672 rabbitmq:management
-
-```
-格式化一下:
-
-```
-docker run -id 
---name=rabbitmq2 
--e RABBITMQ_DEFAULT_USER=username 
--e RABBITMQ_DEFAULT_PASS=password 
--p 5672:5672 
--p 15672:15672 
-rabbitmq:management
+docker pull rabbitmq:3.7.17-management
 ```
 
-访问管理界面的地址是 http://[宿主机IP]:15672 , 如:http://192.168.10.11:15672，默认 guest 用户，密码 也是 guest。
+2. 创建docker网络（让容器可以和主机通信）
+
+```
+docker network create rabbitmqnet
+```
+
+3. 创建三个容器，端口分别是 5673 5674 5675 ，管理端口是 15673 15674 15675
+
+```
+docker run -d \
+ --name=rabbitmq1 \
+ -p 5673:5672 \
+ -p 15673:15672 \
+ -e RABBITMQ_NODENAME=rabbitmq1 \
+ -e RABBITMQ_ERLANG_COOKIE='GUPAOEDUFORBETTERYOU' \
+ -h rabbitmq1 \
+ --net=rabbitmqnet \
+ rabbitmq:management
+```
+
+```java
+docker run -d \
+ --name=rabbitmq2 \
+ -p 5674:5672 \
+ -p 15674:15672 \
+ -e RABBITMQ_NODENAME=rabbitmq1 \
+ -e RABBITMQ_ERLANG_COOKIE='GUPAOEDUFORBETTERYOU' \
+ -h rabbitmq2 \
+ --net=rabbitmqnet \
+ rabbitmq:management
+```
+
+```d
+docker run -d \
+ --name=rabbitmq3 \
+ -p 5675:5672 \
+ -p 15675:15672 \
+ -e RABBITMQ_NODENAME=rabbitmq1 \
+ -e RABBITMQ_ERLANG_COOKIE='GUPAOEDUFORBETTERYOU' \
+ -h rabbitmq3 \
+ --net=rabbitmqnet \
+ rabbitmq:management
+```
+
+4. 后两个节点作为内存节点加入集群
+
+```
+docker exec -it rabbitmq2 /bin/bash
+rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl join_cluster --ram rabbitmq1@rabbitmq1
+rabbitmqctl start_app
+docker exec -it rabbitmq3 /bin/bash
+rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl join_cluster --ram rabbitmq1@rabbitmq1
+rabbitmqctl start_app
+```
+
+访问：
+
+```
+http://127.0.0.1:15673/
+guest/guest登录
+```
+
+
+
