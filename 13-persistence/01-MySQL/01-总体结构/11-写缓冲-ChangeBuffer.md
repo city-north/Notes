@@ -4,7 +4,7 @@
 
 > https://dev.mysql.com/doc/refman/5.7/en/innodb-change-buffer.html
 
-- [缓冲池-buff  er-pool.md](08-缓冲池-buffer-pool.md) 
+- [缓冲池-buffer-pool.md](08-缓冲池-buffer-pool.md) 
 
 ## 目录
 
