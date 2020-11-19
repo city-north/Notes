@@ -130,8 +130,6 @@ public class ApiDependencySetterInjectionDemo {
 
 ## setter注入-byName
 
-
-
 ```java
 
 /**
