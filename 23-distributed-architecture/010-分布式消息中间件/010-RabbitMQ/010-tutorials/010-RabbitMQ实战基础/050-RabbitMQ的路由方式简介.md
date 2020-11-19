@@ -4,8 +4,6 @@
 - [Topic主题](#Topic主题)
 - [Fanout广播](#Fanout广播)
 
-
-
 ## Direct直连
 
 一个队列与直连类型的交换机绑定,需要制定一个明确的绑定键(binding key)
