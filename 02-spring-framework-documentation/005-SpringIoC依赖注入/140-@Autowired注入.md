@@ -82,28 +82,28 @@ org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcesso
 ### 获取注入点的信息
 
 ```java
-	private InjectionMetadata findAutowiringMetadata(String beanName, Class<?> clazz, @Nullable PropertyValues pvs) {
-		// Fall back to class name as cache key, for backwards compatibility with custom callers.
+private InjectionMetadata findAutowiringMetadata(String beanName, Class<?> clazz, @Nullable PropertyValues pvs) {
+    // Fall back to class name as cache key, for backwards compatibility with custom callers.
     //实际上是使用缓存机机制进行获取
-		String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
-		// Quick check on the concurrent map first, with minimal locking.
-		InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
-		if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-			synchronized (this.injectionMetadataCache) {
-				metadata = this.injectionMetadataCache.get(cacheKey);
-				if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-					if (metadata != null) {
-						metadata.clear(pvs);
-					}
-          //通过反射的方式构建注入点,实际上是获取到被注入bean的所有字段,注意这里获取的是Cglib增强类的字段,所以有可能是
-					metadata = buildAutowiringMetadata(clazz);
-					this.injectionMetadataCache.put(cacheKey, metadata);
-				}
-			}
-		}
+    String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
+    // Quick check on the concurrent map first, with minimal locking.
+    InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
+    if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+        synchronized (this.injectionMetadataCache) {
+            metadata = this.injectionMetadataCache.get(cacheKey);
+            if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+                if (metadata != null) {
+                    metadata.clear(pvs);
+                }
+                //通过反射的方式构建注入点,实际上是获取到被注入bean的所有字段,注意这里获取的是Cglib增强类的字段,所以有可能是
+                metadata = buildAutowiringMetadata(clazz);
+                this.injectionMetadataCache.put(cacheKey, metadata);
+            }
+        }
+    }
     //这里的metadata就是包含了@Autowired注解的字段的信息
-		return metadata;
-	}
+    return metadata;
+}
 ```
 
 ### 根据注入点信息注入
@@ -148,7 +148,6 @@ public void inject(Object target, @Nullable String beanName, @Nullable PropertyV
 				catch (BeansException ex) {
 					throw new UnsatisfiedDependencyException(null, beanName, new InjectionPoint(field), ex);
 				}
-        
         //加锁加缓存
 				synchronized (this) {
 					if (!this.cached) {
