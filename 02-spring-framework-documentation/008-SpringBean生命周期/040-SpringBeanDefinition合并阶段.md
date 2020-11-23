@@ -1,6 +1,18 @@
 # 040-SpringBeanDefinition合并阶段
 
+## BeanDefinition合并
+
+- 父子BeanDefinition合并
+  - 当前BeanFactory查找
+  - 层次性BeanFactory查找
+
 SpringBean在实例化之前的时候,会进行合并
+
+## 目录
+
+- [核心解析思想](#核心解析思想)
+
+- [ConfigurableBeanFactory提供了合并功能](#ConfigurableBeanFactory提供了合并功能)
 
 ## 继承结构
 
@@ -121,15 +133,15 @@ private final Map<String, RootBeanDefinition> mergedBeanDefinitions = new Concur
 ```
 
 ```java
-	protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throws BeansException {
-		// Quick check on the concurrent map first, with minimal locking.
-    //第一次找
-		RootBeanDefinition mbd = this.mergedBeanDefinitions.get(beanName);
-		if (mbd != null && !mbd.stale) {
-			return mbd;
-		}
-		return getMergedBeanDefinition(beanName, getBeanDefinition(beanName));
-	}
+protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throws BeansException {
+  // Quick check on the concurrent map first, with minimal locking.
+  //第一次找
+  RootBeanDefinition mbd = this.mergedBeanDefinitions.get(beanName);
+  if (mbd != null && !mbd.stale) {
+    return mbd;
+  }
+  return getMergedBeanDefinition(beanName, getBeanDefinition(beanName));
+}
 ```
 
 由于BeanDefinition是可以嵌套的,所以提供了containingBd属性来判断

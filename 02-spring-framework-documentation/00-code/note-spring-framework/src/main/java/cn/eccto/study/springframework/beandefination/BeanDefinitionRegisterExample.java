@@ -1,6 +1,6 @@
 package cn.eccto.study.springframework.beandefination;
 
-import cn.eccto.study.springframework.ioc.User;
+import cn.eccto.study.springframework.User;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
@@ -26,7 +26,7 @@ public class BeanDefinitionRegisterExample {
     public static class Config {
         @Bean
         public User user() {
-            return new User().setAge(11).setName("EricChen");
+            return new User();
         }
     }
 }

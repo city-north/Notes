@@ -1,6 +1,6 @@
 package cn.eccto.study.springframework.createBean;
 
-import cn.eccto.study.springframework.ioc.User;
+import cn.eccto.study.springframework.User;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;

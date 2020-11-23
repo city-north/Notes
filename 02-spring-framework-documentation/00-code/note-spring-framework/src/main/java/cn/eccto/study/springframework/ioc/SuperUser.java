@@ -1,5 +1,7 @@
 package cn.eccto.study.springframework.ioc;
 
+import cn.eccto.study.springframework.User;
+
 /**
  * <p>
  * TODO
@@ -7,7 +9,6 @@ package cn.eccto.study.springframework.ioc;
  *
  * @author EricChen 2020/10/19 21:18
  */
-@Super
 public class SuperUser extends User {
 
     private String address;
@@ -21,8 +22,4 @@ public class SuperUser extends User {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "SuperUser{} " + super.toString();
-    }
 }

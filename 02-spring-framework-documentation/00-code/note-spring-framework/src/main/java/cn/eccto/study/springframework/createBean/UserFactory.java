@@ -1,6 +1,7 @@
 package cn.eccto.study.springframework.createBean;
 
-import cn.eccto.study.springframework.ioc.User;
+
+import cn.eccto.study.springframework.User;
 
 /**
  * <p>

@@ -1,6 +1,6 @@
 package cn.eccto.study.springframework.createBean;
 
-import cn.eccto.study.springframework.ioc.User;
+import cn.eccto.study.springframework.User;
 import org.springframework.beans.factory.InitializingBean;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +30,7 @@ public class DefaultUserFactory implements UserFactory, InitializingBean {
 
     @Override
     public User createUser() {
-        return new User().setName("EricChen").setAge(123);
+        return new User();
     }
 
     @Override

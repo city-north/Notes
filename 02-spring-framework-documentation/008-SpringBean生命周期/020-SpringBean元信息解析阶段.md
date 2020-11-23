@@ -1,7 +1,7 @@
 # 020-SpringBean元信息解析阶段.md
 
 - 面向资源BeanDefinition的解析
-  - BeanDefinitionReader
+  - [BeanDefinitionReader](#BeanDefinitionReader)
   - XML解析-BeanDefinitionParser
 - 面向注解BeanDefinition的解析
   - [AnnotatedBeanDefinitionReader](#AnnotatedBeanDefinitionReader)
@@ -34,9 +34,30 @@ public interface BeanDefinitionReader {
 }
 ```
 
-
-
 ## XML解析-BeanDefinitionParser
+
+```java
+public class AnnotatedBeanDefinitionParsingDemo {
+
+    public static void main(String[] args) {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        // 基于 Java 注解的 AnnotatedBeanDefinitionReader 的实现
+        AnnotatedBeanDefinitionReader beanDefinitionReader = new AnnotatedBeanDefinitionReader(beanFactory);
+        int beanDefinitionCountBefore = beanFactory.getBeanDefinitionCount();
+        // 注册当前类（非 @Component class）
+        beanDefinitionReader.register(AnnotatedBeanDefinitionParsingDemo.class);
+        int beanDefinitionCountAfter = beanFactory.getBeanDefinitionCount();
+        int beanDefinitionCount = beanDefinitionCountAfter - beanDefinitionCountBefore;
+        System.out.println("已加载 BeanDefinition 数量：" + beanDefinitionCount);
+        // 普通的 Class 作为 Component 注册到 Spring IoC 容器后，通常 Bean 名称为 annotatedBeanDefinitionParsingDemo
+        // Bean 名称生成来自于 BeanNameGenerator，注解实现 AnnotationBeanNameGenerator
+        AnnotatedBeanDefinitionParsingDemo demo = beanFactory.getBean("annotatedBeanDefinitionParsingDemo",
+                AnnotatedBeanDefinitionParsingDemo.class);
+        System.out.println(demo);
+    }
+
+}
+```
 
 ## AnnotatedBeanDefinitionReader
 
@@ -85,48 +106,53 @@ public class AnnotatedBeanDefinitionReader {
 
 ```
 
+注册bean时如果没有指定,则使用这个方式获取JavaBean的Bean名称
+
+```java
+org.springframework.context.annotation.AnnotationBeanNameGenerator#buildDefaultBeanName(BeanDefinition)
+```
+
 #### 具体注册的逻辑
 
 ```java
-	private <T> void doRegisterBean(Class<T> beanClass, @Nullable String name,
-			@Nullable Class<? extends Annotation>[] qualifiers, @Nullable Supplier<T> supplier,
-			@Nullable BeanDefinitionCustomizer[] customizers) {
+private <T> void doRegisterBean(Class<T> beanClass, @Nullable String name,
+                                @Nullable Class<? extends Annotation>[] qualifiers, @Nullable Supplier<T> supplier,
+                                @Nullable BeanDefinitionCustomizer[] customizers) {
 
-		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
-		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
-			return;
-		}
+  AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
+  if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
+    return;
+  }
+  abd.setInstanceSupplier(supplier);
+  ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
+  abd.setScope(scopeMetadata.getScopeName());
+  String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
 
-		abd.setInstanceSupplier(supplier);
-		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
-		abd.setScope(scopeMetadata.getScopeName());
-		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
-
-		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
-		if (qualifiers != null) {
-			for (Class<? extends Annotation> qualifier : qualifiers) {
-				if (Primary.class == qualifier) {
-					abd.setPrimary(true);
-				}
-				else if (Lazy.class == qualifier) {
-					abd.setLazyInit(true);
-				}
-				else {
-					abd.addQualifier(new AutowireCandidateQualifier(qualifier));
-				}
-			}
-		}
-		if (customizers != null) {
-			for (BeanDefinitionCustomizer customizer : customizers) {
-				customizer.customize(abd);
-			}
-		}
-		//封装成BeanDefinitionHolder
-		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
-		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
-    //注册到容器
-		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
-	}
+  AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
+  if (qualifiers != null) {
+    for (Class<? extends Annotation> qualifier : qualifiers) {
+      if (Primary.class == qualifier) {
+        abd.setPrimary(true);
+      }
+      else if (Lazy.class == qualifier) {
+        abd.setLazyInit(true);
+      }
+      else {
+        abd.addQualifier(new AutowireCandidateQualifier(qualifier));
+      }
+    }
+  }
+  if (customizers != null) {
+    for (BeanDefinitionCustomizer customizer : customizers) {
+      customizer.customize(abd);
+    }
+  }
+  //封装成BeanDefinitionHolder
+  BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
+  definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+  //注册到容器
+  BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
+}
 
 ```
 

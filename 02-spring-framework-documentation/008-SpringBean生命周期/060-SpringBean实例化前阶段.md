@@ -1,0 +1,5 @@
+# 060-SpringBean实例化前阶段.md
+
+非主流声明周期- Bean实例化前阶段
+
+InstantationAwareBeanPostProcessor#postProcessBeforeInstantiation

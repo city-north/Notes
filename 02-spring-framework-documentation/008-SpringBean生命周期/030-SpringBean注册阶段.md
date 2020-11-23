@@ -1,6 +1,6 @@
 # 030-SpringBean注册阶段
 
-补充说明[030-BeanDefinition的注册.md](../003-SpringBean的定义-BeanDefiniation/030-BeanDefinition的注册.md) 
+补充说明 [030-BeanDefinition的注册.md](../003-SpringBean的定义-BeanDefiniation/030-BeanDefinition的注册.md) 
 
 - BeanDefinition注册接口
   - BeanDefinitionRegistry
@@ -89,7 +89,9 @@ public void registerBeanDefinition(String beanName, BeanDefinition beanDefinitio
 
 ```java
 private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
+/** List of bean definition names, in registration order. */
 private volatile List<String> beanDefinitionNames = new ArrayList<>(256);//保持注册的顺序
 ```
 
-- 由于ConcurrentHashMap是乱序的,但是要确保Bean创建的顺序,所以要用一个ArrayList去维护一个名字的列表
+- 由于ConcurrentHashMap是乱序的,但是要确保Bean创建(注册)的顺序,所以要用一个ArrayList去维护一个名字的列表
+

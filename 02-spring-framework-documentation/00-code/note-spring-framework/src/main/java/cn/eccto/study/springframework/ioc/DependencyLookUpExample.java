@@ -1,5 +1,6 @@
 package cn.eccto.study.springframework.ioc;
 
+import cn.eccto.study.springframework.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -14,7 +15,6 @@ import java.util.Map;
  *
  * @author EricChen 2020/10/19 20:45
  */
-@Slf4j
 public class DependencyLookUpExample {
 
     public static void main(String[] args) {
@@ -33,7 +33,6 @@ public class DependencyLookUpExample {
      */
     private static void lookupCollectionByAnnotation(ClassPathXmlApplicationContext beanFactory) {
         final Map<String, Object> beansWithAnnotation = beanFactory.getBeansWithAnnotation(Super.class);
-        log.error("根据注解获取bean: {}", beansWithAnnotation);
     }
 
     /**
@@ -41,7 +40,6 @@ public class DependencyLookUpExample {
      */
     private static void lookupCollectionByType(ClassPathXmlApplicationContext beanFactory) {
         final Map<String, User> beansOfType = beanFactory.getBeansOfType(User.class);
-        log.error("collection By Type {}", beansOfType);
     }
 
     /**
@@ -49,7 +47,6 @@ public class DependencyLookUpExample {
      */
     private static void lookupByType(BeanFactory beanFactory) {
         final User bean = beanFactory.getBean(User.class);
-        log.error("根据类型查询 :" + bean);
     }
 
     /**
@@ -58,7 +55,6 @@ public class DependencyLookUpExample {
     private static void lookupLazy(BeanFactory beanFactory) {
         final ObjectFactory<User> objectFactory = (ObjectFactory) beanFactory.getBean("objectFactory");
         final User object = objectFactory.getObject();
-        log.error("延迟加载 :{}", object);
     }
 
     /**
@@ -66,7 +62,6 @@ public class DependencyLookUpExample {
      */
     public static void lookupInRealTime(BeanFactory beanFactory) {
         final User user = (User) beanFactory.getBean("user");
-        log.error("实时查找: {}", user);
     }
 
 

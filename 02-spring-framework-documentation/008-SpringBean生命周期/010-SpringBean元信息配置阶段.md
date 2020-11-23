@@ -12,9 +12,46 @@
 - 面向注解
 - 面向API
 
+### XML配置
+
+
+
 ### Properties资源配置
 
 ![image-20201116213208976](../../assets/image-20201116213208976.png)
+
+```java
+//org.springframework.beans.factory.support public class PropertiesBeanDefinitionReader extends AbstractBeanDefinitionReader
+  
+  
+/**
+	Bean definition reader for a simple properties format.
+	Provides bean definition registration methods for Map/Properties and ResourceBundle. Typically applied to a 	DefaultListableBeanFactory.
+*/
+
+Example:
+   employee.(class)=MyClass       // bean is of class MyClass
+   employee.(abstract)=true       // this bean can't be instantiated directly
+   employee.group=Insurance       // real property
+   employee.usesDialUp=false      // real property (potentially overridden)
+  
+   salesrep.(parent)=employee     // derives from "employee" bean definition
+   salesrep.(lazy-init)=true      // lazily initialize this singleton bean
+   salesrep.manager(ref)=tony     // reference to another bean
+   salesrep.department=Sales      // real property
+  
+   techie.(parent)=employee       // derives from "employee" bean definition
+   techie.(scope)=prototype       // bean is a prototype (not a shared instance)
+   techie.manager(ref)=jeff       // reference to another bean
+   techie.department=Engineering  // real property
+   techie.usesDialUp=true         // real property (overriding parent value)
+  
+   ceo.$0(ref)=secretary          // inject 'secretary' bean as 0th constructor arg
+   ceo.$1=1000000                 // inject value '1000000' at 1st constructor arg
+   
+```
+
+
 
 ```java
 **
@@ -45,10 +82,9 @@ user.properties
 
 ```properties
 #src/main/resources/META-INF/user.properties
-user.(class) = org.geekbang.thinking.in.spring.ioc.overview.domain.User
-user.id = 001
+user.(class) =cn.eccto.study.springframework.User
+user.id = 11
 user.name = 小马哥
-user.city = HANGZHOU
 ```
 
 #### 面向注解
