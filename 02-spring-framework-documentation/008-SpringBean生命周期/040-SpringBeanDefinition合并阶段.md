@@ -1,6 +1,6 @@
 # 040-SpringBeanDefinition合并阶段
 
-## BeanDefinition合并
+## 先入为主
 
 - 父子BeanDefinition合并
   - 当前BeanFactory查找
@@ -109,37 +109,42 @@ ConfigurableBeanFactory#getMergedBeanDefinition
 	BeanDefinition getMergedBeanDefinition(String beanName) throws NoSuchBeanDefinitionException;
 ```
 
-实现类AbstractBeanFactory#getMergedBeanDefinition
+<img src="../../assets/image-20200919224648982.png" alt="image-20200919224648982" style="zoom:80%;" />
+
+其具体的实现是在 : 实现类AbstractBeanFactory#getMergedBeanDefinition
 
 ```java
-	@Override
-	public BeanDefinition getMergedBeanDefinition(String name) throws BeansException {
-		String beanName = transformedBeanName(name);
-		// Efficiently check whether bean definition exists in this factory.
-    //递归往父Definition里获取
-		if (!containsBeanDefinition(beanName) && getParentBeanFactory() instanceof ConfigurableBeanFactory) {
-			return ((ConfigurableBeanFactory) getParentBeanFactory()).getMergedBeanDefinition(beanName);
-		}
-		// Resolve merged bean definition locally.
-    //如果有的话,从当前Beanfactory的中获取BeanDefinition
-		return getMergedLocalBeanDefinition(beanName);
-	}
+@Override
+public BeanDefinition getMergedBeanDefinition(String name) throws BeansException {
+  String beanName = transformedBeanName(name);
+  // Efficiently check whether bean definition exists in this factory.
+  //递归往父Definition里获取
+  if (!containsBeanDefinition(beanName) && getParentBeanFactory() instanceof ConfigurableBeanFactory) {
+    return ((ConfigurableBeanFactory) getParentBeanFactory()).getMergedBeanDefinition(beanName);
+  }
+  // Resolve merged bean definition locally.
+  //如果有的话,从 [当前Beanfactory] 的中获取BeanDefinition
+  return getMergedLocalBeanDefinition(beanName);
+}
 ```
 
 容器中存储
 
 ```java
+/** Map from bean name to merged RootBeanDefinition */
+// 仅仅关注当前Beanfactory,相当于本地缓存
 private final Map<String, RootBeanDefinition> mergedBeanDefinitions = new ConcurrentHashMap<>(256);
 ```
 
 ```java
 protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throws BeansException {
   // Quick check on the concurrent map first, with minimal locking.
-  //第一次找
+  //从缓存中进行第一次找
   RootBeanDefinition mbd = this.mergedBeanDefinitions.get(beanName);
   if (mbd != null && !mbd.stale) {
     return mbd;
   }
+  //缓存没有命中
   return getMergedBeanDefinition(beanName, getBeanDefinition(beanName));
 }
 ```
@@ -148,19 +153,21 @@ protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throw
 
 ```java
 protected RootBeanDefinition getMergedBeanDefinition(
-  String beanName, BeanDefinition bd, @Nullable BeanDefinition containingBd)
-  throws BeanDefinitionStoreException {
+  String beanName, BeanDefinition bd, 
+  @Nullable BeanDefinition containingBd // 嵌套Bean
+)throws BeanDefinitionStoreException {
   //线程不安全,加锁,ConcurrentHashMap仅仅是put和get是线程安全的
   synchronized (this.mergedBeanDefinitions) {
     RootBeanDefinition mbd = null;
     RootBeanDefinition previous = null;
 
     // Check with full lock now in order to enforce the same merged instance.
-    //第而 次找为什么要再找一次呢?其他线程有可能会修改
+    //第2 次找为什么要再找一次呢?其他线程有可能会修改
     if (containingBd == null) {
       mbd = this.mergedBeanDefinitions.get(beanName);
     }
     if (mbd == null || mbd.stale) {
+      //bean在加锁前是否已经被修改
       previous = mbd;
       //如果没有parent
       if (bd.getParentName() == null) {
@@ -178,9 +185,10 @@ protected RootBeanDefinition getMergedBeanDefinition(
         // Child bean definition: needs to be merged with parent.
         BeanDefinition pbd;
         try {
+          //规范名称
           String parentBeanName = transformedBeanName(bd.getParentName());
           if (!beanName.equals(parentBeanName)) {
-            //递归设置
+            //从当前的BeanFactory中查找 parentBeanName,递归设置
             pbd = getMergedBeanDefinition(parentBeanName);
           }
           else {
