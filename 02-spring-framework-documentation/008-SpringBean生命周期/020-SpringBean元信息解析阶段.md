@@ -61,7 +61,7 @@ public class AnnotatedBeanDefinitionParsingDemo {
 
 ## AnnotatedBeanDefinitionReader
 
-AnnotatedBeanDefinitionReader并没有实现接口 BeanDefinitionReader , 是因为 BeanDefinitionReader 都是基于Resource资源进行注册的,而AnnotatedBeanDefinitionReader 不急于Resource资源,而仅仅依赖于扫描
+AnnotatedBeanDefinitionReader并没有实现接口 BeanDefinitionReader , 是因为 BeanDefinitionReader 都是基于Resource资源进行注册的,而AnnotatedBeanDefinitionReader 不基于Resource资源,而仅仅依赖于扫描
 
 主要负责对指定路径下的文件扫描是否包含BeanDefinition,然后使用API方式进行注册
 

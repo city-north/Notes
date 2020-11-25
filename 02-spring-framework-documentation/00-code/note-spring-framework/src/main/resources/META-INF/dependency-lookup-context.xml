@@ -14,8 +14,8 @@
     <!-- Root BeanDefinition 不需要合并，不存在 parent -->
     <!-- 普通 beanDefinition GenericBeanDefinition -->
     <!-- 经过合并后 GenericBeanDefinition 变成 RootBeanDefinition -->
-    <bean id="user" class="cn.eccto.study.springframework.ioc.User">
-        <property name="age" value="11"/>
+    <bean id="user" class="cn.eccto.study.springframework.User">
+        <property name="id" value="11"/>
     </bean>
 
     <!-- 普通 beanDefinition GenericBeanDefinition -->
