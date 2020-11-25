@@ -21,7 +21,7 @@ public class BeanInitializationLifecycleDemo {
         // 添加 CommonAnnotationBeanPostProcessor 解决 @PostConstruct
         beanFactory.addBeanPostProcessor(new CommonAnnotationBeanPostProcessor());
         XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
-        String[] locations = {"META-INF/dependency-lookup-context.xml", "META-INF/bean-constructor-dependency-injection.xml"};
+        String[] locations = {"META-INF/dependency-lookup-context.xml"};
         int beanNumbers = beanDefinitionReader.loadBeanDefinitions(locations);
         System.out.println("已加载 BeanDefinition 数量：" + beanNumbers);
         // 显示地执行 preInstantiateSingletons()

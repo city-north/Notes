@@ -16,6 +16,7 @@
     <!-- 经过合并后 GenericBeanDefinition 变成 RootBeanDefinition -->
     <bean id="user" class="cn.eccto.study.springframework.User">
         <property name="id" value="11"/>
+        <property name="name" value="EricChen"/>
     </bean>
 
     <!-- 普通 beanDefinition GenericBeanDefinition -->
@@ -26,8 +27,5 @@
         <property name="address" value="杭州"/>
     </bean>
 
-    <bean id="objectFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
-        <property name="targetBeanName" value="user"/>
-    </bean>
 
 </beans>

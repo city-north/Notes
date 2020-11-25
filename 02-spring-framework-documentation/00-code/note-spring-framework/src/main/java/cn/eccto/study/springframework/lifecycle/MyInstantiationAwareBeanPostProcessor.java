@@ -2,6 +2,7 @@ package cn.eccto.study.springframework.lifecycle;
 
 import cn.eccto.study.springframework.ioc.SuperUser;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.util.ObjectUtils;
 
@@ -31,5 +32,10 @@ public class MyInstantiationAwareBeanPostProcessor implements InstantiationAware
     @Override
     public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
         return false;
+    }
+
+    @Override
+    public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) throws BeansException {
+        return null;
     }
 }
