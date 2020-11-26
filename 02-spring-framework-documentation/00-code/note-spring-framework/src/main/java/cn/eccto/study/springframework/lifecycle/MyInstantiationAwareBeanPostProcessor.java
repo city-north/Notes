@@ -22,6 +22,7 @@ public class MyInstantiationAwareBeanPostProcessor implements InstantiationAware
     @Override
     public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
         if (ObjectUtils.nullSafeEquals(beanName, "superClass") && SuperUser.class.equals(beanClass)) {
+            System.out.println("postProcessBeforeInstantiation");
             //把配置完成 superUser Bean 覆盖
             return new SuperUser();
         }
@@ -32,6 +33,16 @@ public class MyInstantiationAwareBeanPostProcessor implements InstantiationAware
     @Override
     public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
         return false;
+    }
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return null;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        return null;
     }
 
     @Override

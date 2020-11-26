@@ -55,8 +55,6 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
 }
 ```
 
-
-
 ```java
 protected BeanWrapper createBeanInstance(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) {
     // Make sure bean class is actually resolved at this point.
@@ -77,13 +75,3 @@ protected BeanWrapper createBeanInstance(String beanName, RootBeanDefinition mbd
 ```
 
 
-
-## 二级目录
-
-
-
-## 三级目录
-
-
-
-## 四级目录

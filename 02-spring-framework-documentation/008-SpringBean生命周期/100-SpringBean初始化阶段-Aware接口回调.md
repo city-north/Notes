@@ -1,4 +1,4 @@
-# 100-SpringBeanAware接口回调阶段
+# 100-SpringBean初始化阶段-Aware接口回调
 
 初始化阶段
 
@@ -55,7 +55,11 @@ AbstractAutowireCapableBeanFactory#invokeAwareMethods
 	protected Object initializeBean(final String beanName, final Object bean, @Nullable RootBeanDefinition mbd) {
 		if (System.getSecurityManager() != null) {
 			AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
+        
+        //----------------------本章关注点----调用各类Aware接口-----------------------------------------//
 				//属性赋值完成后,初始化Bean的第一步就是调用各类Aware接口
+        //----------------------本章关注点----调用各类Aware接口-----------------------------------------//
+        
         invokeAwareMethods(beanName, bean);
 				return null;
 			}, getAccessControlContext());
@@ -229,13 +233,13 @@ private void invokeAwareInterfaces(Object bean) {
 }
 ```
 
-## EnvironmentAware
+#### EnvironmentAware
 
 ```java
 void setEnvironment(Environment environment);
 ```
 
-## EmbeddedValueResolverAware
+#### EmbeddedValueResolverAware
 
 实现该接口能够获取Spring EL解析器，用户的自定义注解需要支持spel表达式的时候可以使用，非常方便。
 
@@ -243,31 +247,31 @@ void setEnvironment(Environment environment);
 void setEmbeddedValueResolver(StringValueResolver resolver);
 ```
 
-## ResourceLoaderAware
+#### ResourceLoaderAware
 
 ```java
 void setResourceLoader(ResourceLoader resourceLoader);
 ```
 
-## ApplicationEventPublisherAware
+#### ApplicationEventPublisherAware
 
 ```java
 void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher);
 ```
 
-## MessageSourceAware
+#### MessageSourceAware
 
 ```java
 void setMessageSource(MessageSource messageSource);
 ```
 
-## ApplicationContextAware
+#### ApplicationContextAware
 
 ```java
 void setApplicationContext(ApplicationContext applicationContext) throws BeansException;
 ```
 
-## ServletContextAware
+#### ServletContextAware
 
 ```java
 //package org.springframework.context;

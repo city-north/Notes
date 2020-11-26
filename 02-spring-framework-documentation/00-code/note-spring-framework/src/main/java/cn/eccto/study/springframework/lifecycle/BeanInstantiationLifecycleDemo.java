@@ -15,11 +15,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class BeanInstantiationLifecycleDemo {
     public static void main(String[] args) {
-//        executeBeanFactory();
+        executeBeanFactory();
 
         System.out.println("--------------------------------");
 
-        executeApplicationContext();
+//        executeApplicationContext();
 
     }
 
@@ -34,8 +34,10 @@ public class BeanInstantiationLifecycleDemo {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         BeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
         final int i = beanDefinitionReader.loadBeanDefinitions("META-INF/dependency-lookup-context.xml");
+        beanFactory.addBeanPostProcessor(new MyInstantiationAwareBeanPostProcessor());
         System.out.println("Bean实例个数:" + i);
-        User user = (User) beanFactory.getBean("user", User.class);
+        beanFactory.preInstantiateSingletons();
+        User user = beanFactory.getBean("user", User.class);
         System.out.println(user);
     }
 

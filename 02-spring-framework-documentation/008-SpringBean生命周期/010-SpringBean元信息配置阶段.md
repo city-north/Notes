@@ -14,7 +14,7 @@
 
 ### XML配置
 
-
+略
 
 ### Properties资源配置
 

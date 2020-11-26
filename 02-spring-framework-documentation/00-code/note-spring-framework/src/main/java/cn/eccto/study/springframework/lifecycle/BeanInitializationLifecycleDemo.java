@@ -29,12 +29,12 @@ public class BeanInitializationLifecycleDemo {
         // preInstantiateSingletons 将已注册的 BeanDefinition 初始化成 Spring Bean
         beanFactory.preInstantiateSingletons();
 
-        // 通过 Bean Id 和类型进行依赖查找
-        User user = beanFactory.getBean("user", User.class);
-        System.out.println(user);
-
-        User superUser = beanFactory.getBean("superUser", User.class);
-        System.out.println(superUser);
+//        // 通过 Bean Id 和类型进行依赖查找
+//        User user = beanFactory.getBean("user", User.class);
+//        System.out.println(user);
+//
+//        User superUser = beanFactory.getBean("superUser", User.class);
+//        System.out.println(superUser);
 
     }
 

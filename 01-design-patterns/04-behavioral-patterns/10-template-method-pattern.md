@@ -21,7 +21,7 @@
 **b. 使用步骤** 
 **步骤1：** 创建抽象模板结构（Abstract Class）：炒菜的步骤
 
-```
+```java
 public  abstract class Abstract Class {  
 //模板方法，用来控制炒菜的流程 （炒菜的流程是一样的-复用）
 //申明为final，不希望子类覆盖这个方法，防止更改流程的执行顺序 
