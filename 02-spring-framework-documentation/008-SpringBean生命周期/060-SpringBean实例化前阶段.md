@@ -1,6 +1,14 @@
 # 060-SpringBean实例化前阶段
 
+## 一言蔽之
 
+实例化前阶段是一个非主流阶段，它主要通过后置处理器InstantiationAwareBeanPostProcessor
+
+的实现，通常情况下我们根据bean的名称和BeanDefinition 可以返回一个bean的代理，后续就不执行实例化阶段
+
+```java
+Object InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation
+```
 
 ## 目录
 
@@ -8,8 +16,9 @@
 
 - [先入为主核心类](#先入为主核心类)
 
-
 ## 简介
+
+实例化前阶段的调用入口，下图可以看出在`AbstractAutowireCapableBeanFactory`的createBean方法中，会调用
 
 ![image-20201124195218996](../../assets/image-20201124195218996.png)
 
