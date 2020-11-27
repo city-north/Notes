@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- Root BeanDefinition 不需要合并，不存在 parent -->
+    <!-- 普通 beanDefinition GenericBeanDefinition -->
+    <!-- 经过合并后 GenericBeanDefinition 变成 RootBeanDefinition -->
+    <bean id="demoBean" class="cn.eccto.study.springframework.lifecycle.destruction.DemoBean">
+        <property name="name" value="ericchen"/>
+    </bean>
+
+</beans>

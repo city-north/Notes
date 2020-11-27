@@ -1,0 +1,7 @@
+# BeanFactoryPostProcessor与BeanPostProcessor的区别
+
+BeanFactoryPostProcessor 是Spring BeanFacory(ConfigurableListableBeanFactory)的后置处理器,用于拓展BeanFactoy, 或者通过Beanfactory 进行依赖查找或者依赖注入
+
+BeanFactoryPostProcesspr 必须有Spring ApplicationContext 执行, BeanFactory 无法与其直接执行
+
+BeanPostProcessor 直接与BeanFactory关联,属于N:1关系

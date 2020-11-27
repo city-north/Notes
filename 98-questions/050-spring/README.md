@@ -32,7 +32,17 @@
 
  [009-单例对象能否在IoC容器启动后注册.md](009-单例对象能否在IoC容器启动后注册.md) 
 
+## BeanPostProcessor的使用场景有哪些
 
+ [010-BeanPostProcessor的使用场景有哪些.md](010-BeanPostProcessor的使用场景有哪些.md) 
+
+## BeanFactoryPostProcessor与BeanPostProcessor的区别
+
+ [011-BeanFactoryPostProcessor与BeanPostProcessor的区别.md](011-BeanFactoryPostProcessor与BeanPostProcessor的区别.md) 
+
+## BeanFactory是怎么控制Bean的生命周期
+
+ [012-BeanFactory是怎么控制Bean的生命周期.md](012-BeanFactory是怎么控制Bean的生命周期.md) 
 
 ----
 
