@@ -18,6 +18,8 @@
 
 RabbitMQ的默认端口是5672, 这台RabbitMQ的服务器我们就叫做Broker主机
 
+
+
 ### Connection
 
 无论是生产者发送消息还是消费者消费消息,都需要跟Broker之间建立一个连接,这个链接是TCP场链接
@@ -43,6 +45,8 @@ c:\Users\用户名\AppData\Roaming\db\rabbit@用户名-mesia
 ```
 
 ### Consumer
+
+ [010-生产者和消费者.md](../../011-RabbitMQ相关概念/010-生产者和消费者.md) 
 
 消费者获取消息有两种模式
 

@@ -3,7 +3,7 @@
 - [测试用例](#测试用例)
 - [applicationContext.xml](#applicationContext.xml)
 
-![image-20201117224659189](../../../../assets/image-20201117224659189.png)
+![image-20201117224659189](../../../../../assets/image-20201117224659189.png)
 
 ## 核心对象
 
