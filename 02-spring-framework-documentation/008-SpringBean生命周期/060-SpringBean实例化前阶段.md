@@ -36,7 +36,7 @@ Object InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation
 
 - ConfigurableListableBeanFactory赋予了容器在结束时确保所有**[非延迟初始化]**的单例都初始化
 
-## ConfigurableListableBeanFactory如何提供[费延迟初始化]单例的初始化操作
+## ConfigurableListableBeanFactory如何提供[非延迟初始化]单例的初始化操作
 
 ConfigurableListableBeanFactory赋予了容器在结束时确保所有**[非延迟初始化]**的单例都初始化
 
@@ -99,23 +99,23 @@ private static void executeBeanFactory() {
 具体的执行逻辑
 
 ```java
-	@Nullable
-	protected Object applyBeanPostProcessorsBeforeInstantiation(Class<?> beanClass, String beanName) {
-		for (BeanPostProcessor bp : getBeanPostProcessors()) {
-			if (bp instanceof InstantiationAwareBeanPostProcessor) {
-				InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
-				Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName);
-				if (result != null) {
-					return result;
-				}
-			}
-		}
-		return null;
-	}
-
+@Nullable
+protected Object applyBeanPostProcessorsBeforeInstantiation(Class<?> beanClass, String beanName) {
+  for (BeanPostProcessor bp : getBeanPostProcessors()) {
+    if (bp instanceof InstantiationAwareBeanPostProcessor) {
+      InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
+      Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName);
+      if (result != null) {
+        return result;
+      }
+    }
+  }
+  return null;
+}
 ```
 
 在任何bean初始化回调之后(如初始化bean的afterPropertiesSet或自定义的init方法)，将此BeanPostProcessor应用到给定的新bean实例。bean已经填充了属性值。返回的bean实例可能是原始bean的包装器。
+
 对于FactoryBean，这个回调将同时为FactoryBean实例和由FactoryBean创建的对象(从Spring 2.0开始)调用。后处理器可以决定是应用到FactoryBean还是创建的对象，或者通过相应的FactoryBean instanceof检查两者都应用。
 
 ```java

@@ -12,8 +12,6 @@ Bean实例化阶段实际上是依赖查找或者依赖注入的时候，通过B
 - [实例化方式](#实例化方式)
   - [传统实例化方式](#传统实例化方式)
   - [构造器依赖注入](#构造器依赖注入)
-- [三级目录](#三级目录)
-- [四级目录](#四级目录)
 
 ## 简介
 
@@ -51,7 +49,6 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
         instanceWrapper = createBeanInstance(beanName, mbd, args);
     }
   //暂时忽略后续...
-
 }
 ```
 
@@ -74,4 +71,42 @@ protected BeanWrapper createBeanInstance(String beanName, RootBeanDefinition mbd
 }
 ```
 
+## 使用默认的无参构造器创建对象
 
+```java
+//使用默认的无参构造方法实例化Bean对象
+protected BeanWrapper instantiateBean(final String beanName, final RootBeanDefinition mbd) {
+  try {
+    Object beanInstance;
+    final BeanFactory parent = this;
+    //获取系统的安全管理接口，JDK标准的安全管理API
+    if (System.getSecurityManager() != null) {
+      //这里是一个匿名内置类，根据实例化策略创建实例对象
+      beanInstance = AccessController.doPrivileged((PrivilegedAction<Object>) () ->
+                                                   getInstantiationStrategy().instantiate(mbd, beanName, parent),
+                                                   getAccessControlContext());
+    }
+    else {
+      //将实例化的对象封装起来
+      beanInstance = getInstantiationStrategy().instantiate(mbd, beanName, parent);
+    }
+    BeanWrapper bw = new BeanWrapperImpl(beanInstance);
+    initBeanWrapper(bw);
+    return bw;
+  }
+  catch (Throwable ex) {
+    throw new BeanCreationException(
+      mbd.getResourceDescription(), beanName, "Instantiation of bean failed", ex);
+  }
+}
+```
+
+## 自动注入构造
+
+```java
+protected BeanWrapper autowireConstructor(
+      String beanName, RootBeanDefinition mbd, @Nullable Constructor<?>[] ctors, @Nullable Object[] explicitArgs) {
+
+   return new ConstructorResolver(this).autowireConstructor(beanName, mbd, ctors, explicitArgs);
+}
+```
