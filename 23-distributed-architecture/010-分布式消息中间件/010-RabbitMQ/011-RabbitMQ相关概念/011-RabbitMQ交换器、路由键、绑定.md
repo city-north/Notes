@@ -1,8 +1,9 @@
 # 011-RabbitMQ交换器、路由键、绑定
 
-- Exchange交换器
-- RoutingKey路由键
-- Binding绑定
+- [Exchange交换器](#Exchange交换器)
+- [Exchange交换器类型](#Exchange交换器类型)
+- [RoutingKey路由键](#RoutingKey路由键)
+- [Binding绑定](#Binding绑定)
 
 ## Exchange交换器
 
@@ -12,6 +13,73 @@
 
 - 返回给生产者
 - 直接丢弃
+
+## Exchange交换器类型
+
+RabbitMQ常用的交换器类型有
+
+- fanout
+- direct
+- topic
+- headers
+
+#### fanout
+
+会把所有发送到该交换器的消息路由到所有与该交换器绑定的队列中
+
+#### direct
+
+direct类型的交换器路由规则也很简单，它会把消息路由到那些BindingKey和RoutingKey完全匹配的队列中
+
+```java
+channel.basicPublish(EXCHANGE_NAME, 
+										"worning", 
+										MessageProperties.PERSISTENT_TEXT_PLAIN, 
+										message.getBytes()
+);
+```
+
+<img src="../../../../assets/image-20201202195813078.png" alt="image-20201202195813078" style="zoom: 50%;" />
+
+例如我们发送一条消息,并在发送消息的时候设置路由键为
+
+- worning
+
+则消息会路由到Queue1和Queue2
+
+如果在发送消息的时候,设置为路由键为
+
+- info
+- debug
+
+消息值会路由到Queue2, 如果以其他的路由键发送消息
+
+#### topic
+
+direct类型的交换器路由规则是完全匹配BindingKey和RoutingKey，但是这种严格的匹配方式在很多情况下不能满足实际业务的需求。
+
+topic类型的交换器在匹配规则上进行了扩展，它与direct类型的交换器相似，也是将消息路由到BindingKey和RoutingKey相匹配的队列中，但这里的匹配规则有些不同，它约定：
+
+- RoutingKey为一个点号“.”分隔的字符串（被点号“.”分隔开的每一段独立的字符串称为一个单词）,BindingKey和RoutingKey一样也是点号“.”分隔的字符串；
+- BindingKey中可以存在两种特殊字符串“*”和“＃”，用于做模糊匹配，其中“＃”用于匹配一个单词，“＃”用于匹配多规格单词（可以是零个）。
+
+例如：
+
+<img src="../../../../assets/image-20201202201308479.png" alt="image-20201202201308479" style="zoom:50%;" />
+
+- 路由键为“com.rabbitmq.client”的消息会同时路由到Queue1和Queue2；
+- 路由键为“com.hidden.client”的消息只会路由到Queue2中；
+- 路由键为“com.hidden.demo”的消息只会路由到Queue2中；
+- 路由键为“java.rabbitmq.demo”的消息只会路由到Queue1中；
+- 路由键为“java.util.concurrent”的消息将会被丢弃或者返回给生产者（需要设置mandatory参数），因为它没有匹配任何路由键。
+
+#### headers
+
+headers类型的交换器不依赖于路由键的匹配规则来路由消息，而是根据发送的消息内容中的headers属性进行匹配。
+
+在绑定队列和交换器时制定一组键值对，当发送消息到交换器时，RabbitMQ会获取到该消息的headers（也是一个键值对的形式），对比其中的键值对是否完全匹配队列和交换器绑定时指定的键值对，如果完全匹配则消息会路由到该队列，否则不会路由到该队列。
+
+headers类型的交换器性能会很差，而且也不实用，基本上不会看到它的存在。
 
 ## RoutingKey路由键
 
@@ -51,28 +119,3 @@ channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY,
 ```
 
 - 在direct类型交换器下， RoutingKey和BindingKey要完全一致才能使用
-
-## 交换器类型
-
-RabbitMQ常用的交换器类型有
-
-- fanout
-- direct
-- topic
-- headers
-
-#### fanout
-
-会把所有发送到该交换器的消息路由到所有与该交换器绑定的队列中
-
-#### direct
-
-direct类型的交换器路由规则也很简单，它会把消息路由到那些BindingKey和RoutingKey完全匹配的队列中
-
-#### topic
-
-#### headers
-
-
-
-## 

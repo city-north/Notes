@@ -18,7 +18,7 @@
 - redoLogBuffer
 - doubleWriteBuffer
 
-## s内存刷新到磁盘的机制
+## 内存刷新到磁盘的机制
 
 - redoLogbuffer的刷新条件
 - 脏页的刷新条件
