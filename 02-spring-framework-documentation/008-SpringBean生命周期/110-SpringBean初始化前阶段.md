@@ -1,24 +1,54 @@
 # 110-SpringBean初始化前阶段
 
+## 目录
+
+[TOC]
+
 ## 一言蔽之
 
 初始化Bean之后调用的BeanPostProcessor#postProcessBeforeInitialization
 
-## 目录
+- 形参1 是 实例化的实例
+- 形参2 是 bean的名称
 
-- [一句话总结](#一句话总结)
-- [入口](#入口)
-- [BeanPostProcessor注册阶段](#BeanPostProcessor注册阶段)
-- [BeanPostProcessor执行阶段](#BeanPostProcessor执行阶段)
+返回值不为null的时候,会替换bean
 
-## 入口
+Spring给我们一个在初始化Bean之前的拦截机制,使得我们可以替换已经初始化的bean
+
+## DEMO
+
+```java
+@Override
+//调用BeanPostProcessor后置处理器实例对象初始化之前的处理方法
+public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)throws BeansException {
+  Object result = existingBean;
+  //遍历容器为所创建的Bean添加的所有BeanPostProcessor后置处理器
+  for (BeanPostProcessor beanProcessor : getBeanPostProcessors()) {
+    //调用Bean实例所有的后置处理中的初始化前处理方法，为Bean实例对象在
+    //初始化之前做一些自定义的处理操作
+    Object current = beanProcessor.postProcessBeforeInitialization(result, beanName);
+    if (current == null) {
+      return result;
+    }
+    //返回的bean直接进行替换
+    result = current;
+  }
+  return result;
+}
+```
+
+## 源码
+
+### postProcessBeforeInitialization执行过程
+
+![image-20201125221451477](../../assets/image-20201125221451477.png)
 
 代码入口就是在属性赋值之后,进行初始化操作之前进行的,入口为initializeBean
 
 ![image-20201126000429923](../../assets/image-20201126000429923.png)
 
 ```java
-//org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#initializeBean
+//org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#initializeBean 
 //初始容器创建的Bean实例对象，为其添加BeanPostProcessor后置处理器
 protected Object initializeBean(final String beanName, final Object bean, @Nullable RootBeanDefinition mbd) {
   //JDK的安全机制验证权限
@@ -65,27 +95,28 @@ protected Object initializeBean(final String beanName, final Object bean, @Nulla
 }
 ```
 
+#### 具体生效的方法
+
 ```java
+//org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#applyBeanPostProcessorsBeforeInstantiation	
 @Override
-//调用BeanPostProcessor后置处理器实例对象初始化之前的处理方法
-public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)throws BeansException {
-  Object result = existingBean;
-  //遍历容器为所创建的Bean添加的所有BeanPostProcessor后置处理器
-  for (BeanPostProcessor beanProcessor : getBeanPostProcessors()) {
-    //调用Bean实例所有的后置处理中的初始化前处理方法，为Bean实例对象在
-    //初始化之前做一些自定义的处理操作
-    Object current = beanProcessor.postProcessBeforeInitialization(result, beanName);
-    if (current == null) {
-      return result;
-    }
-    //返回的bean直接进行替换
-    result = current;
-  }
-  return result;
-}
+	public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
+			throws BeansException {
+
+		Object result = existingBean;
+		for (BeanPostProcessor processor : getBeanPostProcessors()) {
+			Object current = processor.postProcessBeforeInitialization(result, beanName);
+			if (current == null) {
+				return result;
+			}
+      //不为空则替换
+			result = current;
+		}
+		return result;
+	}
 ```
 
-## BeanPostProcessor注册阶段
+### postProcessBeforeInitialization注册阶段
 
 通常情况下,在refresh方法的第四步注册BeanPostProcesser
 
@@ -97,27 +128,5 @@ public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, S
 
 ![image-20201126154230077](../../assets/image-20201126154230077.png)
 
-## BeanPostProcessor执行阶段
 
-![image-20201125221451477](../../assets/image-20201125221451477.png)
-
-```java
-org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#applyBeanPostProcessorsBeforeInstantiation
-```
-
-```java
-@Nullable
-protected Object applyBeanPostProcessorsBeforeInstantiation(Class<?> beanClass, String beanName) {
-  for (BeanPostProcessor bp : getBeanPostProcessors()) {
-    if (bp instanceof InstantiationAwareBeanPostProcessor) {
-      InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
-      Object result = ibp.postProcessBeforeInstantiation(beanClass, beanName);
-      if (result != null) {
-        return result;
-      }
-    }
-  }
-  return null;
-}
-```
 

@@ -1,10 +1,21 @@
 # 090-SpringBean属性赋值前阶段
 
+## 目录
+
+[TOC]
+
 ## 一言蔽之
 
-SpringBean属性赋值前回调是SpringBean在创建后,属性赋值前的一种拦截机制,目的是可以
+SpringBean属性赋值前回调的执行时机是
+
+- bean在创建后
+- 属性赋值前(populate)
 
 根据
+
+```
+ PropertyValues InstantiationAwareBeanPostProcessor#postProcessProperties(PropertyValues pvs, Object bean, String beanName);
+```
 
 - PropertyValues pvs : 属性值 
 - Object bean :  实例化后的BeanWarpper
@@ -16,11 +27,49 @@ SpringBean属性赋值前回调是SpringBean在创建后,属性赋值前的一�
 
 返回后的PropertyValues 会被应用到属性赋值阶段
 
-## 目录
+## DEMO
 
-- [Bean属性值元信息](#Bean属性值元信息)
-- [Bean属性赋值前回调](#Bean属性赋值前回调)
-- [调用流程](#调用流程)
+```java
+public class SpringBeanPostPopulateDemo {
+
+    public static void main(String[] args) {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        final int i = reader.loadBeanDefinitions(new ClassPathResource("lifecycle/beforeInitilization/spring-bean-lifecycle-before-initialization.xml"));
+        System.out.printf("加载到 %s 个 bean", i);
+        beanFactory.addBeanPostProcessor(new InstantiationAwareBeanPostProcessor() {
+            @Override
+            public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) throws BeansException {
+                Stream.of(pvs).forEach(System.out::println);
+                // 对 "DemoBean" Bean 进行拦截
+                if (ObjectUtils.nullSafeEquals("demoBean", beanName) && DemoBean.class.equals(bean.getClass())) {
+                    // 假设 <property name="number" value="1" /> 配置的话，那么在 PropertyValues 就包含一个 PropertyValue(number=1)
+                    final MutablePropertyValues propertyValues;
+                    if (pvs instanceof MutablePropertyValues) {
+                        propertyValues = (MutablePropertyValues) pvs;
+                    } else {
+                        propertyValues = new MutablePropertyValues();
+                    }
+                    // 原始配置 <property name="description" value="The user holder" />
+                    propertyValues.add("description", "123");
+                    // 如果存在 "description" 属性配置的话
+                    if (propertyValues.contains("description")) {
+                        // PropertyValue value 是不可变的
+                        propertyValues.removePropertyValue("description");
+                        propertyValues.addPropertyValue("description", "The user holder V2");
+                    }
+                    return propertyValues;
+                }
+                return null;
+            }
+        });
+        System.out.println(beanFactory.getBean(DemoBean.class));
+    }
+
+}
+```
+
+
 
 ## Bean属性值元信息
 
@@ -39,7 +88,7 @@ The default implementation returns the given pvs as-is.
 
 数据从配置文件读出来,我可以在Spring设置到Bean之前进行设置
 
-## 调用流程
+## postProcessPropertyValues调用流程
 
 ![image-20201125221451477](../../assets/image-20201125221451477.png)
 
@@ -49,48 +98,11 @@ The default implementation returns the given pvs as-is.
 PropertyValues InstantiationAwareBeanPostProcessor#postProcessProperties
 ```
 
-回调完成后,返回 PropertyValues 应用于bean的实例上
-
-```java
-class MyInstantiationAwareBeanPostProcessor implements InstantiationAwareBeanPostProcessor {
-
-    // user 是跳过 Bean 属性赋值（填入）
-    // superUser 也是完全跳过 Bean 实例化（Bean 属性赋值（填入））
-    // userHolder
-
-    @Override
-    public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName)
-            throws BeansException {
-        // 对 "userHolder" Bean 进行拦截
-        if (ObjectUtils.nullSafeEquals("userHolder", beanName) && UserHolder.class.equals(bean.getClass())) {
-// 假设 <property name="number" value="1" /> 配置的话，那么在 PropertyValues 就包含一个 PropertyValue(number=1)
-            final MutablePropertyValues propertyValues;
-            if (pvs instanceof MutablePropertyValues) {
-                propertyValues = (MutablePropertyValues) pvs;
-            } else {
-                propertyValues = new MutablePropertyValues();
-            }
-            // 等价于 <property name="number" value="1" />
-            propertyValues.addPropertyValue("number", "1");
-            // 原始配置 <property name="description" value="The user holder" />
-            // 如果存在 "description" 属性配置的话
-            if (propertyValues.contains("description")) {
-                // PropertyValue value 是不可变的
-                propertyValues.removePropertyValue("description");
-                propertyValues.addPropertyValue("description", "The user holder V2");
-            }
-            return propertyValues;
-        }
-        return null;
-    }
-}
-```
-
-## 返回后生效
+### 返回后生效
 
 ![image-20201125222611607](../../assets/image-20201125222611607.png)
 
-## 应用属性值
+## 应用PropertyValues属性值源码
 
 ```java
 protected void applyPropertyValues(String beanName, BeanDefinition mbd, BeanWrapper bw, PropertyValues pvs) {

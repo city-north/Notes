@@ -9,7 +9,11 @@ package cn.eccto.study.springframework.lifecycle.destruction;
  */
 public class DemoBean {
 
+    private Integer age;
+
     private String name;
+
+    private String description;
 
     public String getName() {
         return name;
@@ -19,10 +23,30 @@ public class DemoBean {
         this.name = name;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public DemoBean setAge(Integer age) {
+        this.age = age;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public DemoBean setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "DemoBean{" +
-                "name='" + name + '\'' +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

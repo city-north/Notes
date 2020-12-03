@@ -1,6 +1,10 @@
 # 100-SpringBean初始化阶段-Aware接口回调
 
-初始化阶段
+## 目录
+
+------
+
+[TOC]
 
 ## Aware相关Bean
 

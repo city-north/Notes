@@ -1,20 +1,57 @@
 # 080-SpringBean实例化后阶段
 
+## 目录
+
+[TOC]
+
 ## 一言蔽之
+
+Spring提供了一种在实例化后监听器的机制,可在Bean
+
+- bean实例化后
+- bean初始化前
+
+执行指定逻辑
 
 实例化后置处理器的执行方法为
 
-```
-boolean InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation(Object bean, String beanName)
+```java
+boolean InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation(Object bean, String beanName);
 ```
 
 在实例化后,初始化bean之前进行调用,我们可以使用这个机制自定义我们对bean的赋值操作,进而自定义Bean
 
-## 目录
+- 返回true, 执行后续populate
+- 返回false, 不执行后续populate
 
-- [Bean属性赋值(populate)判断](#Bean属性赋值(populate)判断)
-- [典型实现](#典型实现)
-- [调用流程](#调用流程)
+## DEMO
+
+```java
+public class SpringBeanAfterInstantiationDemo {
+  public static void main(String[] args) {
+    DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+    XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+    final int i = reader.loadBeanDefinitions(new ClassPathResource("lifecycle/beforeInitilization/spring-bean-lifecycle-before-initialization.xml"));
+    beanFactory.addBeanPostProcessor(new InstantiationAwareBeanPostProcessor() {
+      @Override
+      public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
+        System.out.println("bean :" + bean);//bean :DemoBean{name='null'} 可以看出这里只是初始化了,没有populate
+        System.out.println("beanName :" + beanName);
+        if (ObjectUtils.nullSafeEquals("demoBean", beanName) && DemoBean.class.equals(bean.getClass())) {
+          DemoBean bean1 = (DemoBean) bean;
+          bean1.setName("changed bean");
+          // "user" 对象不允许属性赋值（填入）（配置元信息 -> 属性值） 这个时候就不会走populate逻辑了
+          return false;
+        }
+        //使用Spring配置对Bean进行配置
+        return true;
+      }
+    });
+    final DemoBean bean = beanFactory.getBean(DemoBean.class);
+    System.out.println(bean);
+  }
+}
+```
 
 ## Bean属性赋值(populate)判断
 
@@ -33,27 +70,9 @@ boolean InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation(Object
 - 如果返回true, 则执行Spring对Bean属性的设置
 - 如果返回false,则跳过Spring对Bean属性的设置
 
-## 典型实现
+## 源码分析
 
-```java
-class MyInstantiationAwareBeanPostProcessor implements InstantiationAwareBeanPostProcessor {
-
-  @Override
-  public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
-    if (ObjectUtils.nullSafeEquals("user", beanName) && User.class.equals(bean.getClass())) {
-      User user = (User) bean;
-      user.setId(2L);
-      user.setName("mercyblitz");
-      // "user" 对象不允许属性赋值（填入）（配置元信息 -> 属性值）
-      return false;
-    }
-    //使用Spring配置对Bean进行配置
-    return true;
-  }
-}
-```
-
-## 调用流程
+#### 调用流程
 
 ![image-20201125221451477](../../assets/image-20201125221451477.png)
 
