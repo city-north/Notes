@@ -19,7 +19,7 @@
 
 | 特性       | 说明                                                       |
 | ---------- | ---------------------------------------------------------- |
-| 公平性选择 | 支持公平锁和非公平锁,非公平锁的吞吐量由于公平锁            |
+| 公平性选择 | 支持公平锁和非公平锁,非公平锁的吞吐量优于公平锁            |
 | 重入       | 支持重入,读锁支持重入获取读锁;写锁支持获取读锁和写锁       |
 | 锁降级     | 循环获取写锁,获取读锁再释放写锁的次序,写锁能够降级成为读锁 |
 
@@ -179,15 +179,15 @@ final boolean tryWriteLock() {
 - 如果当前线层没有持有该锁则调用该方法会抛出`Illega!MonitorStateException`
 
 ```java
-    public final boolean release(int arg) {
-        if (tryRelease(arg)) {
-            Node h = head;
-            if (h != null && h.waitStatus != 0)
-                unparkSuccessor(h);//唤醒后续节点
-            return true;
-        }
-        return false;
-    }
+public final boolean release(int arg) {
+  if (tryRelease(arg)) {
+    Node h = head;
+    if (h != null && h.waitStatus != 0)
+      unparkSuccessor(h);//唤醒后续节点
+    return true;
+  }
+  return false;
+}
 
 protected final boolean tryRelease(int releases) {
  //是否是当前线程持有的锁
