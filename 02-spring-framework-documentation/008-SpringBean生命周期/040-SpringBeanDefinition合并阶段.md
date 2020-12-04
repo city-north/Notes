@@ -1,5 +1,11 @@
 # 040-SpringBeanDefinition合并阶段
 
+## 目录
+
+---
+
+[TOC]
+
 ## 先入为主
 
 - 父子BeanDefinition合并
@@ -7,12 +13,6 @@
   - 层次性BeanFactory查找
 
 SpringBean在实例化之前的时候,会进行合并
-
-## 目录
-
-- [核心解析思想](#核心解析思想)
-
-- [ConfigurableBeanFactory提供了合并功能](#ConfigurableBeanFactory提供了合并功能)
 
 ## 继承结构
 

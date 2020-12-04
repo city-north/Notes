@@ -1,8 +1,10 @@
 # 050-RabbitMQ的路由方式简介
 
-- [Direct直连](#Direct直连)
-- [Topic主题](#Topic主题)
-- [Fanout广播](#Fanout广播)
+## 目录
+
+---
+
+[TOC]
 
 ## Direct直连
 
@@ -34,3 +36,4 @@ channel.basicPulish("MY_FANOUT_EXCHANGE","","msg4");
 三个队列都会受到msg4
 
 广播类型的消息适用于一些通用的业务消息,比如产品系统产品数据发生变化时,所有系统都会用到,就可以创建一个广播类型的交换机
+

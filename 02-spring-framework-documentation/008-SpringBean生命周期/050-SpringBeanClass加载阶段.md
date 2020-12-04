@@ -2,10 +2,9 @@
 
 ## 目录
 
-- [ClassLoader类加载](../../07-jvm/07-虚拟机类加载机制/README.md) 
-- [Java安全机制](../../04-java/13-Java安全机制) 
-- [ConfiguableBeanFactory临时ClassLoader]()
-- [SpringBean的Class加载过程](#SpringBean的Class加载过程)
+---
+
+[TOC]
 
 ## 简介
 

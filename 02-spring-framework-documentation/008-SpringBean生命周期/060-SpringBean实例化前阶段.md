@@ -1,5 +1,11 @@
 # 060-SpringBean实例化前阶段
 
+## 目录
+
+---
+
+[TOC]
+
 ## 一言蔽之
 
 实例化前阶段是一个非主流阶段，它主要通过后置处理器InstantiationAwareBeanPostProcessor
@@ -9,14 +15,6 @@
 ```java
 Object InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation
 ```
-
-## 目录
-
-- [简介](#简介)
-- [先入为主核心类](#先入为主核心类)
-- [ConfigurableListableBeanFactory如何提供[费延迟初始化]单例的初始化操作](#ConfigurableListableBeanFactory如何提供[费延迟初始化]单例的初始化操作)
-- [InstantiationAwareBeanPostProcessor注册阶段](#InstantiationAwareBeanPostProcessor注册阶段)
-- [InstantiationAwareBeanPostProcessor执行阶段](#InstantiationAwareBeanPostProcessor执行阶段)
 
 ## 简介
 

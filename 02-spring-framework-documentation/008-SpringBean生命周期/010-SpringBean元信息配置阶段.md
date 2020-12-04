@@ -1,8 +1,10 @@
 # 010-SpringBean元信息配置阶段
 
- [003-SpringBean的定义-BeanDefiniation](../003-SpringBean的定义-BeanDefiniation/README.md) 
+## 目录
 
-- BeanDefinition配置
+---
+
+[TOC]
 
 ## BeanDefinition配置
 

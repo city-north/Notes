@@ -1,7 +1,12 @@
 # 030-Spring中配置RabbitMQ.md
 
-- [测试用例](#测试用例)
-- [applicationContext.xml](#applicationContext.xml)
+## 目录
+
+------
+
+[TOC]
+
+## 图示
 
 ![image-20201117224659189](../../../../../assets/image-20201117224659189.png)
 
@@ -17,8 +22,6 @@
 | MessageListenerContainer        | MessageListenerContainer可以理解为MessageListener的容器,一个Container只有一个listener,但是可以生成多个线程相同的MessageListener同时消费消息<br />Container可以管理Listener的声明周期,可以用于对消费者进行配置<br />例如:<br />- 消息动态移除队列<br />- 对消费者进行设置,例如ConsumerTag,Arguments,并发,消费者数量,消息确认模式等等<br />SpringBoot2.0里新增了一个DirectMessageListenerContainer |
 | MessageListenerContainerFactory | 可以在消费者上指定,当我们需要监听多个RabbitMQ的服务的时候,指定不同的MessageListenerContainerFactory |
 | MessageConvertor                | 在调用RabbitTemplate的convertAndSend()方法时发送消息时,会使用MessageConvertor 进行消息的序列化,<br />默认使用的是SimplteMessageConvertor<br />在某些情况下,我们需要选择其他高效的序列化工具,可以自定义一个MessageConvertor |
-
-
 
 ## 测试用例
 

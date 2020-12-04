@@ -1,8 +1,16 @@
 # 040-RabbitMQ的工作模型简介
 
+## 目录
+
+-------------------
+
+[TOC]
+
+## 图示
+
 由于RabbitMQ实现了AMQP协议,所以RabbitMQ的工作模型也是基于AMQP的
 
-![image-20201117201519113](../../../../../assets/image-20201117201519113.png)
+<img src="../../../../../assets/image-20201117201519113.png" alt="image-20201117201519113" style="zoom:67%;" />
 
 ## 核心组件
 
@@ -17,8 +25,6 @@
 ### Broker
 
 RabbitMQ的默认端口是5672, 这台RabbitMQ的服务器我们就叫做Broker主机
-
-
 
 ### Connection
 
@@ -74,7 +80,7 @@ c:\Users\用户名\AppData\Roaming\db\rabbit@用户名-mesia
 
 在生产环境中,一个消费者只处理一个队列的信息,如果需要提高处理消息的能力,可以增加多个消费者,这个时候,消息会在多个消费者之间轮询
 
-### Exchange
+#### Exchange
 
 消息路由组件
 
@@ -101,3 +107,4 @@ Exchange和队列是多对多的绑定关系,也就是说一个交换机的消�
 不同的业务应该有它们自己的vhost,然后再创建专属的用户,给用户分配对应的vhost权限,给超级管理员分配所有的vhost权限
 
 RabbitMQ的默认Vhost是"/"
+
