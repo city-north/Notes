@@ -2,14 +2,11 @@
 
 ## 目录
 
-- [定义](#定义)
-- [理解](#理解)
-- [注意事项](#注意事项)
-- [使用场景](#使用场景)
+------
 
-- [使用原型模式解决实际的问题](#使用原型模式解决实际的问题)
+[TOC]
 
-## 定义
+## 原型模式定义
 
 > 使用原型实例指定待创建对象的类型并且通过复制这个原型来创建新的对象
 
@@ -222,13 +219,11 @@ Java 之所以提供这个接口时因为在运行时通知 Java 虚拟机是否
 
 - (可选) 如果对象 o 的 equals 定义恰当, 则 o.clone().equals(o) 应当成立
 
-## 实例
-
-#### 浅拷贝
+## 浅拷贝
 
 super.clone() 方法直接从堆内存中以二进制流的方式进行复制,重新分配一个内存块,因此其实效率很高,由于 super.clone() 方法基于内存复制,因此不会调用对象的**构造函数,也就是不需要经历初始化过程**
 
-```
+```java
 @Data
 public class ConcretePrototype implements Cloneable {
 
@@ -254,9 +249,9 @@ public class ConcretePrototype implements Cloneable {
 
 即 **拷贝前对象.hobbies = 拷贝后对象.hobbies**
 
-#### 深拷贝
+## 深拷贝
 
-使用序列化技术实现深克隆,
+使用序列化技术实现深克隆,Spring中的BeanDefiniation就是深拷贝
 
 ```java
 @Data

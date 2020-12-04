@@ -1,6 +1,16 @@
-### conditionObj
+# conditionObj
 
->  [050-Condition 接口.md](050-Condition 接口.md) 
+## 目录
+
+------
+
+[TOC]
+
+## 参考
+
+[050-Condition 接口.md](050-Condition 接口.md) 
+
+## AQS中的Condition
 
 Object 方法里 有 noifty 和 wait 方法， 是配合 synchronized 内置锁实现线程间同步的基础设置
 
