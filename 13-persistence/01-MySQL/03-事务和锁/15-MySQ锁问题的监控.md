@@ -26,7 +26,6 @@ show engine innodb status
 
 ```
 select * from innodb_trx
-
 ```
 
 

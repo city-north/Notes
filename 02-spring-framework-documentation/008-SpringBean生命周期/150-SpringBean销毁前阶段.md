@@ -1,5 +1,11 @@
 # 150-SpringBean销毁前阶段
 
+## 目录
+
+------
+
+[TOC]
+
 ## 一言蔽之
 
 SpringBean的生命周期当容器调动
@@ -18,12 +24,9 @@ beanFactory.destroySingleton("demoBean");
 
 - [DisposableBeanAdapter可销毁Bean适配器](#DisposableBeanAdapter可销毁Bean适配器)
 
-## 销毁阶段生命周期
+- 销毁DestructionAwareBeanPostProcessor触发阶段)
 
-- [销毁DestructionAwareBeanPostProcessor注册阶段](#销毁DestructionAwareBeanPostProcessor注册阶段)
-- [销毁DestructionAwareBeanPostProcessor触发阶段](#销毁DestructionAwareBeanPostProcessor触发阶段)
-
-### 销毁DestructionAwareBeanPostProcessor注册阶段
+## DestructionAwareBeanPostProcessor注册阶段
 
 ```java
 public static void main(String[] args) {
@@ -44,6 +47,8 @@ public static void main(String[] args) {
 ```
 
 这里没什么特别的,就是设置进了BeanFactory 里的一个数组里beanPostProcessors
+
+### 堆栈信息
 
 ```
 registerDisposableBeanIfNecessary:1698, AbstractBeanFactory (org.springframework.beans.factory.support)
@@ -67,7 +72,6 @@ registerDisposableBeanIfNecessary
 //org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#doCreateBean
 protected Object doCreateBean(final String beanName, final RootBeanDefinition mbd, final @Nullable Object[] args)
   throws BeanCreationException {
-
   //忽略创建过程
 
   // Register bean as disposable.
@@ -114,9 +118,7 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
 1. 我们自定义的销毁回调
 2. 基于注解驱动的CommonAnnotationBeanPostProcessor,用于解析@PostDestory
 
-
-
-#### DisposableBeanAdapter可销毁Bean适配器
+### DisposableBeanAdapter可销毁Bean适配器
 
 ![image-20201127162456314](../../assets/image-20201127162456314.png)
 
@@ -170,7 +172,7 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
 
 ```
 
-### 销毁DestructionAwareBeanPostProcessor触发阶段
+## DestructionAwareBeanPostProcessor触发阶段
 
 ```java
 postProcessBeforeDestruction:17, MyDestructionAwareBeanPostProcessor (cn.eccto.study.springframework.lifecycle.destruction)

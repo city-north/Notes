@@ -1,70 +1,71 @@
 # 120-SpringBean初始化阶段
 
+## 目录
+
+------
+
+[TOC]
+
 ## 一言蔽之
 
 初始化阶段主要包括三种初始化方式
 
-- @PostConstruct(依赖注解驱动)
-- 实现InitializingBean接口的afterPropertiesSet()方法
-- 自定义初始化方法
+1. @PostConstruct(依赖注解驱动)-**CommonAnnotationBeanPostProcessor方式**
+2. 实现InitializingBean接口的afterPropertiesSet()方法-**固定流程**
+3. 自定义初始化方法-固定流程
 
-## 目录
-
-- [简介](#简介)
-- [实现实例](#二级目录)
-- [@PostConstruct(依赖注解驱动)](#@PostConstruct(依赖注解驱动))
-- [实现InitializingBean接口的afterPropertiesSet()方法](#实现InitializingBean接口的afterPropertiesSet()方法)
-- [自定义初始化方法](#自定义初始化方法)
-
-## 简介
-
-初始化阶段主要涉及到三个步骤,回调的顺序:
-
-- @PostConstruct(依赖注解驱动)
-- 实现InitializingBean接口的afterPropertiesSet()方法
-- 自定义初始化方法
-
-## 实现实例
+## DEMO
 
 ```java
-public class UserHolder implements InitializingBean {
-    private final User user;
-    public UserHolder(User user) {
-        this.user = user;
-    }
-    /**
-     * 依赖于注解驱动
-     * 当前场景：BeanFactory
-     */
-    @PostConstruct
-    public void initPostConstruct() {
-        // postProcessBeforeInitialization V3 -> initPostConstruct V4
-        this.description = "The user holder V4";
-        System.out.println("initPostConstruct() = " + description);
-    }
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        // initPostConstruct V4 -> afterPropertiesSet V5
-        this.description = "The user holder V5";
-        System.out.println("afterPropertiesSet() = " + description);
-    }
-    /**
-     * 自定义初始化方法
-     */
-    public void init() {
-        // initPostConstruct V5 -> afterPropertiesSet V6
-        this.description = "The user holder V6";
-        System.out.println("init() = " + description);
+public class SpringBeanInitializationDemo {
+    public static void main(String[] args) {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        final int i = reader.loadBeanDefinitions(new ClassPathResource("lifecycle/beforeInitilization/spring-bean-lifecycle-initalization.xml"));
+        System.out.printf("加载bean个数为 %s", i);
+        System.out.println();
+        //提供@PostConstruct支持
+        beanFactory.addBeanPostProcessor(new CommonAnnotationBeanPostProcessor());
+        final BeanInitializationDemo bean = beanFactory.getBean(BeanInitializationDemo.class);
+        System.out.println("bean:" + bean);
+//       输出1 ---testPostConstruct---
+//       输出2 ---afterPropertiesSet---
+//       输出3 ---customInitMethod---
     }
 }
 
+```
+
+BeanInitializationDemo定义
+
+```java
+public class BeanInitializationDemo implements InitializingBean {
+    private String name;
+
+  	//使用PostConstruct支持进行初始化
+    @PostConstruct
+    public void testPostConstruct() {
+        System.out.println("---testPostConstruct---");
+    }
+	
+  	//使用InitializingBean回调初始化
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("---afterPropertiesSet---");
+    }
+  
+  	//使用xml中配置的init 方法进行初始化
+    public void customInitMethod() {
+        System.out.println("---customInitMethod---");
+    }
+}
 ```
 
 ## @PostConstruct(依赖注解驱动)
 
 执行原理,通过CommonAnnotationBeanPostProcessor后置处理器完成 
 
-[160-Java通用注解注入原理.md](../005-SpringIoC依赖注入/160-Java通用注解注入原理.md) 
+ [160-Java通用注解注入原理-CommonAnnotationBeanPostProcessor.md](../005-SpringIoC依赖注入/160-Java通用注解注入原理-CommonAnnotationBeanPostProcessor.md) 
 
 ```java
 //org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#initializeBean(String, Object, RootBeanDefinition)
@@ -148,6 +149,28 @@ public Object postProcessBeforeInitialization(Object bean, String beanName) thro
 
 ## 实现InitializingBean接口的afterPropertiesSet()方法
 
+堆栈信息
+
+```
+afterPropertiesSet:47, BeanInitializationDemo (cn.eccto.study.springframework.lifecycle.demoBean)
+invokeInitMethods:1804, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+initializeBean:1741, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+doCreateBean:576, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+createBean:498, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+lambda$doGetBean$0:320, AbstractBeanFactory (org.springframework.beans.factory.support)
+getObject:-1, 1346343363 (org.springframework.beans.factory.support.AbstractBeanFactory$$Lambda$6)
+getSingleton:222, DefaultSingletonBeanRegistry (org.springframework.beans.factory.support)
+doGetBean:318, AbstractBeanFactory (org.springframework.beans.factory.support)
+getBean:224, AbstractBeanFactory (org.springframework.beans.factory.support)
+resolveNamedBean:1114, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+resolveBean:407, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+getBean:341, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+getBean:335, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+main:23, SpringBeanInitializationDemo (cn.eccto.study.springframework.lifecycle)
+```
+
+AbstractAutowireCapableBeanFactory#invokeInitMethods
+
 ```java
 protected void invokeInitMethods(String beanName, final Object bean, @Nullable RootBeanDefinition mbd)throws Throwable {
   //判断是否有InitializingBean 接口
@@ -171,9 +194,32 @@ protected void invokeInitMethods(String beanName, final Object bean, @Nullable R
 }
 ```
 
-
-
 ## 自定义初始化方法
+
+```java
+customInitMethod:25, BeanInitializationDemo (cn.eccto.study.springframework.lifecycle.demoBean)
+invoke0:-1, NativeMethodAccessorImpl (sun.reflect)
+invoke:62, NativeMethodAccessorImpl (sun.reflect)
+invoke:43, DelegatingMethodAccessorImpl (sun.reflect)
+invoke:498, Method (java.lang.reflect)
+invokeCustomInitMethod:1870, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+invokeInitMethods:1813, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+initializeBean:1741, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+doCreateBean:576, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+createBean:498, AbstractAutowireCapableBeanFactory (org.springframework.beans.factory.support)
+lambda$doGetBean$0:320, AbstractBeanFactory (org.springframework.beans.factory.support)
+getObject:-1, 1346343363 (org.springframework.beans.factory.support.AbstractBeanFactory$$Lambda$6)
+getSingleton:222, DefaultSingletonBeanRegistry (org.springframework.beans.factory.support)
+doGetBean:318, AbstractBeanFactory (org.springframework.beans.factory.support)
+getBean:224, AbstractBeanFactory (org.springframework.beans.factory.support)
+resolveNamedBean:1114, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+resolveBean:407, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+getBean:341, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+getBean:335, DefaultListableBeanFactory (org.springframework.beans.factory.support)
+main:23, SpringBeanInitializationDemo (cn.eccto.study.springframework.lifecycle)
+```
+
+第三步执行的执行自定义初始化方法
 
 ```java
 //org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#invokeCustomInitMethod

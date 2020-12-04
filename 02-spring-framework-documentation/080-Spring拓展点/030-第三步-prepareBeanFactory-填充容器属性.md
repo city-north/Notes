@@ -1,8 +1,18 @@
 # 拓展点-prepareBeanFactory
 
+## 目录
+
+------
+
+[TOC]
+
+## 流程图
+
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
-#### refresh方法的第三步
+
+
+## refresh方法的第三步
 
 ```java
 //3、为BeanFactory配置容器特性，例如类加载器、事件处理器等

@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="demoBean" class="cn.eccto.study.springframework.lifecycle.demoBean.BeanInitializationDemo">
+    <bean id="demoBean" class="cn.eccto.study.springframework.lifecycle.demoBean.BeanInitializationDemo" init-method="customInitMethod">
         <property name="name" value="ericchen"/>
     </bean>
 </beans>

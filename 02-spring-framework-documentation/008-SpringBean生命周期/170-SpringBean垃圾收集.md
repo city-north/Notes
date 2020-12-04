@@ -4,3 +4,4 @@
   - 关闭Spring容器(应用上下文)
   - 执行GC
   - SpringBean覆盖的finalize()方法被调用
+

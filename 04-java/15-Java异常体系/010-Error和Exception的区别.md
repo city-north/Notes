@@ -2,11 +2,9 @@
 
 ## 目录
 
-- [简介](#简介)
+------
 
-- [Exception](#Exception)
-
-- [Error](#Error)
+[TOC]
 
 
 ## 简介
@@ -25,13 +23,13 @@ Exception 是程序正常运行中，可以预料的意外情况，可能并且�
 
 Error 是指在正常情况下，不大可能出现的情况，绝大部分的 Error 都会导致程序（比如 JVM 自身）处于非正常的、不可恢复状态。既然是非正常情况，所以不便于也不需要捕获，常见的比如 OutOfMemoryError 之类，都是 Error 的子类。
 
-## NoClassDefFoundError和 ClassNotFoundException 有什么区别
+## NoClassDefFoundError和ClassNotFoundException 有什么区别
 
 #### 类型
 
-- ClassNotFoundException继承自Exception,属于java异常类。
+- ClassNotFoundException继承自Exception,属于Java异常类。
 
-- NoClassDefFoundError继承自Error,在java中Error一般属于不可恢复的系统错误，有JVM抛出，并且不能被开发者处理。
+- NoClassDefFoundError继承自Error,在Java中Error一般属于不可恢复的系统错误，有JVM抛出，并且不能被开发者处理。
 
 ### 产生的原因
 

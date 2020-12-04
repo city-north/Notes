@@ -1,45 +1,43 @@
 # 140-SpringBean初始化完成阶段.md
 
+## 目录
+
+------
+
+[TOC]
+
 ## 一言蔽之
 
 初始化完成阶段主要是调用: SmartInitializingSingleton#afterSingletonsInstantiated的回调,这个回调确保了回调时,是一个完整初始化的Bean
 
-## 目录
-
-- [SmartInitializingSingleton调用时机](#SmartInitializingSingleton调用时机)
-  - [手动API代码调用时机](#手动API代码调用时机)
-  - [AbstractApplicationContext中调用的时机](#AbstractApplicationContext中调用的时机)
-
-- [为什么有了BeanPostProcessor,还要有SmartInitializingSingleton](#为什么有了BeanPostProcessor,还要有SmartInitializingSingleton)
-
-## 入口
-
-Spring4.1+ : SmartInitializingSingleton#afterSingletonsInstantiated
-
-## 使用
+## DEMO
 
 ```java
 public class UserHolder implements SmartInitializingSingleton {
-
     private final User user;
     /**
      * 执行回调
      */
     @Override
     public void afterSingletonsInstantiated() {
-        // postProcessAfterInitialization V7 -> afterSingletonsInstantiated V8
+        // 调用这个方法时,确保bean已经是一个完全初始化的bean
         this.description = "The user holder V8";
         System.out.println("afterSingletonsInstantiated() = " + description);
     }
 }
-
 ```
 
+## SmartInitializingSingleton注册阶段
 
+没有注册阶段,硬编码方式固话了调用逻辑
 
-## SmartInitializingSingleton调用时机
+## SmartInitializingSingleton执行阶段
 
-#### 手动API代码调用时机
+### 代码入口
+
+Spring4.1+ : SmartInitializingSingleton#afterSingletonsInstantiated
+
+### 手动API代码调用时机
 
 在我们自己编程测试时,我们需要手动去触发这个时机
 
@@ -57,15 +55,13 @@ public static void main(String[] args) {
   // SmartInitializingSingleton 通常在 Spring ApplicationContext 场景使用
   // preInstantiateSingletons 将已注册的 BeanDefinition 初始化成 Spring Bean
   
-  
-        //----------------------本章关注点----初始化前阶段-----------------------------------------//
+        //----------------------本章关注点---------------------------------------------//
  				 beanFactory.preInstantiateSingletons();
-          //----------------------本章关注点----初始化前阶段-----------------------------------------//
-
+          //----------------------本章关注点---------------------------------------------//
 }
 ```
 
-#### AbstractApplicationContext中调用的时机
+### AbstractApplicationContext中调用的时机
 
 ApplicationContext中,调用的时机是org.springframework.context.support.AbstractApplicationContext#refresh
 
@@ -82,16 +78,16 @@ public void refresh() throws BeansException, IllegalStateException {
       
       // Instantiate all remaining (non-lazy-init) singletons.
       //11、初始化所有剩余的单例Bean
-              //----------------------本章关注点----初始化前阶段-----------------------------------------//
+              //----------------------本章关注点---------------------------------------------//
 			      finishBeanFactoryInitialization(beanFactory);
-          //----------------------本章关注点----初始化前阶段-----------------------------------------//
+          //----------------------本章关注点---------------------------------------------//
     }
 
 	//忽略
 }
 ```
 
-
+在refresh的第十一步时,进行调用
 
 ```java
 	//对配置了lazy-init属性的Bean进行预实例化处理
@@ -128,18 +124,14 @@ public void refresh() throws BeansException, IllegalStateException {
 
 		// Instantiate all remaining (non-lazy-init) singletons.
 		//对配置了lazy-init属性的单态模式Bean进行预实例化处理
-                  //----------------------本章关注点----初始化前阶段-----------------------------------------//
+                  //----------------------本章关注点---------------------------------------------//
 						beanFactory.preInstantiateSingletons();
-              //----------------------本章关注点----初始化前阶段-----------------------------------------//
+              //----------------------本章关注点---------------------------------------------//
 
 	}
 ```
 
-
-
-
-
-
+#### 对配置lazy-init属性单态Bean的预实例化
 
 ```java
 //org.springframework.beans.factory.support.DefaultListableBeanFactory#preInstantiateSingletons
@@ -211,8 +203,6 @@ public void preInstantiateSingletons() throws BeansException {
   }
 }
 ```
-
-
 
 ## 为什么有了BeanPostProcessor,还要有SmartInitializingSingleton
 

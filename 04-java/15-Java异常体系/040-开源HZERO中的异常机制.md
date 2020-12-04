@@ -2,13 +2,9 @@
 
 ## 目录
 
-- [简介](#简介)
+------
 
-- [继承结构](#继承结构)
-
-- [全局异常处理](#全局异常处理)
-
-- [国际化文案机制](#国际化文案)
+[TOC]
 
 ## 简介
 
@@ -78,3 +74,4 @@ public class BaseExceptionHandler {
 - 使用MessageAccessor获取国际化文案
 - 构建统一的异常包装类ExceptionResponse
 - 返回统一的ResponseEntity,将ExceptionResponse输出到前端
+
