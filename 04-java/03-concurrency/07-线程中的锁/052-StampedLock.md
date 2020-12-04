@@ -1,5 +1,11 @@
 # StampedLock
 
+## 目录
+
+------
+
+[TOC]
+
 ## 是什么
 
 StampedLock 是并发包 里面 JDK8 版本新增的一个锁, 这个锁有三种读写控制
@@ -132,8 +138,6 @@ public class StampedLockExample {
     }
 
 ```
-
-
 
 ## StampedLock 三种锁转换
 
@@ -294,7 +298,7 @@ if (!validate(stamp)) {
 }
 ```
 
-## 三. StampedLock总结
+## StampedLock总结
 
 1. 所有获取锁的方法，都会返回一个stamp戳记，stamp为0表示获取失败，其余均表示成功。
 2. 所有释放锁的方法，都需要一个stamp戳记，这个stamp必须和成功获取锁时返回的stamp一样。
