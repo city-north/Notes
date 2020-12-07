@@ -1,11 +1,8 @@
-# MySQL 中的事务
+# MySQL中的事务
 
-## 目录
+---
 
--  [什么是事务](../../../08-transaction/01-database-transaction/README.md) 
-- [事务的隔离级别会出现的问题](#事务的隔离级别会出现的问题)
-- [InnoDB是如何实现事务的](#InnoDB是如何实现事务的)
-- [InnodDB隔离级别的实现](#InnodDB隔离级别的实现)
+[TOC]
 
 ----
 
@@ -15,7 +12,7 @@
 
 我们先来看一下我们的操作环境。版本(5.7)，存储引擎(InnnoDB)，事务隔离 级别(RR)。
 
-```
+```sql
 select version(); -- 版本(5.7)
 show variables like '%engine%'; -- 存储引擎(InnnoDB)
 show global variables like "tx_isolation"; --事务隔离 级别(RR)。
@@ -33,11 +30,11 @@ show variables like 'autocommit';
 
 否则，如果我们把 autocommit 设置成 false/off，那么数据库的事务就需要我们手 动地去开启和手动地去结束。
 
-#### 手动开启事务
+### 手动开启事务
 
 有几种方式，一种是用 begin; 一种是用 start transaction
 
-#### 结束事务
+### 结束事务
 
 - commit;
 
