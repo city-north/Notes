@@ -1,13 +1,8 @@
 # Synchronzied的实现原理
 
-## 目录
+---
 
-- [Synchronzied是什么](#Synchronzied是什么)
-- [Synchronzied的内存语义](#Synchronzied的内存语义)
-- [Java对象的锁](#Java对象的锁)
-- [monitorenter和monitorexit指令](#monitorenter和monitorexit指令)
-- [锁的优缺点对比](#锁的优缺点对比)
-- [轻量级锁加解锁过程详解](#轻量级锁加解锁过程详解)
+[TOC]
 
 ## Synchronzied是什么
 

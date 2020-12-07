@@ -1,6 +1,10 @@
 # volatile的定义
 
-原理:
+---
+
+[TOC]
+
+## 原理
 
  [04-volatile内存语义.md](../05-Java内存模型/04-volatile内存语义.md) 
 
