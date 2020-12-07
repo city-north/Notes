@@ -1,5 +1,10 @@
 # 022-声明队列-queueDeclare
 
+---
+[TOC]
+
+## 声明队列
+
 queueDeclare相对于exchangeDeclare方法而言，重载方法的个数就少很多，它只有两个重载方法：
 
 ```java
@@ -19,7 +24,7 @@ Queue.DeclareOk queueDeclare(String queue,boolean durable,boolean exclusive,bool
 | 4    | autoDelete | 设置是否自动删除。为true则设置队列为自动删除。自动删除的前提是：至少有一个消费者连接到这个队列，之后所有与这个队列连接的消费者都断开时，才会自动删除。不能把这个参数错误地理解为：“当连接到此队列的所有客户端断开时，这个队列自动删除”，因为生产者客户端创建这个队列，或者没有消费者客户端与这个队列连接时，都不会自动删除这个队列。 |
 | 5    | arguments  | 设置队列的其他一些参数，如x-message-ttl、x-expires、x-max-length、x-max-length-bytes、x-dead-letter-exchange、x-dead-letter-routing-key、x-max-priority等。 |
 
-#### 注意要点
+## 注意要点
 
 生产者和消费者都能够使用queueDeclare来声明一个队列，但是如果消费者在同一个信道上订阅了另一个队列，就无法再声明队列了。必须先取消订阅，然后将信道置为“传输”模式，之后才能声明队列。
 

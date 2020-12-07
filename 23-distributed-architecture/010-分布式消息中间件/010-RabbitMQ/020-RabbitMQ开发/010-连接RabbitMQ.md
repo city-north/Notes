@@ -1,5 +1,8 @@
 # 010-连接RabbitMQ
 
+---
+[TOC]
+
 ## 连接RabbitMQ的典型程序
 
 ```java

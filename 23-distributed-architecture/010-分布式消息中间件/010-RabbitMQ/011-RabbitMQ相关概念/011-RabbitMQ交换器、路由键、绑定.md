@@ -1,9 +1,8 @@
 # 011-RabbitMQ交换器、路由键、绑定
 
-- [Exchange交换器](#Exchange交换器)
-- [Exchange交换器类型](#Exchange交换器类型)
-- [RoutingKey路由键](#RoutingKey路由键)
-- [Binding绑定](#Binding绑定)
+------
+
+[TOC]
 
 ## Exchange交换器
 

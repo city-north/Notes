@@ -1,17 +1,8 @@
 #  031-影响可靠性的第一阶段-生产者发送到Broker
 
-## 目录
+---
 
-- [图示](#图示)
-
-- [生产者发送消息到Broker会出现什么问题](#生产者发送消息到Broker会出现什么问题)
-  - [代码实例-Java-api](#代码实例-Java-api)
-  - [事务模式的缺点](#事务模式的缺点)
-
-- [服务端确认-确认(Confirm)模式](#服务端确认-确认(Confirm)模式)
-  - [普通的确认模式](#普通的确认模式)
-  - [批量确认模式](#批量确认模式)
-  - [异步确认模式](#异步确认模式)
+[TOC]
 
 ## 图示
 
@@ -116,7 +107,7 @@ rabbitTemplate.setChannelTransacted(true);
 
 一旦消息被投递到交换机之后(跟是否路由到队列没有关系),RabbitMQ就会发送一个确认(Basic.Ack)给生产者,也就是调用
 
-```
+```java
 channel.waitForConfirms(); //返回true则表示确认了
 ```
 
@@ -298,7 +289,7 @@ public class AsyncConfirmProducer {
 
 ```
 
-SpringBoot
+#### SpringBoot
 
 Comfirm模式是在Channel上开启的,RabbitTemplate对Channel进行了封装
 
