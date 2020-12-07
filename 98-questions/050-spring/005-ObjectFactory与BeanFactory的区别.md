@@ -9,8 +9,6 @@ ObjectFactory与BeanFactory均提供依赖查找的能力
 org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean.TargetBeanObjectFactory
 ```
 
-
-
 ![image-20201102212015503](../../assets/image-20201102212015503.png)
 
 

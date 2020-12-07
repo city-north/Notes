@@ -1,6 +1,10 @@
 # 对象工厂（objectFactory）
 
-## 是什么
+---
+
+[TOC]
+
+## objectFactory是什么
 
 当我们把数据库返回的结果集转化为实例对象的时候,需要创建对象的实例,由于我们不知道需要处理的类型是什么,有哪些属性,所以不能用 new 的方式去创建,在 Mybatis里面, 提供了一个工厂类的接口,`ObjectFactory`专门用来创建对象的实例
 
@@ -11,7 +15,7 @@
 - setProperties 主要是设置的参数,一般是 Configuration对象的参数
 - create 创建对象,调用无参的构造函数
 - create 调用有参数的构造函数
-- isCoolection 是否是集合
+- isCollection 是否是集合
 
 ## 详细介绍
 

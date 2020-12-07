@@ -1,9 +1,8 @@
 # 单一类型依赖查找-BeanFactory
 
-- [单一类型依赖查找接口](#单一类型依赖查找接口)
-- [根据Bean名称查找](#根据Bean名称查找)
-- [根据Bean类型查找](#根据Bean类型查找)
-- [根据名称和类型查找](#根据名称和类型查找)
+---
+
+[TOC]
 
 ## BeanFactory设计思想
 
@@ -49,10 +48,6 @@ BeanFactory#getType(String)
 //获取别名
 BeanFactory#getAliases(String)
 ```
-
-
-
-
 
 ## 单一类型依赖查找接口
 

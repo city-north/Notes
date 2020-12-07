@@ -1,5 +1,8 @@
 # 040-Request-Bean作用域
 
+---
+[TOC]
+
 在一次 HTTP 请求中,每个 Bean 定义对应一个实例,该作用域进在基于 Web 的 Sprng上下文(例如 SpringMVC)中才有效
 
 注解:

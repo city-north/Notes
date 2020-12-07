@@ -1,4 +1,10 @@
-# raft 协议
+# Raft协议
+
+---
+
+[TOC]
+
+## 参考
 
 > https://mp.weixin.qq.com/s/i6ULr-aW7MOxQotCQpqBCQ
 >
@@ -27,7 +33,7 @@ raft 主要是用来解决数据库多节点之间的一致性问题
 - 首先Master挂掉后要需要判断该提升哪个Slave为新的Master。
 - 在多态集群下还容易遇到一个问题，就是在网络情况下以前的Master出现网络隔离，还在继续对外提供服务，而这时新的集群和Master已经形成了，新的数据被写入到新的Master，可是读取的却是旧的数据，这就是在分布式一致性领域所面临的线性一致性问题。
 
-## Consensus Algorithm 一致性算法
+## ConsensusAlgorithm一致性算法
 
 大多数的一致性算法其实都是采用了**Replicated State Machine**的模型。对于这个模型你可以认为数据是被放在状态机上，用户操作集群时 首先需要写入log，然后通过一致性算法将log复制到其他机器，一旦确定其他机器都接收到log后就会认为该log被提交了，最后其他节点会依次将log存放到状态机。
 
@@ -51,7 +57,7 @@ Raft是不依赖系统的时间，它是将时间分成一个个Term，每个Ter
 
 结合Raft Term就可以进行Raft的选举。首先当系统启动后所有的节点都会进入Follow状态，Follow没有接收到任何请求的话，过一段时间就会进入Candidate状态，然后询问其他节点是否投票，如果其他节点反馈已经有新的Leader，这个Candidate就会变成Follow，而当Candidate接收到大多数的投票后就会变成Leader，之后会立即将一个log发送给其他节点开始续租Leader的时间租约。
 
-## Leader election : Leader 选举
+## Leader election: Leader选举
 
 选举超时时间是 follower 变成一个 Candidate 前等待的时间 ,一般是 150ms 到 300ms 之间的随机数
 
@@ -72,7 +78,7 @@ Raft是不依赖系统的时间，它是将时间分成一个个Term，每个Ter
 
 之后log会被复制到其他的节点，绝大多数节点都接收到这个log后， Leader就认为该log是committed的。
 
-#### 当出现网络隔离时
+当出现网络隔离时
 
 <img src="../../assets/image-20200805152931725.png" alt="image-20200805152931725" style="zoom:50%;" />
 

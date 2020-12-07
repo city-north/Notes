@@ -1,6 +1,9 @@
 # 020-Singleton-Bean作用域
 
-#### The Singleton Scope (Singleton 作用域)
+---
+[TOC]
+
+## The Singleton Scope (Singleton 作用域)
 
 Spring容器管理的一个单例 bean,所有根据 ID 获取它的请求,都会只返回这个实例
 

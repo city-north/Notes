@@ -1,5 +1,9 @@
 # 层次性查找-HierarchicalBeanFactory
 
+---
+
+[TOC]
+
 ## 目录
 
 - HierarchicalBeanFactory简介
@@ -10,8 +14,6 @@
       - [单一类型](#单一类型)
       - 集合类型
     - 根据Java注解查找名称列表
-
-
 
 ## HierarchicalBeanFactory简介
 
@@ -32,7 +34,7 @@ BeanFactory的直接子接口,
 
 ![image-20200917212321381](../../assets/image-20200917212321381.png)
 
-## 获取双亲容器
+## 双亲BeanFactory
 
 ```java
 //获取双亲BeanFactory

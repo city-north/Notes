@@ -1,7 +1,9 @@
 # SpringCloud RefreshScope
 
-- [注册时机](#注册时机)
-- [RefreshScope实现](#RefreshScope实现)
+---
+[TOC]
+
+## 简介
 
 SpringCloud @RefreshScope 是如何控制Bean的动态刷新的
 
@@ -24,7 +26,7 @@ public @interface RefreshScope {
 }
 ```
 
-#### 注册时机
+## 注册时机
 
 ```java
 //org.springframework.cloud.autoconfigure.RefreshAutoConfiguration	
@@ -34,8 +36,6 @@ public static RefreshScope refreshScope() {
   return new RefreshScope();
 }
 ```
-
-
 
 ## RefreshScope实现
 

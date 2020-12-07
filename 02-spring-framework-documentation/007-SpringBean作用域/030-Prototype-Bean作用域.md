@@ -1,8 +1,7 @@
 # 030-Prototype-Bean作用域
 
-- [prototype类型Bean的特点](#prototype类型Bean的特点)
-- [图示](#图示)
-- [销毁回调](#销毁回调)
+---
+[TOC]
 
 ## prototype类型Bean的特点
 
@@ -20,8 +19,6 @@
 ```xml
 <bean id="accountService" class="com.something.DefaultAccountService" scope="prototype"/>
 ```
-
-## 
 
 ## 销毁回调
 

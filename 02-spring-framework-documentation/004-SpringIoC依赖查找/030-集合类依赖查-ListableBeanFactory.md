@@ -1,10 +1,8 @@
 # 030-集合类依赖查-ListableBeanFactory
 
-## 目录
+---
 
-- ListableBeanFactory简介
-  - [根据Bean类型查找](#根据Bean类型查找)
-  - [通过注解类型查找](#通过注解类型查找)
+[TOC]
 
 ## ListableBeanFactory简介
 
@@ -61,8 +59,6 @@ ListableBeanFactory#getBeanNamesForType(java.lang.Class<?>, boolean, boolean)
 ListableBeanFactory#getBeansOfType(java.lang.Class<T>)
 ListableBeanFactory#getBeansOfType(java.lang.Class<T>, boolean, boolean)
 ```
-
-
 
 ## 根据注解类型查找
 

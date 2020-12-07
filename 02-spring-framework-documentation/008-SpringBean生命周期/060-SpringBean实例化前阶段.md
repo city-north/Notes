@@ -16,6 +16,21 @@
 Object InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation
 ```
 
+## DEMO
+
+```java
+@Override
+public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+  if (ObjectUtils.nullSafeEquals(beanName, "superClass") && SuperUser.class.equals(beanClass)) {
+    System.out.println("postProcessBeforeInstantiation");
+    //把配置完成 superUser Bean 覆盖
+    return new SuperUser();
+  }
+  //保持 Spring IoC 容器的实例化操作
+  return null;
+}
+```
+
 ## 简介
 
 实例化前阶段的调用入口，下图可以看出在`AbstractAutowireCapableBeanFactory`的createBean方法中，会调用
@@ -115,17 +130,4 @@ protected Object applyBeanPostProcessorsBeforeInstantiation(Class<?> beanClass, 
 在任何bean初始化回调之后(如初始化bean的afterPropertiesSet或自定义的init方法)，将此BeanPostProcessor应用到给定的新bean实例。bean已经填充了属性值。返回的bean实例可能是原始bean的包装器。
 
 对于FactoryBean，这个回调将同时为FactoryBean实例和由FactoryBean创建的对象(从Spring 2.0开始)调用。后处理器可以决定是应用到FactoryBean还是创建的对象，或者通过相应的FactoryBean instanceof检查两者都应用。
-
-```java
-@Override
-public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
-  if (ObjectUtils.nullSafeEquals(beanName, "superClass") && SuperUser.class.equals(beanClass)) {
-    System.out.println("postProcessBeforeInstantiation");
-    //把配置完成 superUser Bean 覆盖
-    return new SuperUser();
-  }
-  //保持 Spring IoC 容器的实例化操作
-  return null;
-}
-```
 
