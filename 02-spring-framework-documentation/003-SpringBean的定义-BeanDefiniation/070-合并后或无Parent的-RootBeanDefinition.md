@@ -1,5 +1,9 @@
 # 070-合并后或无Parent的-RootBeanDefinition
 
+---
+
+[TOC]
+
 ![image-20201116213208976](../../assets/image-20201116213208976.png)
 
 ## RootBeanDefinition

@@ -1,5 +1,11 @@
 # 080-标注注解的BeanDefinition
 
+---
+
+[TOC]
+
+## 层次关系
+
 ![image-20201116213208976](../../assets/image-20201116213208976.png)
 
 BeanDefinition
@@ -9,7 +15,7 @@ BeanDefinition
 - **AnnotatedBeanDefinition**接口
 - RootBeanDefinition
 
-## **AnnotatedBeanDefinition**接口
+## AnnotatedBeanDefinition接口
 
 ```java
 //基于注解的BeanDefinition
@@ -44,17 +50,6 @@ public interface AnnotatedBeanDefinition extends BeanDefinition {
 
 ```java
 package org.springframework.core.type;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-
-import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.lang.Nullable;
-import org.springframework.util.MultiValueMap;
 
 /**
  * {@link AnnotationMetadata} implementation that uses standard reflection
@@ -208,7 +203,6 @@ public class StandardAnnotationMetadata extends StandardClassMetadata implements
  * interface.
  */
 public class MethodMetadataReadingVisitor extends MethodVisitor implements MethodMetadata {
-
 }
 ```
 

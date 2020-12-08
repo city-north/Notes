@@ -1,5 +1,11 @@
 # 初始化SpringBean(Initialization)
 
+---
+
+[TOC]
+
+## 简介
+
 - @PostConstruct 标注方法
 - 实现 InitializingBean 接口的 afterPropertiesSet() 方法
 - 自定义初始化方法

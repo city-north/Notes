@@ -1,10 +1,159 @@
 # BeanDefinition定义SpringBean
 
-- [什么是BeanDefinition](#什么是BeanDefinition)
-- [BeanDefinition元信息](#BeanDefinition元信息)
-- [使用BeanDefinitionBuilder来定义一个BeanDefinition](#使用BeanDefinitionBuilder来定义一个BeanDefinition)
+---
+
+[TOC]
 
 ## 什么是BeanDefinition
+
+BeanDefinition是Spring对Bean定义的逻辑抽象,子接口或者实现:
+
+- GenericBeanDefinition:通用型BeanDefinition
+- RootBeanDefinition:无Parent的BeanDefinition或者合并后的BeanDefinition
+- AnnotatedBeanDefinition:注解标注的BeanDefinition
+
+## 接口源码
+
+#### 静态属性
+
+```java
+public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
+  	// 单例
+    String SCOPE_SINGLETON = ConfigurableBeanFactory.SCOPE_SINGLETON;
+    // 原型
+  	String SCOPE_PROTOTYPE = ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+    
+  	int ROLE_APPLICATION = 0;
+    int ROLE_SUPPORT = 1;
+    int ROLE_INFRASTRUCTURE = 2;
+}
+```
+
+#### 设置双亲
+
+```java
+//设置父定义名称
+void setParentName(@Nullable String parentName);
+
+@Nullable
+String getParentName();
+```
+
+#### 设置Class属性
+
+```java
+void setBeanClassName(@Nullable String beanClassName);
+
+@Nullable
+String getBeanClassName();
+```
+
+#### 设置构造器参数
+
+```java
+ConstructorArgumentValues getConstructorArgumentValues();
+
+default boolean hasConstructorArgumentValues() {
+  return !getConstructorArgumentValues().isEmpty();
+}
+```
+
+#### 获取属性参数
+
+```java
+MutablePropertyValues getPropertyValues();
+
+default boolean hasPropertyValues() {
+  return !getPropertyValues().isEmpty();
+}
+```
+
+#### 设置Scope/单例/原型/抽象
+
+```java
+void setScope(@Nullable String scope);
+@Nullable
+
+String getScope();
+
+boolean isSingleton();
+/**
+	 * @since 3.0
+	 */
+boolean isPrototype();
+
+boolean isAbstract();
+```
+
+#### 获取描述
+
+```java
+@Nullable
+String getDescription();
+
+@Nullable
+String getResourceDescription();
+```
+
+#### 获取角色
+
+```java
+int getRole();
+
+@Nullable
+BeanDefinition getOriginatingBeanDefinition();
+```
+
+#### 设置懒加载
+
+```java
+void setLazyInit(boolean lazyInit);
+
+boolean isLazyInit();
+```
+
+#### 设置依赖Bean
+
+```java
+void setDependsOn(@Nullable String... dependsOn);
+
+@Nullable
+String[] getDependsOn();
+```
+
+#### 是否自动注入
+
+```java
+void setAutowireCandidate(boolean autowireCandidate);
+
+boolean isAutowireCandidate();
+```
+
+#### 设置是否是主Bean
+
+```java
+void setPrimary(boolean primary);
+
+boolean isPrimary();
+```
+
+#### 设置FactoryBean
+
+```java
+void setFactoryBeanName(@Nullable String factoryBeanName);
+@Nullable
+String getFactoryBeanName();
+
+setFactoryMethodName(@Nullable String factoryMethodName);
+@Nullable
+String getFactoryMethodName();
+```
+
+
+
+
+
+
 
 ![image-20201116213208976](../../assets/image-20201116213208976.png)
 

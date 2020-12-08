@@ -1,11 +1,16 @@
 # BeanDefiniation的注册
 
-- XML 配置
+---
+
+[TOC]
+
+## 注册的方式
+
+- XML配置
 - Java注解配置元信息
   - @Bean
   - @Component
   - @Import
-
 - [JavaAPI配置元信息](#JavaAPI配置元信息)
 
 ## JavaAPI配置元信息

@@ -1,5 +1,9 @@
 # 实例化SpringBean
 
+---
+
+[TOC]
+
 - 常规方式
   - 通过构造器 (配置元信息: XML, Java注解, Java API)
   - 通过静态工厂方法(配置元信息 XML 和 JavaAPI)

@@ -1,17 +1,26 @@
-# 060-通用型BeanDefinition
+# 060-通用型GenericBeanDefinition
+
+---
+
+[TOC]
+
+## 层次关系
 
 ![image-20201116213208976](../../assets/image-20201116213208976.png)
 
 - BeanDefinition
-  - AbstractBeanDefinition
+  - **AbstractBeanDefinition**
     - GenericBeanDefinition
   - AnnotatedBeanDefinition
   - RootBeanDefinition
 
 ## GenericBeanDefinition
 
+几乎所有的操作都是在AbstractBeanDefinition中实现
+
 ```java
 public class GenericBeanDefinition extends AbstractBeanDefinition {
+  
 	//获取双亲BeanDefinition
    @Nullable
    private String parentName;
@@ -54,9 +63,8 @@ public class GenericBeanDefinition extends AbstractBeanDefinition {
    public AbstractBeanDefinition cloneBeanDefinition() {
       return new GenericBeanDefinition(this);
    }
-
-
 }
 ```
 
 ## AbstractBeanDefinition
+

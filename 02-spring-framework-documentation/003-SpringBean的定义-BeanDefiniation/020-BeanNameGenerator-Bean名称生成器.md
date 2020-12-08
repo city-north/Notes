@@ -1,8 +1,14 @@
 # BeanNameGenerator-Bean名称生成器
 
+---
+
+[TOC]
+
+## 继承结构
+
 核心接口-BeanNameGenerator
 
-- 默认实现DefaultBeanNameGenerator
+- [默认实现DefaultBeanNameGenerator](#默认实现DefaultBeanNameGenerator)
 - [基于注解扫描的方式生成AnnotationBeanNameGenerator](#基于注解扫描的方式生成AnnotationBeanNameGenerator)
 
 ## 默认实现DefaultBeanNameGenerator
@@ -30,6 +36,7 @@ public class DefaultBeanNameGenerator implements BeanNameGenerator {
 		String beanClassName = definition.getBeanClassName();
 		Assert.state(beanClassName != null, "No bean class name set");
 		String shortClassName = ClassUtils.getShortName(beanClassName);
+    //使用自省的默认名称
 		return Introspector.decapitalize(shortClassName);
 	}
 ```
