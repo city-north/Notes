@@ -41,8 +41,6 @@ BeanFactory的直接子接口,
 HierarchicalBeanFactory#getParentBeanFactory
 ```
 
-
-
 ## 层次性查找
 
 #### 根据Bean名称查找

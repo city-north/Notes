@@ -13,7 +13,7 @@ SpringBean属性赋值前回调的执行时机是
 
 根据
 
-```
+```java
  PropertyValues InstantiationAwareBeanPostProcessor#postProcessProperties(PropertyValues pvs, Object bean, String beanName);
 ```
 
@@ -109,7 +109,6 @@ protected void applyPropertyValues(String beanName, BeanDefinition mbd, BeanWrap
   if (pvs.isEmpty()) {
     return;
   }
-
   if (System.getSecurityManager() != null && bw instanceof BeanWrapperImpl) {
     ((BeanWrapperImpl) bw).setSecurityContext(getAccessControlContext());
   }

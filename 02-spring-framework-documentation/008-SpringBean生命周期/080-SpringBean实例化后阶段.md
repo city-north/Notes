@@ -62,7 +62,7 @@ public class SpringBeanAfterInstantiationDemo {
 - 在Spring自动装配开始之前，这是在给定bean实例上执行定制字段注入的理想回调。
 - 默认的值是ture
 
-```
+```java
 //org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor
 boolean InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation(Object bean, String beanName)
 ```

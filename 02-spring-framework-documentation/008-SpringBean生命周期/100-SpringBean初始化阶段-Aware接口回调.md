@@ -45,7 +45,7 @@ BeanFactory生命周期中自带的aware
 
 无需注册,hardcode编写的初始化方式
 
-```
+```java
 AbstractAutowireCapableBeanFactory#invokeAwareMethods
 ```
 

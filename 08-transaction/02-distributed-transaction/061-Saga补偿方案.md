@@ -1,13 +1,6 @@
 # Saga补偿方案
 
-## 目录
-
-- [什么是Saga](#什么是Saga)
-- [Saga核心思想](#Saga核心思想)
-- [Saga的执行流程](#Saga的执行流程)
-- [Saga的优劣势](#Saga的优劣势)
-
-- [Saga和TCC的对比](#Saga和TCC的对比)
+[TOC]
 
 ## 什么是Saga
 

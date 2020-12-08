@@ -1,8 +1,12 @@
 # 依赖处理过程
 
-#### 先入为主的核心类
+---
 
-- 入口 ： DefaultListableBeanFactory#resolveDependency
+[TOC]
+
+## 先入为主的核心类
+
+- 入口 ： **DefaultListableBeanFactory#resolveDependency**
 - 依赖描述符 : DependencyDescriptor
   - 自定义绑定候选对象处理器 ：AutowireCandidateReslover	
 
