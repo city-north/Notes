@@ -4,7 +4,7 @@
 
 [TOC]
 
-<img src="../../../../assets/image-20201202202702570.png" alt="image-20201202202702570" style="zoom:50%;" />
+<img src="../../../../assets/image-20201202202702570.png" alt="image-20201202202702570" style="zoom: 33%;" />
 
 ## Connection和Channel
 
