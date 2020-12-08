@@ -3,7 +3,16 @@
 ---
 [TOC]
 
-## 简介
+## 声明一个交换器
+
+```java
+Exchange.DeclareOk exchangeDeclare( String exchange,
+                                    String type,
+                                    boolean durable,
+                                    boolean autoDelete,
+                                    boolean internal,
+                                    Map<String, Object> arguments											) throws IOException
+```
 
 这个方法的返回值是Exchange.DeclareOK，用来标识成功声明了一个交换器。
 各个参数详细说明如下所述。
@@ -36,7 +45,7 @@ Exchange.DeclareOk exchangeDeclare(String exchange,BuiltinExchangeType type,bool
 Exchange.DeclareOk exchangeDeclare(String exchange,BuiltinExchangeType type,boolean durable,boolean autoDelete,boolean internal,Map<String,Object>arguments) throws IOException;
 ```
 
-与exchangeDeclare师出同门的还有几个方法，比如exchangeDeclareNoWait方法，具体定义如下（当然也有BuiltExchangeType版的，这里就不展开了）
+与exchangeDeclare师出同门的还有几个方法，比如 exchangeDeclareNoWait 方法，具体定义如下（当然也有BuiltExchangeType版的，这里就不展开了）
 
 ```java
 void exchangeDeclareNoWait(String exchange,
