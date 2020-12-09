@@ -60,24 +60,6 @@ void queueDeleteNoWait(String queue,boolean ifUnused,boolean ifEmpty) throws IOE
     Queue.PurgeOk queuePurge(String queue) throws IOException;
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 如果要在应用中共享一个队列，可以做如下声明
 
 ```java

@@ -1,6 +1,5 @@
 package cn.eccto.study.springframework.tutorials.messageResolver;
 
-import com.sun.tools.internal.xjc.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -19,8 +18,7 @@ public class LanguageValidator implements ConstraintValidator<MyLanguage, String
     @Autowired
     private LanguageProvider languageProvider;
 
-    public void initialize(Language constraintAnnotation) {
-    }
+
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

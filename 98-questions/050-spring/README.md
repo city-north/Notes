@@ -44,6 +44,16 @@
 
  [012-BeanFactory是怎么控制Bean的生命周期.md](012-BeanFactory是怎么控制Bean的生命周期.md) 
 
+## Spring内建的XmlSchema常见有哪些
+
+## Spring配置元信息具体有那些
+
+ [014-Spring配置元信息有哪些.md](014-Spring配置元信息有哪些.md) 
+
+## Spring-Extensible-XML-authoring的缺点
+
+ [015-Spring-Extensible-XML-authoring的缺点.md](015-Spring-Extensible-XML-authoring的缺点.md) 
+
 ----
 
 ## 描述SpringMVC的流程
@@ -77,6 +87,5 @@
 ## BeanFactory和FactoryBean的区别
 
 ## Spring创建了单例对象，如果多线程并发对属性赋值，造成相互覆盖的情况，如何处理
-
 
 
