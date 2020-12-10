@@ -4,12 +4,7 @@ https://www.cs.auckland.ac.nz/references/java/java1.5/tutorial/javabeans/introsp
 
 https://xiaomi-info.github.io/2020/03/16/java-beans-introspection/
 
-## 目录
-
-- [什么是Java自省](#什么是Java自省)
-- [Java自省与反射的区别](#Java自省与反射的区别)
-- [JavaBean内省机制详解](#JavaBean内省机制详解)
-- [属性处理](#属性处理)
+[TOC]
 
 ## 什么是Java自省
 

@@ -58,8 +58,6 @@ Collection 接口时层级结构的根接口,它提供了所有集合都适用�
 | [java.util.concurrent.ConcurrentMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentMap.html) |      | 是       |      |
 | [java.util.concurrent.ConcurrentNavigableMap](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentNavigableMap.html) |      | 是       |      |
 
-- 
-
 ## Collection Implementations
 
 Classes that implement the collection interfaces typically have names in the form of <*Implementation-style*><*Interface*>. The general purpose implementations are summarized in the following table:
