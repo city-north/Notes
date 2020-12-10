@@ -101,8 +101,6 @@ public class AnnotatedYamlPropertySourceDemo {
 
 ```
 
-
-
 ```java
 /**
  * YAML 格式的 {@link PropertySourceFactory} 实现
@@ -116,10 +114,5 @@ public class YamlPropertySourceFactory implements PropertySourceFactory {
         return new PropertiesPropertySource(name, yamlProperties);
     }
 }
-
-```
-
-```xml
-
 ```
 

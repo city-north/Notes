@@ -8,6 +8,7 @@
 
 ## 触发时机
 
+```
 - AbstractApplicationContext#obtainFreshBeanFactory
   - AbstractRefreshableApplicationContext#refreshBeanFactory
     - AbstractXmlApplicationContext#loadBeanDefinitions
@@ -15,6 +16,7 @@
         - XmlBeanDefinitionReader#doLoadBeanDefinitions
           - ...
             - BeanDefinitionParserDelagte#parseCustomElement
+```
 
 ## 核心流程
 

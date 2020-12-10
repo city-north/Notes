@@ -69,8 +69,6 @@ public static void main(String[] args) {
 }
 ```
 
-
-
 #### 可修改实现-MutablePropertyValues
 
 MutablePropertyValues是PropertyValues的实现类
@@ -78,8 +76,6 @@ MutablePropertyValues是PropertyValues的实现类
 ```java
 MutablePropertyValues pvs = beanDefinition.getPropertyValues();
 ```
-
-
 
 ### Bean属性上下文存储-AttributeAccessor
 

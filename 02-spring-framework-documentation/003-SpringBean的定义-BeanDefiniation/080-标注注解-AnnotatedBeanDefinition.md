@@ -12,6 +12,8 @@ BeanDefinition
 
 - AbstractBeanDefinition
   - GenericBeanDefinition
+    - AnnotatedGenericBeanDefinition注解标注的BeanDefinition
+    - ScannedGenericBeanDefinition被扫描的BeanDefinition
 - **AnnotatedBeanDefinition**接口
 - RootBeanDefinition
 

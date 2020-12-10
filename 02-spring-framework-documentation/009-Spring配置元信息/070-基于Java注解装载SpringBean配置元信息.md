@@ -2,17 +2,43 @@
 
 [TOC]
 
-## SpringIoC容器装配注解
+## 核心API
 
-| Spring注解      | 场景说明                                | 起始版本 |
-| --------------- | --------------------------------------- | -------- |
-| @ImportResource | 替换XML元素import                       | 3.0      |
-| @Import         | 导入Configuration Class                 | 3.0      |
-| @ComponetScan   | 扫描指定package下标注Spring模式注解的类 | 3.1      |
+ [020-SpringBean元信息解析阶段.md](../008-SpringBean生命周期/020-SpringBean元信息解析阶段.md) 
 
-## SpringIoC配置属性注解
+org.springframework.context.annotation.AnnotatedBeanDefinitionReader
 
-| Spring注解       | 场景说明                   | 起始版本 |
-| ---------------- | -------------------------- | -------- |
-| @PropertySource  | 配置属性抽象PropertySource | 3.1      |
-| @PropertySources | PropertySource集合注解     | 4.0      |
+- 资源
+  - 类对象-java.lang.Class
+- 底层
+  - [条件评估-ConditionEvaluator](#条件评估-ConditionEvaluator)
+  - [Bean范围解析-ScopeMetadataReslover](#Bean范围解析-ScopeMetadataReslover)
+  - [BeanDefinition解析-内部API实现](#BeanDefinition解析-内部API实现)
+  - [BeanDefinition处理-AnnotationConfigUtils.processCommonDefinitionAnnotations](#BeanDefinition处理-AnnotationConfigUtils.processCommonDefinitionAnnotations)
+  - [BeanDefinition注册-BeanDefinitonRegistry](#BeanDefinition注册-BeanDefinitonRegistry ) 
+
+## AnnotatedBeanDefinitionReader
+
+并没有直接继承或者实现BeanDefinitionReader
+
+ [080-标注注解-AnnotatedBeanDefinition.md](../003-SpringBean的定义-BeanDefiniation/080-标注注解-AnnotatedBeanDefinition.md) 
+
+原因是它不是传统的BeanDefinition那样,是基于Resource资源
+
+### 条件评估-ConditionEvaluator
+
+条件评估的工具类
+
+#### shouldSkip
+
+```java
+//是不是跳过Bean,也就是@Condition注解是否成立
+public boolean shouldSkip(AnnotatedTypeMetadata metadata) ;
+```
+
+### Bean范围解析-ScopeMetadataReslover
+
+解析元数据相关的数据
+
+## 
+
