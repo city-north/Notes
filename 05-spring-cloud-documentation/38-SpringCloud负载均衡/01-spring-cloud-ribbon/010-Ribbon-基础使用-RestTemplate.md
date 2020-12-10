@@ -2,12 +2,7 @@
 
 Ribbon可以和RestTemplate一起只用，也可以集成到Feign中进行使用
 
-## 目录
-
-- [RestTemplate简介](#RestTemplate简介)
-- [RestTemplate和Ribbon一起使用方式](#RestTemplate和Ribbon一起使用方式)
-- [覆盖Ribbon提供的默认组件实例](#覆盖Ribbon提供的默认组件实例)
-- [使用application.yml配置策略](#使用application.yml配置策略)
+[TOC]
 
 ## RestTemplate简介
 

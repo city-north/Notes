@@ -8,7 +8,7 @@
 
 ## 一言蔽之
 
-初始化完成阶段主要是调用: SmartInitializingSingleton#afterSingletonsInstantiated的回调,这个回调确保了回调时,是一个完整初始化的Bean
+初始化完成阶段主要是调用: SmartInitializingSingleton#afterSingletonsInstantiated`的回调,这个回调确保了回调时,是一个完整初始化的Bean
 
 ## DEMO
 
@@ -55,9 +55,9 @@ public static void main(String[] args) {
   // SmartInitializingSingleton 通常在 Spring ApplicationContext 场景使用
   // preInstantiateSingletons 将已注册的 BeanDefinition 初始化成 Spring Bean
   
-        //----------------------本章关注点---------------------------------------------//
- 				 beanFactory.preInstantiateSingletons();
-          //----------------------本章关注点---------------------------------------------//
+  //----------------------本章关注点---------------------------------------------//
+  beanFactory.preInstantiateSingletons();
+  //----------------------本章关注点---------------------------------------------//
 }
 ```
 
@@ -72,7 +72,6 @@ ApplicationContext中,调用的时机是org.springframework.context.support.Abst
 @Override
 public void refresh() throws BeansException, IllegalStateException {
   synchronized (this.startupShutdownMonitor) {
-   
     try {
   	//忽略
       
@@ -82,7 +81,6 @@ public void refresh() throws BeansException, IllegalStateException {
 			      finishBeanFactoryInitialization(beanFactory);
           //----------------------本章关注点---------------------------------------------//
     }
-
 	//忽略
 }
 ```
@@ -196,8 +194,6 @@ public void preInstantiateSingletons() throws BeansException {
         //----------------------本章关注点----初始化前阶段-----------------------------------------//
         smartSingleton.afterSingletonsInstantiated();
         //----------------------本章关注点----初始化前阶段-----------------------------------------//
-
-
       }
     }
   }

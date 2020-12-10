@@ -10,8 +10,8 @@
 
 初始化阶段主要包括三种初始化方式
 
-1. @PostConstruct(依赖注解驱动)-**CommonAnnotationBeanPostProcessor方式**
-2. 实现InitializingBean接口的afterPropertiesSet()方法-**固定流程**
+1. @PostConstruct(依赖注解驱动)-CommonAnnotationBeanPostProcessor方式
+2. 实现InitializingBean接口的afterPropertiesSet()方法-固定流程
 3. 自定义初始化方法-固定流程
 
 ## DEMO
@@ -33,10 +33,9 @@ public class SpringBeanInitializationDemo {
 //       输出3 ---customInitMethod---
     }
 }
-
 ```
 
-BeanInitializationDemo定义
+#### BeanInitializationDemo定义
 
 ```java
 public class BeanInitializationDemo implements InitializingBean {

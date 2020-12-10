@@ -1,5 +1,9 @@
 # Mycat全局ID
 
+[TOC]
+
+## Mycat全局序列4 种实现方式
+
 Mycat 全局序列实现方式主要有 4 种:
 
 - [文件方式](#文件方式)
@@ -9,7 +13,7 @@ Mycat 全局序列实现方式主要有 4 种:
 
 当然也可以自定义业务序列。
 
-## 文件方式
+### 文件方式
 
 配置文件 server.xml sequnceHandlerType 值: 0 文件 1数据库 2 本地时间戳 3ZK
 
@@ -41,7 +45,7 @@ INSERT INTO `customer` (`id`, `name`) VALUES (next value for MYCATSEQ_CUSTOMER, 
 - 优点:本地加载，读取速度较快。
 - 缺点:当 Mycat 重新发布后，配置文件中的 sequence 需要替换。Mycat 不能 做集群部署。
 
-## 数据库方式
+### 数据库方式
 
 ```xml
 <property name="sequnceHandlerType">1</property>
@@ -134,7 +138,7 @@ INSERT INTO MYCAT_SEQUENCE(name,current_value,increment,remark) VALUES ('GLOBAL'
 select next value for MYCATSEQ_ORDERS
 ```
 
-## 本地时间戳方式
+### 本地时间戳方式
 
 ID= 64 位二进制 (42(毫秒)+5(机器 ID)+5(业务编码)+12(重复累加) ，长度为 18 位
 
@@ -149,7 +153,7 @@ ID= 64 位二进制 (42(毫秒)+5(机器 ID)+5(业务编码)+12(重复累加) �
 WORKID=01 DATAACENTERID=01
 ```
 
-## zookeeper方式
+### zookeeper方式
 
 修改 conf/myid.properties
 设置 loadZk=true(启动时会从 ZK 加载配置，一定要注意备份配置文件，并且先 用 bin/init_zk_data.sh,把配置文件写入到 ZK)

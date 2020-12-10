@@ -10,7 +10,7 @@
 
 SpringBean的生命周期当容器调动
 
-```
+```java
 beanFactory.destroySingleton("demoBean");
 ```
 

@@ -1,12 +1,10 @@
 # Ribbon-源码分析-配置和实例初始化
 
+[TOC]
+
+## 图示
+
 <img src="../../../assets/D8E05E30D7E9049DF1EC7051400BD86E.png" alt="img" style="zoom:50%;" />
-
-## 目录
-
-- [核心注解RibbonClient](#核心注解RibbonClient)
-- [客户端配置注册器-ClientConfigurationRegistrar](#客户端配置注册器-ClientConfigurationRegistrar)
-- [Ribbon对于组件实例的管理配置机制](#Ribbon对于组件实例的管理配置机制)
 
 ## 核心注解RibbonClient
 
@@ -24,7 +22,7 @@ public @interface RibbonClient {
     
     String name() default "";
 
-      //Ribbon客户端的自定义配置，可以配置生成客户端的各个组件，比如说ILoadBalancer、ServerListFilter和IRule。默认的配置为RibbonClientConfiguration.java 
+//Ribbon客户端的自定义配置，可以配置生成客户端的各个组件，比如说ILoadBalancer、ServerListFilter和IRule。默认的配置为RibbonClientConfiguration.java 
     
      Class〈?〉[] configuration() default {};
 }

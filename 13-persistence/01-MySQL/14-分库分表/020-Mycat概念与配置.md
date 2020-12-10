@@ -1,16 +1,14 @@
 # Mycat
 
+[TOC]
+
+## 相关网站
+
 | 相关网站                                                     |
 | ------------------------------------------------------------ |
 | [Mycat 概要介绍](https://github.com/MyCATApache/Mycat-Server) |
 | [入门指南](https://github.com/MyCATApache/Mycat-doc/tree/master/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97) |
 | [官网](http://www.mycat.io)                                  |
-
-## 目录
-
-- [什么是Mycat](#什么是Mycat)
-- [Mycat分片规则](#Mycat分片规则)
-- [Mycat配置详解](#Mycat配置详解)
 
 ## 什么是Mycat
 
