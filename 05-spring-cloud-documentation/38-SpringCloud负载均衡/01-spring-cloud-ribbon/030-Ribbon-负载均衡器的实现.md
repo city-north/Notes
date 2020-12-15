@@ -1,9 +1,10 @@
 # Ribbon负载均衡算法的实现
 
+[TOC]
+
 ## 目录
 
 - [Ribbon内置的负载均衡算法](#Ribbon内置的负载均衡算法)
-- [程序员自定义负载均衡算法](#程序员自定义负载均衡算法)
 - [源码实现](#源码实现)
 
 IRule是定义Ribbon负载均衡策略的接口，你可以通过实现该接口来自定义自己的负载均衡策略，RibbonClientConfiguration配置类则会给出IRule的默认实例。IRule接口的choose方法就是从一堆服务器中根据一定规则选出一个服务器。IRule有很多默认的实现类，这些实现类根据不同的算法和逻辑来进行负载均衡。
@@ -12,15 +13,15 @@ IRule是定义Ribbon负载均衡策略的接口，你可以通过实现该接口
 
 Ribbon的负载均衡策略既有 **RoundRobinRule** 和 **RandomRule** 这样的不依赖于服务器运行状况的策略，也有 **AvailabilityFilteringRule** 和**WeightedResponseTimeRule** 等多种基于服务器运行状况决策的策略。这些策略既可以依据单个服务器的运行状况，也可以依据整个服务区的运行状况选择具体调用的服务器，适用于各种场景需求。
 
-| 策略             | 代码类                                  | 描述                                                         |
-| ---------------- | --------------------------------------- | ------------------------------------------------------------ |
-| 随机策略         | RandomRule                              | 随机选择server                                               |
-| 轮询策略         | [RoundRobinRule](#RoundRobinRule)       | 按照顺序选择server                                           |
-| 重试策略         | RetryRule                               | 在一个配置时间内选择server不成功,则一直尝试选择一个可用的Server |
-| 最低并发按策略   | BestAvailiableRule                      | 选择最小请求的服务器                                         |
-| 可用过滤策略     | AvailabilityFilteringRule               | 过滤一直连接失败并被标记成 circuit trypped 的server ,过滤掉的那些高兵发的连接Server(active connections 超出设置的阈值) |
-| 响应时间加全策略 | WeightedResponseTimeRule                | 根据server的响应时间分配权重,相应时间越长,权重越低,被选择到的概率就越低,响应时间越短,权重越高,被选择到的概率就越高,这个策略很贴切,总和了各种因素,如: 网络、磁盘、IO 、 等等这些因素直接影响响应时间 |
-| 区域权衡策略     | [ZoneAvoidanceRule](#ZoneAvoidanceRule) | 综合判断server所在的区域的性能和server的可用性轮询选择server,并且判定一个AWS zone的运行性能是否可用,剔除不可用的Zone中的所有server |
+| 策略             | 代码类                                                 | 描述                                                         |
+| ---------------- | ------------------------------------------------------ | ------------------------------------------------------------ |
+| 随机策略         | RandomRule                                             | 随机选择server                                               |
+| 轮询策略         | [RoundRobinRule](#轮询策略:RoundRobinRule)             | 按照顺序选择server                                           |
+| 重试策略         | RetryRule                                              | 在一个配置时间内选择server不成功,则一直尝试选择一个可用的Server |
+| 最低并发按策略   | BestAvailiableRule                                     | 选择最小请求的服务器                                         |
+| 可用过滤策略     | AvailabilityFilteringRule                              | 过滤一直连接失败并被标记成 circuit trypped 的server ,过滤掉的那些高兵发的连接Server(active connections 超出设置的阈值) |
+| 响应时间加全策略 | WeightedResponseTimeRule                               | 根据server的响应时间分配权重,相应时间越长,权重越低,被选择到的概率就越低,响应时间越短,权重越高,被选择到的概率就越高,这个策略很贴切,总和了各种因素,如: 网络、磁盘、IO 、 等等这些因素直接影响响应时间 |
+| 区域权衡策略     | [ZoneAvoidanceRule](#虑服务器的状态:ZoneAvoidanceRule) | 综合判断server所在的区域的性能和server的可用性轮询选择server,并且判定一个AWS zone的运行性能是否可用,剔除不可用的Zone中的所有server |
 
 ## 源码
 
@@ -28,7 +29,7 @@ IRule是定义Ribbon负载均衡策略的接口，你可以通过实现该接口
 
 ![image-20200914202832089](../../../assets/image-20200914202832089.png)
 
-## RoundRobinRule
+## 轮询策略:RoundRobinRule
 
 ClientConfigEnabledRoundRobinRule 是比较常用的IRule的子类之一，它使用的负载均衡策略是最为常见的Round Robin策略，即简单轮询策略
 
@@ -71,7 +72,7 @@ public class ClientConfigEnabledRoundRobinRule extends AbstractLoadBalancerRule 
 
 ```
 
-## ZoneAvoidanceRule
+## 虑服务器的状态:ZoneAvoidanceRule
 
 ZoneAvoidanceRule则会考虑服务器的状态，从而更好地进行负载均衡。
 

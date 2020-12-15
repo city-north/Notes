@@ -1,5 +1,7 @@
 # JWT token
 
+[TOC]
+
 JWT (JSON WEB TOKEN ) 是一种使用 JSON 格式来规约TOKEN 或者 SESSION 的协议,由于传统认证方式免不了会生成一个凭证,这个凭证可以是 token或者是 session,保存于服务端或者其他持久化工具中,这样一来,凭证的存取就显得非常麻烦,JWT 的出现打破了这个瓶颈,实现了"客户端 SESSION"的愿景
 
 - Header 头部 :  指定 JWT 使用的签名算法
@@ -18,8 +20,6 @@ JWT (JSON WEB TOKEN ) 是一种使用 JSON 格式来规约TOKEN 或者 SESSION �
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJiMDhmODZhZi0zNWRhLTQ4ZjItOGZhYi1jZWYzOTA0NjYwYmQifQ.-xN_h82PHVTCMA9vdoHrcZxH-x5mb11y1537t3rGzcM
 ```
 
-
-
 ### 签名的目的
 
 最后一步签名的过程，实际上是对头部以及载荷内容进行签名。一般而言，加密算法对于不同的输入产生的输出总是不一样的。对于两个不同的输入，产生同样的输出的概率极其地小（有可能比我成世界首富的概率还小）。所以，我们就把“不一样的输入产生不一样的输出”当做必然事件来看待吧。
@@ -37,3 +37,4 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJiMDhmODZhZi0zNWRhLTQ4ZjItOGZ
 所以，在JWT中，不应该在载荷里面加入任何敏感的数据。在上面的例子中，我们传输的是用户的User ID。这个值实际上不是什么敏感内容，一般情况下被知道也是安全的。
 
 但是像密码这样的内容就不能被放在JWT中了。如果将用户的密码放在了JWT中，那么怀有恶意的第三方通过Base64解码就能很快地知道你的密码了。
+

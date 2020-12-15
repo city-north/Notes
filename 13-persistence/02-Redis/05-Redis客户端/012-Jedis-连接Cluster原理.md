@@ -2,13 +2,9 @@
 
 > 问题：使用 Jedis 连接 Cluster 的时候，我们只需要连接到任意一个或者多个 redis group 中的实例地址，那我们是怎么获取到需要操作的 Redis Master 实例的？
 
-
-
 ## 值得注意的是
 
 - 如何存储 slot 和 Redis 连接池的关系。 
-
-
 
 ## DEMO
 

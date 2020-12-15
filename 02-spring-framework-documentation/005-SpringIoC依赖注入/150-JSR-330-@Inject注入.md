@@ -1,5 +1,7 @@
 # 150-JSR-330-@Inject注入
 
+[TOC]
+
 ## 目录
 
 - [先入为主的核心类](#先入为主的核心类)
@@ -87,12 +89,6 @@ AutowiredAnnotationBeanPostProcessor 的构造函数中加入了对注解的支�
 		return pvs;
 	}
 ```
-
-
-
-
-
-
 
 ## 自定义进行依赖注入的注解
 

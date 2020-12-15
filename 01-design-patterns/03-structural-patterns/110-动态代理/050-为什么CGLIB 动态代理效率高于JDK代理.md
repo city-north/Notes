@@ -1,6 +1,8 @@
 # 为什么CGLIB动态代理效率高于JDK
 
-因为 CGlib 采用了 FastClass 机制
+[TOC]
+
+不一定效率高,CGlib 采用了 FastClass 机制
 
 #### 什么是 FastClass机制
 

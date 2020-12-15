@@ -14,7 +14,7 @@ SpringBean属性赋值前回调的执行时机是
 根据
 
 ```java
- PropertyValues InstantiationAwareBeanPostProcessor#postProcessProperties(PropertyValues pvs, Object bean, String beanName);
+PropertyValues InstantiationAwareBeanPostProcessor#postProcessProperties(PropertyValues pvs, Object bean, String beanName);
 ```
 
 - PropertyValues pvs : 属性值 

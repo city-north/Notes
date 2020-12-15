@@ -1,10 +1,14 @@
 # HashMap 为什么线程不安全
 
- [051-hashMap的底层原理.md](../../../02-collections/03-map/051-hashMap的底层原理.md) 
+[TOC]
 
-> 在多线程情况下,使用 HashMap 进行 put 的操作的时候会引发死循环
->
-> 是因为 Java8 之前 的 HashMap 在扩容的 Rehash 时,采用的是头插法 ,会导致形成链状结构
+## 一言蔽之
+
+在多线程情况下,使用 HashMap 进行 put 的操作的时候会引发死循环
+
+是因为 Java8 之前 的 HashMap 在扩容的 Rehash 时,采用的是头插法 ,会导致形成链状结构
+
+ [051-hashMap的底层原理.md](../../../02-collections/03-map/051-hashMap的底层原理.md) 
 
 ## JDK1.7中的线程不安全
 

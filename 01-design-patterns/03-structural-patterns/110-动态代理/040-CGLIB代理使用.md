@@ -1,5 +1,7 @@
 # Spring 的代理
 
+[TOC]
+
 Spring整合了JDK代理（**优先使用**）和cglib代理（**无接口时使用**），
 
 - 当 bean 有实现接口时,Spring 就会使用 JDK 的动态代理

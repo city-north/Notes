@@ -1,4 +1,6 @@
-# LongAccumulator 类原理探究
+# LongAccumulator类原理
+
+[TOC]
 
 ## 总结
 

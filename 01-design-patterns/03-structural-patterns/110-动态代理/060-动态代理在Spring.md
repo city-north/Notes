@@ -1,5 +1,7 @@
 # 动态代理在 Spring
 
+[TOC]
+
 - 当 Bean 有实现接口时, JDK代理
 - 当 Bean 没有接口时, cglib 代理
 

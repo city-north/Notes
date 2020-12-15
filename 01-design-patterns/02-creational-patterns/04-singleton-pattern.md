@@ -1,5 +1,7 @@
 # 单例模式(Singleton Pattern)
 
+[TOC]
+
 > 确保一个类在任何情况下只有一个实例，并提供一个全局访问点来访问这个唯一实例
 
 ## 特点
@@ -269,8 +271,6 @@ public class InnerClassSingleton {
 
 因为 SingletonHolder 类没有被主动使用，只有通过显式调用 getInstance 方法时，才会显式装载 SingletonHolder 类，从而实例化 instance。想象一下，如果实例化 instance 很消耗资源，所以想让它延迟加载，另外一方面，又不希望在 Singleton 类加载时就实例化，因为不能确保 Singleton 类还可能在其他的地方被主动使用从而被加载，那么这个时候实例化 instance 显然是不合适的。这个时候，这种方式相比饿汉单例就显得很合理。
 
-
-
 ####   缺点
 
 - 反射还是可以访问私有的构造方法,有可会被反射攻击
@@ -291,10 +291,6 @@ public class InnerClassSingleton {
 - ObjectInputStream#readObject0(), 相当于重载 
 - ObjectInputStream#readOrdinaryObject
 - ObjectStreamClass#isInstantiable() 查看这个对象是否可以被初始化.就是判断了这个的对象是否有构造方法
-
-吗
-
-
 
 ## 总结
 

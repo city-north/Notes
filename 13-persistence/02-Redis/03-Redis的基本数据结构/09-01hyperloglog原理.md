@@ -1,9 +1,6 @@
 # HyperLogLog 原理
 
-## 目录
-
-- [为什么使用](#为什么使用)
-- [为什么HyperLogLog只占用12kb](#为什么HyperLogLog只占用12kb)
+[TOC]
 
 ----
 

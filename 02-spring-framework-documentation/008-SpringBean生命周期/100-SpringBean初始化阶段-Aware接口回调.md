@@ -26,14 +26,7 @@
   - [BeanClassLoaderAware](#BeanClassLoaderAware)
   - [BeanFactoryAware](#BeanFactoryAware)
 - ApplicationContext声明周期中的aware
-  - [EnvironmentAware](#EnvironmentAware)
-  - [EmbeddedValueResolverAware](#EmbeddedValueResolverAware)
-  - [ResourceLoaderAware](#ResourceLoaderAware)
-  - [ApplicationEventPublisherAware](#ApplicationEventPublisherAware)
-  - [MessageSourceAware](#MessageSourceAware)
-  - [ApplicationContextAware](#ApplicationContextAware)
-
-## BeanFactory生命周期中自带的aware
+  - ßBeanFactory生命周期中自带的aware
 
 BeanFactory生命周期中自带的aware
 

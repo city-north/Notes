@@ -8,6 +8,7 @@
               maxQueueSize="100"
               maxIdleTime="60000
               minSpareThreads="4" 
+              prestartminSpareThreads="true"
               />
 ```
 

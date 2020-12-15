@@ -1,14 +1,12 @@
 # 050-SpringBeanClassLoading加载阶段
 
-## 目录
-
 ---
 
 [TOC]
 
 ## 简介
 
-加载阶段实际上就是在获取到RootBeanDefinition之后(Merge之后),最后通过Class.forName的方式加载到类加载器
+加载阶段实际上就是在获取到RootBeanDefinition之后(Merge之后),最后通过**Class.forName**的方式加载到类加载器
 
 -  [040-SpringBeanDefinition合并阶段.md](040-SpringBeanDefinition合并阶段.md) 
 
@@ -67,7 +65,6 @@ protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredTy
       bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
     }
     //...忽略
-
   }
 ```
 
@@ -201,3 +198,4 @@ public Class<?> resolveBeanClass(@Nullable ClassLoader classLoader) throws Class
    return resolvedClass;
 }	
 ```
+
