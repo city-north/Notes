@@ -11,8 +11,6 @@
 private String path;
 ```
 
-
-
 ## DEMO
 
 ```java
