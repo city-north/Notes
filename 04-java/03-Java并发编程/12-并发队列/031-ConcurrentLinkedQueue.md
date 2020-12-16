@@ -1,6 +1,8 @@
 # ConcurrentLinkedQueue
 
-## 是什么
+[TOC]
+
+## ConcurrentLinkedQueue是什么
 
 ConcurrentLinkedQueue 是一个线程安全的, **无界 非阻塞队列**, 其底层使用单向链表数据结构来保存队列元素,每个元素包装成一个 Node 节点 , 对列是靠**头节点** 和 **尾结点**来维护的 
 
