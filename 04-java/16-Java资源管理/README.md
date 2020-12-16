@@ -2,6 +2,14 @@
 
 [TOC]
 
+## 简介
+
+Java中的资源可以分为三类
+
+- ClassLoader
+- File
+- URL
+
 | 职责         | 说明                                                         |
 | ------------ | ------------------------------------------------------------ |
 | 面向资源     | 文件系统<br />artifact(jar,war, ear文件) 远程资源            |
@@ -16,6 +24,8 @@
 - 基于 java.net.URLStreamHandler
 
 #### 基于java.net.URLStreamHandlerFactory
+
+Tomcat就是使用这种方式扩展,缺陷是单ClassLoader只有一次
 
 ![image-20201211141628919](../../assets/image-20201211141628919.png)
 
