@@ -1,12 +1,10 @@
 # Locale对象详解
 
-- [Locale简介](#Locale简介)
-- [什么是locale-sensitive](#什么是locale-sensitive)
-- [locale-sensitive的SPI](#locale-sensitive的SPI)
-
-一个国际化的项目如何知道自己应该用哪种合适的语言或地区呢? Locale对象
+[TOC]
 
 ## Locale简介
+
+一个国际化的项目如何知道自己应该用哪种合适的语言或地区呢? Locale对象
 
 一个Locale对象有两部分组成
 

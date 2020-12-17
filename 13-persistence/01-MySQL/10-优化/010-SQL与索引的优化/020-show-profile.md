@@ -1,4 +1,8 @@
-# SHOW PROFILE
+# 020-show-profile
+
+[TOC]
+
+## 简介
 
 > https://dev.mysql.com/doc/refman/5.7/en/show-profile.html
 

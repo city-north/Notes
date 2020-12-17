@@ -11,6 +11,7 @@ import java.net.Socket;
  * @author EricChen 2020/11/30 22:03
  */
 public class PortScaner {
+    public String app;
 
     public static void main(String[] args) {
         String host = "localhost";
@@ -20,6 +21,14 @@ public class PortScaner {
             } catch (IOException e) {
                 System.out.println("can not connect to port " + port);
             }
+        }
+    }
+
+     class Apple {
+
+
+        public  String getApp() {
+            return PortScaner.app;
         }
     }
 }

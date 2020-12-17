@@ -1,19 +1,16 @@
 # InnoDB Change Buffer 写缓冲
 
+[TOC]
+
+## 参考文档
+
 写缓冲是 buffer-pool 的一部分 
 
 > https://dev.mysql.com/doc/refman/5.7/en/innodb-change-buffer.html
 
 - [缓冲池-buffer-pool.md](08-缓冲池-buffer-pool.md) 
 
-## 目录
-
-- [使用ChangeBuffer的两个同时满足的条件](#使用ChangeBuffer的两个同时满足的条件)
-
-- [为什么要有写缓冲](#为什么要有写缓冲)
-- [为什么主键修改不需要ChangeBuffer](#为什么主键修改不需要ChangeBuffer)
-- [为什么辅助索引修改时需要ChangeBuffer](#为什么辅助索引修改时需要ChangeBuffer)
-- [使用ChangeBuffer的两个同时满足的条件](#使用ChangeBuffer的两个同时满足的条件)
+## 图示
 
 ![image-20200313211319713](../../../assets/image-20200313211319713-7629580.png)
 
