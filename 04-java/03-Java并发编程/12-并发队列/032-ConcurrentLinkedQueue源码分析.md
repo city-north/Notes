@@ -1,5 +1,9 @@
 # ConcurrentLinkedQueue
 
+[TOC]
+
+## 图示
+
 [ConcurrentLinkedQueue 基础](031-ConcurrentLinkedQueue.md) 
 
 
@@ -126,8 +130,6 @@ public boolean add(E e) {
   return offer(e);
 }
 ```
-
-
 
 #### poll操作
 

@@ -1,5 +1,7 @@
 # CyclicBarrier 内存屏障
 
+[TOC]
+
 ## 为什么要有CyclicBarrier
 
 我们都知道， CountDownLatch 在解决多线程同步方面相对于调用线程的 join 方法已经有了不少优化

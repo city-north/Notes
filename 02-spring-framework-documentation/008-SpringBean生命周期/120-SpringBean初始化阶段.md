@@ -35,7 +35,7 @@ public class SpringBeanInitializationDemo {
 }
 ```
 
-#### BeanInitializationDemo定义
+### BeanInitializationDemo定义
 
 ```java
 public class BeanInitializationDemo implements InitializingBean {
@@ -60,7 +60,7 @@ public class BeanInitializationDemo implements InitializingBean {
 }
 ```
 
-## @PostConstruct(依赖注解驱动)
+### @PostConstruct(依赖注解驱动)
 
 执行原理,通过CommonAnnotationBeanPostProcessor后置处理器完成 
 
@@ -146,7 +146,7 @@ public Object postProcessBeforeInitialization(Object bean, String beanName) thro
 
 
 
-## 实现InitializingBean接口的afterPropertiesSet()方法
+### 实现InitializingBean接口的afterPropertiesSet()方法
 
 堆栈信息
 
@@ -193,7 +193,7 @@ protected void invokeInitMethods(String beanName, final Object bean, @Nullable R
 }
 ```
 
-## 自定义初始化方法
+### 自定义初始化方法
 
 ```java
 customInitMethod:25, BeanInitializationDemo (cn.eccto.study.springframework.lifecycle.demoBean)
