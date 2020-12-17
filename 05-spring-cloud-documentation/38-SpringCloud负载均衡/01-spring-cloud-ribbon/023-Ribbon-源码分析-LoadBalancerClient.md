@@ -1,6 +1,12 @@
 # Ribbon源码分析LoadBalancerClient
 
+[TOC]
+
+## LoadBalancerClient是什么
+
 LoadBalancerClient是Ribbon项目的核心类之一，可以在RestTemplate发送网络请求时替代RestTemplate进行网络调用
+
+## LoadBalancerClient的定义
 
 ```java
 // LoadBalancerClient.java
@@ -24,6 +30,8 @@ public interface ServiceInstanceChooser {
     ServiceInstance choose(String serviceId);
 }
 ```
+
+
 
 RibbonLoadBalancerClient是LoadBalancerClient的实现类之一，它的execute方法会首先使用ILoadBalancer来选择服务器实例(Server)，然后将该服务器实例封装成RibbonServer对象，最后再调用LoadBalancerRequest的apply方法进行网络请求的处理。excute方法的具体实现如下所示：
 

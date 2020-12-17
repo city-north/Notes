@@ -1,10 +1,6 @@
 # LoadBalancer源码分析
 
-## 目录
-
-- [LoadBalancer是什么](#LoadBalancer是什么)
-- [怎么获得ILoadBalancer](#怎么获得ILoadBalancer)
-- 负载均衡
+[TOC]
 
 ## LoadBalancer是什么
 
@@ -12,24 +8,11 @@ ILoadBalancer是Ribbon的关键类之一，它是定义负载均衡操作过程�
 
 Ribbon通过**SpringClientFactory**工厂类的getLoadBalancer方法可以获取ILoadBalancer实例。
 
-## 怎么获得ILoadBalancer
+## 创建ILoadBalancer
 
-根据Ribbon的组件实例化机制，ILoadBalnacer实例是在RibbonAutoConfiguration中被创建生成的。
-SpringClientFactory中的实例都是RibbonClientConfiguration或者自定义Configuration配置类创建的Bean实例。
+根据Ribbon的组件实例化机制，ILoadBalnacer 实例是在 RibbonClientConfiguration中被创建生成的。
 
-RibbonClientConfiguration还创建了IRule、IPing和ServerList等相关组件的实例。使用者可以通过自定义配置类给出上述几个组件的不同实例。
-
-- ZoneAwareLoadBalancer是ILoadBalancer接口的实现类之一，它是Ribbon默认的ILoadBalancer接口的实例。
-
-![image-20200914201010709](../../../assets/image-20200914201010709.png)
-
-
-
-
-
-
-
-RibbonClientConfiguration中有关 ZoneAwareLoadBalancer 的配置如下所示：
+ZoneAwareLoadBalancer是ILoadBalancer接口的实现类之一，它是Ribbon默认的ILoadBalancer接口的实例。
 
 ```java
 //RibbonClientConfiguration.java
@@ -43,6 +26,42 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
     }
     return new ZoneAwareLoadBalancer〈〉(config, rule, ping, serverList,
             serverListFilter, serverListUpdater);
+}
+```
+
+![image-20200914201010709](../../../assets/image-20200914201010709.png)
+
+
+
+## 创建IRule
+
+IRule代表负责均衡的策略
+
+```java
+@Bean
+@ConditionalOnMissingBean
+public IRule ribbonRule(IClientConfig config) {
+  if (this.propertiesFactory.isSet(IRule.class, name)) {
+    return this.propertiesFactory.get(IRule.class, config, name);
+  }
+  ZoneAvoidanceRule rule = new ZoneAvoidanceRule();
+  rule.initWithNiwsConfig(config);
+  return rule;
+}
+```
+
+## 创建IPing
+
+```java
+@Bean
+@ConditionalOnMissingBean
+public IPing ribbonPing(IClientConfig config) {
+  //读取客户配置
+  if (this.propertiesFactory.isSet(IPing.class, name)) {
+    return this.propertiesFactory.get(IPing.class, config, name);
+  }
+  //使用默认配置
+  return new DummyPing();
 }
 ```
 
@@ -146,4 +165,3 @@ public Server chooseServer(Object key) {
 
 
 ![image-20200811205841118](../../../assets/image-20200811205841118.png)
-
