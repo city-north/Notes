@@ -23,12 +23,4 @@ public class PortScaner {
             }
         }
     }
-
-     class Apple {
-
-
-        public  String getApp() {
-            return PortScaner.app;
-        }
-    }
 }

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Book {
     @NotNull
     private String name;
-    @MyLanguage
+//    @MyLanguage
     private String language;
 
     public String getName() {

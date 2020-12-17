@@ -39,8 +39,8 @@ protected void initMessageSource() {
                  logger.debug("Using MessageSource [" + this.messageSource + "]");
              }
          }else {
+           	//Spring兜底实现
              //如果用户并没有定义配置文件，那么使用临时的DelegatingMessageSource以便于作为调用  
-             //getMessage方法的返回
              DelegatingMessageSource dms = new DelegatingMessageSource();
              dms.setParentMessageSource(getInternalParentMessageSource());
              this.messageSource = dms;

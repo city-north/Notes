@@ -31,9 +31,26 @@ public interface MessageSource {
 - defaultMessage—查找失败时返回的默认消息
 - 区域(Locale) : 执行查找的区域设置
 
-## ResourceBundleMessageSource-ResourceBundle支持的消息源
+##### MessageSourceResolvable 是三个参数的聚合
+
+```java
+@FunctionalInterface
+public interface MessageSourceResolvable {
+	@Nullable
+	String[] getCodes();
+
+	@Nullable
+	default Object[] getArguments() {
+		return null;
+	}
+	@Nullable
+	default String getDefaultMessage() {
+		return null;
+	}
+}
+```
 
 
 
-## ReloadableResourceBundleMessageSource-可reload的实现消息源
+
 

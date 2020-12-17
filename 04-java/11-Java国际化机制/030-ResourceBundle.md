@@ -51,7 +51,7 @@ ButtonLabel  -- 兜底
 
 如果找不到,会抛出 MissingResourceException 为了避免抛出这些异常,一定要定义一个base class
 
-## ResouceBoundle两个子类
+## ResourceBundle两个子类
 
 ResouceBoundle 是一个抽象类, 拥有两个子类
 
@@ -84,7 +84,21 @@ while (bundleKeys.hasMoreElements()) {
 
 ### ListResourceBundle-列举实现
 
+硬编码方式实现的国际化方法
+
 ListSourceBundle 通过一个便捷的list管理资源, 么一个 ListSourceBundle 是又一个class file 支持的, 你可以保存任何 指定的Locale读取方式,
+
+## ResourceBundle
+
+
+
+### 
+
+#### 
+
+
+
+
 
 ## ResouceBoundle非常的灵活
 
@@ -146,51 +160,5 @@ Locale = fr_FR
 GDP = 20200
 Population = 58317450
 Literacy = 0.99
-```
-
-## 自定义ResourceBundle的加载
-
-ResourceBundle.Control 可以指定如何定位和初始化resouce bundle ,它定义了一个ResouceBundle.getBundle 工厂方法
-
-```java
-public class RBControl {
-    public static void main(String[] args) {
-        test(Locale.CHINA);
-        test(new Locale("zh", "HK"));
-        test(Locale.TAIWAN);
-        test(Locale.CANADA);
-    }
-
-    private static void test(Locale locale) {
-        ResourceBundle rb = ResourceBundle.getBundle(
-                "messages/RBControl",
-                Locale.CHINA,
-                new ResourceBundle.Control() {
-                    @Override
-                    public List<Locale> getCandidateLocales(String baseName, Locale locale) {
-                        if (baseName == null)
-                            throw new NullPointerException();
-
-                        if (locale.equals(new Locale("zh", "HK"))) {
-                            return Arrays.asList(
-                                    locale,
-                                    Locale.TAIWAN,
-                                    // no Locale.CHINESE here
-                                    Locale.ROOT);
-                        } else if (locale.equals(Locale.TAIWAN)) {
-                            return Arrays.asList(
-                                    locale,
-                                    // no Locale.CHINESE here
-                                    Locale.ROOT);
-                        }
-                        return super.getCandidateLocales(baseName, locale);
-                    }
-                }
-
-        );
-        System.out.println(rb.getString("region"));
-    }
-
-}
 ```
 
