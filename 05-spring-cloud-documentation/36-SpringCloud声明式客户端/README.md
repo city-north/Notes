@@ -1,5 +1,9 @@
 # SpringCloud Feign
 
+[TOC]
+
+## 简介
+
 在使用 SpringCloud 开发微服务应用的时候,各个服务都是以 HTTP 接口的形式对外提供服务,因此在服务消费者调用服务提供者时,底层通过 HTTP Client 的方式调用
 
 - JDK 原生的 URLConnection
@@ -15,7 +19,7 @@ SpringCloud 对 Feign 进行了增强,使得 Feign 支持 SpringMVC 的注解,�
 - 声明式 WebService 客户端, 让 web service 客户端变得更加简单
 - 支持编码器解码器
 - SpringCloud Feign 支持 SpringMVC 注解
-- 可以做到使用 HTTP 请求访问远程服务,就像是调用本地方法一样]
+- 可以做到使用 HTTP 请求访问远程服务,就像是调用本地方法一样
 
 ## Feign 的特性
 
@@ -24,20 +28,6 @@ SpringCloud 对 Feign 进行了增强,使得 Feign 支持 SpringMVC 的注解,�
 - 支持 Hystrix 和它的 Fallback
 - 支持 Ribbon 的负载均衡
 - 支持 HTTP 请求和响应压缩
-
-## 互见法
-
--  [如何引入 feign](../06-spring-cloud-open-feign/01-how-to-included-feign.md) 
--  [覆盖默认的配置](../06-spring-cloud-open-feign/02-overriding-feign-defaults.md) 
--  [手动创建 feign](../06-spring-cloud-open-feign/03-creating-feign-clients-manually.md) 
--  [hystrix-support](../06-spring-cloud-open-feign/04-feign-hystrix-support.md) 
--  [hystrix-fallbacks](../06-spring-cloud-open-feign/05-feign-hystrix-fallbacks.md) 
--  [06-feign-and-primary.md](../06-spring-cloud-open-feign/06-feign-and-primary.md) 
--  [07-feign-inheritance-support.md](../06-spring-cloud-open-feign/07-feign-inheritance-support.md) 
--  [08-feign-request-response-compression.md](../06-spring-cloud-open-feign/08-feign-request-response-compression.md) 
--  [09-feign-logging.md](../06-spring-cloud-open-feign/09-feign-logging.md) 
--  [10-feign-@querymap-support.md](../06-spring-cloud-open-feign/10-feign-@querymap-support.md) 
--  [11-hateoas-support.md](../06-spring-cloud-open-feign/11-hateoas-support.md) 
 
 ## Feign 的工作流程
 
@@ -49,10 +39,6 @@ SpringCloud 对 Feign 进行了增强,使得 Feign 支持 SpringMVC 的注解,�
   - Client 可以是 Apache  的 HttpClient
   - Client 可以是 OKhttp
 - Client 被封装到 LoadBalanceClient 类,这个类结合 Ribbon 负载均衡发起服务之间的调用
-
-
-
-
 
 
 

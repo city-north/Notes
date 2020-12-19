@@ -1,5 +1,9 @@
 # Feign 的工作原理
 
+[TOC]
+
+## Feign工作的基本流程
+
 - 在微服务开发时,我们会在主程序使用 @EnableFeignClients 注解开启对 Feign Client 扫描加载处理,根据 Feign Client 的规范,定义接口并添加 @FeignClients 注解
 
 - 当程序启动时,会进行包扫描,扫描所有标注 @FeignClients 的注解的类, 并将这些信息注入到 SpringIOC 容器中,当定义 Feign 接口的方法被调用时, 通过 **JDK 代理的方式** 生成具体的 RestTemplate 
@@ -15,6 +19,8 @@
   - 也可以是 OKhttp
 
 - 最后 Client 被封装到 LoadBalanceClient 类, 这个类交给 Ribbon 负载均衡发起服务之间的调用
+
+## 图示
 
 ![image-20200726132143323](../../assets/image-20200726132143323.png)
 
