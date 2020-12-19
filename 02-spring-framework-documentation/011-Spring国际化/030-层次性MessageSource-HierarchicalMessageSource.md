@@ -21,3 +21,4 @@ public interface HierarchicalMessageSource extends MessageSource {
 ## 为什么要有层次性
 
 当前找不到的时候,可以去parent里找,拓展了搜索路径,增强了弹性和代码复用
+

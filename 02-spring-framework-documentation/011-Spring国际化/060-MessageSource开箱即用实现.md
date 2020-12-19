@@ -6,8 +6,6 @@
 
 ### ResourceBundleMessageSource-ResourceBundle支持的消息源
 
-
-
 ```
 org.springframework.context.support.ResourceBundleMessageSource
 ```
@@ -17,13 +15,7 @@ org.springframework.context.support.ResourceBundleMessageSource
 - 利用ResourceBoundle导入文案(作为存储介质)
 - 利用MessageFormat进行文本格式的转换(格式转换)
 
-
-
-
-
 ![image-20201217211156231](../../assets/image-20201217211156231.png)
-
-
 
 ### ReloadableResourceBundleMessageSource-可reload的实现消息源
 
@@ -32,6 +24,8 @@ org.springframework.context.support.ResourceBundleMessageSource
 ```
 org.springframework.context.support.ReloadableResourceBundleMessageSource
 ```
+
+
 
 ### StaticMessageSource-静态的MessageSource
 
