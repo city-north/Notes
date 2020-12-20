@@ -16,40 +16,55 @@
 它描述了
 
 - 一种语言
-- 一个位置(通常包含)
+- 可选的一个国家或地区
 - 一段脚本(可选, 自 JavaEE7 开始支持)
-- 一个变体(可选)
+- 可选的一个变体
+- 可选的一个扩展
 
-比如
+#### 一种语言
 
-#### 在美国
+由2个或者3个小写字母表示,例如 en(英语), de(德语), zh中文
 
-Locale 对象包含
+<img src="../../assets/image-20201220124526090.png" alt="image-20201220124526090" style="zoom:67%;" />
 
-- Language=English
-- location=United States
 
-#### 在德国
 
-- language=German
-- location=Germary
+#### 一段脚本(可选, 自 JavaEE7 开始支持)
 
-#### 在瑞士
+可选的一段脚本，由首字母大写的四个字母表示，例如Latn（拉丁文）、Cyrl（西里尔文）和Hant（繁体中文字符）。这个部分很有用，有些中文读者更喜欢阅读繁体中文而不是简体中文。
 
-瑞士有四种官方语言, 德语, 法语, 意大利语, 力拓罗曼私语
+#### 可选的一个国家或地区
 
-一个说德语的瑞士人使用的Locale是
+由2个大写字母或3个数字表示，例如US（美国）和CH（瑞士）
 
-- language=German
-- location-Switzerland
+<img src="../../assets/image-20201220124738112.png" alt="image-20201220124738112" style="zoom:67%;" />
 
-虽然这个Locale 和德国 的locale 很相似,但是 货币会被表示成瑞士法郎而不是欧元
+#### 可选的一个变体
 
-如果只设置了语言, 比如
+用于指定各种杂项特性，例如方言和拼写规则。变体现在已经很少使用了。过去曾经有一种挪威语的变体“尼诺斯克语”，但是它现在已经用另一种不同的代码nn来表示了。过去曾经用于日本帝国历和泰语数字的变体现在也都被表示成了扩展。
 
-- language=German
+```
+String outputString = new String();
+Locale[] thaiLocale = {
+             new Locale("th"),
+             new Locale("th", "TH"),
+             new Locale("th", "TH", "TH")
+         };
 
-那么Locale 就不能处理国家相关的问题, 比如货币
+for (Locale locale : thaiLocale) {
+    NumberFormat nf = NumberFormat.getNumberInstance(locale);
+    outputString = outputString + locale.toString() + ": ";
+    outputString = outputString + nf.format(573.34) + "\n";
+}
+```
+
+
+
+#### 可选的一个扩展
+
+扩展描述了日历（例如日本历）和数字（替代西方数字的泰语数字）等内容的本地偏好。Unicode标准规范了其中的某些扩展，这些扩展应该以u-和两个字母代码开头，这两个字母的代码指定了该扩展处理的是日历（ca）还是数字（nu），或者是其他内容。例如，扩展u-nu-thai表示使用泰语数字。其他扩展是完全任意的，并且以x-开头，例如x-java。
+
+
 
 ## Locale对象遵循的标准
 
@@ -152,40 +167,7 @@ The following table contains several sample country and region codes.
 | `RU`     | `RUS`    | `643`        | Russian Federation |
 | `US`     | `USA`    | `840`        | United States      |
 
-### 变码 Variant Code
-
-The optional `variant` code can be used to further distinguish your `Locale`. For example, the variant code can be used to indicate dialectical differences that are not covered by the region code.
-
-------
-
-**Version Note:** Prior to the Java SE 7 release, the variant code was sometimes used to identify differences that were not specific to the language or region. For example, it might have been used to identify differences between computing platforms, such as Windows or UNIX. Under the IETF BCP 47 standard, this use is discouraged.
-
-To define non-language-specific variations relevant to your environment, use the extensions mechanism, as explained in [BCP 47 Extensions](https://docs.oracle.com/javase/tutorial/i18n/locale/extensions.html).
-
-------
-
-As of the Java SE 7 release, which conforms to the IETF BCP 47 standard, the variant code is used specifically to indicate additional variations that define a language or its dialects. The IETF BCP 47 standard imposes syntactic restrictions on the variant subtag. You can see a list of variant codes (search for *variant*) at http://www.iana.org/assignments/language-subtag-registry.
-
-For example, Java SE uses the variant code to support the Thai language. By convention, a `NumberFormat` object for the `th` and `th_TH` locales will use common Arabic digit shapes, or Arabic numerals, to format Thai numbers. However, a `NumberFormat` for the `th_TH_TH` locale uses Thai digit shapes. The excerpt from [`ThaiDigits.java`](https://docs.oracle.com/javase/tutorial/i18n/locale/examples/ThaiDigits.java) demonstrates this:
-
-```
-String outputString = new String();
-Locale[] thaiLocale = {
-             new Locale("th"),
-             new Locale("th", "TH"),
-             new Locale("th", "TH", "TH")
-         };
-
-for (Locale locale : thaiLocale) {
-    NumberFormat nf = NumberFormat.getNumberInstance(locale);
-    outputString = outputString + locale.toString() + ": ";
-    outputString = outputString + nf.format(573.34) + "\n";
-}
-```
-
-The following is a screenshot of this sample:
-
-## locale-sensitive的SPI
+## locale-敏感的SPI
 
 - `BreakIterator` objects
 - `Collator` objects

@@ -1,14 +1,10 @@
-# UndoLog
+# UndoLog (撤销日志或回滚日志)
 
 ## 目录
 
-- [什么是undolog](#什么是undolog)
-- [存储在哪里](#存储在哪里)
-- [相关配置](#相关配置)
+[TOC]
 
-undolog (撤销日志或回滚日志)
-
-## 什么是undolog
+## 什么是UndoLog 
 
 记录了事务发生之前的数据状态(不包括select )。
 

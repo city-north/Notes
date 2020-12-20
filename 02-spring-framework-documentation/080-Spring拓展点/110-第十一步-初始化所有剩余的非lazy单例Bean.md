@@ -2,6 +2,14 @@
 
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
+[TOC]
+
+## 主要工作
+
+完成BeanFactory的初始化工作，其中包括ConversionService的设置、配置冻结以及非延迟加载的bean的初始化工作。
+
+## preInstantiateSingletons
+
 完成BeanFactory的初始化工作，其中包括ConversionService的设置、配置冻结以及非延迟加载的bean的初始化工作。
 
 ```java

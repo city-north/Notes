@@ -4,17 +4,28 @@
 
 ## 目录
 
+[TOC]
+
+## 简介
+
 在Spring中还提供了Lifecycle接口，Lifecycle中包含start/stop方法，实现此接口后Spring会保证在启动的时候调用其start方法开始生命周期，并在Spring关闭的时候调用stop方法来结束生命周期，通常用来配置后台程序，在启动后一直运行（如对MQ进行轮询等）。而ApplicationContext的初始化最后正是保证了这一功能的实现。
 
-      protected void finishRefresh() {
-      		initLifecycleProcessor();
+    	protected void finishRefresh() {
+    		// Clear context-level resource caches (such as ASM metadata from scanning).
+    		clearResourceCaches();
     
-         // Propagate refresh to lifecycle processor first.
-         getLifecycleProcessor().onRefresh();
+    		// Initialize lifecycle processor for this context.
+    		initLifecycleProcessor();
     
-         // Publish the final event.
-         publishEvent(new ContextRefreshedEvent(this));
-    }
+    		// Propagate refresh to lifecycle processor first.
+    		getLifecycleProcessor().onRefresh();
+    
+    		// Publish the final event.
+    		publishEvent(new ContextRefreshedEvent(this));
+    
+    		// Participate in LiveBeansView MBean, if active.
+    		LiveBeansView.registerApplicationContext(this);
+    	}
 ## initLifecycleProcessor
 
 当ApplicationContext启动或停止时，它会通过LifecycleProcessor来与所有声明的bean的周期做状态更新，而在LifecycleProcessor的使用前首先需要初始化。

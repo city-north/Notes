@@ -1,5 +1,7 @@
 # 检测parentBeanFactory
 
+[TOC]
+
 从代码上看，如果缓存没有数据的话直接转到父类工厂上去加载了，这是为什么呢？
 
 ## 源码
@@ -29,11 +31,7 @@ if (parentBeanFactory != null && !containsBeanDefinition(beanName)) {
 }
 ```
 
-
-
 可能读者忽略了一个很重要的判断条件：parentBeanFactory != null && !containsBean Definition (beanName)，parentBeanFactory != null。
-
-
 
 ![image-20200929211813368](../../assets/image-20200929211813368.png)
 

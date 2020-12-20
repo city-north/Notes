@@ -25,7 +25,11 @@ org.springframework.context.support.ResourceBundleMessageSource
 org.springframework.context.support.ReloadableResourceBundleMessageSource
 ```
 
-
-
 ### StaticMessageSource-静态的MessageSource
+
+使用addMessage 方法加入到内存中存储
+
+```
+private final Map<String, Map<Locale, MessageHolder>> messageMap = new HashMap<>();
+```
 

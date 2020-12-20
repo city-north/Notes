@@ -1,5 +1,7 @@
 # Eureka 的设计理念
 
+[TOC]
+
 > https://medium.com/knerd/eureka-why-you-shouldnt-use-zookeeper-for-service-discovery-4932c5c7e764
 >
 > 在生产实践中,服务注册一级发现中心保留可用以及过期的数据总比丢失可用的数据好

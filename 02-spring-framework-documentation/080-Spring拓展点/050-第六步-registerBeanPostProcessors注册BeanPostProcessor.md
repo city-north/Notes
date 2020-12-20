@@ -1,5 +1,9 @@
 # 第六步-registerBeanPostProcessors注册BeanPostProcessor
 
+[TOC]
+
+
+
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
 - [BeanPostProcessor介绍](#BeanPostProcessor介绍)

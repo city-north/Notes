@@ -1,5 +1,9 @@
 # BinLog 和 RedoLog 和 UndoLog
 
+[TOC]
+
+## 简介
+
 - BinLog 二进制日志
 
 可以理解为存储的 sql 语句和其逆向的语句,用于主从复制和数据库基于时间点还原
