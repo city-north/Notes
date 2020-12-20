@@ -33,12 +33,7 @@ public class MessageSourceAwareExample {
         private MessageSource messageSource;
 
         public void doSomething() {
-            System.out.println(messageSource.getMessage("app.name", new Object[]{"Joe"},Locale.SIMPLIFIED_CHINESE));
-        }
-
-        @Override
-        public void setMessageSource(MessageSource messageSource) {
-            this.messageSource = messageSource;
+            SysV
 
         }
     }
