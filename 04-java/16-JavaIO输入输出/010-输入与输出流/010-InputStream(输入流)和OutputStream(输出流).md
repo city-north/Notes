@@ -119,7 +119,7 @@ void	reset()//将此流重新定位到上次在此输入流上调用 mark方法�
 
 Java的基本输出流类是
 
-```
+```java
 java.io.OutputStream;
 ```
 
@@ -179,12 +179,11 @@ write方法接受一个0-255之间的整数,将对应的字节写入到输出流
 ```
 
 ```java
-    public static void copy5(String src, String dest) throws IOException {
-        FileOutputStream out = new FileOutputStream(dest);
-        out.write(32);  //!
-        out.write(289); //!
-        out.close();
-    }
+public static void copy5(String src, String dest) throws IOException {
+  FileOutputStream out = new FileOutputStream(dest);
+  out.write(32);  //!
+  out.write(289); //!
+  out.close();
 }
 ```
 

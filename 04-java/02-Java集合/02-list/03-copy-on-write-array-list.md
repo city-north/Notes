@@ -1,12 +1,10 @@
 # CopyOnWriteArrayList
 
+[TOC]
+
 ## 目录
 
 [COW-CopyOnWrite写时复制机制.md](../../../99-unclassified/01-COW-CopyOnWrite写时复制机制.md) 
-
-
-
-----
 
 CopyOnWriteArrayList 是一个线程安全的无界数组 , 使用CopyOnWrite 写时复制的策略来保证 list 的一致性, 而
 
@@ -35,8 +33,6 @@ CopyOnWriteArraySet 底层也是用它实现的
 - 何时初始化 list, 初始化的 list 元素个数为多少, list 是有限大小吗 ?
 - 如何保证线程安全, 比如多个线程进行读写时如何保证是线程安全的 ?
 - 如何保证使用迭代器遍历 list 的数据一致性
-
-
 
 ## 源码解析
 
