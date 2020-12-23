@@ -60,7 +60,6 @@ class UserProcessor {
   public void process(@Valid User user) {
     System.out.println(user);
   }
-
 }
 
 class User {

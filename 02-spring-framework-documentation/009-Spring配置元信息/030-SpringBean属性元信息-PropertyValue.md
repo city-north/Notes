@@ -8,6 +8,8 @@
 
 ## 一言蔽之
 
+
+
 ## SpringBean属性元信息的分类
 
 - Bean属性抽象-PropertyValues
@@ -76,6 +78,53 @@ MutablePropertyValues是PropertyValues的实现类
 ```java
 MutablePropertyValues pvs = beanDefinition.getPropertyValues();
 ```
+
+## Propertyvalues的特征
+
+| 特征         | 说明                                                         |
+| ------------ | ------------------------------------------------------------ |
+| 数据来源     | BeanDefinition, 主要来源XML资源配置BeanDefinition            |
+| 数据结构     | 由一个或者多个PropertyValue组成                              |
+| 成员结构     | PropertyValue包含属性名称,以及属性值(包括原始值和类型转换后的值) |
+| 常见实现     | MutablePropertyValues                                        |
+| Web拓展实现  | ServletConfigPropertyValues<br />SerletRequestParameterPropertyValues<br /> |
+| 相关声明周期 | InstantiationAwareBeanPostProcessor#postProcessProperties<br />[080-SpringBean实例化后阶段.md](../008-SpringBean生命周期/080-SpringBean实例化后阶段.md) |
+
+## Propertyvalue源码
+
+Propertyvalue 是一个数据结构,包含了key-value形式,包含了属性名以及对应的值
+
+```java
+public class PropertyValue extends BeanMetadataAttributeAccessor implements Serializable {
+
+	private final String name;
+
+  //原始值
+	@Nullable
+	private final Object value;
+
+  //是否是可选的
+	private boolean optional = false;
+
+  //是否已经转换
+	private boolean converted = false;
+
+  //转换后的值
+	@Nullable
+	private Object convertedValue;
+
+	/**是否有必要进行转换 */
+	@Nullable
+	volatile Boolean conversionNecessary;
+
+	/**  */
+	@Nullable
+	transient volatile Object resolvedTokens;
+
+}
+```
+
+
 
 ### Bean属性上下文存储-AttributeAccessor
 
