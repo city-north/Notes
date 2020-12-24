@@ -32,8 +32,8 @@ public class MessageSourceAwareExample {
     public static class MyBean implements MessageSourceAware {
         private MessageSource messageSource;
 
-        public void doSomething() {
-            SysV
+        @Override
+        public void setMessageSource(MessageSource messageSource) {
 
         }
     }
@@ -41,6 +41,5 @@ public class MessageSourceAwareExample {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MessageSourceAwareExample.class);
         MyBean bean = context.getBean(MyBean.class);
-        bean.doSomething();
     }
 }

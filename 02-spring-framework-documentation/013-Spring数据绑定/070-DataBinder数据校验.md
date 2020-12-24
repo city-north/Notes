@@ -2,6 +2,20 @@
 
 [TOC]
 
+## DataBinder是什么
+
+
+
+
+
+## DataBinderUML
+
+![image-20201224124446547](../../assets/image-20201224124446547.png)
+
+
+
+## 源码分析
+
 ```java
 public void bind(PropertyValues pvs) {
    MutablePropertyValues mpvs = (pvs instanceof MutablePropertyValues ?

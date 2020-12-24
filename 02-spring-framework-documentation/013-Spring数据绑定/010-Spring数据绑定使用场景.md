@@ -29,8 +29,6 @@ org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#pop
 
 ```java
 protected void applyPropertyValues(String beanName, BeanDefinition mbd, BeanWrapper bw, PropertyValues pvs) {
-  
-  
 }
 ```
 
