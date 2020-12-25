@@ -6,7 +6,7 @@
 
 ### ResourceBundleMessageSource-ResourceBundle支持的消息源
 
-```
+```java
 org.springframework.context.support.ResourceBundleMessageSource
 ```
 
@@ -21,7 +21,7 @@ org.springframework.context.support.ResourceBundleMessageSource
 
 可重载Properties + MessageFormat 组合 MessageSource实现
 
-```
+```java
 org.springframework.context.support.ReloadableResourceBundleMessageSource
 ```
 
@@ -29,7 +29,7 @@ org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 使用addMessage 方法加入到内存中存储
 
-```
+```java
 private final Map<String, Map<Locale, MessageHolder>> messageMap = new HashMap<>();
 ```
 

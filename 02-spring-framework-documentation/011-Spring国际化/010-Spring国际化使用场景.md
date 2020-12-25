@@ -11,7 +11,11 @@
 
 ## 普通国际化文案
 
+直接调用 getMessage 方法获取国际化文案
 
+```java
+MessageSource#getMessage(String code, Object[] args, String default, Locale loc)MessageSource#
+```
 
 ## Bean Validation校验国际化文案
 

@@ -14,7 +14,7 @@
 
 ## Spring常规校验
 
-
+对SpringBean对象进行校验，
 
 ## Spring数据绑定(DataBinder)
 

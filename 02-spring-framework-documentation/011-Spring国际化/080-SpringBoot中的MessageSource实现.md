@@ -1,8 +1,10 @@
+
+
 # 080-SpringBoot中的MessageSource实现
 
 [TOC]
 
-## SpringBoot为什么要新建 MessageSource Bean?
+## SpringBoot为什么要新建MessageSourceBean?
 
 - AbstractApplicationContext 的实现决定了MessageSource内建实现
 - SpringBoot通过外部化配置简化MessageSource Bean的构建

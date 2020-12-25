@@ -32,8 +32,6 @@ protected void applyPropertyValues(String beanName, BeanDefinition mbd, BeanWrap
 }
 ```
 
-
-
 ### Spring数据绑定类(DataBinder)
 
  [020-Spring数据绑定组件.md](020-Spring数据绑定组件.md) 

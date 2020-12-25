@@ -11,6 +11,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.StringValueResolver;
 
+import java.util.Properties;
+
 /**
  * <p>
  * TODO
@@ -19,7 +21,7 @@ import org.springframework.util.StringValueResolver;
  * @author EricChen 2020/11/23 21:16
  */
 @Data
-public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAware, EnvironmentAware,EmbeddedValueResolverAware, ResourceLoaderAware, ApplicationEventPublisherAware, MessageSourceAware, ApplicationContextAware {
+public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAware, EnvironmentAware, EmbeddedValueResolverAware, ResourceLoaderAware, ApplicationEventPublisherAware, MessageSourceAware, ApplicationContextAware {
     private String user;
     private int id;
     private String city;
@@ -27,6 +29,7 @@ public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAwa
     private ClassLoader classLoader;
     private BeanFactory beanFactory;
     private String beanName;
+    private Properties context;
 
     public String getUser() {
         return user;
@@ -106,6 +109,27 @@ public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAwa
     @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
         System.out.println(resourceLoader);
+    }
 
+    public Properties getContext() {
+        return context;
+    }
+
+    public void setContext(Properties context) {
+        this.context = context;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user='" + user + '\'' +
+                ", id=" + id +
+                ", city='" + city + '\'' +
+                ", name='" + name + '\'' +
+                ", classLoader=" + classLoader +
+                ", beanFactory=" + beanFactory +
+                ", beanName='" + beanName + '\'' +
+                ", context=" + context +
+                '}';
     }
 }

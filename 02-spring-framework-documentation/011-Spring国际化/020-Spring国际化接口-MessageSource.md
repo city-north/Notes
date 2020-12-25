@@ -4,7 +4,9 @@
 
 ## 核心接口MessageSource
 
+```java
 org.springframework.context.MessageSource
+```
 
 Spring提供的一个策略策略接口用于解析消息，支持此类消息的参数化和国际化。
 
@@ -12,6 +14,8 @@ Spring提供的一个策略策略接口用于解析消息，支持此类消息�
 
 - org.springframework.context.support.ResourceBundleMessageSource
 - org.springframework.context.support.ReloadableResourceBundleMessageSource
+
+## MessageSource接口
 
 ```java
 public interface MessageSource {

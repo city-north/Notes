@@ -19,7 +19,6 @@
 ```java
 public class StringToPropertiesPropertyEditor extends PropertyEditorSupport {
 
-
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
       //1. Spring框架将文本内容传递到PropertyEditor实现的setAsTest(String)方法
