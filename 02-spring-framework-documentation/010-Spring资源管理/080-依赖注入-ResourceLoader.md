@@ -8,7 +8,7 @@
 2. @Autowired注入ResourceLoader
 3. 注入ApplicationContext作为ResourceLoader
 
-## DEMO
+## 代码实例
 
 ```java
 /**

@@ -4,6 +4,8 @@
 
 ## SpringResource接口拓展
 
+[TOC]
+
 可写资源接口
 
 - org.springframework.core.io.WritableResource
@@ -15,9 +17,7 @@
 
 - org.springframework.core.io.support.EncodedResource
 
-
-
-## DEMO
+## 代码实例
 
 ```java
 /**

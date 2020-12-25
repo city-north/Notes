@@ -6,8 +6,6 @@
 
 因为AbstractApplicationContext 接口本身继承了ResourceLoader ,默认实现在DefaultResourceLoader
 
-
-
 ## ResourceLoader资源加载器继承结构
 
 - ResourceLoader (org.springframework.core.io)
@@ -21,7 +19,7 @@
 
 值得注意的是AbstractApplicationContext,基本上所有的ApplicationContext都继承这个类,也就是说ApplicationContext本身就是一个资源加载器,其默认实现在DefaultResourceLoader中
 
-## DEMO
+## 代码实例
 
 ```java
 /**
