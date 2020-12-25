@@ -29,7 +29,9 @@ public interface InputStreamSource {
 }
 ```
 
-作为Spring资源机制的顶层接口,它规定了获取输入流的方法,也就是一种对流读取的方法,概括了Resouce的最抽象形象
+作为Spring资源机制的顶层接口,它规定了获取输入流的方法,也就是一种对流读取的方法,概括了Resouce的最抽象的功能
+
+`getInputStream()`方法主要作用是定位和打开一个资源，每次调用时都会返回一个新的InputStream， 调用者负责关闭流
 
 ### Resource:只读资源
 
@@ -37,39 +39,21 @@ public interface InputStreamSource {
 
 ```java
 public interface Resource extends InputStreamSource {
-	boolean exists();
-	default boolean isReadable() {
-		return true;
-	}
-	default boolean isOpen() {
-		return false;
-	}
-	default boolean isFile() {
-		return false;
-	}
-	URL getURL() throws IOException;
-	URI getURI() throws IOException;
-	File getFile() throws IOException;
-
-	/**
+    boolean exists();
+    
+    boolean isOpen();
+    URL getURL() throws IOException;
+    //返回资源的描述，用于错误输出，通常情况下是资源URL的全限定名
+    String getDescription();
+    
+ 	/**
 	 * 通过NIO channel方式读取
 	 * @since 5.0
 	 */
 	default ReadableByteChannel readableChannel() throws IOException {
 		return Channels.newChannel(getInputStream());
 	}
-	
-	long contentLength() throws IOException;
-
-	long lastModified() throws IOException;
-
-	Resource createRelative(String relativePath) throws IOException;
-
-	@Nullable
-	String getFilename();
-	String getDescription();
 }
-
 ```
 
 ### WritableResource:可写资源
@@ -98,18 +82,6 @@ public interface WritableResource extends Resource {
 ```java
 package org.springframework.core.io.support;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-
-import org.springframework.core.io.InputStreamSource;
-import org.springframework.core.io.Resource;
-import org.springframework.lang.Nullable;
-import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
-
 /**
  * Holder that combines a {@link Resource} descriptor with a specific encoding
  * or {@code Charset} to be used for reading from the resource.
@@ -125,7 +97,7 @@ public class EncodedResource implements InputStreamSource {
 	@Nullable
 	private final Charset charset;
 
-
+	//可以看出是一个包装器
 	public EncodedResource(Resource resource) {
 		this(resource, null, null);
 	}
@@ -144,7 +116,6 @@ public class EncodedResource implements InputStreamSource {
 		this.encoding = encoding;
 		this.charset = charset;
 	}
-
 
 	public boolean requiresReader() {
 		return (this.encoding != null || this.charset != null);
@@ -165,7 +136,6 @@ public class EncodedResource implements InputStreamSource {
 			return new InputStreamReader(this.resource.getInputStream());
 		}
 	}
-
 	@Override
 	public InputStream getInputStream() throws IOException {
 		return this.resource.getInputStream();

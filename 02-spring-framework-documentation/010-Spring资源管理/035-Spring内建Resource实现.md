@@ -182,9 +182,13 @@ public class FileSystemResource extends AbstractResource implements WritableReso
 
 ```
 
-## UrlResource
+### UrlResource
 
-UrlResource代表使用URL方式的资源, 在获取输入流的时候,底层也是用的Java的URL.openConnection
+UrlResource 实际上包装了一个 `java.net.URL`, 用于兼容 Java NET方式的资源，例如 files， http，ftp 等等
+
+通常情况下都会以一个标准格式String来代表资源，前缀是协议，例如`file:` 访问文件系统的文件, `http:` 根据HTTP协议进行访问, `ftp:` 根据FTP协议进行访问等等
+
+
 
 ```java
 public class UrlResource extends AbstractFileResolvingResource {
@@ -223,4 +227,12 @@ public class UrlResource extends AbstractFileResolvingResource {
 }
 
 ```
+
+UrlResource代表使用URL方式的资源, 在获取输入流的时候,底层也是用的Java的URL.openConnection
+
+### ServletContextResource
+
+一个 为容器 SerlvetContext 资源的实现， 通常情况下是采取root资源的相关联的web应用
+
+它始终支持流访问和URL访问，但允许`java.io.File文件`仅当web应用程序存档扩展并且资源实际位于文件系统上时才进行访问。不管它是在文件系统上展开还是直接从JAR或其他地方（比如数据库）访问它，实际上取决于Servlet容器。
 
