@@ -13,7 +13,7 @@ Reader 和Writer可以处理很多字符集, 如 UFT-8
 
 Java提供了一个体系,处理字符
 
-```
+```java
 java.io.Reader // 类指定读取字符的API
 java.io.Writer ///指定写字符的API
 ```
