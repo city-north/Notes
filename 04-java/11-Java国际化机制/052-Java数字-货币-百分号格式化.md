@@ -14,7 +14,7 @@ java.text.NumberFormat
 
 使用NumberFormat.getNumberInstance(Locale) 方法获取number格式化器
 
-```
+```java
 static public void displayNumber(Locale currentLocale) {
 
     Integer quantity = new Integer(123456);
@@ -44,7 +44,7 @@ static public void displayNumber(Locale currentLocale) {
 
 ## 货币Currencies
 
-```
+```java
 static public void displayCurrency( Locale currentLocale) {
 
     Double currencyAmount = new Double(9876543.21);
@@ -75,7 +75,7 @@ You can also use the methods of the [`NumberFormat`](https://docs.oracle.com/jav
 
 The following code sample shows how to format a percentage.
 
-```
+```java
 static public void displayPercent(Locale currentLocale) {
 
     Double percent = new Double(0.75);

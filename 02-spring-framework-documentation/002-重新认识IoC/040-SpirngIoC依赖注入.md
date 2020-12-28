@@ -1,14 +1,6 @@
 # SpringIoc依赖注入
 
-- 按照名称来注入
-- 根据Bean的类型注入
-  - 单个Bean对象
-  - 集合Bean对象
-- 注入容器内建的Bean对象
-- 注入非Bean对象
-- 注入类型
-  - 实时注入
-  - 延迟注入
+[TOC]
 
 ## Spring IoC的依赖来源
 

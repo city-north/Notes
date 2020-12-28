@@ -8,8 +8,6 @@
 
 Errors对象有多重选型,有时候我们也不好区分
 
-
-
 ## 怎么救赎
 
 Spring Validation 和 Bean  Validator进行适配
@@ -40,10 +38,9 @@ Spring Validation 和 Bean  Validator进行适配
     <context:component-scan base-package="org.geekbang.thinking.in.spring.validation"/>
 
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-
     </bean>
 
-    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+  <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
         <property name="validator" ref="validator"/>
     </bean>
 
@@ -117,3 +114,113 @@ public class SpringBeanValidationDemo {
 ```
 
 我们可以通过setValidationMessageSource方法设置消息源
+
+## 源码
+
+- 入口:注册所有PostProcessor
+
+```java
+org.springframework.context.support.AbstractApplicationContext#refresh
+
+	@Override
+	public void refresh() throws BeansException, IllegalStateException {
+		synchronized (this.startupShutdownMonitor) {
+				//....
+				
+				// Register bean processors that intercept bean creation.
+				registerBeanPostProcessors(beanFactory);
+				
+				....
+			
+	}
+```
+
+初始化我们注册的 MethodValidationPostProcessor
+
+```java
+@SuppressWarnings("serial")
+public class MethodValidationPostProcessor extends AbstractBeanFactoryAwareAdvisingPostProcessor
+		implements InitializingBean {
+
+	private Class<? extends Annotation> validatedAnnotationType = Validated.class;
+
+	@Nullable
+	private Validator validator;
+	
+  //---- 关注点, 拦截的AOP 是Validated.class标注的Bean
+	@Override
+	public void afterPropertiesSet() {
+		Pointcut pointcut = new AnnotationMatchingPointcut(this.validatedAnnotationType, true);
+		this.advisor = new DefaultPointcutAdvisor(pointcut, createMethodValidationAdvice(this.validator));
+	}
+
+	/**
+	 * Create AOP advice for method validation purposes, to be applied
+	 * with a pointcut for the specified 'validated' annotation.
+	 * @param validator the JSR-303 Validator to delegate to
+	 * @return the interceptor to use (typically, but not necessarily,
+	 * a {@link MethodValidationInterceptor} or subclass thereof)
+	 * @since 4.2
+	 */
+	protected Advice createMethodValidationAdvice(@Nullable Validator validator) {
+		return (validator != null ? new MethodValidationInterceptor(validator) : new MethodValidationInterceptor());
+	}
+
+}
+
+
+```
+
+具体切面逻辑
+
+```java
+public class MethodValidationInterceptor implements MethodInterceptor {
+
+	private final Validator validator;
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		// Avoid Validator invocation on FactoryBean.getObjectType/isSingleton
+		if (isFactoryBeanMetadataMethod(invocation.getMethod())) {
+			return invocation.proceed();
+		}
+
+		Class<?>[] groups = determineValidationGroups(invocation);
+
+		// Standard Bean Validation 1.1 API
+		ExecutableValidator execVal = this.validator.forExecutables();
+		Method methodToValidate = invocation.getMethod();
+		Set<ConstraintViolation<Object>> result;
+
+		try {
+      //校验参数
+			result = execVal.validateParameters(
+					invocation.getThis(), methodToValidate, invocation.getArguments(), groups);
+		}
+		catch (IllegalArgumentException ex) {
+			// Probably a generic type mismatch between interface and impl as reported in SPR-12237 / HV-1011
+			// Let's try to find the bridged method on the implementation class...
+			methodToValidate = BridgeMethodResolver.findBridgedMethod(
+					ClassUtils.getMostSpecificMethod(invocation.getMethod(), invocation.getThis().getClass()));
+			result = execVal.validateParameters(
+					invocation.getThis(), methodToValidate, invocation.getArguments(), groups);
+		}
+		if (!result.isEmpty()) {
+			throw new ConstraintViolationException(result);
+		}
+
+		Object returnValue = invocation.proceed();
+		//校验返回值
+		result = execVal.validateReturnValue(invocation.getThis(), methodToValidate, returnValue, groups);
+		if (!result.isEmpty()) {
+			throw new ConstraintViolationException(result);
+		}
+
+		return returnValue;
+	}
+
+
+}
+
+```
+

@@ -1,5 +1,7 @@
 # MySQL InnoDB 锁的基本类型
 
+[TOC]
+
 https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html
 
 官网把锁分成了 8 类。所以我们把前面的两个行级别的锁(Shared and Exclusive Locks)，和两个表级别的锁(Intention Locks)称为锁的基本模式。

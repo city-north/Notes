@@ -1,5 +1,7 @@
 # Redis Cluster
 
+[toc]
+
 > https://redis.io/topics/cluster-tutorial/
 
 Redis集群是Redis提供的分布式数据库防范,集群通用分片(sharding) 来实现数据共享,并提供复制和故障转移功能

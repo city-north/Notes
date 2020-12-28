@@ -1,5 +1,7 @@
 # BeanFactory和ApplicatonContext到底哪个是真正的容器
 
+[TOC]
+
 ## BeanFactory
 
 - Beanfactory接口提供了一些可以管理某种类型**对象**的机制(注意,这里说的是对象,而没有说是bean, 依赖来源并不只是Bean)
