@@ -40,7 +40,7 @@ TypeConverter实际上把两个语义合在一起了
 
 ![image-20201225232826704](../../assets/image-20201225232826704.png)
 
-- PropertyEditorRegistrySupport添加了所有默认的内建的PropertyEditor
+- PropertyEditorRegistrySupport添加了所有默认的内建的PropertyEditor 
 - 如果不能解析，尝试使用ConversionService
 
 ## TypeConverter生命周期
