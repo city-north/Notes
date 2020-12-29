@@ -263,11 +263,11 @@ synchronized 内部包括
 - `synchronized`在收到新的锁请求时首先自旋,如果通过自旋也没有获取锁资源,则将被放入锁竞争队列` ContentionList `中
 - 为了防止锁竞争时 `ContentionList`尾部的元素被大量的并发线程进行 CAS 访问而影响性能, Owner 线程会在释放锁资源时将`ContentionList`中的部分线程移动到 EntryList 中,并制定 EntryList 中的某个线程(一般为先进入的线程)为 `OnDeck` 线程
 - Owner 线程并没有直接把锁传递给  `OnDeck` 线程,而是把锁竞争的权利交给 `OnDeck` ,让 OnDeck 线程重新竞争锁,Java 中把这行为成为"竞争切换" , 该行为牺牲了公平性,但是提高了性能
-
 - 获取到锁的OnDeck线程会变成 Owner 线程,而未获取到锁资源的线程依然会停留在 EntryList 中
 - Owner 线程被 wait 方法阻塞后,会被转移到 WaitSet 队列中,直到某个时刻被 notify 方法或者 notifyAll 方法唤醒,会再次进入 EntryList 中, `ContentionList`  , `EntryList` ,` WaitSet`中的线程均为阻塞状态,该阻塞是由操作系统来完成的(在 LInux内核下是采用 `pthread_mutex_lock`)
+- ![image-20201229173901390](../../../assets/image-20201229173901390.png)
 
-![image-20200629225108668](../../../assets/image-20200629225108668.png)
+
 
 在 `synchronized` 中, 在线程进入 ` ContentionList `之前,等待的线程会先尝试以自旋的方式获取锁,如果获取不到就进入` ContentionList `,该做法对于已经进入队列的线程是不公平的,因此`synchronized`是非公平锁,另外,自旋获取锁的线程也可以直接抢占 Deck 线程的锁资源
 

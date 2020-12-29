@@ -1,4 +1,6 @@
-# 临键锁 next-key-锁
+# 04-MySQL临键锁next-key-锁
+
+## MySQL三种锁算法图示
 
 ![image-20200826201517598](../../../assets/image-20200826201517598.png)
 

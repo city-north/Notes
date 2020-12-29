@@ -66,8 +66,6 @@ public class FilterOutputStream extends OutputStream {
 
 ```
 
-
-
 ## 过滤器流的定义
 
 过滤器(filter)流可以串链到输入流和输出流上
@@ -102,7 +100,7 @@ FileInputStream fin = new FileInputStream("xxx.txt");
 
 使用BufferedInputStream做一个缓冲, 加速整个过程
 
-```
+```java
 FileInputStream fin = new FileInputStream("xxx.txt");
 BufferedInputStream bin = new BufferedInputStream(fin);//包装器模式
 ```
@@ -111,7 +109,7 @@ BufferedInputStream bin = new BufferedInputStream(fin);//包装器模式
 
 如果我们想使用指定实现类的方法,那么也是一个,直接丢到构造器中
 
-```
+```java
 DataOutputStream dout = new DataOutputStream(
 			new BufferdOutputStream(
 					new FileOutputStream("data.txt")

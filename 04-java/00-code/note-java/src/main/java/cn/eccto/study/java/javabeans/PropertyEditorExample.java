@@ -1,5 +1,6 @@
 package cn.eccto.study.java.javabeans;
 
+
 import com.google.common.collect.ImmutableMap;
 
 import java.beans.*;

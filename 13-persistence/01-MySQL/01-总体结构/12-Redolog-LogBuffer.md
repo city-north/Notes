@@ -1,15 +1,14 @@
 # Redo Log -Log buffer-重做日志
 
-所属位置:   [LogBuffer-redoLog在MySQL的位置](12-Redolog-LogBuffer.md#BufferPool的组成) 
+所属位置:   
 
-## 目录
+[TOC]
 
-- [什么是重做日志](#什么是重做日志)
-- [什么时候刷新缓冲到日志文件](#什么时候刷新缓冲到日志文件)
+## 其他参考资料
 
-- [重做日志具体在哪里](#重做日志具体在哪里)
+- [LogBuffer-redoLog在MySQL的位置](12-Redolog-LogBuffer.md#BufferPool的组成) 
 
-## 什么是重做日志
+## 什么是RedoLog重做日志
 
 ![image-20200313211659949](../../../assets/image-20200313211659949-7629590.png)
 

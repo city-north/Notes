@@ -14,11 +14,11 @@ PrintStream是一个过滤器流,System.out 就是一个 PrintStream
 
 ## PrintStream为什么是瘟疫
 
-- [println换行是平台有关的](#println换行是平台有关的)
-- [PrintStream想当然的使用所在平台的默认编码方式](#PrintStream想当然的使用所在平台的默认编码方式)
-- [PrintStream生吞了所有异常](#PrintStream生吞了所有异常)
+- println换行是平台有关的
+- PrintStream想当然的使用所在平台的默认编码方式
+- PrintStream生吞了所有异常
 
-### println换行是平台有关的
+### 缺点1:println换行是平台有关的
 
 PrintStream的输出是与平台有关的,取决于运行代码的机器,
 
@@ -32,13 +32,13 @@ PrintStream的输出是与平台有关的,取决于运行代码的机器,
 
 那么你使用println换行输出的话,很可能在windows可以工作,在linux或者mac无法使用
 
-### PrintStream想当然的使用所在平台的默认编码方式
+### 缺点2:PrintStream想当然的使用所在平台的默认编码方式
 
 PrintStream想当然的使用所在平台的默认编码方式,这种编码可能不是服务器或者客户端想要的
 
 PrintStream不提供任何改变默认编码的机制
 
-## PrintStream生吞了所有异常
+### 缺点3:PrintStream生吞了所有异常
 
 这使得PrintStream 适合作为教科书程序,因为要讲述简单的控制台输出,不用让学生先去学习异常处理相关知识
 
