@@ -1,5 +1,9 @@
 # 类型处理器（typeHandlers）
 
+[TOC]
+
+# 什么是TypeHandler
+
 由于 Java 类型和数据库的 JDBC 类型不是一一对应的 (比如 String 与 varchar)， 所以我们把 Java 对象转换为数据库的值，和把数据库的值转换成 Java 对象，需要经过 一定的转换，这两个方向的转换就要用到 TypeHandler
 
 ##### 为什么实体类对象里面的一个 String 属性，可以保存成数据库里面的 varchar 字段，或者保存成 char 字段?

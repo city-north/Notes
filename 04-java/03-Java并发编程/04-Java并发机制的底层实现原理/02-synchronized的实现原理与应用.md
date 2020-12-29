@@ -50,7 +50,7 @@ public class SynchronizedExample {
 
 当一个线程访问同步代码块时，它首先必须得到锁，退出或者抛出异常时必须释放锁。
 
-## monitorenter 和 monitorexit 指令
+## monitorenter和monitorexit指令
 
 ```java
 public class Synchronized {

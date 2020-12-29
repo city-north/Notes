@@ -1,11 +1,14 @@
 # 070-第七步-初始化消息资源MessageSource
 
+[TOC]
+
+## 图示
+
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
 ## 目录
 
-- [MessageSource的使用方式](#MessageSource的使用方式)
-- [源码分析](#源码分析)
+[TOC]
 
 ## MessageSource的使用方式
 
@@ -61,3 +64,4 @@ public String getMessage(String code, Object args[], Locale locale) throws NoSuc
 ```
 
 其中的getMessageSource()方法正是获取了之前定义的自定义资源配置。
+

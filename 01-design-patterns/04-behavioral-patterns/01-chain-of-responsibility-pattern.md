@@ -1,8 +1,12 @@
 # 责任链模式（Chain of Responsibility Pattern）
 
+[TOC]
+
+## 责任链模式
+
 [参考文章](https://refactoring.guru/design-patterns/chain-of-responsibility)
 
-> **责任链模式**是一种行为设计模式， 允许你将请求沿着处理者链进行发送。 收到请求后， 每个处理者均可对请求进行处理， 或将其传递给链上的下个处理者。
+**责任链模式**是一种行为设计模式， 允许你将请求沿着处理者链进行发送。 收到请求后， 每个处理者均可对请求进行处理， 或将其传递给链上的下个处理者。
 
 
 
@@ -96,3 +100,4 @@ public class ChainClient {
 ## Mybatis 中经典的责任链-Interceptor
 
  [09-plugins.md](../../10-data-access/02-mybatis/09-plugins.md) 
+

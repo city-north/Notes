@@ -1,4 +1,8 @@
-# bean的实例化
+# 004-DI第三步-bean的实例化
+
+[TOC]
+
+## 实例化简介
 
 如果从缓存中得到了bean的原始状态，则需要对bean进行实例化。这里有必要强调一下，缓存中记录的只是最原始的bean状态，并不一定是我们最终想要的bean。
 
@@ -93,56 +97,55 @@
 ## getObjectFromFactoryBean
 
 ```java
-	//Bean工厂生产Bean实例对象
-	protected Object getObjectFromFactoryBean(FactoryBean<?> factory, String beanName, boolean shouldPostProcess) {
-		//Bean工厂是单态模式，并且Bean工厂缓存中存在指定名称的Bean实例对象
-		if (factory.isSingleton() && containsSingleton(beanName)) {
-			//多线程同步，以防止数据不一致
-			synchronized (getSingletonMutex()) {
-				//直接从Bean工厂缓存中获取指定名称的Bean实例对象
-				Object object = this.factoryBeanObjectCache.get(beanName);
-				//Bean工厂缓存中没有指定名称的实例对象，则生产该实例对象
-				if (object == null) {
-					//调用Bean工厂的getObject方法生产指定Bean的实例对象
-					object = doGetObjectFromFactoryBean(factory, beanName);
-					// Only post-process and store if not put there already during getObject() call above
-					// (e.g. because of circular reference processing triggered by custom getBean calls)
-					Object alreadyThere = this.factoryBeanObjectCache.get(beanName);
-					if (alreadyThere != null) {
-						object = alreadyThere;
-					}
-					else {
-						if (shouldPostProcess) {
-							try {
-								object = postProcessObjectFromFactoryBean(object, beanName);
-							}
-							catch (Throwable ex) {
-								throw new BeanCreationException(beanName,
-										"Post-processing of FactoryBean's singleton object failed", ex);
-							}
-						}
-						//将生产的实例对象添加到Bean工厂缓存中
-						this.factoryBeanObjectCache.put(beanName, object);
-					}
-				}
-				return object;
-			}
-		}
-		//调用Bean工厂的getObject方法生产指定Bean的实例对象
-		else {
-			Object object = doGetObjectFromFactoryBean(factory, beanName);
-			if (shouldPostProcess) {
-				try {
-					object = postProcessObjectFromFactoryBean(object, beanName);
-				}
-				catch (Throwable ex) {
-					throw new BeanCreationException(beanName, "Post-processing of FactoryBean's object failed", ex);
-				}
-			}
-			return object;
-		}
-	}
-
+//Bean工厂生产Bean实例对象
+protected Object getObjectFromFactoryBean(FactoryBean<?> factory, String beanName, boolean shouldPostProcess) {
+  //Bean工厂是单态模式，并且Bean工厂缓存中存在指定名称的Bean实例对象
+  if (factory.isSingleton() && containsSingleton(beanName)) {
+    //多线程同步，以防止数据不一致
+    synchronized (getSingletonMutex()) {
+      //直接从Bean工厂缓存中获取指定名称的Bean实例对象
+      Object object = this.factoryBeanObjectCache.get(beanName);
+      //Bean工厂缓存中没有指定名称的实例对象，则生产该实例对象
+      if (object == null) {
+        //调用Bean工厂的getObject方法生产指定Bean的实例对象
+        object = doGetObjectFromFactoryBean(factory, beanName);
+        // Only post-process and store if not put there already during getObject() call above
+        // (e.g. because of circular reference processing triggered by custom getBean calls)
+        Object alreadyThere = this.factoryBeanObjectCache.get(beanName);
+        if (alreadyThere != null) {
+          object = alreadyThere;
+        }
+        else {
+          if (shouldPostProcess) {
+            try {
+              object = postProcessObjectFromFactoryBean(object, beanName);
+            }
+            catch (Throwable ex) {
+              throw new BeanCreationException(beanName,
+                                              "Post-processing of FactoryBean's singleton object failed", ex);
+            }
+          }
+          //将生产的实例对象添加到Bean工厂缓存中
+          this.factoryBeanObjectCache.put(beanName, object);
+        }
+      }
+      return object;
+    }
+  }
+  //调用Bean工厂的getObject方法生产指定Bean的实例对象
+  else {
+    Object object = doGetObjectFromFactoryBean(factory, beanName);
+    if (shouldPostProcess) {
+      try {
+        object = postProcessObjectFromFactoryBean(object, beanName);
+      }
+      catch (Throwable ex) {
+        throw new BeanCreationException(beanName, "Post-processing of FactoryBean's object failed", ex);
+      }
+    }
+    return object;
+  }
+}
 ```
 
 上面我们已经讲述了FactoryBean的调用方法，如果bean声明为FactoryBean类型，则当提取bean时提取的并不是FactoryBean，而是FactoryBean中对应的getObject方法返回的bean，而doGetObjectFromFactoryBean正是实现这个功能的。
@@ -152,14 +155,6 @@
 在Spring获取bean的规则中有这样一条：尽可能保证所有bean初始化后都会调用注册的 **BeanPostProcessor** 的 **postProcessAfterInitialization** 方法进行处理，在实际开发过程中大可以针对此特性设计自己的业务逻辑。
 
 ![image-20200929224153370](../../assets/image-20200929224153370.png)
-
-
-
-
-
-
-
-
 
 
 

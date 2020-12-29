@@ -1,5 +1,9 @@
 # ParNew 垃圾收集器
 
+[TOC]
+
+## 图示
+
 <img src="../../assets/image-20200908105903706.png" alt="image-20200908105903706" style="zoom:67%;" />
 
 并行回收器在串行回收器的基础上，增加了多个线程同时进行回收，对于并行能力强的计算机，可以有效减少垃圾收集所需要的实际时间
@@ -30,7 +34,7 @@
 | 适用范围 | 新生代                                              |
 | 应用     | 运行在Server模式下的虚拟机中首选的新生代收集器      |
 
-#### 使用参数
+## 使用参数
 
 ```
 XX：+UseParNewGC//新生代使用ParNew回收器，老年代使用串行回收器Serial Old ,（JDK 9、JDK 10已经删除，因为ParNew需要和CMS搭配工作，而CMS已经被G1替代，不再支持此参数）
@@ -40,7 +44,7 @@ XX：+UseParNewGC//新生代使用ParNew回收器，老年代使用串行回收�
 -XX：+UseConcMarkSweepGC（JDK 9、JDK 10不建议使用，建议使用默认的G1垃圾回收器）：新生代使用ParNew回收器，老年代使用CMS。
 ```
 
-#### 指定回收线程
+## 指定回收线程
 
 ParNew回收器工作时的线程数量可以使用`-XX:ParallelGCThreads`参数指定。
 
