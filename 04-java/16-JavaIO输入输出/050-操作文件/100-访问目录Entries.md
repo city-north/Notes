@@ -12,10 +12,9 @@
 
 ```java
 /**
-     * 测试展示目录下的所有Entry ,不包含子目录
-     *
-     * @param path 路径
-     */
+* 测试展示目录下的所有Entry ,不包含子目录
+* @param path 路径
+*/
 public static void listAllEntries(String path) throws IOException {
     Stream<Path> list = Files.list(Paths.get(path));
     list.forEach(System.out::println);
@@ -28,14 +27,14 @@ public static void listAllEntries(String path) throws IOException {
 ### 2. 使用Files.walk方法获取到目录以及其子目录下的项
 
 ```java
-    /**
-     * 列出所有目录以及子目录
-     * @param path
-     */
-    private static void listAllEntriesAndSubDirectory(String path) throws IOException {
-        Stream<Path> walk = Files.walk(Paths.get(path));
-        walk.forEach(System.out::println);
-    }
+/**
+* 列出所有目录以及子目录
+* @param path
+*/
+private static void listAllEntriesAndSubDirectory(String path) throws IOException {
+  Stream<Path> walk = Files.walk(Paths.get(path));
+  walk.forEach(System.out::println);
+}
 
 ```
 
@@ -46,7 +45,7 @@ public static void listAllEntries(String path) throws IOException {
 
 ### 3. 使用find方法过滤返回的结果
 
-如果要过来walk访问的路径，并且过来标准涉及到目录存储相关的文件属性，例如，尺寸，创建时间，和类型等等，那么就应该用find方法来替代wakl方法， 第三个参数是谓语函数来调用这个方法
+如果要过来walk访问的路径，并且过来标准涉及到目录存储相关的文件属性，例如，尺寸，创建时间，和类型等等，那么就应该用find方法来替代walk方法， 第三个参数是谓语函数来调用这个方法
 
 ```java
 @Test

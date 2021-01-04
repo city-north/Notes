@@ -1,5 +1,9 @@
 # 第二步-obtainFreshBeanFactory-加载BeanFactory
 
+[TOC]
+
+## 图示
+
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
 refresh方法中的第二步:
@@ -10,11 +14,6 @@ refresh方法中的第二步:
 ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 ```
 
-我们可以
-
-- [定制BeanFactory](#定制BeanFactory)
-- [定制加载BeanDefinition的逻辑](#定制加载BeanDefinition的逻辑)
-
 ## 简介
 
 obtainFreshBeanFactory方法从字面理解是获取BeanFactory。之前有说过，ApplicationContext是对BeanFactory的功能上的扩展，不但包含了BeanFactory的全部功能,更在其基础上添加了大量的拓展应用
@@ -23,7 +22,7 @@ obtainFreshBeanFactory方法从字面理解是获取BeanFactory。之前有说�
 ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 ```
 
-经过这一步之后,ApplicationContext 就拥有了BeanFactory的全部功能
+经过这一步之后, ApplicationContext 就拥有了 BeanFactory 的全部功能
 
 主要实现
 
@@ -80,8 +79,7 @@ protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
              beanFactory.setAllowCircularReferences(this.allowCircularReferences);
          }
          //用于@Qualifier和@Autowired 
-         beanFactory.setAutowireCandidateResolver(new QualifierAnnotationAutowireCandidateResolver  
-());
+         beanFactory.setAutowireCandidateResolver(new QualifierAnnotationAutowireCandidateResolver());
 }
 ```
 
@@ -132,16 +130,16 @@ public Object getSuggestedValue(DependencyDescriptor descriptor) {
 
 ```java
 @Override
-     protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException {
-     //为指定beanFactory创建XmlBeanDefinitionReader
-     XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
-		 //对beanDefinitionReader进行环境变量的设置
-     beanDefinitionReader.setEnvironment(this.getEnvironment());
-     beanDefinitionReader.setResourceLoader(this);
-     beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
-     //对BeanDefinitionReader进行设置，可以覆盖
-     initBeanDefinitionReader(beanDefinitionReader);
-     loadBeanDefinitions(beanDefinitionReader);
+protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException {
+  //为指定beanFactory创建XmlBeanDefinitionReader
+  XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+  //对beanDefinitionReader进行环境变量的设置
+  beanDefinitionReader.setEnvironment(this.getEnvironment());
+  beanDefinitionReader.setResourceLoader(this);
+  beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
+  //对BeanDefinitionReader进行设置，可以覆盖
+  initBeanDefinitionReader(beanDefinitionReader);
+  loadBeanDefinitions(beanDefinitionReader);
 }
 ```
 在初始化了DefaultListableBeanFactory和XmlBeanDefinitionReader后就可以进行配置文件的读取了。

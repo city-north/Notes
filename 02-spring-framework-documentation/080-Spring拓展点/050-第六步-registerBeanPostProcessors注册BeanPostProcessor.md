@@ -2,11 +2,26 @@
 
 [TOC]
 
-
+## 图示
 
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
-- [BeanPostProcessor介绍](#BeanPostProcessor介绍)
+## 注册
+
+```java
+@Override
+	public void refresh() throws BeansException, IllegalStateException {
+		synchronized (this.startupShutdownMonitor) {
+			...
+			try {
+				// Register bean processors that intercept bean creation.
+				registerBeanPostProcessors(beanFactory);
+
+				...
+	}
+```
+
+
 
 ## BeanPostProcessor介绍
 
@@ -34,3 +49,6 @@ public class MyInstantiationAwareBeanPostProcessor implements InstantiationAware
 
 那么使用BeanFactory方式进行Spring的bean的加载时是不会有任何改变的，但是使用ApplicationContext方式获取bean的时候会在获取每个bean时打印出“====”，而这个特性就是在 registerBeanPostProcessors 方法中完成
 
+## 参考资料
+
+-  [080-SpringBean实例化后阶段.md](../008-SpringBean生命周期/080-SpringBean实例化后阶段.md) 

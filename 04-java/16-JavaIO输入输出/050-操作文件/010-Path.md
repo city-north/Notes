@@ -14,12 +14,13 @@ C：\
 
 ## 源码
 
-#### java.nio.file.Paths 7
+#### java.nio.file.Paths
+
+@since java7
 
 ```java
-static Path get（String first，String...more）
-通过连接给定的字符串创建一个路径。
-
+//通过连接给定的字符串创建一个路径。
+static Path get（String first，String...more);
 ```
 
 #### ￼java.nio.file.Path 7

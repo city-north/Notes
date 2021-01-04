@@ -26,7 +26,7 @@
   - [BeanClassLoaderAware](#BeanClassLoaderAware)
   - [BeanFactoryAware](#BeanFactoryAware)
 - ApplicationContext声明周期中的aware
-  - ßBeanFactory生命周期中自带的aware
+  - BeanFactory生命周期中自带的aware
 
 BeanFactory生命周期中自带的aware
 
@@ -49,44 +49,44 @@ AbstractAutowireCapableBeanFactory#invokeAwareMethods
 ![image-20201126000429923](../../assets/image-20201126000429923.png)
 
 ```java
-	protected Object initializeBean(final String beanName, final Object bean, @Nullable RootBeanDefinition mbd) {
-		if (System.getSecurityManager() != null) {
-			AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
-        
-        //----------------------本章关注点----调用各类Aware接口-----------------------------------------//
-				//属性赋值完成后,初始化Bean的第一步就是调用各类Aware接口
-        //----------------------本章关注点----调用各类Aware接口-----------------------------------------//
-        
-        invokeAwareMethods(beanName, bean);
-				return null;
-			}, getAccessControlContext());
-		}
-		else {
+protected Object initializeBean(final String beanName, final Object bean, @Nullable RootBeanDefinition mbd) {
+  if (System.getSecurityManager() != null) {
+    AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
+
+      //----------------------本章关注点----调用各类Aware接口-----------------------------------------//
       //属性赋值完成后,初始化Bean的第一步就是调用各类Aware接口
-			invokeAwareMethods(beanName, bean);
-		}
-    Object wrappedBean = bean;
-    if (mbd == null || !mbd.isSynthetic()) {
-      //应用BeanPostProcessors, 其中ApplicationContext相关声明周期回调就使用ApplicatoonContextAwareProcessor实现
-      wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
-    }
+            invokeAwareMethods(beanName, bean);
+      //----------------------本章关注点----调用各类Aware接口-----------------------------------------//
 
-    try {
-      //调用初始化方法
-      invokeInitMethods(beanName, wrappedBean, mbd);
-    }
-    catch (Throwable ex) {
-      throw new BeanCreationException(
-        (mbd != null ? mbd.getResourceDescription() : null),
-        beanName, "Invocation of init method failed", ex);
-    }
-    if (mbd == null || !mbd.isSynthetic()) {
-      //应用初始化
-      wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
-    }
+      return null;
+    }, getAccessControlContext());
+  }
+  else {
+    //属性赋值完成后,初始化Bean的第一步就是调用各类Aware接口
+    invokeAwareMethods(beanName, bean);
+  }
+  Object wrappedBean = bean;
+  if (mbd == null || !mbd.isSynthetic()) {
+    //应用BeanPostProcessors, 其中ApplicationContext相关声明周期回调就使用ApplicatoonContextAwareProcessor实现
+    wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+  }
 
-    return wrappedBean;
-	}
+  try {
+    //调用初始化方法
+    invokeInitMethods(beanName, wrappedBean, mbd);
+  }
+  catch (Throwable ex) {
+    throw new BeanCreationException(
+      (mbd != null ? mbd.getResourceDescription() : null),
+      beanName, "Invocation of init method failed", ex);
+  }
+  if (mbd == null || !mbd.isSynthetic()) {
+    //应用初始化
+    wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+  }
+
+  return wrappedBean;
+}
 
 ```
 

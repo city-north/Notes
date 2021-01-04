@@ -4,12 +4,6 @@
 
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
-## 目录
-
-- [源码分析-BeanFactoryPostProcessor注册过程](#源码分析-BeanFactoryPostProcessor注册过程)
-
-- [源码分析-BeanFactoryPostProcessor调用过程](#源码分析-BeanFactoryPostProcessor调用过程)
-
 ## 源码分析-BeanFactoryPostProcessor注册过程
 
 ApplicationContext 会自动检测实现了BeanFactoryPostProcessor的bean,并且会在bean创建之前执行他们

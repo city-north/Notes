@@ -2,6 +2,8 @@
 
 [TOC]
 
+## 什么是JWT Token
+
 JWT (JSON WEB TOKEN ) 是一种使用 JSON 格式来规约TOKEN 或者 SESSION 的协议,由于传统认证方式免不了会生成一个凭证,这个凭证可以是 token或者是 session,保存于服务端或者其他持久化工具中,这样一来,凭证的存取就显得非常麻烦,JWT 的出现打破了这个瓶颈,实现了"客户端 SESSION"的愿景
 
 - Header 头部 :  指定 JWT 使用的签名算法

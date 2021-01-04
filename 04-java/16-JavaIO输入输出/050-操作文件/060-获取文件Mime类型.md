@@ -17,7 +17,6 @@ Let's start with Java 7 – which provides the method [*Files.probeContentType(p
 public void whenUsingJava7_thenSuccess() {
     Path path = new File("product.png").toPath();
     String mimeType = Files.probeContentType(path);
- 
     assertEquals(mimeType, "image/png");
 }
 ```
@@ -30,11 +29,11 @@ Now, if the file is recognized by any of the implementations, the content type i
 
 In addition to that, it's also important to note that the strategy will fail if the file isn't present in the filesystem. Furthermore, if the file doesn't have an extension, it will result in failure.
 
-##  **3. Using \*URLConnection\***
+##  **3. Using URLConnection**
 
 *URLConnection* provides several APIs for detecting MIME types of a file. Let's briefly explore each of them.
 
-### **3.1. Using \*getContentType()\***
+### **3.1. Using getContentType()**
 
 We can use *getContentType()* method of *URLConnection* to retrieve a file's MIME type:
 
@@ -51,7 +50,7 @@ public void whenUsingGetContentType_thenSuccess(){
 
 However, a major drawback of this approach is that **it's very slow**.
 
-### **3.2. Using \*guessContentTypeFromName()\***
+### **3.2. Using guessContentTypeFromName()**
 
 Next, let's see how we can make use of the *guessContentTypeFromName()* for the purpose:
 
@@ -69,7 +68,7 @@ This method makes use of the internal *FileNameMap* to **resolve the MIME type f
 
 We also have the option of using *guessContentTypeFromStream()* instead, which uses the first few characters of the input stream, to determine the type.
 
-### **3.3. Using \*getFileNameMap\*()**
+### **3.3. Using getFileNameMap()**
 
 A faster way to obtain the MIME type using *URLConnection* is using the *getFileNameMap()* method:
 
@@ -94,7 +93,7 @@ By default, **the class uses \*content-types.properties\*** file in *JRE_HOME/li
 System.setProperty("content.types.user.table","<path-to-file>");
 ```
 
-## **4. Using \*MimeTypesFileTypeMap\***
+## **4. Using MimeTypesFileTypeMap**
 
 *MimeTypesFileTypeMap* resolves MIME types by using file's extension. This class came with Java 6, and hence comes very handy when we're working with JDK 1.6.
 
@@ -123,7 +122,7 @@ Here, we can either pass the name of the file or the *File* instance itself as t
 
 However, if no file is found, it will return *application/octet-stream* as the response.
 
-## **5. Using \*jMimeMagic\***
+## **5. Using jMimeMagic**
 
 [jMimeMagic](https://github.com/arimus/jmimemagic) is a restrictively licensed library that we can use to obtain the MIME type of a file.
 

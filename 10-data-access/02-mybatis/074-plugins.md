@@ -1,6 +1,8 @@
 # Mybatis插件（plugins）
 
-## 是什么
+[TOC]
+
+## 插件是什么
 
 插件是 Mybatis 的一个强大的机制,Mybatis 预留了插件的接口,让 Mybatis 更加容易拓展 , MyBatis 通过 JDK 代理的方式通过代理 四大天王
 
@@ -57,10 +59,8 @@ public Object plugin(Object target) {
 @SuppressWarnings({"rawtypes", "unchecked"})
 @Intercepts(
         {
-                @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
-                @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}),
-        }
-)
+ @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}),})
 public class PageInterceptor implements Interceptor {
 
 ```

@@ -1,6 +1,8 @@
-# JavaBean事件监听
+# 004-JavaBean事件监听
 
 [TOC]
+
+## 一个事件监听的例子
 
 先举一个的例子，在 Mac 中设置飞书通知方式的时候，当界面右侧选择“提示”的时候，那么左侧也会相应的显示为“提示”：
 
@@ -253,5 +255,7 @@ java.beans.EventSetDescriptor[name=vetoableChange; inDefaultEventSet; listenerTy
 
 ## 其他
 
-在 Java 生态飞速发展的今天，很多底层技术细节都被高级框架所屏蔽，而 Java Beans 就是其中一种。也许平时根本就用不到，但是其代码设计和思想理念不应该被忽视。Dubbo 2.7 之后提出了“服务自省”的概念，其灵感就来源于 Java Beans 内省机制。
+在 Java 生态飞速发展的今天，很多底层技术细节都被高级框架所屏蔽，而 Java Beans 就是其中一种。也许平时根本就用不到，但是其代码设计和思想理念不应该被忽视。
+
+Dubbo 2.7 之后提出了“服务自省”的概念，其灵感就来源于 Java Beans 内省机制。
 

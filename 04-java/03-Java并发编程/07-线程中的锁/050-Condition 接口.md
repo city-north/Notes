@@ -1,13 +1,12 @@
 # 使用Condition
 
-- [Condition是什么](#Condition是什么)
+## 目录
 
-- [Condition实现原理](#Condition实现原理)
+[TOC]
 
-- [Condition和Object的对比](#Condition和Object的对比)
-- [Condition和对象锁的区别](#Condition和对象锁的区别)
+## 简介
 
-> 在前面学习 synchronized 的时候，有讲到 wait/notify 的基本使用，结合 synchronized 可以实现对线程的通信。既然 J.U.C 里 面提供了锁的实现机制，那 J.U.C 里面有没有提供类似的线程通信的工具呢? 
+在前面学习 synchronized 的时候，有讲到 wait/notify 的基本使用，结合 synchronized 可以实现对线程的通信。既然 J.U.C 里 面提供了锁的实现机制，那 J.U.C 里面有没有提供类似的线程通信的工具呢? 
 
 > Condition 是一个多线程协调通信的工具类，可以让某些线程一起等待某个条件 (condition)，只有满足条件时，线程才会被唤醒
 
@@ -28,9 +27,7 @@ Condition 在 AQS 的基础上,额外添加了一个单向的**等待队列**,�
     - 进入等待状态
     - 加入等待队列
 
-  - 如果一个线程调用了Condition.signal() 方法, 那么该线程将
-
-    - 将等待队列对头元素(等待时间最长)的 Node 加入到 AQS 队列的末尾
+  - 如果一个线程调用了Condition.signal() 方法, 那么该线程将等待队列对头元素(等待时间最长)的 Node 加入到 AQS 队列的末尾
 
 - 跟 Object 比较下 , 总体来说是更有灵活性 , 并且可以同时创建多个 condition 队列 , 使用更加灵活支持在等待的时候,忽略中断,支持等待超时退出
 
