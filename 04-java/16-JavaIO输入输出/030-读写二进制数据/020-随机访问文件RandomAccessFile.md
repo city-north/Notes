@@ -18,4 +18,5 @@ RandomAccessFile inOut = new RandomAccessFile("employee.dat","rw");//读写模�
 
 怎么范围的？
 
-RandomAccessFile 有一个表示下一个将被读入或者写出子接所在位置的文件指针，seek方法可以用来将这个文件指针设置到文件中的任意子接位置， seek的参数时一个long类型的整数，它的值位于0到文件长度（字节数）
+RandomAccessFile 有一个表示下一个将被读入或者写出子接所在位置的文件指针，seek方法可以用来将这个文件指针设置到文件中的任意子接位置， seek的参数时一个long类型的整数，它的值位于0到文件长度（字节数）来度量的长度之间
+
