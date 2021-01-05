@@ -12,7 +12,6 @@
 
 ```java
 public class DataBinderDemo {
-
     public static void main(String[] args) {
 
         // 创建空白对象
@@ -60,10 +59,7 @@ public class DataBinderDemo {
         BindingResult result = binder.getBindingResult();
         System.out.println(result);
     }
-
 }
-
-
 ```
 
 ## DataBinder 特性二：支持嵌套属性
@@ -88,8 +84,6 @@ System.out.println(result);
 ```java
 public class User implements BeanNameAware {
 
-    private Long id;
-
     private String name;
 
     private Company company;
@@ -100,10 +94,3 @@ public class Company {
     String name;
 }
 ```
-
-
-
-```java
-
-```
-

@@ -1,8 +1,6 @@
-# Future和FutureTask
+# 08-FutureTask
 
-- [为什么要有Future接口](#为什么要有Future接口)
-- [Future接口详解](#Future接口详解)
-- [使用FutureTask](#使用FutureTask)
+[TOC]
 
 ## 为什么要有Future接口
 
@@ -27,10 +25,9 @@ public interface Future<V> {
   	//是否完成
     boolean isDone();
     V get() throws InterruptedException, ExecutionException;
-    V get(long timeout, TimeUnit unit)
-        throws InterruptedException, ExecutionException, TimeoutException;
+  
+    V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException;
 }
-
 ```
 
 #### get

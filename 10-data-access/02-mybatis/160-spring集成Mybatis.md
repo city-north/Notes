@@ -1,28 +1,8 @@
 # mybatis-spring 桥接包核心原理
 
-带着问题去看源码
+[TOC]
 
-- [SqlSessionFactory是什么时候创建的](#SqlSessionFactory是什么时候创建的)
-
-- [SqlSession怎么获取](#SqlSession怎么获取)
-
-- 为什么不用它来 getMapper?
-
-- 为什么@AutoWired 注如一个 Mapper 接口,可以直接使用, 在 IoC 的容器里面我们注册的是什么,注册时候发生了什么事
-
-- 在Spring中为什么不能使用 DefaultSqlSessionm 为什么不能, 替代品是什么
-
-  > 因为 DefaultSqlSession 是线程不安全的,替代品是 SqlSessionTemplate 是线程安全的
-
-- 为什么 SqlSessionTemplate 是线程安全的
-
-- [什么时候扫描](#什么时候扫描)
-
-- 扫描的时候注册到 IoC容器中的是什么
-
-- SqlSessionDaoSupport
-
-## SqlSessionFactory是什么时候创建的
+## 1.SqlSessionFactory是什么时候创建的
 
 当需要引入 Mybatis 的时候,我们要引入 `org.mybatis.spring.SqlSessionFactoryBean` ,用来创建 SqlSessionFactory ,我们可以看到 property 属性配置了
 
@@ -167,12 +147,6 @@ MyBatis 默认的 DefaultSqlSession 是线程不安全的 , 替代品是 SqlSess
 ```
 
 #### 为什么SqlSessionTemplate是线程安全的
-
-
-
-
-
-
 
 
 

@@ -1,5 +1,7 @@
 # Redis底层如何存储
 
+[TOC]
+
 ## 一句话总结
 
 底层采用两个 hash表存储, 因为要扩容要渐进式 rehash, key 是SDS ,最大 512M ,value 是 redisObject, 和 hashmap 很像, 数组+链表+头插法
@@ -19,7 +21,7 @@
 
 Redis服务器将所有数据库都保存在服务器状态 redis.h/redisServer 结构的 db 数组中:
 
-```c++
+```java
 struct redisServer{
   //...
   //一个数组,保存着服务器中的所有数据库
@@ -132,7 +134,7 @@ string
 
 ## 什么时候使用hash什么时候使用String
 
-Redi 底层存储是 k,v 形式存储, k 是一个 sds, v 是一个 dict 对象,维护了两个 hashtable 数组,
+Redis 底层存储是 k,v 形式存储, k 是一个 sds, v 是一个 dict 对象,维护了两个 hashtable 数组,
 
 如果直接使用 String 类型存储, hashtable 数组势必会进行扩容进行 rehash, 造成性能浪费
 

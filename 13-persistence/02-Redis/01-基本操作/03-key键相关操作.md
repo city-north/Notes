@@ -1,8 +1,12 @@
-# key 键相关操作
+# 03-key键相关操作
+
+[TOC]
+
+## 简介
 
 Redis 键命令用于管理 redis 的键。
 
-### 语法
+## 语法
 
 Redis 键命令的基本语法如下：
 
@@ -10,7 +14,7 @@ Redis 键命令的基本语法如下：
 redis 127.0.0.1:6379> COMMAND KEY_NAME
 ```
 
-### 实例
+## 实例
 
 ```
 redis 127.0.0.1:6379> SET runoobkey redis

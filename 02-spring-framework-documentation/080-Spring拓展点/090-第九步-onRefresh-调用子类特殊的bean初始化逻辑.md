@@ -1,5 +1,7 @@
 # 090-第九步-onRefresh-调用子类特殊的bean初始化逻辑
 
+[TOC]
+
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
 
@@ -11,41 +13,41 @@
 ## AbstractApplicationContext
 
 ```java
-	protected void onRefresh() throws BeansException {
-		// For subclasses: do nothing by default.
-	}
+protected void onRefresh() throws BeansException {
+  // For subclasses: do nothing by default.
+}
 ```
 
 ## 子类-AbstractRefreshableWebApplicationContext
 
 ```java
-	@Override
-	protected void onRefresh() {
-		this.themeSource = UiApplicationContextUtils.initThemeSource(this);
-	}
+@Override
+protected void onRefresh() {
+  this.themeSource = UiApplicationContextUtils.initThemeSource(this);
+}
 ```
 
 ## 子类-GenericWebApplicationContext
 
 ```java
-	@Override
-	protected void onRefresh() {
-		this.themeSource = UiApplicationContextUtils.initThemeSource(this);
-	}
+@Override
+protected void onRefresh() {
+  this.themeSource = UiApplicationContextUtils.initThemeSource(this);
+}
 ```
 
 ### 孙子类-ServletWebServerApplicationContext
 
 ```java
-	@Override
-	protected void onRefresh() {
-		super.onRefresh();
-		try {
-			createWebServer();
-		}
-		catch (Throwable ex) {
-			throw new ApplicationContextException("Unable to start web server", ex);
-		}
-	}
+@Override
+protected void onRefresh() {
+  super.onRefresh();
+  try {
+    createWebServer();
+  }
+  catch (Throwable ex) {
+    throw new ApplicationContextException("Unable to start web server", ex);
+  }
+}
 ```
 

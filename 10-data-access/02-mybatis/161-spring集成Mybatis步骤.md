@@ -1,4 +1,4 @@
-## 集成的简要步骤
+# 集成的简要步骤
 
 除了 MyBatis 的依赖之外，我们还需要在 pom 文件中引入 MyBatis 和 Spring 整合
 的 jar 包

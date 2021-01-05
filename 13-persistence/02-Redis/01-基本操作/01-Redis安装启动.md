@@ -1,8 +1,6 @@
-# Redis 安装与启动
+# 01-Redis安装启动
 
-- **CentOS7安装Redis单实例**
-- **CentOS7 Docker安装Redis**
-- 服务启动
+[TOC]
 
 ## CentOS7安装Redis单实例
 
