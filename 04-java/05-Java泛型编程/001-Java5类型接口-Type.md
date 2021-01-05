@@ -1,42 +1,36 @@
-# 030-虚拟机中的泛型类型信息
+# 001-Java5类型接口-Type
 
 [TOC]
 
-Java泛型的卓越特性之一是在虚拟机中泛型类型的擦除。令人感到奇怪的是，擦除的类仍然保留一些泛型祖先的微弱记忆。
-
-例如，原始的Pair类知道源于泛型类`Pair＜T＞`，即使一个Pair类型的对象无法区分是由`Pair＜String＞`构造的还是由`Pair＜Employee＞`构造的。
-类似地，看一下方法
-
-```java
-public static <T extends Comparable< ? super T>> T min (T[] a);
-```
-
-可以使用反射API来确定：
-
-- 这个泛型方法有一个叫做T的类型参数。
-- 这个类型参数有一个子类型限定，其自身又是一个泛型类型。
-- 这个限定类型有一个通配符参数。
-- 这个通配符参数有一个超类型限定。
-- 这个泛型方法有一个泛型数组参数。
-
-换句话说，需要重新构造实现者声明的泛型类以及方法中的所有内容。但是，不会知道对于特定的对象或方法调用，如何解释类型参数。
-为了表达泛型类型声明，使用java.lang.reflect包中提供的接口Type。
-
-## Type接口
+## Java5类型接口-java.lang.reflect.Type
 
 这个接口包含下列子类型：
 
 
 
-![image-20210105204220304](../../../assets/image-20210105204220304.png)
+![image-20210105204220304](../../assets/image-20210105204220304.png)
 
-- Class类，描述具体类型。
-- TypeVariable接口，描述类型变量(如T extends Comparable＜？super T＞)。
-- WildcardType接口，描述通配符(如？super T)。
-- ParameterizedType接口，描述泛型类或接口类型(如Comparable＜？super T＞)。
-- GenericArrayType接口，描述泛型数组(如T[])。
+| 派生类或接口                        | 说明                                                         |
+| ----------------------------------- | ------------------------------------------------------------ |
+| java.lang.Class                     | Java类API, 如java.lang.String ;描述具体类型                  |
+| java.lang.reflect.GenericArrayType  | 描述泛型数组(如T[])                                          |
+| java.lang.reflect.ParameterizedType | 描述泛型类或接口类型(如Comparable＜？super T＞)              |
+| java.lang.reflect.TypeVariable      | 描述类型变量(如T extends Comparable＜？super T＞)<br />又比如Collection<E> 中的E |
+| java.lang.reflect.WildcardType      | 描述通配符类型 (如？super T)。                               |
 
-注意，最后4个子类型是接口，虚拟机将实例化实现这些接口的适当的类。
+核心API
+
+| 类型                             | 说明                                   |
+| -------------------------------- | -------------------------------------- |
+| 泛型信息(Generic Info)           | java.lang.Class#getGenericInfo()       |
+| 泛型参数(Parameters)             | java.lang.reflect.ParameterizedType    |
+| 泛型父类(Super Classes)          | java.lang.Class#getGenericSuperclass() |
+| 泛型接口(Interfaces)             | java.lang.Class#getGenericInterfaces() |
+| 泛型声明(Generic Declearation  ) | java.lang.reflect.GenericDeclearation  |
+
+
+
+## API
 
 #### ￼java.lang.Class＜T＞1.0
 
