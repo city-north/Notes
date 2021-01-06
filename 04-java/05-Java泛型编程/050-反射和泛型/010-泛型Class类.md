@@ -8,7 +8,7 @@
 
 ## 泛型Class类
 
-**现在，Class类是泛型的。例如，String.class实际上是一个Class＜String＞类的对象(事实上，是唯一的对象)。**
+**Class类是泛型的。例如，String.class实际上是一个Class＜String＞类的对象(事实上，是唯一的对象)。**
 
 类型参数十分有用，这是因为它允许Class＜T＞方法的返回类型更加具有针对性。
 

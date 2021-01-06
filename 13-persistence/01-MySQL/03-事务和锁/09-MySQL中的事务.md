@@ -1,4 +1,4 @@
-# MySQL中的事务
+# 09-MySQL中的事务
 
 ---
 
@@ -18,11 +18,11 @@ show variables like '%engine%'; -- 存储引擎(InnnoDB)
 show global variables like "tx_isolation"; --事务隔离 级别(RR)。
 ```
 
-### 自动提交
+#### 查看是否自动提交
 
 InnoDB 里面有一个 autocommit 的参数(分成两个级别， session 级别和 global级别)。
 
-```
+```java
 show variables like 'autocommit';
 ```
 
@@ -30,11 +30,11 @@ show variables like 'autocommit';
 
 否则，如果我们把 autocommit 设置成 false/off，那么数据库的事务就需要我们手 动地去开启和手动地去结束。
 
-### 手动开启事务
+#### 手动开启事务
 
 有几种方式，一种是用 begin; 一种是用 start transaction
 
-### 结束事务
+#### 结束事务
 
 - commit;
 

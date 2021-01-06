@@ -1,6 +1,8 @@
 # Reids淘汰算法-LFU
 
-## 什么是 LFU
+[TOC]
+
+## 什么是LFU
 
 LFU，Least Frequently Used，最不常用，4.0 版本新增 
 
@@ -8,7 +10,7 @@ LFU，Least Frequently Used，最不常用，4.0 版本新增
 
 近似 LRU 算法很简单,在现有数据结构的基础上使用随机采样法来淘汰元素
 
-### 值得注意的是
+## 值得注意的是
 
 - [如果基于传统LRU算法实现Redis-LRU会有什么问题](#如果基于传统LRU算法实现Redis-LRU会有什么问题)
 - [如何找出热度最低的数据](#如何找出热度最低的数据)
@@ -22,7 +24,7 @@ LFU，Least Frequently Used，最不常用，4.0 版本新增
 如果淘汰策略是 LRU，则根据配置的采样值 **maxmemory_samples** (默认是 5 个),
 随机从数据库中选择 m 个 key, 淘汰其中热度最低的 key 对应的缓存数据。所以采样参数**m**配置的数值越大, 就越能精确的查找到待淘汰的缓存数据,但是也消耗更多的CPU计算,执行效率降低。
 
-## lRU 和 lFU 
+## lRU和lFU 
 
 IFU的全称是 Least Frequently Used ,  表示按最近的访问频率进行淘汰, 它比 LRU 更加精确地表达一个 key 被访问的热度
 

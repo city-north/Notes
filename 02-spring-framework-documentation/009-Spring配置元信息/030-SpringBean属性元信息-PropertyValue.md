@@ -8,7 +8,10 @@
 
 ## 一言蔽之
 
+PropertyValue 是对属性元信息的封装,它的关注点是属性名和属性的值
 
+- 在BeanDefinition中包含一些列PropertyValue 的合集 PropertyValues
+- 经过属性绑定后,会将PropertyValue 中的属性值进行设置
 
 ## SpringBean属性元信息的分类
 
@@ -27,11 +30,18 @@ PropertyValues 代表Bean的属性集合, 其中集成多个PropertyValues
 PropertyValue代表了配置的bean的属性,我们可以使用以下方式设置
 
 ```java
-final BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
-beanDefinitionBuilder.addPropertyValue("name", "EricChen");
+DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
+BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
+builder.addPropertyValue("name", "EricChen");
+final AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
+
+//-- 
+defaultListableBeanFactory.registerBeanDefinition("user", beanDefinition);
+final Object user = defaultListableBeanFactory.getBean("user");
+//-- 
 ```
 
-##### 附加属性setAttribute和source的作用
+## 附加属性setAttribute和source的作用
 
 ```java
 public static void main(String[] args) {
@@ -124,9 +134,7 @@ public class PropertyValue extends BeanMetadataAttributeAccessor implements Seri
 }
 ```
 
-
-
-### Bean属性上下文存储-AttributeAccessor
+## Bean属性上下文存储-AttributeAccessor
 
 属性存储器,
 

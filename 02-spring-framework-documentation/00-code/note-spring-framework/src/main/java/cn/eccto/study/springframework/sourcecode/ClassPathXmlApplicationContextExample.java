@@ -19,8 +19,6 @@ public class ClassPathXmlApplicationContextExample {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("sourcecode/beanFactoryTest.xml");
         final Object student = applicationContext.getBean("student");
         final Student bean = applicationContext.getBean(Student.class);
-        log.error("" + student);
-        log.error("" + bean);
     }
 
 }

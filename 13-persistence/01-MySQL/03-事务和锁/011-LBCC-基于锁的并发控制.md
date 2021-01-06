@@ -1,4 +1,6 @@
-# LBCC 基于锁的并发控制
+# 011-LBCC-基于锁的并发控制
+
+[TOC]
 
 读取数据的时候，锁定要 操作的数据，不允许其他的事务修改就行了。这种方案我们叫做基于锁的并发控制 Lock Based Concurrency Control(LBCC)。
 
@@ -6,10 +8,12 @@
 
 ## InnodDB 隔离级别的实现
 
-|      | 隔离级别                                              | 锁                                                           |
-| ---- | ----------------------------------------------------- | ------------------------------------------------------------ |
-| 1    | [读未提交（read uncommitted)](01-read-uncommitted.md) | 不加锁                                                       |
-| 4    | [串行化 (serializable)](04-serializable.md)           | 所有 select 隐式转换成 共享锁(in share mode)会和 update 和 delete 互斥 |
+|      | 隔离级别                    | 读     | 写                                                           |
+| ---- | --------------------------- | ------ | ------------------------------------------------------------ |
+| 1    | 读未提交（read uncommitted) | 不加锁 | 不加锁                                                       |
+| 2    | 读已提交（read committed)   | MVCC   | 记录锁                                                       |
+| 3    | 可重复读（repeatable read)  | MVCC   | 记录锁/间隙锁/临键锁                                         |
+| 4    | 串行化 (serializable)       | 共享锁 | 所有 select 隐式转换成 共享锁(in share mode)会和 update 和 delete 互斥 |
 
 ![image-20200826204259542](../../../assets/image-20200826204259542.png)
 

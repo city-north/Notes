@@ -24,4 +24,5 @@ public static class Pair<T> {
 }
 ```
 
-Employee.class是类型Class＜Employee＞的一个对象。makePair方法的类型参数T同Employee匹配，并且编译器可以推断出这个方法将返回一个Pair＜Employee＞。
+Employee.class是类型`Class＜Employee＞`的一个对象。makePair方法的类型参数T同Employee匹配，并且编译器可以推断出这个方法将返回一个`Pair＜Employee＞`。
+

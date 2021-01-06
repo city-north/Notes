@@ -28,21 +28,18 @@
 | 泛型接口(Interfaces)             | java.lang.Class#getGenericInterfaces() |
 | 泛型声明(Generic Declearation  ) | java.lang.reflect.GenericDeclearation  |
 
-
-
 ## API
 
 #### ￼java.lang.Class＜T＞1.0
 
 ```java
 java.lang.Class＜T＞1.0
-·TypeVariable[]getTypeParameters()5.0
-//如果这个类型被声明为泛型类型，则获得泛型类型变量，否则获得一个长度为0的数组。
-·Type getGenericSuperclass()5.0
-//获得被声明为这一类型的超类的泛型类型；如果这个类型是Object或不是一个类类型(class type)，则返回null。
-·Type[]getGenericInterfaces()5.0
-//获得被声明为这个类型的接口的泛型类型(以声明的次序)，否则，如果这个类型没有实现接口，返回长度为0的数组。
-
+  ·TypeVariable[]getTypeParameters()5.0
+  //如果这个类型被声明为泛型类型，则获得泛型类型变量，否则获得一个长度为0的数组。
+  ·Type getGenericSuperclass()5.0
+  //获得被声明为这一类型的超类的泛型类型；如果这个类型是Object或不是一个类类型(class type)，则返回null。
+  ·Type[]getGenericInterfaces()5.0
+  //获得被声明为这个类型的接口的泛型类型(以声明的次序)，否则，如果这个类型没有实现接口，返回长度为0的数组。
 ```
 
 #### java.lang.reflect.Method 
@@ -58,7 +55,7 @@ java.lang.reflect.Method 1.1
 
 ```
 
-#### ￼java.lang.reflect.TypeVariable 5.0
+#### ￼java.lang.reflect.TypeVariable 5.0 类型变量
 
 ```java
 ￼java.lang.reflect.TypeVariable 5.0
@@ -66,10 +63,10 @@ java.lang.reflect.Method 1.1
 //获得类型变量的名字。
 ·Type[]getBounds()
 //获得类型变量的子类限定，否则，如果该变量无限定，则返回长度为0的数组。
-￼
+
 ```
 
-#### java.lang.reflect.WildcardType 5.0
+#### java.lang.reflect.WildcardType 5.0 通配符类型
 
 ```java
 java.lang.reflect.WildcardType 5.0
@@ -91,7 +88,7 @@ java.lang.reflect.ParameterizedType 5.0
 //如果是内部类型，则返回其外部类型，如果是一个顶级类型，则返回null。
 ```
 
-#### java.lang.reflect.ParameterizedType 5.0
+#### java.lang.reflect.GenericArrayType 5.0
 
 ```java
 java.lang.reflect.GenericArrayType 5.0
