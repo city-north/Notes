@@ -1,4 +1,4 @@
-# 层次性查找-HierarchicalBeanFactory
+# 040-层次性依赖查找-HierarchicalBeanFactory
 
 ---
 

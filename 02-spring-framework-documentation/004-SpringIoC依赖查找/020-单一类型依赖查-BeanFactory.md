@@ -1,4 +1,4 @@
-# 单一类型依赖查找-BeanFactory
+# 020-单一类型依赖查-BeanFactory
 
 ---
 
@@ -12,7 +12,7 @@ BeanFactory就是Spring中的容器,最顶层的接口,
 
 为了可以实现这个目的,声明了以下方法
 
-**查找Bean特性**
+### 查找Bean特性
 
 ```java
 //根据Bean名称查找
@@ -31,7 +31,7 @@ BeanFactory#getBeanProvider(java.lang.Class<T>)
 BeanFactory#getBeanProvider(ResolvableType)
 ```
 
-**检测Bean特性**
+### 检测Bean特性
 
 ```java
 //是否包含

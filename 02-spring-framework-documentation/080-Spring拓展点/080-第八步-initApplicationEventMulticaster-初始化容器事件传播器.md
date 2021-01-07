@@ -5,7 +5,6 @@
 ## 目录
 
 - [Spring中的事件机制](#Spring中的事件机制)
-- 
 
 ## Spring中的事件机制
 
@@ -30,6 +29,7 @@ protected void initApplicationEventMulticaster() {
                  logger.debug("Using ApplicationEventMulticaster [" + this.application EventMulticaster + "]");
              }
          }else {
+           //内置的发不起
              this.applicationEventMulticaster = new SimpleApplicationEventMulticaster (beanFactory);
              beanFactory.registerSingleton(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, this.applicationEventMulticaster);
              if (logger.isDebugEnabled()) {
@@ -42,6 +42,25 @@ protected void initApplicationEventMulticaster() {
 ```
 
 按照之前介绍的顺序及逻辑，我们推断，作为广播器，一定是用于存放监听器并在合适的时候调用监听器，那么我们不妨进入默认的广播器实现SimpleApplicationEventMulticaster来一探究竟。
+
+## org.springframework.context.event.SimpleApplicationEventMulticaster
+
+默认的实现
+
+#### 执行器Executor和错误处理器
+
+```java
+@Nullable
+private Executor taskExecutor;
+
+@Nullable
+private ErrorHandler errorHandler;
+
+```
+
+ [120-同步和异步的事件广播.md](../016-Spring事件/120-同步和异步的事件广播.md) 
+
+ [130-Spring事件异常处理.md](../016-Spring事件/130-Spring事件异常处理.md) 
 
 其中的一段代码是我们感兴趣的。
 
