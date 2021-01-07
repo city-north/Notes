@@ -1,6 +1,6 @@
 # 040-Varargs警告
 
-Java不支持泛型类型数组
+Java不支持泛型类型数组,向参数个数可变的方法传递一个泛型类型的实例
 
 ```java
 public static <T> void addAll(Collection<T> collection, T... ts) {
