@@ -4,7 +4,11 @@
 
 ## 简介
 
-当Spring应用上下文出现多层次Spring应用上下文(ApplicationContext)时. 如 Spring WebMVC ,SpringBoot 或者SpringCloud场景下
+当Spring应用上下文出现多层次Spring应用上下文(ApplicationContext)时. 如 
+
+- Spring WebMVC
+- SpringBoot
+- SpringCloud场景
 
 由子ApplicationContext发起的Spring事件可能会传递给其父ApplicationContext(直到Root)的过程
 

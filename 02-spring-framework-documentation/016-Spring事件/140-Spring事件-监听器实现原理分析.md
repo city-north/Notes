@@ -6,3 +6,8 @@
 
 Spring3中BenPostProcessor 和ApplicationContextPublisher在一个类使用时会导致事件发送不出来
 
+![image-20210108125332047](../../assets/image-20210108125332047.png)
+
+## 核心类
+
+- Simp

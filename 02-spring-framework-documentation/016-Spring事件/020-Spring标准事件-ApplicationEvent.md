@@ -2,6 +2,15 @@
 
 [TOC]
 
+## Spring事件核心组件API
+
+| 类名称           | 核心类                                                       |
+| ---------------- | ------------------------------------------------------------ |
+| Spring事件       | org.springframework.context.ApplicationEvent                 |
+| Spring事件监听器 | org.springframework.context.ApplicationListener              |
+| Spring事件发布器 | org.springframework.context.ApplicationEventPublisher        |
+| Spring事件广播器 | org.springframework.context.event.ApplicationEventMulticaster |
+
 ## UML
 
 ![image-20210107181245453](../../assets/image-20210107181245453.png)
@@ -36,9 +45,11 @@ public abstract class ApplicationEvent extends EventObject {
 - org.springframework.context.event.ContextStoppedEvent :  Spring上下文停止事件
 - org.springframework.context.event.ContextClosedEvent :  Spring上下文关闭事件
 
-#### org.springframework.context.event.ContextRefreshedEvent : Spring应用上下文就绪事件
+#### Spring应用上下文就绪事件-org.springframework.context.event.ContextRefreshedEvent
 
 发布时机
+
+ [120-第十二步-finishRefresh-结束通知.md](../080-Spring拓展点/120-第十二步-finishRefresh-结束通知.md) 
 
 org.springframework.context.support.AbstractApplicationContext#finishRefresh
 
@@ -101,17 +112,27 @@ org.springframework.context.support.AbstractApplicationContext#finishRefresh
 	}
 ```
 
+## earlyApplicationEvent早期事件
 
+```java
+@Override
+public void refresh() 
+  prepareRefresh();
+	initApplicationEventMulticaster();
+	onRefresh();
+	registerListeners();
+	finishBeanFactoryInitialization(beanFactory);
+	finishRefresh();
+}
 
+```
 
+在refreh方法中,先注册的广播器,后注册的监听器
 
+- 如果在监听器没有注册之前,就触发了发送,那么会导致消息无法正常接收
+- 使用earlyApplicationEvent存储下来,到监听器都初始化好以后再发送
 
-
-
-
-
-
-#### org.springframework.context.event.ContextStartedEvent : Spring应用上下文启动事件
+#### Spring应用上下文启动事件:org.springframework.context.event.ContextStartedEvent
 
 发布时机
 
@@ -123,7 +144,7 @@ public void start() {
 }
 ```
 
-#### org.springframework.context.event.ContextStoppedEvent :  Spring上下文停止事件
+#### Spring上下文停止事件:org.springframework.context.event.ContextStoppedEvent
 
 发布时机
 
@@ -135,9 +156,7 @@ public void stop() {
 }
 ```
 
-
-
-#### org.springframework.context.event.ContextClosedEvent :  Spring上下文关闭事件
+#### Spring上下文关闭事件-org.springframework.context.event.ContextClosedEvent 
 
 org.springframework.context.support.AbstractApplicationContext#doClose
 

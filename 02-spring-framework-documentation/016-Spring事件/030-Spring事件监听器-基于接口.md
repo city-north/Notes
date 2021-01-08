@@ -22,7 +22,6 @@ public interface ApplicationListener<E extends ApplicationEvent> extends EventLi
 	 * @param event the event to respond to
 	 */
 	void onApplicationEvent(E event);
-
 }
 ```
 
@@ -49,7 +48,7 @@ public class ApplicationListenerDemo {
 
 输出
 
-```
+```java
 接收到Spring事件org.springframework.context.event.ContextRefreshedEvent
 接收到Spring事件org.springframework.context.event.ContextStartedEvent
 接收到Spring事件org.springframework.context.event.ContextStoppedEvent
