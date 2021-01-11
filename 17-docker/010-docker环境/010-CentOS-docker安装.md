@@ -8,6 +8,7 @@
 
 ```
 sudo yum update
+yum -y install yum-utils
 ```
 
 ## 添加仓库
