@@ -1,8 +1,6 @@
 # MySQL 优化
 
-- [正确认识MySQL](#正确认识MySQL)
-
--  [MySQL配置相关优化.md](040-MySQL配置优化/010-连接相关配置的优化.md) 
+[TOC]
 
 ## 正确认识MySQL
 

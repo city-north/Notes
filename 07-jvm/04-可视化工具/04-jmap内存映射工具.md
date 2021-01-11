@@ -1,5 +1,7 @@
 # 内存映射工具Jmap
 
+[TOC]
+
 ## 目录
 
 - 使用jmap导出dump

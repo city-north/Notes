@@ -38,10 +38,6 @@ public static String getString() {
 
 ```
 
-
-
-
-
 ## GenericTypeResolver处理泛型参数类型(ResolvableType) 相关方法
 
 ```java
@@ -86,10 +82,7 @@ public static StringList getStringList() {
 static class StringList extends ArrayList<String> {
 
 }
-
 ```
-
-
 
 ## GenericTypeResolver处理泛型类型变量(TypeVariable) 相关方法
 
