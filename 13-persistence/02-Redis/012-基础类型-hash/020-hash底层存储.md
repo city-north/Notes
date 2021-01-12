@@ -1,5 +1,9 @@
 # Redis-Hash-底层存储
 
+[TOC]
+
+## Redis常用对象存储
+
 | 对象         | 对象 type 属性值 | type 命令输出 | 底层可能的存储结构                                    | object encoding           |
 | ------------ | ---------------- | ------------- | ----------------------------------------------------- | ------------------------- |
 | 字符串对象   | OBJ_STRING       | "string"      | OBJ_ENCODING_INT OBJ_ENCODING_EMBSTR OBJ_ENCODING_RAW | int embstr raw            |
@@ -8,18 +12,14 @@
 | 集合对象     | OBJ_SET          | "set"         | OBJ_ENCODING_INTSET OBJ_ENCODING_HT                   | intset hashtable          |
 | 有序集合对象 | OBJ_ZSET         | "zset"        | OBJ_ENCODING_ZIPLIST OBJ_ENCODING_SKIPLIST            | ziplist skiplist(包含 ht) |
 
-#### 一句话定义
+## 一言蔽之
 
 Redis 的 Hash 本身也是一个 KV 的结构，类似于 Java 中的 HashMap。头插法
 
 - 元素较少时  [ziplist 压缩列表](../16-Redis底层数据结构/01-压缩列表.md) 
 -  [hashtable](../010-数据类型-String/011-Redis如何存储.md) 
 
-#### 值得注意的问题
-
-- [为什么要定义两个哈希表呢](#为什么要定义两个哈希表呢)
-
-  参考 [011-Redis如何存储.md](../010-数据类型-String/011-Redis如何存储.md) 
+## 值得注意的问题
 
 -  [什么时候使用hash什么时候使用String](../010-数据类型-String/011-Redis如何存储.md#什么时候使用hash什么时候使用String) 
 
@@ -32,8 +32,8 @@ Redis 又对 dictEntry 进行了多层的封装。
 ```c
 typedef struct dictEntry {
     void *key;   						/* key 关键字定义 */
-    void *val;  					 		/* value 定义 */
-    struct dictEntry *next;  /* 指向下一个键值对节点 */
+    void *val;  					 	/* value 定义 */
+    struct dictEntry *next; /* 指向下一个键值对节点 */
 } dictEntry;
 ```
 
@@ -62,15 +62,19 @@ typedef struct dict {
 
 ![image-20200406200343297](../../../assets/image-20200406200343297.png)
 
-#### 为什么要定义两个哈希表呢
+## 为什么要定义两个哈希表呢
 
 redis 的 hash 默认使用的是 ht[0]，ht[1]不会初始化和分配空间。为了扩容
 
- [06-Redis扩容与缩容.md](../06-模式以及常见问题/06-Redis扩容与缩容.md) 
+参考
+
+- [011-Redis如何存储.md](../010-数据类型-String/011-Redis如何存储.md) 
+
+-  [06-Redis扩容与缩容.md](../06-模式以及常见问题/06-Redis扩容与缩容.md) 
 
 ## 什么时候使用zipList什么时候使用hashtable 
 
-当 hash 对象同时满足以下两个条件的时候，使用 ziplist 编码: 
+当hash对象同时满足以下两个条件的时候，使用 ziplist 编码: 
 
 - 所有的键值对的健和值的字符串长度都小于等于 64byte(一个英文字母一个字节);
 - 哈希对象保存的键值对数量小于 512 个。

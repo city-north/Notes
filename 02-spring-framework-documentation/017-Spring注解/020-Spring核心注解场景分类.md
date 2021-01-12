@@ -1,8 +1,12 @@
+
+
 # 020-Spring核心注解场景分类
 
 [TOC]
 
-## Spring模式注解
+## Spring模式注解(Stereotype Annotations)
+
+[050-Spring模式注解-Stereotype-Annotations.md](050-Spring模式注解-Stereotype-Annotations.md) 
 
 | Spring注解     | 场景说明          | 其实版本 |
 | -------------- | ----------------- | -------- |
@@ -26,3 +30,4 @@
 | ---------- | ---------------------------------- | -------- |
 | @Autowired | Bean依赖注入，支持多种依赖查找方式 | 2.5      |
 | @Qualifier | 细粒度@Autowired依赖查找           | 2.5      |
+

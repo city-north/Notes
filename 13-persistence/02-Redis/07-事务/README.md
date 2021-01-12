@@ -12,7 +12,12 @@ Redis 的事务有两个特点:
 
 - 不会受到其他客户端的请求的影响。
 
-Redis 的事务涉及到四个命令:multi(开启事务)，exec(执行事务)，discard (取消事务)，watch(监视)
+Redis 的事务涉及到四个命令:
+
+- multi(开启事务)
+- exec(执行事务)
+- discard (取消事务)
+- watch(监视)
 
 ##  对于服务端来说
 
