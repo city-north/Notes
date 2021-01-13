@@ -1,5 +1,7 @@
 # 开闭原则（Open Closed Principle）
 
+[TOC]
+
 ## 定义
 
 > **软件实体应该对拓展开放，对修改关闭。**

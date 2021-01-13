@@ -6,6 +6,10 @@
 
 - org.springframework.validation.DataBinder
 
+## UML
+
+![image-20201224124446547](../../assets/image-20201224124446547.png)
+
 ## Web组件
 
 - org.springframework.web.bind.WebDataBinder
@@ -29,12 +33,12 @@
 
 ### DataBinder的绑定方法
 
-bind方法将 PropertyValues(key-value)内容映射到uanlianBean(target)中的属性上
+bind方法将 PropertyValues(key-value)内容映射到相关联Bean(target)中的属性上
 
 ```java
-	public void bind(PropertyValues pvs) {
-		...
-	}
+public void bind(PropertyValues pvs) {
+  ...
+}
 ```
 
 - 假设PropertyValues中包含"name =小马哥" 的键值对

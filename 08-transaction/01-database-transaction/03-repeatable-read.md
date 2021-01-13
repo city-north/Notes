@@ -28,7 +28,6 @@ UNIQUE KEY `id` ( `id` )
 
 INSERT INTO account (user_name,balance) values ('张三',100);
 INSERT INTO account (user_name,balance) values ('李四', 0);
-
 ```
 
 ## 会出现的问题

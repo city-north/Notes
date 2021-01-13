@@ -2,12 +2,6 @@
 
 [TOC]
 
-## DataBinder是什么
-
-
-
-
-
 ## DataBinderUML
 
 ![image-20201224124446547](../../assets/image-20201224124446547.png)
@@ -31,8 +25,6 @@ public void bind(PropertyValues pvs) {
 		applyPropertyValues(mpvs);
 	}
 ```
-
-
 
 ```java
 	protected void applyPropertyValues(MutablePropertyValues mpvs) {

@@ -1,6 +1,8 @@
 # 一条更新 SQL 是如何执行的
 
-数据库里面，我们说的 update 操作其实包括了更新、插入和删除。如果大家有看 过 MyBatis 的源码，应该知道 Executor 里面也只有 doQuery()和 doUpdate()的方法， 没有 doDelete()和 doInsert()。
+[TOC]
+
+数据库里面，我们说的 update 操作其实包括了更新、插入和删除。如果大家有看过 MyBatis 的源码，应该知道 Executor 里面也只有 doQuery()和 doUpdate()的方法， 没有 doDelete()和 doInsert()。
 
 更新流程和查询流程有什么不同呢?
 

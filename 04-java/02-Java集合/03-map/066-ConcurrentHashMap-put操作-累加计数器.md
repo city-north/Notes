@@ -13,6 +13,8 @@
 
 ## 图示
 
+
+
 ![image-20200909121018928](../../../assets/image-20200909121018928.png)
 
 ## addCount方法初始化阶段
@@ -114,7 +116,9 @@ private transient volatile CounterCell[] counterCells;/ /counterCells数组，�
     }
 ```
 
-值得注意的是 **@sun.misc.Contended** 注解 是为了解决伪共享问题  [100-伪共享.md](../../03-concurrency/05-Java内存模型/100-伪共享.md) 
+值得注意的是 **@sun.misc.Contended** 注解 是为了解决伪共享问题  
+
+
 
 #### fullAddCount源码分析
 

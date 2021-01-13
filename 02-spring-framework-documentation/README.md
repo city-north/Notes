@@ -7,7 +7,7 @@
 在修理冰箱之前,一定是先看冰箱说明书,同样,在学习 Spring 源码前,一定要看 Spring 官方文档
 
 - 知识点穿插使用的案例
-- 分析 Spring 做法是否合适
+- 分析Spring做法是否合适
 
 ## Spring 简介
 
@@ -51,3 +51,16 @@ Spring 优势:
     
 
 4. **Lightweight Alternative to Java EE :** Spring是使用POJO构建企业应用程序的轻量级解决方案。它可以用于servlet容器(例如Tomcat服务器)，并且不需要应用服务器。
+
+## Spring 核心特性
+
+- IoC容器
+- Spring事件(Events)
+- 资源管理(Resources)
+- 国际化(i18n)
+- 校验(validation)
+- 数据绑定(Data Binding)
+- 类型转换(Type Conversion)
+- Spring 表达式(Spring Express Language)
+- 面向切面编程
+

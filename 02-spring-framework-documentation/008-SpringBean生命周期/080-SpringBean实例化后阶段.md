@@ -24,6 +24,10 @@ boolean InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation(Object
 - 返回true, 执行后续populate
 - 返回false, 不执行后续populate
 
+## 图示
+
+<img src="../../assets/image-20200922174843774.png" alt="image-20200922174843774"  />
+
 ## DEMO
 
 ```java
