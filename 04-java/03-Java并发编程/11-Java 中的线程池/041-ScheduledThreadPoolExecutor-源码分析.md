@@ -1,4 +1,6 @@
-# ScheduledThreadPoolExecutor-源码分析
+# 041-ScheduledThreadPoolExecutor-源码分析
+
+[TOC]
 
 > 指定一定延迟时间后或者定时进行任务调度执行的线程池
 
@@ -32,7 +34,7 @@ public class FutureTask<V> implements RunnableFuture<V> {
 
 可能的任务转换状态路径为
 
-```
+```java
 NEW -> COMPLETING -> NORMAL
 初始状态 -> 执行中状态 -> 正常运行结束状态
 ```
@@ -55,27 +57,27 @@ NEW -> INTERRUPTING -> INTERRUPTED
 ## ScheduledFutureTask
 
 ```java
-    private class ScheduledFutureTask<V>
-            extends FutureTask<V> implements RunnableScheduledFuture<V> {
+private class ScheduledFutureTask<V>
+  extends FutureTask<V> implements RunnableScheduledFuture<V> {
 
-        /** Sequence number to break ties FIFO */
-        private final long sequenceNumber;
+  /** Sequence number to break ties FIFO */
+  private final long sequenceNumber;
 
-        /** The time the task is enabled to execute in nanoTime units */
-        private long time;
+  /** The time the task is enabled to execute in nanoTime units */
+  private long time;
 
-        /**
-         * Period 用来表示任务的类型
-         */
-        private final long period;
+  /**
+   * Period 用来表示任务的类型
+   */
+  private final long period;
 
-        /** The actual task to be re-enqueued by reExecutePeriodic */
-        RunnableScheduledFuture<V> outerTask = this;
+  /** The actual task to be re-enqueued by reExecutePeriodic */
+  RunnableScheduledFuture<V> outerTask = this;
 
-        /**
-         * Index into delay queue, to support faster cancellation.
-         */
-        int heapIndex;
+  /**
+    * Index into delay queue, to support faster cancellation.
+    */
+  int heapIndex;
 ```
 
 period 用来表示任务的类型

@@ -1,14 +1,16 @@
 # LinkedBlockingQueue
 
+[TOC]
+
+## 简介
+
 链表实现的有界阻塞 FIFO 队列, 此队列的默认和最大长度为 **Integer.MAX_VALUE**。
 
 `LinkedBlockingQueue` 的内部是通过**单向链表**实现的,使用**头节点,尾结点**来进行入队和出队操作,也就是入队操作都是对尾结点进行操作,出队列都是对头结点进行操作
 
-#### ![image-20200715132205808](../../../assets/image-20200715132205808.png)
+![image-20200715132205808](../../../assets/image-20200715132205808.png)
 
 对头结点和尾结点的操作分别使用了单独的独占锁从而保证了原子性,所以**出栈**和**入栈**可以同时进行的,另外对于头节点和尾结点都配对了条件队列,用来存放被阻塞的线程, 并结合入队、出队操作实现了一个生产消费模型
-
-
 
 ## 类图
 
@@ -26,49 +28,47 @@
 - [remove操作](#remove操作)
 - [size操作](#size操作)
 
-
-
 #### offer操作
 
 offer 阻塞插入一个元素
 
 **offer 方法通过使用 putLock 锁保证了在队列尾新增元素操作的原子性, 另外调用条件变量的方法前一定要记得获取对应的锁,并且注意进队时只操作队列链表的尾结点**
 
-向队列尾部插入一个元素,如果队列中有空闲则插入成功后返回 true, 如果队列已经满了则丢弃当前元素然后返回 false , 如果 e 元素 为 null 则 抛出 NullPointerException 异常,  
+向队列尾部插入一个元素,如果队列中有空闲则插入成功后返回 true, 如果队列已经满了则丢弃当前元素然后返回 false , 如果 e 元素为null 则抛出 NullPointerException 异常,  
 
 ```java
-    public boolean offer(E e) {
-      //① 为空则抛出空指针
-        if (e == null) throw new NullPointerException();
-      
-      //② 如果当前队列满则丢弃将要放入的元素,然后返回 false
-        final AtomicInteger count = this.count;
-        if (count.get() == capacity)
-            return false;
-      // ③ 构造新节点, 获取 putLock 独占锁
-        int c = -1;
-        Node<E> node = new Node<E>(e);
-        final ReentrantLock putLock = this.putLock;
-        putLock.lock();
-        try {
-          //④ 如果队列不满则进队列, 并递增元素计数
-            if (count.get() < capacity) {
-                enqueue(node);//插入队列
-                c = count.getAndIncrement();//递增技术器
-              //⑤
-                if (c + 1 < capacity)
-                    notFull.signal();
-            }
-        } finally {
-          //⑥ 释放锁
-            putLock.unlock();
-        }
-      // ⑦
-        if (c == 0)
-            signalNotEmpty();
-      // ⑧
-        return c >= 0;
+public boolean offer(E e) {
+  //① 为空则抛出空指针
+  if (e == null) throw new NullPointerException();
+
+  //② 如果当前队列满则丢弃将要放入的元素,然后返回 false
+  final AtomicInteger count = this.count;
+  if (count.get() == capacity)
+    return false;
+  // ③ 构造新节点, 获取 putLock 独占锁
+  int c = -1;
+  Node<E> node = new Node<E>(e);
+  final ReentrantLock putLock = this.putLock;
+  putLock.lock();
+  try {
+    //④ 如果队列不满则进队列, 并递增元素计数
+    if (count.get() < capacity) {
+      enqueue(node);//插入队列
+      c = count.getAndIncrement();//递增技术器
+      //⑤
+      if (c + 1 < capacity)
+        notFull.signal();
     }
+  } finally {
+    //⑥ 释放锁
+    putLock.unlock();
+  }
+  // ⑦
+  if (c == 0)
+    signalNotEmpty();
+  // ⑧
+  return c >= 0;
+}
 ```
 
 - ② 判断如果当前队列已经满了, 则丢弃当前元素
@@ -83,16 +83,16 @@ offer 阻塞插入一个元素
 - ⑦ 中的 c ==0 说明在执行代码 ⑥的时候释放锁时候队列里面至少要有一个元素, 队列里面有元素则执行 signalNotEmpty 操作 , signalNotEmpty 的代码如下
 
   ```java
-      private void signalNotEmpty() {
-          final ReentrantLock takeLock = this.takeLock;
-          takeLock.lock();
-          try {
-            //激活 notEmpty 条件队列中因为调用 notEmpty 的 await 方法, 比如 调用 take 方法并且队列为空的时候) 而被阻塞的一个线程, 这也说明了调用条件变量的方法前需要获取对应的锁
-              notEmpty.signal();
-          } finally {
-              takeLock.unlock();
-          }
-      }
+  private void signalNotEmpty() {
+    final ReentrantLock takeLock = this.takeLock;
+    takeLock.lock();
+    try {
+      //激活 notEmpty 条件队列中因为调用 notEmpty 的 await 方法, 比如 调用 take 方法并且队列为空的时候) 而被阻塞的一个线程, 这也说明了调用条件变量的方法前需要获取对应的锁
+      notEmpty.signal();
+    } finally {
+      takeLock.unlock();
+    }
+  }
   ```
 
 #### put操作
@@ -105,18 +105,18 @@ offer 阻塞插入一个元素
 - 如果插入的是 null 则会抛出 `NullPointerException`
 
 ```java
-    public void put(E e) throws InterruptedException {
-        if (e == null) throw new NullPointerException();
-        // Note: convention in all put/take/etc is to preset local var
-        // holding count negative to indicate failure unless set.
-      //② 构建新节点,并获取独占锁 putLock
-        int c = -1;
-        Node<E> node = new Node<E>(e);
-        final ReentrantLock putLock = this.putLock;
-        final AtomicInteger count = this.count;
-        putLock.lockInterruptibly();
-        try {
-            /*
+public void put(E e) throws InterruptedException {
+  if (e == null) throw new NullPointerException();
+  // Note: convention in all put/take/etc is to preset local var
+  // holding count negative to indicate failure unless set.
+  //② 构建新节点,并获取独占锁 putLock
+  int c = -1;
+  Node<E> node = new Node<E>(e);
+  final ReentrantLock putLock = this.putLock;
+  final AtomicInteger count = this.count;
+  putLock.lockInterruptibly();
+  try {
+    /*
              * Note that count is used in wait guard even though it is
              * not protected by lock. This works because count can
              * only decrease at this point (all other puts are shut
@@ -124,21 +124,21 @@ offer 阻塞插入一个元素
              * signalled if it ever changes from capacity. Similarly
              * for all other uses of count in other wait guards.
              */
-          //③ 如果队列满则等待
-            while (count.get() == capacity) {
-                notFull.await();
-            }
-          //④ 进队列并递增计数
-            enqueue(node);
-            c = count.getAndIncrement();
-            if (c + 1 < capacity)
-                notFull.signal();
-        } finally {
-            putLock.unlock();
-        }
-        if (c == 0)
-            signalNotEmpty();
+    //③ 如果队列满则等待
+    while (count.get() == capacity) {
+      notFull.await();
     }
+    //④ 进队列并递增计数
+    enqueue(node);
+    c = count.getAndIncrement();
+    if (c + 1 < capacity)
+      notFull.signal();
+  } finally {
+    putLock.unlock();
+  }
+  if (c == 0)
+    signalNotEmpty();
+}
 ```
 
 - 代码②使用了 putLock.lockInterruptibly(); 获取了独占锁,  也就是说 这个方法是可以被中断的

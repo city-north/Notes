@@ -1,12 +1,8 @@
-# Redo Log -Log buffer-重做日志
+# RedoLog-LogBuffer-重做日志
 
 所属位置:   
 
 [TOC]
-
-## 其他参考资料
-
-- [LogBuffer-redoLog在MySQL的位置](12-Redolog-LogBuffer.md#BufferPool的组成) 
 
 ## 什么是RedoLog重做日志
 
@@ -21,7 +17,7 @@
 
 重做日志一般不需要设置很大,因为一般情况下每一秒会将重做日志缓冲刷新到日志文件,因此 ,用户只要保证每秒产生的事务量在缓冲之内即可
 
-```
+```java
 show variables like '%innodb_log_buffer%'
 ```
 
@@ -35,31 +31,17 @@ show variables like '%innodb_log_buffer%'
 
 log buffer 写入 磁盘的时机，由一个参数控制，默认是 1。
 
-```
+```java
 SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit';
 ```
 
-- 0 (延迟写)
-  log buffer 将每秒一次地写入 log file 中，并且 log file 的 flush 操作同时进行。 
+| 参数 | 含义                 | 具体操作                                                     | 弊端                                                  |
+| ---- | -------------------- | ------------------------------------------------------------ | ----------------------------------------------------- |
+| 0    | 延迟写               | MySQL 每秒 将log buffer一次地写入 log file 中，同样操作系统 每秒 flush到磁盘 | 性能最好的,但是不安全,MySQL 一旦崩溃,会丢失 1秒的数据 |
+| 1    | 实时写，实时刷(默认) | 每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file，并且flush到磁盘中去 | 安全性最高, 但是性能差,因为每次都要刷新到磁盘         |
+| 2    | 实时写，延迟刷       | 每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file。但是 操作系统的flush 操作一秒进行一次 | 介于两者之间                                          |
 
-  > 该模式下，在事务提交的时候，不会主动触发写入磁盘的操作。
-
-- 1 (默认，实时写，实时刷)
-
-  > 每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file，并且刷到磁盘 中去。
-
-- 2 ( 实时写，延迟刷)
-  每次事务提交时 MySQL 都会把 log buffer 的数据写入 log file。但是 flush 操作并不会同时进行。
-
-  > 该模式下，MySQL 会每秒执行一次 flush 操作。
-
-flush 就是把操作系统缓冲区写入到磁盘。当重做日志缓冲池的剩余空间小于 1/2 时, 重做日志缓冲刷新到重做日志文件
-
-三种模式下, 0 是性能最好,但是不安全, MySQL 进程一旦崩溃会导致丢失一秒的数据,
-
-- 0 是性能最好的,但是不安全,MySQL 一旦崩溃,会丢失 1秒的数据
-- 1 是安全性最高, 但是性能差,因为每次都要刷新到磁盘
-- 2 是介意两者之间         
+*flush 就是把操作系统缓冲区写入到磁盘。当重做日志缓冲池的剩余空间小于 1/2 时, 重做日志缓冲刷新到重做日志文件
 
 ## 重做日志具体在哪里
 
@@ -72,7 +54,7 @@ flush 就是把操作系统缓冲区写入到磁盘。当重做日志缓冲池�
 
 这种日志和磁盘配合的整个过程，其实就是 MySQL 里的 WAL 技术 (Write-Ahead Logging)，它的关键点就是先写日志，再写磁盘。
 
-```
+```java
 show variables like 'innodb_log%';
 ```
 
@@ -110,7 +92,7 @@ redoLog 记录数据页更新之后的状态，而是记录这个页做了什么
 
 刷盘是随机 I/O，而记录日志是顺序 I/O，顺序 I/O 效率更高。因此先把修改写入日志，可以延迟刷盘时机，进而**提升系统吞吐**
 
-#### Log Buffer 什么时候写入 redolog 的磁盘文件 logFile 中?
+#### Log Buffer什么时候写入redolog 的磁盘文件 logFile 中?
 
 这是内存结构的第 4 块内容，redo log，它又分成内存和磁盘两部分。redo log 有 什么特点?
 

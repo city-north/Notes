@@ -1,4 +1,6 @@
-# ConcurrentHashMap - put操作
+# ConcurrentHashMap-put操作
+
+[TOC]
 
 ![image-20200912215807512](../../../assets/image-20200912215807512.png)
 

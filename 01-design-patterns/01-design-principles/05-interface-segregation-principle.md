@@ -1,5 +1,7 @@
 # 接口隔离原则（Interface Segregation Principle）
 
+[TOC]
+
 ## 定义
 
 > 客户端不应该依赖那些它不需要的接口。

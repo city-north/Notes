@@ -1,8 +1,12 @@
-# ThreadPoolExecutor
+# 010-ThreadPoolExecutor
+
+[TOC]
+
+## 简介
 
 Executors 其实是个工具类, 里面提供了好多方法, 这些方法根据用户选择 返回不同的线程池实例,
 
-ThreadPoolExecutor 继承了 AbstractExecutorService , 成员变量 ctl 是一个 Integer 的原子变量, 用来记录线程池 状态和线程池中的线程个数, 类似于 ReentrantReadWriteLock 使用一个变量保存两种信息
+ThreadPoolExecutor继承了AbstractExecutorService , 成员变量 ctl 是一个 Integer 的原子变量, 用来记录线程池 状态和线程池中的线程个数, 类似于 ReentrantReadWriteLock 使用一个变量保存两种信息
 
 
 

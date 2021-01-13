@@ -1,4 +1,6 @@
-## 工厂方法模式（Factory Method Pattern）
+# 工厂方法模式（Factory Method Pattern）
+
+[TOC]
 
 [参考](https://blog.csdn.net/carson_ho/article/details/52343584)
 

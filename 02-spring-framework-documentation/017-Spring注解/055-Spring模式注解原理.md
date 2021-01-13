@@ -8,10 +8,6 @@
 
 
 
-
-
-
-
 ## 核心组件
 
 - 核心组件：org.springframework.context.annotation.ClassPathBeanDefinitionScanner
