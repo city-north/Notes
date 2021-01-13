@@ -15,13 +15,13 @@
 
 - 统一的SPring配置属性管理
 
-Spring Framework 3.1 开始引入 Environment抽象, 它统一 Spring配置属性的存储, 包括占位符处理和类型转换, 不仅完整的个替换了 `PropertySourcesPlaceholderConfigurer` , 而且还支持更加丰富的配置属性源 `PropertySource`
+Spring Framework 3.1 开始引入 Environment抽象, 它统一Spring配置属性的存储, 包括占位符处理和类型转换, 不仅完整的个替换了 `PropertySourcesPlaceholderConfigurer` , 而且还支持更加丰富的配置属性源 `PropertySource`
 
-- 条件化SpringBean 装配管理
+- 条件化SpringBean装配管理
 
-通过 Environment Profiles 信息, 帮助 Spring容器提供条件化地装配Bean
+通过 Environment Profiles 信息, 帮助Spring容器提供条件化地装配Bean
 
-## Envoronment抽象UML
+### Envoronment抽象UML
 
 ![image-20210113123624597](../../assets/image-20210113123624597.png)
 
@@ -48,8 +48,13 @@ public interface PropertyResolver {
 	String resolvePlaceholders(String text);
 	String resolveRequiredPlaceholders(String text) throws IllegalArgumentException;
 }
-
 ```
+
+从这个接口来看，很像是BeanFactory接口，封装了最顶层的属性解析（只读）的方法，获取属性，
+
+值得注意的时尝试进行类型转换的`	<T> T getProperty(String key, Class<T> targetType);` 一定使用了Spring类型转换机制
+
+ [080-Spring类型转换在Environment中的运用.md](080-Spring类型转换在Environment中的运用.md) 
 
 ### Environment抽象
 
@@ -70,6 +75,13 @@ public interface Environment extends PropertyResolver {
 	boolean acceptsProfiles(Profiles profiles);
 }
 ```
+
+这个接口实际上就将Profiles的概念引入到了Environment， 这里表明的意思是一个Environment对象对应了多个Profiles.
+
+- 默认的Profiles（可以是多个)
+- 激活的Profiles(可以是多个)
+
+我们可以在外部化配置中使用`spring.profiles.active` 来指定激活的Profiles
 
 ### ConfigurableEnvironment接口
 
@@ -122,6 +134,37 @@ public interface ConfigurablePropertyResolver extends PropertyResolver {
   void setRequiredProperties(String... requiredProperties);
   //校验必须的属性
 	void validateRequiredProperties() throws MissingRequiredPropertiesException;
+}
+
+```
+
+### 抽象实现：AbstractEnvironment抽象出通用逻辑
+
+```java
+public abstract class AbstractEnvironment implements ConfigurableEnvironment {
+	//激活的Profiles
+    private final Set<String> activeProfiles = new LinkedHashSet<>();
+	//默认的Profiles
+    private final Set<String> defaultProfiles = new LinkedHashSet<>(getReservedDefaultProfiles());
+	//可变的属性源
+    private final MutablePropertySources propertySources = new MutablePropertySources();
+	//属性解析器
+    private final ConfigurablePropertyResolver propertyResolver =
+        new PropertySourcesPropertyResolver(this.propertySources);
+}
+```
+
+两个值得注意
+
+- MutablePropertySources的实现，这里new了一个MutablePropertySources，包含多个属性源，具有优先级
+- ConfigurablePropertyResolver 的实现 PropertySourcesPropertyResolver 解析器，所有解析操作，均有它代理
+
+例如获取属性的方法：就是由 PropertySourcesPropertyResolver 全权代理
+
+```java
+@Override
+public <T> T getProperty(String key, Class<T> targetType, T defaultValue) {
+    return this.propertyResolver.getProperty(key, targetType, defaultValue);
 }
 
 ```

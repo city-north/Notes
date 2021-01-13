@@ -10,8 +10,6 @@
 
 例如`@TransactionalService`注解,就同时表达了`@Transaction`注解和`@Service`的语义,同时,由于元注解模式, 它也拥有`@Component`注解语义
 
-
-
 ## 基本定义
 
 Spring组合注解（Composed Annotations）中的元注解允许使用Spring的模式注解（Stereotype Annotation)注解与其他Spring功能性注解的任意组合

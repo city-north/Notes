@@ -26,7 +26,9 @@
 
 ### Spring外部化配置元信息-PropertySource
 
+ [100-Spring配置属性源-PropertySource.md](..\018-Spring-Environment抽象\100-Spring配置属性源-PropertySource.md) 
+
 ### SpringProfile元信息-@Profile
 
-
+ [040-理解条件配置-SpringProfiles.md](..\018-Spring-Environment抽象\040-理解条件配置-SpringProfiles.md) 
 
