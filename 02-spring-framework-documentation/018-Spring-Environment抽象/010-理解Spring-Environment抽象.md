@@ -2,6 +2,15 @@
 
 [TOC]
 
+## Environment接口
+
+- 核心接口- Envoronment
+- 父接口-PropertyResolver
+- 可配置接口-ConfigurableEnvironment
+- 职责
+  - 管理Spring配置属性源
+  - 管理Profiles
+
 ## Spring Environment抽象都包含什么
 
 - 统一的SPring配置属性管理

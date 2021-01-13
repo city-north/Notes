@@ -26,9 +26,7 @@
 
 ### Spring外部化配置元信息-PropertySource
 
- [045-Spring外部化配置元信息-PropertySource.md](045-Spring外部化配置元信息-PropertySource.md) 
-
 ### SpringProfile元信息-@Profile
 
- [046-SpringProfile元信息-@Profile.md](046-SpringProfile元信息-@Profile.md) 
+
 
