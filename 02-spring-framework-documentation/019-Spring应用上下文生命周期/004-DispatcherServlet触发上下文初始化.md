@@ -1,14 +1,8 @@
-# 使用DispatcherServlet初始化上下文
-
-一样,也是看到refresh就结束
-
-## 目录
-
-- 利用Servlet规范中的init方法回调创建容器
+# 004-使用DispatcherServlet触发上下文初始化
 
 ## 图示
 
-![image-20200917231528342](../../../assets/image-20200917231528342.png)
+![image-20200917231528342](../../assets/image-20200917231528342.png)
 
 ## 利用Servlet规范中的init方法回调创建容器
 
@@ -24,6 +18,4 @@
 - refresh方法
 
 #### 看到了refresh,基本就走的通用流程,仅仅只是获取BeanDefination的方式不同而已
-
- [000-IOC容器初始化流程.md](../000-IOC容器初始化流程.md) 
 

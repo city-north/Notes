@@ -30,7 +30,6 @@ public class AsyncEventHandlerDemo {
             simpleApplicationEventMulticaster.setTaskExecutor(Executors.newSingleThreadExecutor());
 
         }
-        context.publishEvent(new SpringEvent);
 
     }
 }

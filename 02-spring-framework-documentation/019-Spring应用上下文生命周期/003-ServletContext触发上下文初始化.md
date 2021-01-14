@@ -1,11 +1,6 @@
-# 使用ContextLoaderListener初始化上下文
+# 003-ServletContext触发上下文初始化
 
-一样,也是看到refresh就结束
-
-## 目录
-
-- [利用Servlet规范中的ServletContextListener回调创建容器](#利用Servlet规范中的ServletContextListener回调创建容器)
-- [图示](#图示)
+[TOC]
 
 ## 利用Servlet规范中的ServletContextListener回调创建容器
 
@@ -16,7 +11,6 @@
 ## ServletContextListener
 
 ```java
-
 public interface ServletContextListener extends EventListener {
 
     /**
@@ -35,11 +29,11 @@ public interface ServletContextListener extends EventListener {
 
 ## 图示
 
-![image-20200917232814898](../../../assets/image-20200917232814898.png)
+![image-20200917232814898](../../assets/image-20200917232814898.png)
 
 ## 利用Servlet规范中的init方法回调创建容器
 
-根据 [010-Servlet规范](../../../16-JSR/010-Servlet规范)  中的初始化方法, servlet在被创建的时候,会被Servlet容器调用init方法
+根据 [010-Servlet规范](../../16-JSR/010-Servlet规范)  中的初始化方法, servlet在被创建的时候,会被Servlet容器调用init方法
 
 - javax.servlet.ServletContextListener#contextInitialized
 - org.springframework.web.context.ContextLoader#initWebApplicationContext
@@ -49,5 +43,3 @@ public interface ServletContextListener extends EventListener {
 #### 看到了refresh,基本就走的通用流程,仅仅只是获取BeanDefination的方式不同而已
 
 
-
- [000-IOC容器初始化流程.md](../000-IOC容器初始化流程.md) 

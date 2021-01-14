@@ -2,11 +2,20 @@
 
 [TOC]
 
+## 一言蔽之
+
+Environment通过聚合一个PropertySourcesPlaceholderConfigurer从而实现了对占位符属性的解析
+
+调用的逻辑通过在PlaceholderConfigurerSupport里的BeanFactoryProcesser回调中获取bean后解析
+
+
+
 ## 核心类
 
 - Spring 3.1 之前的占位符处理 
   - 组件 - org.springframework.beans.factory.config.PropertyPlaceholderConfigurer
   - 接口 - org.springframework.util.StringValueResolver
+
 - Spring 3.1 之后的占位符处理
   - 组件 - org.springframework.context.support.PropertySourcesPlaceholderConfigurer
   - 接口 - org.springframework.beans.factory.config.EmbeddedValueResolver
@@ -23,21 +32,15 @@
 
 ```java
 public class PropertyPlaceholderConfigurerDemo {
-
     public static void main(String[] args) {
-
         // 创建并且启动 Spring 应用上下文
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("META-INF/placeholders-resolver.xml");
-
         User user = context.getBean("user", User.class);
-
         System.out.println(user);
-
         // 关闭 Spring 应用上下文
         context.close();
     }
 }
-
 
 ```
 

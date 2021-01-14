@@ -1,4 +1,4 @@
-# @Autowired注入
+# 140-@Autowired注入
 
 [TOC]
 
@@ -66,47 +66,47 @@ org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcesso
 依赖查找和注入的核心入口
 
 ```java
-org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessProperties(PropertyValues pvs, Object bean, String beanName)
+org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName)
 ```
 
 ```java
-//org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessProperties		
+//org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessPropertyValues		
 @Override
-	public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) {
-    //获取注入点的信息,实际上这里就是依赖查找
-		InjectionMetadata metadata = findAutowiringMetadata(beanName, bean.getClass(), pvs);
-		try {
-      //根据注入点信息注入
-			metadata.inject(bean, beanName, pvs);
-		}
-		return pvs;
-	}
+public PropertyValues postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName) {
+  //获取注入点的信息,实际上这里就是依赖查找
+  InjectionMetadata metadata = findAutowiringMetadata(beanName, bean.getClass(), pvs);
+  try {
+    //根据注入点信息注入
+    metadata.inject(bean, beanName, pvs);
+  }
+  return pvs;
+}
 ```
 
 ### 获取注入点的信息
 
 ```java
 private InjectionMetadata findAutowiringMetadata(String beanName, Class<?> clazz, @Nullable PropertyValues pvs) {
-    // Fall back to class name as cache key, for backwards compatibility with custom callers.
-    //实际上是使用缓存机机制进行获取
-    String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
-    // Quick check on the concurrent map first, with minimal locking.
-    InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
-    if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-        synchronized (this.injectionMetadataCache) {
-            metadata = this.injectionMetadataCache.get(cacheKey);
-            if (InjectionMetadata.needsRefresh(metadata, clazz)) {
-                if (metadata != null) {
-                    metadata.clear(pvs);
-                }
-                //通过反射的方式构建注入点,实际上是获取到被注入bean的所有字段,注意这里获取的是Cglib增强类的字段,所以有可能是
-                metadata = buildAutowiringMetadata(clazz);
-                this.injectionMetadataCache.put(cacheKey, metadata);
-            }
+  // Fall back to class name as cache key, for backwards compatibility with custom callers.
+  //实际上是使用缓存机机制进行获取
+  String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());
+  // Quick check on the concurrent map first, with minimal locking.
+  InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);
+  if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+    synchronized (this.injectionMetadataCache) {
+      metadata = this.injectionMetadataCache.get(cacheKey);
+      if (InjectionMetadata.needsRefresh(metadata, clazz)) {
+        if (metadata != null) {
+          metadata.clear(pvs);
         }
+        //通过反射的方式构建注入点,实际上是获取到被注入bean的所有字段,注意这里获取的是Cglib增强类的字段,所以有可能是
+        metadata = buildAutowiringMetadata(clazz);
+        this.injectionMetadataCache.put(cacheKey, metadata);
+      }
     }
-    //这里的metadata就是包含了@Autowired注解的字段的信息
-    return metadata;
+  }
+  //这里的metadata就是包含了@Autowired注解的字段的信息
+  return metadata;
 }
 ```
 
@@ -114,7 +114,6 @@ private InjectionMetadata findAutowiringMetadata(String beanName, Class<?> clazz
 
 ```java
 //org.springframework.beans.factory.annotation.InjectionMetadata#inject
-
 public void inject(Object target, @Nullable String beanName, @Nullable PropertyValues pvs) throws Throwable {
   Collection<InjectedElement> checkedElements = this.checkedElements;
   Collection<InjectedElement> elementsToIterate =
@@ -132,54 +131,54 @@ public void inject(Object target, @Nullable String beanName, @Nullable PropertyV
 
 ```java
 //org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.AutowiredFieldElement#inject
-		@Override
-		protected void inject(Object bean, @Nullable String beanName, @Nullable PropertyValues pvs) throws Throwable {
-			Field field = (Field) this.member;
-			Object value;
-			if (this.cached) {
-				value = resolvedCachedArgument(beanName, this.cachedFieldValue);
-			}
-			else {
-				DependencyDescriptor desc = new DependencyDescriptor(field, this.required);
-				desc.setContainingClass(bean.getClass());
-				Set<String> autowiredBeanNames = new LinkedHashSet<>(1);
-				Assert.state(beanFactory != null, "No BeanFactory available");
-				TypeConverter typeConverter = beanFactory.getTypeConverter();
-				try {
-          //依赖处理 133-依赖处理过程-解析依赖.md
-					value = beanFactory.resolveDependency(desc, beanName, autowiredBeanNames, typeConverter);
-				}
-				catch (BeansException ex) {
-					throw new UnsatisfiedDependencyException(null, beanName, new InjectionPoint(field), ex);
-				}
-        //加锁加缓存
-				synchronized (this) {
-					if (!this.cached) {
-						if (value != null || this.required) {
-							this.cachedFieldValue = desc;
-							registerDependentBeans(beanName, autowiredBeanNames);
-							if (autowiredBeanNames.size() == 1) {
-								String autowiredBeanName = autowiredBeanNames.iterator().next();
-								if (beanFactory.containsBean(autowiredBeanName) &&
-										beanFactory.isTypeMatch(autowiredBeanName, field.getType())) {
-									this.cachedFieldValue = new ShortcutDependencyDescriptor(
-											desc, autowiredBeanName, field.getType());
-								}
-							}
-						}
-						else {
-							this.cachedFieldValue = null;
-						}
-						this.cached = true;
-					}
-				}
-			}
-			if (value != null) {
-        //获取到解析后的依赖,使用反射注入
-				ReflectionUtils.makeAccessible(field);
-				field.set(bean, value);
-			}
-		}
-	}
+@Override
+protected void inject(Object bean, @Nullable String beanName, @Nullable PropertyValues pvs) throws Throwable {
+  Field field = (Field) this.member;
+  Object value;
+  if (this.cached) {
+    value = resolvedCachedArgument(beanName, this.cachedFieldValue);
+  }
+  else {
+    DependencyDescriptor desc = new DependencyDescriptor(field, this.required);
+    desc.setContainingClass(bean.getClass());
+    Set<String> autowiredBeanNames = new LinkedHashSet<>(1);
+    Assert.state(beanFactory != null, "No BeanFactory available");
+    TypeConverter typeConverter = beanFactory.getTypeConverter();
+    try {
+      //依赖处理 133-依赖处理过程-解析依赖.md
+      value = beanFactory.resolveDependency(desc, beanName, autowiredBeanNames, typeConverter);
+    }
+    catch (BeansException ex) {
+      throw new UnsatisfiedDependencyException(null, beanName, new InjectionPoint(field), ex);
+    }
+    //加锁加缓存
+    synchronized (this) {
+      if (!this.cached) {
+        if (value != null || this.required) {
+          this.cachedFieldValue = desc;
+          registerDependentBeans(beanName, autowiredBeanNames);
+          if (autowiredBeanNames.size() == 1) {
+            String autowiredBeanName = autowiredBeanNames.iterator().next();
+            if (beanFactory.containsBean(autowiredBeanName) &&
+                beanFactory.isTypeMatch(autowiredBeanName, field.getType())) {
+              this.cachedFieldValue = new ShortcutDependencyDescriptor(
+                desc, autowiredBeanName, field.getType());
+            }
+          }
+        }
+        else {
+          this.cachedFieldValue = null;
+        }
+        this.cached = true;
+      }
+    }
+  }
+  if (value != null) {
+    //获取到解析后的依赖,使用反射注入
+    ReflectionUtils.makeAccessible(field);
+    field.set(bean, value);
+  }
+}
+}
 ```
 

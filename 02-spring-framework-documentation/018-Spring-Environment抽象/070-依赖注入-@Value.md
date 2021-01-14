@@ -2,6 +2,12 @@
 
 [TOC]
 
+## 一言蔽之
+
+@Value可以将配置元信息里的配置注入到属性中, 通过AutowiredAnnotationBeanPostProcessor将值插入
+
+## 使用简介
+
 - 通过 @Value
   - org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
 
@@ -35,7 +41,18 @@ public class ValueAnnotationDemo {
 }
 ```
 
-## 原理分析
+## @Value底层实现
+
+- 底层实现
+  - org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+  - org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency
+
+- 底层服务- org.springframework.beans.TypeConverter
+  - 默认实现-org.springframework.beans.TypeConverterDelegate
+    - java.beans.PropertyEditor
+    - org.springframework.core.convert.ConversionService
+
+### 执行流程
 
 ```
 doResolveDependency:1225, DefaultListableBeanFactory (org.springframework.beans.factory.support)
@@ -66,7 +83,7 @@ org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDe
 ```java
 @Nullable
 public Object doResolveDependency(DependencyDescriptor descriptor, @Nullable String beanName,
-              @Nullable Set<String> autowiredBeanNames, @Nullable TypeConverter typeConverter) throws BeansException {
+                                  @Nullable Set<String> autowiredBeanNames, @Nullable TypeConverter typeConverter) throws BeansException {
 
   InjectionPoint previousInjectionPoint = ConstructorResolver.setCurrentInjectionPoint(descriptor);
   try {
@@ -102,65 +119,58 @@ public Object doResolveDependency(DependencyDescriptor descriptor, @Nullable Str
 
 ```
 
-```java
-	@Override
-	@Nullable
-	public Object getSuggestedValue(DependencyDescriptor descriptor) {
-		Object value = findValue(descriptor.getAnnotations());
-		if (value == null) {
-			MethodParameter methodParam = descriptor.getMethodParameter();
-			if (methodParam != null) {
-				value = findValue(methodParam.getMethodAnnotations());
-			}
-		}
-		return value;
-	}
-```
+我们可以看到具体的类型转换是使用TypeConverter的类型转换来实现的,TypeConverter中有两种实现方式
 
+- java.beans.PropertyEditor
+- org.springframework.core.convert.ConversionService
 
+获取到@Value注解的value值
 
 ```java
-	@Nullable
-	protected Object findValue(Annotation[] annotationsToSearch) {
-		if (annotationsToSearch.length > 0) {   // qualifier annotations have to be local
-			AnnotationAttributes attr = AnnotatedElementUtils.getMergedAnnotationAttributes(
-					AnnotatedElementUtils.forAnnotations(annotationsToSearch), this.valueAnnotationType);
-			if (attr != null) {
-				return extractValue(attr);
-			}
-		}
-		return null;
-	}
+@Override
+@Nullable
+public Object getSuggestedValue(DependencyDescriptor descriptor) {
+  //直接获取到所有value值的属性
+  Object value = findValue(descriptor.getAnnotations());
+  if (value == null) {
+    MethodParameter methodParam = descriptor.getMethodParameter();
+    if (methodParam != null) {
+      value = findValue(methodParam.getMethodAnnotations());
+    }
+  }
+  return value;
+}
+
+@Nullable
+protected Object findValue(Annotation[] annotationsToSearch) {
+  if (annotationsToSearch.length > 0) {   // qualifier annotations have to be local
+    AnnotationAttributes attr = AnnotatedElementUtils.getMergedAnnotationAttributes(
+      AnnotatedElementUtils.forAnnotations(annotationsToSearch), this.valueAnnotationType);
+    if (attr != null) {
+      return extractValue(attr);
+    }
+  }
+  return null;
+}
 ```
+
+解析的具体逻辑
 
 ```java
 //解析属性值	
 @Override
-	@Nullable
-	public String resolveEmbeddedValue(@Nullable String value) {
-		if (value == null) {
-			return null;
-		}
-		String result = value;
-		for (StringValueResolver resolver : this.embeddedValueResolvers) {
-			result = resolver.resolveStringValue(result);
-			if (result == null) {
-				return null;
-			}
-		}
-		return result;
-	}
+@Nullable
+public String resolveEmbeddedValue(@Nullable String value) {
+  if (value == null) {
+    return null;
+  }
+  String result = value;
+  for (StringValueResolver resolver : this.embeddedValueResolvers) {
+    result = resolver.resolveStringValue(result);
+    if (result == null) {
+      return null;
+    }
+  }
+  return result;
+}
 ```
-
-## @Value底层实现
-
-- 底层实现
-  - org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
-  - org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency
-
-- 底层服务- org.springframework.beans.TypeConverter
-  - 默认实现-org.springframework.beans.TypeConverterDelegate
-    - java.beans.PropertyEditor
-    - org.springframework.core.convert.ConversionService
-
-## 源码分析

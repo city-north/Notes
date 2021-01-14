@@ -1,8 +1,8 @@
-# 硬编码方式初始化实例
+# 002-注解方式触发Spring上下文初始化
 
-### 图解
+## 图解
 
-![image-20200917215957012](../../../assets/image-20200917215957012.png)
+![image-20200917215957012](../../assets/image-20200917215957012.png)
 
 ### 实例代码
 
@@ -15,19 +15,18 @@ class QuickStartExample {
         HelloWorldServiceClient bean = context.getBean(HelloWorldServiceClient.class);
         bean.showMessage();
     }
-}
+}002
 ```
 
 ### 查看构造器中的操作
 
 ```java
-	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
-		this();
-		register(annotatedClasses);
-		refresh();
-	}
+public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
+  this();
+  register(annotatedClasses);
+  refresh();
+}
 ```
 
 #### 看到了refresh,基本就走的通用流程,仅仅只是获取BeanDefination的方式不同而已
 
- [000-IOC容器初始化流程.md](../000-IOC容器初始化流程.md) 

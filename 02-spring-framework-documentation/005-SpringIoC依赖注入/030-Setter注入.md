@@ -1,15 +1,6 @@
 # 030-Setter注入
 
-根据注入类型
-
-- [setter注入-手动方式](#setter注入-手动方式)
-- [setter注入-Java注解方式](#setter注入-Java注解方式)
-- [setter注入-API配置方式](#setter注入-API配置方式)
-
-注入方式
-
-- [setter注入-byName](#setter注入-byName)
-- [setter注入-byType](#setter注入-byType)
+[TOC]
 
 ## setter注入-手动方式
 
@@ -151,7 +142,7 @@ public class AutoWiringByNameDependencySetterInjectionDemo {
 
 ```
 
-#### 配置文件
+配置文件
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

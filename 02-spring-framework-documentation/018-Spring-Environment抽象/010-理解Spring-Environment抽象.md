@@ -2,28 +2,30 @@
 
 [TOC]
 
+## EnvoronmentUML
+
+![image-20210113123624597](../../assets/image-20210113123624597.png)
+
 ## Environment接口
 
 - 核心接口- Envoronment
 - 父接口-PropertyResolver
 - 可配置接口-ConfigurableEnvironment
 - 职责
-  - 管理Spring配置属性源
-  - 管理Profiles
+  - 管理Spring配置属性源(org.springframework.core.env.MutablePropertySources)
+  - 管理Profiles(org.springframework.core.env.Profiles)
+  - 管理Java的SystemEnvironment
+  - 管理Java的SystemProperties
 
 ## Spring Environment抽象都包含什么
 
-- 统一的SPring配置属性管理
+- **统一的Spring配置属性管理**
 
 Spring Framework 3.1 开始引入 Environment抽象, 它统一Spring配置属性的存储, 包括占位符处理和类型转换, 不仅完整的个替换了 `PropertySourcesPlaceholderConfigurer` , 而且还支持更加丰富的配置属性源 `PropertySource`
 
-- 条件化SpringBean装配管理
+- **条件化SpringBean装配管理**
 
 通过 Environment Profiles 信息, 帮助Spring容器提供条件化地装配Bean
-
-### Envoronment抽象UML
-
-![image-20210113123624597](../../assets/image-20210113123624597.png)
 
 ### Environment父接口PropertyResolver
 
@@ -100,7 +102,9 @@ public interface ConfigurableEnvironment extends Environment, ConfigurableProper
   //获取PropertySources属性源
 	MutablePropertySources getPropertySources();
 	
+  //获取系统变量
   Map<String, Object> getSystemProperties();
+  //获取环境信息
 	Map<String, Object> getSystemEnvironment();
 
 	void merge(ConfigurableEnvironment parent);

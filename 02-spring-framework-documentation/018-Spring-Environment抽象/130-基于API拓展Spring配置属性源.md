@@ -2,9 +2,13 @@
 
 [TOC]
 
+
+
 ## Spring应用上下文启动前装配 PropertySource
 
-## Spring应用山下文启动之后装配PropertySource
+值得注意的是
+
+- propertySources不具备动态更新能力
 
 ```java
 public class EnvironmentPropertySourceChangeDemo {
