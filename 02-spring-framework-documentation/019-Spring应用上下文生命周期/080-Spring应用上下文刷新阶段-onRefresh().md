@@ -11,6 +11,10 @@
     - org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext#onRefresh
     - org.springframework.web.context.support.StaticWebApplicationContext#onRefresh
 
+## 图示
+
+![image-20201007151953236](../../assets/image-20201007151953236.png)
+
 #### org.springframework.web.context.support.GenericWebApplicationContext#onRefresh
 
 ```java

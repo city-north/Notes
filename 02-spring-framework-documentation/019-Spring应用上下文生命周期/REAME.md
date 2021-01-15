@@ -6,248 +6,52 @@
 
 ![image-20201007151953236](../../assets/image-20201007151953236.png)
 
-## 0.  触发阶段
+# 应用上下文-ApplicationContext
 
-- [001-硬编码XML方式触发Spring上下文初始化.md](001-硬编码XML方式触发Spring上下文初始化.md) 
-- [002-注解方式触发Spring上下文初始化.md](002-注解方式触发Spring上下文初始化.md) 
-- [003-ServletContext触发上下文初始化.md](003-ServletContext触发上下文初始化.md) 
-- [004-DispatcherServlet触发上下文初始化.md](004-DispatcherServlet触发上下文初始化.md) 
+## ApplicationContext简介
 
-## 1. Spring应用上下文启动准备阶段-prepareRefresh()
+- ApplicationContext 是一个BeanFactory , 提供了 BeanFactory 的所有的所有功能, 主要负责对外 ,相当于外交部 ,
+- 通过继承接口, 它拥有比 Bean工厂更多的功能
 
-**调用容器准备刷新的方法，获取容器的当时时间，同时给容器设置同步标识**
+## 常用的ApplicationContext
 
-在某种情况下项目的使用需要读取某些系统变量，而这个变量的设置很可能会影响着系统的正确性，那么`ClassPathXmlApplicationContext`为我们提供的这个准备函数就显得非常必要，它可以在Spring启动的时候提前对必需的变量进行存在性验证
+The most commonly used `ApplicationContext` implementations are:
 
--  [010-Spring应用上下文启动准备阶段.md](010-Spring应用上下文启动准备阶段.md) 
+1. **[FileSystemXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you need to provide the full path of the XML bean configuration file to the constructor.
+2. **[ClassPathXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/ClassPathXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you do not need to provide the full path of the XML file but you need to set CLASSPATH properly because this container will look bean configuration XML file in CLASSPATH.
+3. **[WebXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/context/support/XmlWebApplicationContext.html)** – This container loads the XML file with definitions of all beans from within a web application.
 
+## 提供的核心功能
 
+应用中提供配置的核心接口, 当应用运行时,它是只读read-only 的,但是如果其实现类支持reload, 则可以在运行时重新加载
 
+ApplicationContext 提供的核心功能
 
+- 因为继承了[`ListableBeanFactory`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/ListableBeanFactory.html),所以支持访问应用Bean组件的工厂方法
+- 因为继承了 [`ResourceLoader`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/ResourceLoader.html)接口, 所以拥有了加载通用资源的能力  [010-Resource机制](../090-Spring机制/010-Resource机制) 
+- 因为继承了[`ApplicationEventPublisher`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html)  接口, 所以拥有了发送事件和注册监听器的能力  [030-ApplicationEvent-事件机制](../090-Spring机制/030-ApplicationEvent-事件机制) 
+- 因为继承了 [`MessageSource`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/MessageSource.html) 接口, 所有拥有了解析国际化消息的能力  [020-MessageSource-国际化消息机制](../090-Spring机制/020-MessageSource-国际化消息机制) 
+- **子上下文的优先级更高** - 继承了 parent 上下文。在后代上下文中的定义将始终具有优先级。例如，这意味着整个web应用程序可以使用单个父上下文，而每个servlet都有独立于任何其他servlet的子上下文。
 
+## 生命周期回调
 
+为了支持一个标准 [BeanFactory](010-BeanFactory.md) 的生命周期内的所有功能, ApplicationContext 的所有实现类 会检测并调用 实现了接口的bean
 
+-  [`ApplicationContextAware`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationContextAware.html) 
 
+-  [`ResourceLoaderAware`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ResourceLoaderAware.html)
+-  [`ApplicationEventPublisherAware`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisherAware.html) 
+-  [`MessageSourceAware`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/MessageSourceAware.html) 
 
+## 层级结构
 
+![image-20200919224648982](../../assets/image-20200919224648982.png)
 
+## 儿子委派机制
 
+ApplicationContext允许上下文嵌套，通过保持父上下文可以维持一个上下文体系。对于Bean的查找可以在这个上下文体系中进行，首先检查当前上下文，其次检查父上下文，逐级向上，这样可以为不同的Spring应用提供一个共享的Bean定义环境。
 
+## 不同子类的应用
 
-
-我们说,refresh函数包含了几乎ApplicationContext 的所有功能,而且逻辑非常清晰
-
-AbstractApplicationContext#refresh()
-
-1. [初始化优化前的准备工作,例如对系统属性或者环境变量进行准备和验证](#初始化优化前的准备工作,例如对系统属性或者环境变量进行准备和验证)
-
-   ```java
-   //1、调用容器准备刷新的方法，获取容器的当时时间，同时给容器设置同步标识
-   prepareRefresh();
-   ```
-
-2. [初始化BeanFactory,并进行XML文件读取](#初始化BeanFactory,并进行XML文件读取)
-
-   ```java
-   //2、告诉子类启动refreshBeanFactory()方法，Bean定义资源文件的载入从
-   //子类的refreshBeanFactory()方法启动
-   ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
-   ```
-
-3. [对BeanFactory进行各种功能填充](#对BeanFactory进行各种功能填充)
-
-   ```java
-   //3、为BeanFactory配置容器特性，例如类加载器、事件处理器等
-   prepareBeanFactory(beanFactory);
-   ```
-
-4. [子类覆盖方法做额外的处理](#子类覆盖方法做额外的处理)
-
-   ```java
-   //4、为容器的某些子类指定特殊的BeanPost事件处理器
-   postProcessBeanFactory(beanFactory);
-   ```
-
-5. [激活各种BeanFactory处理器](#激活各种BeanFactory处理器)
-
-   ```java
-   //5、调用所有注册的BeanFactoryPostProcessor的Bean
-   invokeBeanFactoryPostProcessors(beanFactory);
-   ```
-
-6. [注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候](#注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候)
-
-   ```java
-   //6、为BeanFactory注册BeanPost事件处理器.
-   //BeanPostProcessor是Bean后置处理器，用于监听容器触发的事件
-   registerBeanPostProcessors(beanFactory);
-   ```
-
-7. [为上下文初始化Message源，即对不同语言的消息体进行国际化处理](#为上下文初始化Message源，即对不同语言的消息体进行国际化处理)
-
-   ```java
-   //7、初始化信息源，和国际化相关.
-   initMessageSource();
-   ```
-
-8. [初始化应用消息广播器，并放入“applicationEventMulticaster”bean中](#初始化应用消息广播器，并放入"applicationEventMulticaster"bean中)
-
-   ```java
-   //8、初始化容器事件传播器.
-   initApplicationEventMulticaster();
-   ```
-
-9. 留给子类来初始化其他的bean
-
-   ```java
-   //9、调用子类的某些特殊Bean初始化方法
-   onRefresh();
-   ```
-
-10. [注册监听器](#注册监听器),在所有注册的bean中查找listener bean，注册到消息广播器中。
-
-    ```java
-    //10、为事件传播器注册事件监听器.
-    registerListeners();
-    ```
-
-11. [初始化剩下的单实例（非惰性的）](#初始化剩下的单实例（非惰性的）)
-
-    ```java
-    //11、初始化所有剩余的单例Bean
-    finishBeanFactoryInitialization(beanFactory);
-    ```
-
-12. [完成刷新过程](#完成刷新过程)，通知生命周期处理器lifecycleProcessor刷新过程，同时发出ContextRefreshEvent通知别人。
-
-    ```java
-    //-----调用 InitializingBean
-    //12、初始化容器的生命周期事件处理器，并发布容器的生命周期事件
-    finishRefresh();
-    ```
-
-## 图示
-
-![image-20201007151953236](../../assets/image-20201007151953236.png)
-
-## 源代码
-
-```java
-	@Override
-	public void refresh() throws BeansException, IllegalStateException {
-		synchronized (this.startupShutdownMonitor) {
-			//1、调用容器准备刷新的方法，获取容器的当时时间，同时给容器设置同步标识
-			prepareRefresh();
-
-			//2、告诉子类启动refreshBeanFactory()方法，Bean定义资源文件的载入从
-			//子类的refreshBeanFactory()方法启动
-			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
-      //----到这已经初始化好了Bean
-
-			//3、为BeanFactory配置容器特性，例如类加载器、事件处理器等
-			prepareBeanFactory(beanFactory);
-
-			try {
-				//4、为容器的某些子类指定特殊的BeanPost事件处理器
-				postProcessBeanFactory(beanFactory);
-
-				//5、调用所有注册的BeanFactoryPostProcessor的Bean
-				invokeBeanFactoryPostProcessors(beanFactory);
-
-				//6、为BeanFactory注册BeanPost事件处理器.
-				//BeanPostProcessor是Bean后置处理器，用于监听容器触发的事件
-				registerBeanPostProcessors(beanFactory);
-
-				//7、初始化信息源，和国际化相关.
-				initMessageSource();
-
-				//8、初始化容器事件传播器.
-				initApplicationEventMulticaster();
-
-				//9、调用子类的某些特殊Bean初始化方法
-				onRefresh();
-
-				//10、为事件传播器注册事件监听器.
-				registerListeners();
-
-				//11、初始化所有剩余的单例Bean
-				finishBeanFactoryInitialization(beanFactory);
-        	//-----调用 InitializingBean
-
-				//12、初始化容器的生命周期事件处理器，并发布容器的生命周期事件
-				finishRefresh();
-			}
-
-			catch (BeansException ex) {
-				if (logger.isWarnEnabled()) {
-					logger.warn("Exception encountered during context initialization - " +
-							"cancelling refresh attempt: " + ex);
-				}
-				//13、销毁已创建的Bean
-				destroyBeans();
-
-				//14、取消refresh操作，重置容器的同步标识。
-				cancelRefresh(ex);
-
-				throw ex;
-			}
-			finally {
-				//15、重设公共缓存
-				resetCommonCaches();
-			}
-		}
-	}
-```
-
-## 初始化优化前的准备工作,例如对系统属性或者环境变量进行准备和验证
-
-在某种情况下项目的使用需要读取某些系统变量，而这个变量的设置很可能会影响着系统的正确性，那么ClassPathXmlApplicationContext为我们提供的这个准备函数就显得非常必要，它可以在Spring启动的时候提前对必需的变量进行存在性验证
-
- [010-第一步-prepareRefresh-环境准备.md](010-第一步-prepareRefresh-环境准备.md) 
-
-## 初始化BeanFactory,并进行XML文件读取
-
-之前有提到ClassPathXmlApplicationContext包含着BeanFactory所提供的一切特征，那么在这一步骤中将会复用BeanFactory中的配置文件读取解析及其他功能，这一步之后，ClassPathXmlApplicationContext实际上就已经包含了BeanFactory所提供的功能，也就是可以进行bean的提取等基础操作了。
-
- [020-第二步-obtainFreshBeanFactory-加载BeanFactory.md](020-第二步-obtainFreshBeanFactory-加载BeanFactory.md) 
-
-## 对BeanFactory进行各种功能填充
-
-@Qualifier与@Autowired应该是大家非常熟悉的注解，那么这两个注解正是在这一步骤中增加的支持。
-
- [030-第三步-prepareBeanFactory-填充容器属性.md](030-第三步-prepareBeanFactory-填充容器属性.md) 
-
-## 子类覆盖方法做额外的处理
-
-Spring之所以强大，为世人所推崇，除了它功能上为大家提供了便例外，还有一方面是它的完美架构，开放式的架构让使用它的程序员很容易根据业务需要扩展已经存在的功能。这种开放式的设计在Spring中随处可见，例如在本例中就提供了一个空的函数实现postProcessBeanFactory来方便程序员在业务上做进一步扩展。
-
-## 激活各种BeanFactory处理器
-
- [040-第五步-BeanFactoryPostProcessor的后处理.md](040-第五步-BeanFactoryPostProcessor的后处理.md) 
-
-## 注册拦截bean创建的bean处理器，这里只是注册，真正的调用是在getBean时候
-
- [050-第六步-registerBeanPostProcessors注册BeanPostProcessor.md](050-第六步-registerBeanPostProcessors注册BeanPostProcessor.md) 
-
- [051-第六步-registerBeanPostProcessors源码分析.md](051-第六步-registerBeanPostProcessors源码分析.md) 
-
-## 为上下文初始化Message源，即对不同语言的消息体进行国际化处理
-
- [070-第七步-初始化消息资源MessageSource.md](070-第七步-初始化消息资源MessageSource.md) 
-
-## 初始化应用消息广播器，并放入“applicationEventMulticaster”bean中
-
- [080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md](080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md) 
-
-## 注册监听器
-
- [100-第十步-registerListeners-注册事件监听器.md](100-第十步-registerListeners-注册事件监听器.md) 
-
-## 初始化剩下的单实例（非惰性的）
-
- [110-第十一步-初始化所有剩余的非lazy单例Bean.md](110-第十一步-初始化所有剩余的非lazy单例Bean.md) 
-
-## 完成刷新过程
-
- [120-第十二步-finishRefresh-结束通知.md](120-第十二步-finishRefresh-结束通知.md) 
+ [000-IOC容器初始化流程.md](../../020-Spring容器初始化流程/000-IOC容器初始化流程.md) 
 

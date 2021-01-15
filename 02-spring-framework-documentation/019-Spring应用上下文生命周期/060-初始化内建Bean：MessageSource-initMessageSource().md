@@ -11,6 +11,10 @@
 
  [010-Spring国际化使用场景.md](../011-Spring国际化/010-Spring国际化使用场景.md) 
 
+## 图示
+
+![image-20201007151953236](../../assets/image-20201007151953236.png)
+
 ## 源码分析
 
 在initMessageSource中获取自定义资源文件的方式为

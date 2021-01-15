@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 图示
+
+![image-20201007151953236](../../assets/image-20201007151953236.png)
+
 ## 020-BeanFactory创建阶段做了什么?
 
 - 刷新Spring上下文底层BeanFactory-refrehBeanFactory();
