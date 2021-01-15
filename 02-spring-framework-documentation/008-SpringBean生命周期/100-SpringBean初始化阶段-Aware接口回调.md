@@ -36,11 +36,15 @@ BeanFactory生命周期中自带的aware
 
 #### BeanFactory生命周期中自带的aware注册时机
 
-无需注册,hardcode编写的初始化方式
+内嵌的Aware无需注册,hardcode编写的初始化方式
 
 ```java
 AbstractAutowireCapableBeanFactory#invokeAwareMethods
 ```
+
+自定义的Aware接口的注册
+
+ [040-BeanFactory后置处理阶段-postProcessBeanFactory().md](../019-Spring应用上下文生命周期/040-BeanFactory后置处理阶段-postProcessBeanFactory().md) 
 
 #### BeanFactory生命周期中自带的aware调用时机
 

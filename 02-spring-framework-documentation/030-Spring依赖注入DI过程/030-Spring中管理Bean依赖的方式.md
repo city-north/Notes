@@ -2,9 +2,7 @@
 
 ## 目录
 
-- [AbstractAutoWireCapabIeBeanFactory对Bean实例对象进行属性依赖注入](#AbstractAutoWireCapabIeBeanFactory对Bean实例对象进行属性依赖注入)
-- [SpringIoC容器根据Bean名称或者类型进行autowiring自动属性依赖注入](#SpringIoC容器根据Bean名称或者类型进行autowiring自动属性依赖注入)
-- [DefauItSingIetonBeanRegistry的registerDependentBean()方法实现属性依赖注入](#DefauItSingIetonBeanRegistry的registerDependentBean()方法实现属性依赖注入)
+[TOC]
 
 ---
 

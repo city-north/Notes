@@ -1,4 +1,8 @@
-# 增加对属性编辑器的支持
+# 031-BeanFactory准备阶段-增加对属性编辑器的支持
+
+[TOC]
+
+## 什么是属性编辑器
 
 在Spring DI注入的时候可以把普通属性注入进来，但是像Date类型就无法被识别。例如：
 
@@ -41,8 +45,6 @@ public void testDate(){
     System.out.println(userManager);  
 }
 ```
-
-
 
 如果直接这样使用，程序则会报异常，类型转换不成功。因为在UserManager中的dataValue属性是Date类型的，而在XML中配置的却是String类型的，所以当然会报异常。
 

@@ -10,7 +10,7 @@
 
 ## 内建MessageSource初始化过程
 
- [070-第七步-初始化消息资源MessageSource.md](../080-Spring拓展点/070-第七步-初始化消息资源MessageSource.md) 
+ [060-初始化内建Bean：MessageSource-initMessageSource().md](../019-Spring应用上下文生命周期/060-初始化内建Bean：MessageSource-initMessageSource().md) 
 
 ## MessageSource
 

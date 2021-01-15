@@ -27,12 +27,12 @@ ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 obtainFreshBeanFactory()
 
 ```java
-	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
-		//抽象实现
-    refreshBeanFactory();
-    //返回
-		return getBeanFactory();
-	}
+protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
+  //抽象实现
+  refreshBeanFactory();
+  //返回
+  return getBeanFactory();
+}
 ```
 
 ### 刷新Spring上下文底层BeanFactory
@@ -174,7 +174,7 @@ protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansE
 }
 ```
 
-使用XmlBeanDefinitionReader的loadBeanDefinitions方法进行配置文件的加载机注册相信大家已经不陌生，这完全就是开始BeanFactory的套路。
+使用`XmlBeanDefinitionReader`的`loadBeanDefinitions`方法进行配置文件的加载机注册相信大家已经不陌生，这完全就是开始BeanFactory的套路。
 
-因为在XmlBeanDefinitionReader中已经将之前初始化的 DefaultListableBeanFactory 注册进去了，所以XmlBeanDefinitionReader所读取的BeanDefinitionHolder都会注册到DefaultListableBeanFactory中，也就是经过此步骤，类型DefaultListableBeanFactory的变量beanFactory已经包含了所有解析好的配置。
+因为在`XmlBeanDefinitionReader`中已经将之前初始化的 `DefaultListableBeanFactory `注册进去了，所以`XmlBeanDefinitionReader`所读取的`BeanDefinitionHolder`都会注册到`DefaultListableBeanFactory`中，也就是经过此步骤，类型`DefaultListableBeanFactory`的变量`beanFactory`已经包含了所有解析好的配置。
 

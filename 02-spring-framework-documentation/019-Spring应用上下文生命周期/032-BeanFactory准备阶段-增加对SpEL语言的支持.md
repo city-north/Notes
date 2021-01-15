@@ -49,12 +49,12 @@ protected Object evaluateBeanDefinitionString(String value, BeanDefinition beanD
 ## 编程方式使用SpEL表达式了
 
 ```java
-    public static void main(String[] args) {
-        ExpressionParser expressionParser = new SpelExpressionParser();
-        Expression exp = expressionParser.parseExpression("'Hello World'.concat('!')");
-        final Object value = (String)exp.getValue();
-        System.out.println(value);//Hello World!
-    }
+public static void main(String[] args) {
+  ExpressionParser expressionParser = new SpelExpressionParser();
+  Expression exp = expressionParser.parseExpression("'Hello World'.concat('!')");
+  final Object value = (String)exp.getValue();
+  System.out.println(value);//Hello World!
+}
 ```
 
 #### 
