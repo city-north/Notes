@@ -4,18 +4,10 @@
 
 ## 一言蔽之
 
-在多线程情况下,使用 HashMap 进行 put 的操作的时候会引发死循环
-
-是因为 Java8 之前 的 HashMap 在扩容的 Rehash 时,采用的是头插法 ,会导致形成链状结构
-
- [051-hashMap的底层原理.md](../../../02-collections/03-map/051-hashMap的底层原理.md) 
+1. 在jdk1.7中，在多线程环境下，扩容时会造成环形链或数据丢失。
+2. 在jdk1.8中，在多线程环境下，会发生数据覆盖的情况。
 
 ## JDK1.7中的线程不安全
-
-### `HashMap`的线程不安全主要体现在下面两个方面：
-
-1. 在JDK1.7中，当并发执行扩容操作时会造成环形链和数据丢失的情况。
-2. 在JDK1.8中，在并发执行put操作时会发生数据覆盖的情况。
 
 ### 分析
 
@@ -68,27 +60,26 @@ class HashMapThread extends Thread {
 
 ```java
 void transfer(Entry[] newTable, boolean rehash) {
-        int newCapacity = newTable.length;
-        for (Entry<K,V> e : table) {
-            while(null != e) {
-              //循环原链表,获取到下一个 entry
-                Entry<K,V> next = e.next;  // 7 =3.next
-              //进行 rehash
-                if (rehash) {
-                    e.hash = null == e.key ? 0 : hash(e.key);
-                }
-              //获取到 rehash 后的索引值
-                int i = indexFor(e.hash, newCapacity); //使用 3进行 rehash
-              //把目前尾结点的 next 指向新的索引地址  
-              e.next = newTable[i];//10   // e.next = null
-              //将rehash 后的 element 插入索引地址 
-                newTable[i] = e;//11 // 新空间设置为 3
-              //将
-                e = next;//12  //  e 设置成 7
-            }
-        }
+  int newCapacity = newTable.length;
+  for (Entry<K,V> e : table) {
+    while(null != e) {
+      //循环原链表,获取到下一个 entry
+      Entry<K,V> next = e.next;  // 7 =3.next
+      //进行 rehash
+      if (rehash) {
+        e.hash = null == e.key ? 0 : hash(e.key);
+      }
+      //获取到 rehash 后的索引值
+      int i = indexFor(e.hash, newCapacity); //使用 3进行 rehash
+      //把目前尾结点的 next 指向新的索引地址  
+      e.next = newTable[i];//10   // e.next = null
+      //将rehash 后的 element 插入索引地址 
+      newTable[i] = e;//11 // 新空间设置为 3
+      //将
+      e = next;//12  //  e 设置成 7
     }
-
+  }
+}
 ```
 
 总结下该函数的主要作用：
