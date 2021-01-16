@@ -2,10 +2,6 @@
 
 [TOC]
 
-## 图示
-
-![image-20201007151953236](../../assets/image-20201007151953236.png)
-
 ## 030-BeanFactory准备阶段做了什么?
 
 - 关联ClassLoader
@@ -137,5 +133,7 @@ beanFactory.ignoreDependencyInterface(ApplicationContextAware.class);
 beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 ```
 
+## 图示
 
+![image-20201007151953236](../../assets/image-20201007151953236.png)
 

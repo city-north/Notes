@@ -2,11 +2,9 @@
 
 [TOC]
 
-## 图示
-
-![image-20201007151953236](../../assets/image-20201007151953236.png)
-
 ## 020-BeanFactory创建阶段做了什么?
+
+AbstractApplicationContext#obtainFreshBeanFactory
 
 - 刷新Spring上下文底层BeanFactory-refrehBeanFactory();
   - 销毁或者关闭BeanFactory,如果已经存在的话
@@ -58,6 +56,7 @@ protected final void refreshBeanFactory() throws BeansException {
   try {
     //创建IOC容器
     DefaultListableBeanFactory beanFactory = createBeanFactory();
+    //设置ID为ApplicationContext的ID
     beanFactory.setSerializationId(getId());
     //对IOC容器进行定制化，如设置启动参数，开启注解的自动装配等
     customizeBeanFactory(beanFactory);
@@ -76,12 +75,18 @@ throw new ApplicationContextException("I/O error parsing bean definition source 
 详细分析上面的每个步骤。
 
 1. 创建DefaultListableBeanFactory。
-   在介绍BeanFactory的时候，不知道读者是否还有印象，声明方式为：`BeanFactory bf = new XmlBeanFactory("beanFactoryTest.xml")`，其中的XmlBeanFactory继承自DefaultListableBeanFactory，并提供了XmlBeanDefinitionReader类型的reader属性，也就是说DefaultListableBeanFactory是容器的基础。必须首先要实例化，那么在这里就是实例化DefaultListableBeanFactory的步骤。
+
+   > 在介绍BeanFactory的时候，不知道读者是否还有印象，声明方式为：`BeanFactory bf = new XmlBeanFactory("beanFactoryTest.xml")`，其中的XmlBeanFactory继承自DefaultListableBeanFactory，并提供了XmlBeanDefinitionReader类型的reader属性，也就是说DefaultListableBeanFactory是容器的基础。必须首先要实例化，那么在这里就是实例化DefaultListableBeanFactory的步骤。
+
 2. 指定序列化ID。
+
 3. 定制BeanFactory。
+
 4. 加载BeanDefinition。
+
 5. 使用全局变量记录BeanFactory类实例。
-   因为DefaultListableBeanFactory类型的变量beanFactory是函数内的局部变量，所以要使用全局变量记录解析结果。
+
+   > 因为DefaultListableBeanFactory类型的变量beanFactory是函数内的局部变量，所以要使用全局变量记录解析结果。
 
 ### 定制BeanFactory-customizeBeanFactory
 
@@ -182,3 +187,6 @@ protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansE
 
 因为在`XmlBeanDefinitionReader`中已经将之前初始化的 `DefaultListableBeanFactory `注册进去了，所以`XmlBeanDefinitionReader`所读取的`BeanDefinitionHolder`都会注册到`DefaultListableBeanFactory`中，也就是经过此步骤，类型`DefaultListableBeanFactory`的变量`beanFactory`已经包含了所有解析好的配置。
 
+## 图示
+
+![image-20201007151953236](../../assets/image-20201007151953236.png)

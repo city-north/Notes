@@ -27,9 +27,10 @@
 
 ```java
 protected void prepareRefresh() {
+  //登记刷新时间
   this.startupDate = System.currentTimeMillis();
-  this.closed.set(false);
-  this.active.set(true);
+  this.closed.set(false);//标志位
+  this.active.set(true);//标志位
 
   if (logger.isInfoEnabled()) {
     logger.info("Refreshing " + this);
@@ -63,6 +64,11 @@ protected void prepareRefresh() {
 ```
 
 ### 初始化PropertySources
+
+```java
+//留给子类覆盖
+initPropertySources();
+```
 
 initPropertySources留给子类实现,例如在Servlet项目中, 主动去调用了自定义的getEnvironment()逻辑创建环境信息
 

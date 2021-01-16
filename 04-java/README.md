@@ -2,5 +2,11 @@
 
 https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html
 
-![image-20201129202057961](../assets/image-20201129202057961.png)
+## 学习计划
+
+| 章节 | 名称                 | check |
+| ---- | -------------------- | ----- |
+| 1    | Java程序设计概述     |       |
+| 1.1  | Java程序设计平台     |       |
+| 1.2  | Java白皮书的关键术语 |       |
 
