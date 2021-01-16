@@ -1,10 +1,20 @@
 # 040-BeanFactory后置处理阶段
 
-
-
 [TOC]
 
-## 040-BeanFactory后置处理阶段做了什么?
+## 一言蔽之
+
+BeanFactory后置处理阶段主要是在BeanFactory初始化好以后执行的后置通知 执行顺序是
+
+- BeanDefinitionRegistryPostProcessor的postProcessBeanDefinitionRegistry
+
+  > 行为的含义是Bean的注册中心初始化完成,允许进行定制
+
+- BeanFactoryPostProcessor的postProcessBeanFactory
+
+  > 行为的含义是BeanFactory已经初始化完毕了,可以进行定制
+
+## BeanFactory后置处理阶段做了什么?
 
 有两种方式可以对BeanFactory后进行处理
 
@@ -28,29 +38,69 @@
 - [invokeBeanFactoryPostProcessors拓展方式](#invokeBeanFactoryPostProcessors拓展方式)
   - 实际上是组合方法来拓展(调用当前上下文所组合的BeanFactoryPostProcessor来进行操作)
 
-## postProcessBeanFactory拓展方式
+## 代码实例
+
+ [020-SpringBoot拓展点-容器刷新阶段.md](../../03-spring-boot-documentation/140-SpringBoot拓展点/020-SpringBoot拓展点-容器刷新阶段.md) 
+
+```java
+public class PostFactoryBeanFactoryDemo {
+
+    public static void main(String[] args) {
+        GenericApplicationContext context = new GenericApplicationContext();
+        context.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
+        context.addBeanFactoryPostProcessor(new MyBeanDefinitionRegistryPostProcessor());
+        context.refresh();
+        context.close();
+    }
+    static class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+
+        @Override
+        public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+            System.out.println("----- MyBeanFactoryPostProcessor- postProcessBeanFactory()------");
+        }
+    }
+    static class MyBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
+
+        @Override
+        public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+            System.out.println("----- MyBeanDefinitionRegistryPostProcessor- postProcessBeanDefinitionRegistry()------");
+
+        }
+
+        @Override
+        public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+            System.out.println("----- MyBeanDefinitionRegistryPostProcessor- postProcessBeanFactory()------");
+
+        }
+    }
+}
+```
+
+## 源码分析
+
+### postProcessBeanFactory拓展方式
 
 org.springframework.web.context.support.GenericWebApplicationContext#postProcessBeanFactory 中的postProcessBeanFactory主要是添加了一种ServletContextAwareProcessor, 添加 ServletContextAware的后置处理
 
 ### 添加自定义的ServletContextAware接口
 
 ```java
-	@Override
-	protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-		if (this.servletContext != null) {
-      //添加后置处理器
-			beanFactory.addBeanPostProcessor(new ServletContextAwareProcessor(this.servletContext));
-      //忽略依赖注入接口
-			beanFactory.ignoreDependencyInterface(ServletContextAware.class);
-		}
-    //注册Bean的Scope作用域
-		WebApplicationContextUtils.registerWebApplicationScopes(beanFactory, this.servletContext);
-    //注册环境Bean
-		WebApplicationContextUtils.registerEnvironmentBeans(beanFactory, this.servletContext);
-	}
+@Override
+protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+  if (this.servletContext != null) {
+    //添加后置处理器
+    beanFactory.addBeanPostProcessor(new ServletContextAwareProcessor(this.servletContext));
+    //忽略依赖注入接口
+    beanFactory.ignoreDependencyInterface(ServletContextAware.class);
+  }
+  //注册Bean的Scope作用域
+  WebApplicationContextUtils.registerWebApplicationScopes(beanFactory, this.servletContext);
+  //注册环境Bean
+  WebApplicationContextUtils.registerEnvironmentBeans(beanFactory, this.servletContext);
+}
 ```
 
-## invokeBeanFactoryPostProcessors拓展方式
+### invokeBeanFactoryPostProcessors拓展方式
 
 ```java
 /**
@@ -75,4 +125,6 @@ protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory b
 
 - `BeanDefinitionRegistryPostProcessor#postProcessBeanDefinitionRegistry`先执行
 - `BeanFactoryPostProcessor#postProcessBeanFactory`
+
+
 
