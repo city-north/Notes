@@ -2,6 +2,15 @@
 
 [TOC]
 
+## 一言蔽之
+
+Spring中用于处理泛型类型的工具诶,主要是能够
+
+- 解析方法参数类型
+- 解析方法返回值类型
+- 解析方法返回值泛型参数类型
+- 解析指定类型的泛型参数类型
+
 ## 核心API
 
 org.springframework.core.GenericTypeResolver

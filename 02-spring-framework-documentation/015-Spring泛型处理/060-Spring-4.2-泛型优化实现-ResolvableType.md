@@ -2,6 +2,14 @@
 
 [TOC]
 
+## 一言蔽之
+
+ResolvableType是一个工具类,可以获取到一个类的的泛型类型,屏蔽了复杂的反射API
+
+- 是GenericTypeResolver的替代者
+
+- 是GenericCollectionTypeResolver的替代者
+
 ## 核心API
 
 org.springframework.core.ResolvableType

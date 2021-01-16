@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 一言蔽之
+
+MethodParameter是方法参数的抽象, 可以表示方法参数,可以表示构造器参数,可以表示返回参数
+
 ## 简介
 
 核心API-org.springframework.core.MethodParameter
