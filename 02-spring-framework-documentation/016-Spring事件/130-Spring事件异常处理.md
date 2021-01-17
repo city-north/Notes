@@ -21,20 +21,24 @@ org.springframework.util.ErrorHandler
 org.springframework.context.event.SimpleApplicationEventMulticaster#invokeListener
 
 ```java
+
+@Nullable
+private ErrorHandler errorHandler;
+
 protected void invokeListener(ApplicationListener<?> listener, ApplicationEvent event) {
-		ErrorHandler errorHandler = getErrorHandler();
-		if (errorHandler != null) {
-			try {
-				doInvokeListener(listener, event);
-			}
-			catch (Throwable err) {
-				errorHandler.handleError(err);
-			}
-		}
-		else {
-			doInvokeListener(listener, event);
-		}
-	}
+  ErrorHandler errorHandler = getErrorHandler();
+  if (errorHandler != null) {
+    try {
+      doInvokeListener(listener, event);
+    }
+    catch (Throwable err) {
+      errorHandler.handleError(err);
+    }
+  }
+  else {
+    doInvokeListener(listener, event);
+  }
+}
 ```
 
 ## 优点

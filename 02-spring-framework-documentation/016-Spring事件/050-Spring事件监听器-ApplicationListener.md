@@ -2,12 +2,40 @@
 
 [TOC]
 
+## 一言蔽之
+
+注册ApplicationListener有两种方法进行注册
+
 ## 注册ApplicationListener
 
 - 通过ApplicationListener作为SpringBean注册
 - 通过ConfigurableApplicationContext API 注册
 
 ### 方法一:通过ApplicationListener作为SpringBean注册
+
+```java
+public static void main(String[] args) {
+  AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+  // 将引导类 ApplicationListenerDemo 作为 Configuration Class
+  context.register(ApplicationListenerDemo.class);
+
+  // 方法二：基于 Spring 注解：@org.springframework.context.event.EventListener
+  // b 方法：基于 ApplicationListener 注册为 Spring Bean
+  // 通过 Configuration Class 来注册
+  context.register(MyApplicationListener.class);
+  // ApplicationEventMulticaster
+  // 启动 Spring 应用上下文
+  context.refresh(); // ContextRefreshedEvent
+  // 启动 Spring 上下文
+  context.start();  // ContextStartedEvent
+  // 停止 Spring 上下文
+  context.stop();  // ContextStoppedEvent
+  // 关闭 Spring 应用上下文
+  context.close(); // ContextClosedEvent
+}
+```
+
+### 方法二:通过ConfigurableApplicationContext API 注册
 
 ```java
 public static void main(String[] args) {
@@ -26,30 +54,6 @@ public static void main(String[] args) {
   });
 
   // 方法二：基于 Spring 注解：@org.springframework.context.event.EventListener
-  // ApplicationEventMulticaster
-  // 启动 Spring 应用上下文
-  context.refresh(); // ContextRefreshedEvent
-  // 启动 Spring 上下文
-  context.start();  // ContextStartedEvent
-  // 停止 Spring 上下文
-  context.stop();  // ContextStoppedEvent
-  // 关闭 Spring 应用上下文
-  context.close(); // ContextClosedEvent
-}
-```
-
-### 方法二:通过ConfigurableApplicationContext API 注册
-
-```java
-public static void main(String[] args) {
-  AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-  // 将引导类 ApplicationListenerDemo 作为 Configuration Class
-  context.register(ApplicationListenerDemo.class);
-
-  // 方法二：基于 Spring 注解：@org.springframework.context.event.EventListener
-  // b 方法：基于 ApplicationListener 注册为 Spring Bean
-  // 通过 Configuration Class 来注册
-  context.register(MyApplicationListener.class);
   // ApplicationEventMulticaster
   // 启动 Spring 应用上下文
   context.refresh(); // ContextRefreshedEvent

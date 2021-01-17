@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 一言蔽之
+
+在类上标注@EventListener 可以变成一个事件 ,可以支持多个类型的处理
+
 ## 核心注解
 
 org.springframework.context.event.EventListener
@@ -27,7 +31,7 @@ public @interface EventListener {
 | 设计特点             | 支持多ApplicationEvent类型,无需接口约束 |
 | 注解目标             | 方法                                    |
 | 是否支持异步执行     | 支持,配合@Ansy注解                      |
-| 是否支持泛型类型事件 | 支持,                                   |
+| 是否支持泛型类型事件 | 支持                                    |
 | 是否支持顺序控制     | 支持,配合@Order注解                     |
 
 ## 代码实例

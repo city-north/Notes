@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 一言蔽之
+
+Spring事件监听器ApplicationListener 拓展自EventListener , 是一个单一类型事件处理
+
 ## Spring事件接口
 
 - 拓展接口 : org.springframework.context.ApplicationListener
@@ -9,23 +13,22 @@
 - 处理方法 :  void onApplicationEvent(E event);
 - 事件类型 : org.springframework.context.ApplicationEvent
 
-**单一类型事件处理**
+## 什么是单一类型事件处理
+
+一次性只处理一类事件
 
 ## 源码
 
 ```java
 @FunctionalInterface
 public interface ApplicationListener<E extends ApplicationEvent> extends EventListener {
-
-	/**
-	 * Handle an application event.
-	 * @param event the event to respond to
-	 */
 	void onApplicationEvent(E event);
 }
 ```
 
 ## 代码实例
+
+## 注册事件
 
 ```java
 public class ApplicationListenerDemo {

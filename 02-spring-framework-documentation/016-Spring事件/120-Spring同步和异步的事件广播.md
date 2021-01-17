@@ -1,6 +1,10 @@
-# 120-同步和异步的事件广播
+# 120-Spring同步和异步的事件广播
 
 [TOC]
+
+## 一言蔽之
+
+
 
 ## 实现同步异步执行的方式
 
@@ -33,19 +37,24 @@
 #### SimpleApplicationEventMulticaster
 
 ```java
+@Nullable
+private Executor taskExecutor;
+
+@Nullable
+private ErrorHandler errorHandler;
 @Override
 public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableType eventType) {
-   ResolvableType type = (eventType != null ? eventType : resolveDefaultEventType(event));
-   for (final ApplicationListener<?> listener : getApplicationListeners(event, type)) {
-      Executor executor = getTaskExecutor();
-      if (executor != null) {
-          //如果存在执行器，则直接调用执行器里的线程执行listener
-         executor.execute(() -> invokeListener(listener, event));
-      }
-      else {
-         invokeListener(listener, event);
-      }
-   }
+  ResolvableType type = (eventType != null ? eventType : resolveDefaultEventType(event));
+  for (final ApplicationListener<?> listener : getApplicationListeners(event, type)) {
+    Executor executor = getTaskExecutor();
+    if (executor != null) {
+      //如果存在执行器，则直接调用执行器里的线程执行listener
+      executor.execute(() -> invokeListener(listener, event));
+    } else {
+      //如果不存在则直接执行
+      invokeListener(listener, event);
+    }
+  }
 }
 ```
 
@@ -55,7 +64,6 @@ public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableTyp
 public class AsyncEventHandlerDemo {
 
     public static void main(String[] args) {
-
         GenericApplicationContext context = new GenericApplicationContext();
 
         // 1.添加自定义 Spring 事件监听器
@@ -93,7 +101,6 @@ public class AsyncEventHandlerDemo {
                 System.err.println("当 Spring 事件异常时，原因：" + e.getMessage());
             });
         }
-
         context.addApplicationListener(new ApplicationListener<MySpringEvent>() {
             @Override
             public void onApplicationEvent(MySpringEvent event) {

@@ -4,7 +4,7 @@
 
 ## 一言蔽之
 
-ApplicationEventPublisher 是时间发布器, AbstractApplicationContext 本身就是一个 ApplicationEventPublisher  ,底层委派给ApplicationEventMuticaster实现
+ApplicationEventPublisher 是事件发布器, AbstractApplicationContext 本身就是一个 ApplicationEventPublisher  ,底层委派给ApplicationEventMuticaster实现
 
 ## 事件发布的方法
 

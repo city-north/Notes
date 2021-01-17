@@ -1,4 +1,4 @@
-# StampedLock
+# 052-StampedLock
 
 ## 目录
 
@@ -12,7 +12,7 @@ StampedLock 是并发包 里面 JDK8 版本新增的一个锁, 这个锁有三�
 
 - writeLock 写锁
 - readLock 悲观读锁
-- tryOptimisticRead 乐观读锁
+- tryOptimisticRead 乐观读
 
 当调用获取锁的系列函数时, 会返回一个 long 类型的变量, 叫做 戳记(stamp) . 这个 stamp 代表锁的状态
 
@@ -147,7 +147,7 @@ StampedLock 支持是那种锁再一定条件下进行相互转换, 例如
 long tryConvertWriteLock(long stamp);
 ```
 
-期望吧 stamp 标识的锁升级为写锁, 这个函数会在下面几种情况下返回一个有效的 stamp , 也就是晋升写锁层高
+期望把 stamp 标识的锁升级为写锁, 这个函数会在下面几种情况下返回一个有效的 stamp , 也就是晋升写锁层高
 
 - 当前锁已经是写模式了
 - 当前锁出于读锁模式,并且没有其他线程是读锁模式
@@ -180,36 +180,29 @@ public class TestStampedLock {
 改变x,y的值。首先获取了写锁，然后修改x,y的值，最后释放写锁。由于StampedLock的写锁是独占锁，当其他线程调用move方法时，会被阻塞。也保证了其他线程不能获取读锁来读取x,y的值，保证了对x,y操作的原子性和数据的一致性。
 
 ```java
-  /**
-     * 独占锁
-     *
-     * @param deltaX
-     * @param deltaY
-     */
-    public void move(double deltaX, double deltaY) {
-        long stamp = sl.writeLock();
-        try {
-            x += deltaX;
-            y += deltaY;
-        } finally {
-            sl.unlockWrite(stamp);
-        }
-    }
+/**
+  * 独占锁
+  */
+public void move(double deltaX, double deltaY) {
+  long stamp = sl.writeLock();
+  try {
+    x += deltaX;
+    y += deltaY;
+  } finally {
+    sl.unlockWrite(stamp);
+  }
+}
 ```
 
 #### distanceFromOrigin方法：
 
 计算当前坐标到原点的距离。(1)获取了乐观读锁，如果当前没有其他线程获取到了写锁，那么（1）的返回值就是非0，（2）复制了坐标变量到本地方法栈中。
 
-(3)检查(1)获取到的stamp值是否还有效。之所以要检测，是因为（1）获取乐观读锁的时候没有通过CAS修改状态，而是通过为运算符返回一个stamp，在这里校验是看在获取stamp后判断前是否有其他线程持有写锁，如果有的话，则stamp无效。
-
-（7）在计算期间，也有可能其他线程在这段时间里获取了写锁，并修改了x,y值，而（7）操作的是方法栈里的值，也就是快照而已，并不是最新的值。
-
-（3）校验失败后，会获取悲观读锁，这时候如果有其他线程持有了写锁，则（4）会一直阻塞至其他线程释放了写锁，否则，当前线程获取到了读锁，执行（5）（6）。代码在执行（5）的时候，由于加了读锁，所以在这期间其他线程获取写锁的时候会阻塞，这保证了数据的一致性。
+(3)检查(1)获取到的stamp值是否还有效。之所以要检测，是因为（1）获取乐观读锁的时候没有通过CAS修改状态，而是通过为运算符返回一个stamp，在这里校验是看在获取stamp后判断前是否有其他线程持有写锁，如果有的话，则stamp无效。（7）在计算期间，也有可能其他线程在这段时间里获取了写锁，并修改了x,y值，而（7）操作的是方法栈里的值，也就是快照而已，并不是最新的值。（3）校验失败后，会获取悲观读锁，这时候如果有其他线程持有了写锁，则（4）会一直阻塞至其他线程释放了写锁，否则，当前线程获取到了读锁，执行（5）（6）。代码在执行（5）的时候，由于加了读锁，所以在这期间其他线程获取写锁的时候会阻塞，这保证了数据的一致性。
 
 另外，这里的x,y没有被声明volatile会不会内存不可见，答案是不会的，因为加锁的语义保存了内存可见性。
 
-当然，最后计算的值，依然有可能不是最新的。
+**当然，最后计算的值，依然有可能不是最新的。**
 
 ```java
     /**
@@ -245,36 +238,34 @@ public class TestStampedLock {
 如果当前坐标在原点，则移动坐标。(1)获取悲观读锁，保证其他线程不能获取写锁来修改x,y的值。(2)判断是否在原点，是的话，则（3）尝试升级读锁为写锁，因为这时候可能有多个线程持有该悲观读锁，所以不一定能升级成功。当多个线程都执行到（3）时，则只有一个可以升级成功，然后执行（4）更新stamp，修改坐标值，退出循环。失败的话，执行（5），先释放读锁，再申请写锁，再循环。最后执行（6）释放锁。
 
 ```java
-
-    /**
+/**
      * 使用悲观锁获取读锁，并尝试转换为写锁
      */
-    public void moveAtOrigin(double newX, double newY) {
-        // (1)
-        long stamp = sl.readLock();
-        try {
-            // （2）如果当前点在原点则移动
-            while (x == 0.0 && y == 0.0) {
-                // （3）尝试将获取的读锁升级为写锁
-                long ws = sl.tryConvertToWriteLock(stamp);
-                if (ws != 0L) {
-                    // （4）升级成功，更新戳记，并设置坐标，退出循环
-                    stamp = ws;
-                    x = newX;
-                    y = newY;
-                    break;
-                } else {
-                    // （5）读锁升级写锁失败，显示获取独占锁，循环重试
-                    sl.unlockRead(stamp);
-                    stamp = sl.writeLock();
-                }
-            }
-        } finally {
-          //(6)
-            sl.unlock(stamp);
-        }
-
+public void moveAtOrigin(double newX, double newY) {
+  // (1)
+  long stamp = sl.readLock();
+  try {
+    // （2）如果当前点在原点则移动
+    while (x == 0.0 && y == 0.0) {
+      // （3）尝试将获取的读锁升级为写锁
+      long ws = sl.tryConvertToWriteLock(stamp);
+      if (ws != 0L) {
+        // （4）升级成功，更新戳记，并设置坐标，退出循环
+        stamp = ws;
+        x = newX;
+        y = newY;
+        break;
+      } else {
+        // （5）读锁升级写锁失败，显示获取独占锁，循环重试
+        sl.unlockRead(stamp);
+        stamp = sl.writeLock();
+      }
     }
+  } finally {
+    //(6)
+    sl.unlock(stamp);
+  }
+}
 ```
 
 这里在使用乐观锁的时候，要考虑得比较多，必须要保证以下顺序：

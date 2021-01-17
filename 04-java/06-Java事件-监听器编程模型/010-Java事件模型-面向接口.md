@@ -25,8 +25,6 @@
 | Java Swing                                              | javax.swing.envent.MenuEvent          | javax.swing.event.MenuListener           |
 | Java Preference                                         | java.util.prefs.ProperenceChangeEvent | java.util.prefs.PreferenceChangeListener |
 
-
-
 ## 源码分析
 
 #### java.util.EventObject
@@ -53,12 +51,6 @@ public class EventObject implements java.io.Serializable {
 }
 
 ```
-
-
-
-
-
-
 
 ####  java.util.Observable
 

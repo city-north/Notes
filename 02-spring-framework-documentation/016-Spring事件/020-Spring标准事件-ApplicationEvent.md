@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 一言蔽之
+
+Spring标准事件ApplicationEvent 拓展自Java标准事件EventObject, 在此基础上添加了发生的事件, 所有Spring的事件都继承自ApplicationEvent 
+
 ## Spring事件核心组件API
 
 | 类名称           | 核心类                                                       |
@@ -25,7 +29,7 @@ public abstract class ApplicationEvent extends EventObject {
 	/** use serialVersionUID from Spring 1.2 for interoperability */
 	private static final long serialVersionUID = 7099057708183571937L;
 
-	/** System time when the event happened */
+	/** System time when the event happened */ // 时间戳
 	private final long timestamp;
 
 	public ApplicationEvent(Object source) {
@@ -47,11 +51,23 @@ public abstract class ApplicationEvent extends EventObject {
 
 #### Spring应用上下文就绪事件-org.springframework.context.event.ContextRefreshedEvent
 
+ContextRefreshedEvent的事件源是ApplicationContext
+
+```java
+public class ContextRefreshedEvent extends ApplicationContextEvent {
+	public ContextRefreshedEvent(ApplicationContext source) {
+		super(source);
+	}
+}
+```
+
 发布时机
 
- [120-第十二步-finishRefresh-结束通知.md](../080-Spring拓展点/120-第十二步-finishRefresh-结束通知.md) 
-
+```java
 org.springframework.context.support.AbstractApplicationContext#finishRefresh
+```
+
+ [110-Spring应用上下刷新完成阶段-finishRefresh.md](../019-Spring应用上下文生命周期/110-Spring应用上下刷新完成阶段-finishRefresh.md) 
 
 ```java
 	protected void finishRefresh() {

@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 一言蔽之
+
+ApplicationEventMuticaster 是发布器, 是Spring底层发布事件的具体实现 , ApplicationEventPublisher 最终委派给ApplicationEventMuticaster实现(默认是SimpleApplicationEventMulticaster)
+
 ## 事件发布的方法
 
 - 通过ApplicationEventPublisher发布
@@ -85,11 +89,11 @@ public class InjectingApplicationEventPublisherDemo implements ApplicationEventP
 
 org.springframework.context.support.AbstractApplicationContext#refresh
 
- [080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md](../080-Spring拓展点/080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md) 
+ [070-初始化内建Bean：Spring事件广播器-initApplicationEventMulticaster().md](../019-Spring应用上下文生命周期/070-初始化内建Bean：Spring事件广播器-initApplicationEventMulticaster().md) 
 
- [100-第十步-registerListeners-注册事件监听器.md](../080-Spring拓展点/100-第十步-registerListeners-注册事件监听器.md) 
+ [090-Spring事件监听器注册阶段-registerListeners().md](../019-Spring应用上下文生命周期/090-Spring事件监听器注册阶段-registerListeners().md) 
 
-```
+```java
 @Override
 public void refresh() throws BeansException, IllegalStateException {
    synchronized (this.startupShutdownMonitor) {
@@ -123,6 +127,7 @@ public void refresh() throws BeansException, IllegalStateException {
          onRefresh();
 
          // Check for listener beans and register them.
+        //注册监听器
          registerListeners();
 
          // Instantiate all remaining (non-lazy-init) singletons.
@@ -133,14 +138,12 @@ public void refresh() throws BeansException, IllegalStateException {
       }
 ```
 
-## 源码
 
- [080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md](../080-Spring拓展点/080-第八步-initApplicationEventMulticaster-初始化容器事件传播器.md) 
 
-#### 关于异步
+## 关于异步
 
  [120-同步和异步的事件广播.md](120-同步和异步的事件广播.md) 
 
-#### 关于错误处理
+## 关于错误处理
 
  [130-Spring事件异常处理.md](130-Spring事件异常处理.md) 

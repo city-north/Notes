@@ -1,10 +1,10 @@
-# 090-Spring-4.2-Payload事件
+# 090-Spring4.2以后引入的Payload事件
 
 [TOC]
 
 ## 使用场景
 
-简化Spring事件发送,关注事件源主体
+简化Spring事件发送,更加关注事件源主体本身
 
 ## 源码
 
