@@ -2,8 +2,6 @@
 
 [TOC]
 
-
-
 ## Spring应用上下文启动前装配 PropertySource
 
 值得注意的是

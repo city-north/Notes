@@ -20,7 +20,7 @@ Environment通过聚合一个PropertySourcesPlaceholderConfigurer从而实现了
   - 组件 - org.springframework.context.support.PropertySourcesPlaceholderConfigurer
   - 接口 - org.springframework.beans.factory.config.EmbeddedValueResolver
 
-主要是为了利用 Environment中 PropertySource机制
+PropertySourcesPlaceholderConfigurer 具有优势, 主要是为了利用 Environment中 PropertySource 机制
 
 ## UML
 

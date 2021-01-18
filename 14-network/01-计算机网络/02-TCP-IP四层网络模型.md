@@ -56,7 +56,7 @@ udp: 传输效率高,可靠性不高,适用于数据量小,可靠性要求不高
 
 如图
 
-<img src="assets/image-20200328162120864.png" alt="image-20200328162120864" style="zoom:33%;" />
+<img src="../../assets/image-20200328162120864.png" alt="image-20200328162120864" style="zoom:33%;" />
 
 ![image-20200328230046844](assets/image-20200328230046844.png)
 

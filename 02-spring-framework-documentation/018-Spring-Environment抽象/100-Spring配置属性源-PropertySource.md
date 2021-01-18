@@ -103,8 +103,6 @@ public class MutablePropertySources implements PropertySources {
 		this.propertySourceList.set(index, propertySource);
 	}
 
-
-
 	protected void assertLegalRelativeAddition(String relativePropertySourceName, PropertySource<?> propertySource) {
 		String newPropertySourceName = propertySource.getName();
 		if (relativePropertySourceName.equals(newPropertySourceName)) {
@@ -122,7 +120,6 @@ public class MutablePropertySources implements PropertySources {
 		removeIfPresent(propertySource);
 		this.propertySourceList.add(index, propertySource);
 	}
-
 
 	private int assertPresentAndGetIndex(String name) {
 		int index = this.propertySourceList.indexOf(PropertySource.named(name));

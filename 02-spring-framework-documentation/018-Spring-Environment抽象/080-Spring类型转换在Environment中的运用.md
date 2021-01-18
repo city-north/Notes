@@ -14,8 +14,6 @@ Environment中的类型转换实际上是委托给了PropertySourcesPropertyReso
 - 底层服务- org.springframework.core.convert.ConversionService
   - 默认实现-`org.springframework.core.convert.support.DefaultConversionService`
 
-
-
 ## 源码分析
 
 AbstractEnvironment 聚合了PropertySourcesPropertyResolver来完成类型转换相关的功能

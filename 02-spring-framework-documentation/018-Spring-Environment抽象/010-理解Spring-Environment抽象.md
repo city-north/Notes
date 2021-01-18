@@ -2,7 +2,19 @@
 
 [TOC]
 
-## EnvoronmentUML
+## 一言蔽之
+
+Spring Environment抽象都包含什么
+
+- **统一的Spring配置属性管理**
+
+Spring Framework 3.1 开始引入 Environment抽象, **它统一Spring配置属性的存储,** 包括占位符处理和**类型转换**, 不仅完整的个替换了 (PropertySourcesPlaceholderConfigurer) , 而且还支持更加丰富的配置属性源 (PropertySource)
+
+- **条件化SpringBean装配管理**
+
+通过 Environment Profiles 信息, 帮助Spring容器提供条件化地装配Bean
+
+## UML
 
 ![image-20210113123624597](../../assets/image-20210113123624597.png)
 
@@ -16,16 +28,6 @@
   - 管理Profiles(org.springframework.core.env.Profiles)
   - 管理Java的SystemEnvironment
   - 管理Java的SystemProperties
-
-## Spring Environment抽象都包含什么
-
-- **统一的Spring配置属性管理**
-
-Spring Framework 3.1 开始引入 Environment抽象, 它统一Spring配置属性的存储, 包括占位符处理和类型转换, 不仅完整的个替换了 `PropertySourcesPlaceholderConfigurer` , 而且还支持更加丰富的配置属性源 `PropertySource`
-
-- **条件化SpringBean装配管理**
-
-通过 Environment Profiles 信息, 帮助Spring容器提供条件化地装配Bean
 
 ### Environment父接口PropertyResolver
 
