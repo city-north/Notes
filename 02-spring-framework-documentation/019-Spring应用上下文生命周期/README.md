@@ -35,7 +35,7 @@ The most commonly used `ApplicationContext` implementations are:
 
 ApplicationContext 提供的核心功能
 
-- 因为继承了[`ListableBeanFactory`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/ListableBeanFactory.html),所以支持访问应用Bean组件的工厂方法
+- 因为继承了[`ListableBeanFactory`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/ListableBeanFactory.html),所以支持访问应用Bean组件的工厂方法,集合BeanFactory相关Bean的功能
 - 因为继承了 [`ResourceLoader`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/ResourceLoader.html)接口, 所以拥有了加载通用资源的能力  [010-Resource机制](../090-Spring机制/010-Resource机制) 
 - 因为继承了[`ApplicationEventPublisher`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html)  接口, 所以拥有了发送事件和注册监听器的能力  [030-ApplicationEvent-事件机制](../090-Spring机制/030-ApplicationEvent-事件机制) 
 - 因为继承了 [`MessageSource`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/MessageSource.html) 接口, 所有拥有了解析国际化消息的能力  [020-MessageSource-国际化消息机制](../090-Spring机制/020-MessageSource-国际化消息机制) 
@@ -55,11 +55,7 @@ ApplicationContext 提供的核心功能
 
 ![image-20200919224648982](../../assets/image-20200919224648982.png)
 
-## 结构化hierarchy
+## 层次关系hierarchy
 
 ApplicationContext允许上下文嵌套，通过保持父上下文可以维持一个上下文体系。对于Bean的查找可以在这个上下文体系中进行，首先检查当前上下文，其次检查父上下文，逐级向上，这样可以为不同的Spring应用提供一个共享的Bean定义环境。
-
-## 不同子类的应用
-
- [000-IOC容器初始化流程.md](../../020-Spring容器初始化流程/000-IOC容器初始化流程.md) 
 

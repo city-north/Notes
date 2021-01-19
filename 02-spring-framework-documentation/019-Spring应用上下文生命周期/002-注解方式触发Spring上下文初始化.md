@@ -15,7 +15,7 @@ class QuickStartExample {
         HelloWorldServiceClient bean = context.getBean(HelloWorldServiceClient.class);
         bean.showMessage();
     }
-}002
+}
 ```
 
 ### 查看构造器中的操作

@@ -64,7 +64,7 @@ spring在进入函数 prepareBeanFactory 之前, 就已经完成了对配置的�
 		beanFactory.registerResolvableDependency(ApplicationContext.class, this);
 
 
-    //注册Application的探测器
+    //注册Application的探测器 ,只有单例的listener可以加载进去
 		beanFactory.addBeanPostProcessor(new ApplicationListenerDetector(this));
 
 		// 增加对AspectJ的支持

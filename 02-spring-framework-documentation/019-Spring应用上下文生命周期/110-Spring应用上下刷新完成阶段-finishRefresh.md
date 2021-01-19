@@ -49,7 +49,7 @@ public void clearResourceCaches() {
 初始化声明周期回调
 
 - 应用上下文的声明周期
-- Bean的声明周期s
+- Bean的声明周期
 
 ```java
 	protected void initLifecycleProcessor() {

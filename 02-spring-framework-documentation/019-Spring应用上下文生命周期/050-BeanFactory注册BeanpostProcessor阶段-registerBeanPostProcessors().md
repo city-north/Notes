@@ -19,10 +19,6 @@
 
 从方法名来说,是在注册BeanPostProcessors
 
-
-
-
-
 注册 PriorityOrdered 类型的BeanPostProcessorBeans
 
 ```java

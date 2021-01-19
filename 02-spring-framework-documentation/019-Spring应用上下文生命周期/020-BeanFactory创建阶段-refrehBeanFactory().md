@@ -2,7 +2,7 @@
 
 [TOC]
 
-## 020-BeanFactory创建阶段做了什么?
+## BeanFactory创建阶段做了什么?
 
 AbstractApplicationContext#obtainFreshBeanFactory
 
@@ -37,11 +37,11 @@ protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
 }
 ```
 
-### 刷新Spring上下文底层BeanFactory
+### refreshBeanFactory-刷新Spring上下文底层BeanFactory
 
 refreshBeanFactory(),实际上代码实现是其子类实现
 
-```
+```java
 org.springframework.context.support.AbstractRefreshableApplicationContext#refreshBeanFactory
 ```
 
@@ -60,7 +60,7 @@ protected final void refreshBeanFactory() throws BeansException {
     beanFactory.setSerializationId(getId());
     //对IOC容器进行定制化，如设置启动参数，开启注解的自动装配等
     customizeBeanFactory(beanFactory);
-//调用载入Bean定义的方法，主要这里又使用了一个委派模式，在当前类中只定义了抽象的loadBeanDefinitions方法，具体的实现调用子类容器
+		//调用载入Bean定义的方法，主要这里又使用了一个委派模式，在当前类中只定义了抽象的loadBeanDefinitions方法，具体的实现调用子类容器
     loadBeanDefinitions(beanFactory);
     synchronized (this.beanFactoryMonitor) {
       this.beanFactory = beanFactory;

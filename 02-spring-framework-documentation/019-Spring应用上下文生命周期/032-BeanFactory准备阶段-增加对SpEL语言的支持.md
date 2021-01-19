@@ -1,5 +1,7 @@
 # 032-BeanFactory准备阶段-增加对SpEL语言的支持
 
+[toc]
+
 Spring表达式语言全称为Spring Expression Language，缩写为SpEL，类似于Struts 2x中使用的OGNL表达式语言，能在运行时构建复杂表达式、存取对象图属性、对象方法调用等，并且能与Spring功能完美整合，比如能用来配置bean定义。SpEL是单独模块，只依赖于core模块，不依赖于其他模块，可以单独使用。
 SpEL使用#{…}作为定界符，所有在大框号中的字符都将被认为是SpEL，使用格式如下：
 
@@ -25,7 +27,7 @@ SpEL使用#{…}作为定界符，所有在大框号中的字符都将被认为�
 在源码中通过代码
 
 ```java
-beanFactory.setBeanExpressionResolver(new StandardBeanExpression- Resolver())
+beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver())
 ```
 
 注册语言解析器，就可以对SpEL进行解析了，那么在注册解析器后Spring又是在什么时候调用这个解析器进行解析呢？

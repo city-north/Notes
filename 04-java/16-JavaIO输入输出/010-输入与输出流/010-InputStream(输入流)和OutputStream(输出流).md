@@ -52,7 +52,7 @@ abstract int read();
 
 在具体的实现类中,这个方法具有不同的功能
 
-- 在FIleInputStream 类中,将从某个文件中读入一个字节
+- 在 FIleInputStream 类中,将从某个文件中读入一个字节
 - System.in(一个InputStream的子类预定义对象) 是从"标准输入"中读取信息,可以是控制台或者是重定向文件
 
 我们会遇到读取数据到一半的时候没出现网络故障从而抛出IoException的场景,例如,我们要从一个网络连接中读取1024个字节,但是实际上只有512个字节到到,我们应该尝试使用read的另一个重载
@@ -87,7 +87,7 @@ if (bytesAvailable > 0) {
 	byte[] data = new byte[bytesAvailable];
 	in.read(data);
 }
-	//立刻执行程序其他部分
+//立刻执行程序其他部分
 ```
 
 ### skip方法

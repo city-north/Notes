@@ -40,8 +40,6 @@ BeanFactory后置处理阶段主要是在BeanFactory初始化好以后执行的�
 
 ## 代码实例
 
- [020-SpringBoot拓展点-容器刷新阶段.md](../../03-spring-boot-documentation/140-SpringBoot拓展点/020-SpringBoot拓展点-容器刷新阶段.md) 
-
 ```java
 public class PostFactoryBeanFactoryDemo {
 

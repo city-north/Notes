@@ -1,4 +1,4 @@
-# 010-Spring应用上下文启动准备阶段.md
+# 010-Spring应用上下文启动准备阶段
 
 [TOC]
 
@@ -8,7 +8,7 @@
 
 ## Spring应用上下文启动准备阶段做了什么?
 
-核心入口- AbstractApplicationContext#prepareRefresh()方法
+核心入口- **AbstractApplicationContext#prepareRefresh()**方法
 
 值得注意的点
 
@@ -83,9 +83,19 @@ protected void initPropertySources() {
 }
 
 @Override
+public ConfigurableEnvironment getEnvironment() {
+  //没有则自动创建
+  if (this.environment == null) {
+      //创建
+    this.environment = createEnvironment();
+  }
+  return this.environment;
+}
+
+@Override
 protected ConfigurableEnvironment createEnvironment() {
   //创建自定义的Environment抽象
-  return new StandardServletEnvironment();
+  return new StandardEnvironment();
 }
 ```
 
@@ -93,7 +103,7 @@ protected ConfigurableEnvironment createEnvironment() {
 
 ### 检验Environment中必须属性
 
-检验Environment中必须属性:getEnvironment().validateRequiredProperties();
+检验Environment中必须属性 : getEnvironment().validateRequiredProperties();
 
 假如现在有这样一个需求，工程在运行过程中用到的某个设置（例如VAR）是从系统环境变量中取得的，而如果用户没有在系统环境变量中配置这个参数，那么工程可能不会工作。这一要求可能会有各种各样的解决办法，当然，在Spring中可以这样做，你可以直接修改Spring的源码，例如修改ClassPathXmlApplicationContext。当然，最好的办法还是对源码进行扩展，我们可以自定义类：
 
@@ -113,8 +123,8 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
 
 ```java
 public static void main(String[] args) {
-         ApplicationContext bf = new MyClassPathXmlApplicationContext ("test/customtag/test.xml"); 
-         User user=(User) bf.getBean("testbean");
+ 				ApplicationContext bf = new MyClassPathXmlApplicationContext ("test/customtag/test.xml"); 
+        User user=(User) bf.getBean("testbean");
 }
 ```
 

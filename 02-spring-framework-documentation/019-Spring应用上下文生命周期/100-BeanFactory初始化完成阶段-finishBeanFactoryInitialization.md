@@ -22,7 +22,7 @@
 protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
   // BeanFactory关联ConversionServerice Bean , 如果存在
   // Initialize conversion service for this context.
-  if (beanFactory.containsBean(CONVERSION_SERVICE_BEAN_NAME) && sbeanFactory.isTypeMatch(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class)) {
+  if (beanFactory.containsBean(CONVERSION_SERVICE_BEAN_NAME) && sbeanFactory.isTypeMatch(CONVERSION_SERVICE_BEAN_NAME,ConversionService.class)) {
     beanFactory.setConversionService(
       beanFactory.getBean(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class));
   }
