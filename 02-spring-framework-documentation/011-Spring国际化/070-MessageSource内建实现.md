@@ -50,7 +50,7 @@ HierarchicalMessageSource接口最重要的两个实现类是
 
 ## 初始化的时机
 
-```
+```java
 //7、初始化信息源，和国际化相关.
 initMessageSource();
 ```
