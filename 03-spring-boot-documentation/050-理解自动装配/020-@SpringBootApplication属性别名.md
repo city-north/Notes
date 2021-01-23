@@ -1,0 +1,1 @@
+# 020-@SpringBootApplication属性别名

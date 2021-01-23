@@ -1,0 +1,1 @@
+# 050-@SpringBootApplication继承@Configuration-CGLIB提升

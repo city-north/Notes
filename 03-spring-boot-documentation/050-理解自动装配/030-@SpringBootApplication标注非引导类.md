@@ -1,0 +1,1 @@
+# 030-@SpringBootApplication标注非引导类

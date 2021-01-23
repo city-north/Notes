@@ -1,12 +1,8 @@
-# 理解@SpringBootApplication注解语义
+# 010-理解@SpringBootApplication注解语义
 
 ## 目录
 
-- 注解代码
-
-
-
-
+[TOC]
 
 ## 注解代码
 
