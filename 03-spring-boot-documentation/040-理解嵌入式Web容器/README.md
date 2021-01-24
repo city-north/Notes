@@ -1,5 +1,9 @@
 # 040-理解嵌入式Web容器
 
+[TOC]
+
+## SpringBoot嵌入式容器支持
+
 早在Tomcat5.x和Jetty 5.x 就已经支持嵌入式容器, Serlvet规范实现与这三种Servlet容器的版本对应的关系如下
 
 | Servlet规范 | Tomcat | Jetty | Undertow |
@@ -15,7 +19,7 @@
 
 Spring WebFlux 基于 Reactor 框架实现, 因此在SpringBoot 引入,通常被 spring-boot-starter-webflux简介引入
 
-一下三种服务器都可以作为Reactvie web server ,是因为 Servlet 3.1 +  容器同样满足 Reactive 异步非阻塞的特性
+一下三种服务器都可以作为Reactvie web server ,是因为 Servlet 3.1+  容器同样满足 Reactive 异步非阻塞的特性
 
 - Tomcat
 - Jetty

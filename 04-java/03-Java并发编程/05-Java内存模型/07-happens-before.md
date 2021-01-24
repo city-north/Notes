@@ -1,47 +1,41 @@
 #              happens-before
 
-## 目录
-
-------
-
-
-
 [TOC]
 
 ## 一言蔽之
 
 **happens-before 用来描述操作之间的内存可见性,用来屏蔽程序员与 JMM 内存可见性操作的细节**
 
+<img src="../../../assets/image-20200306122005450.png" alt="image-20200306122005450" style="zoom: 33%;" />
+
 **它的意思表示的是前一个操作的结果对于后续操作是可见的，所以它是一种表达多个线程之间对于内存的可见性。**
 
 所以我们可以认为在 JMM 中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作必须要存在 happens-before 关系。这两个操作可以是同一个线程，也 可以是不同的线程
+
+## 什么是Happens-Before
+
+两个操作之间有 happens-before 关系,并不意味着前一个操作必须要在后一个操作之前执行,happens-before 仅仅要求前一个操作(执行的结果) 对于后一个操作可见,且前一个操作按顺序排在第二个操作之前(the first is visible to the ordered before the second)
+
+对于 Java 程序来说,happens-before 规则简单容易懂,避免Java 程序员为了理解 JMM 提供的内存可见性保证而去学习复杂的重排序规则以及这些规则的具体实现
 
 ## happens-before的六个规则
 
 6个规则，都是对 JMM 对内存可见性相关操作的屏蔽， 也是程序员最关心的
 
-- [程序顺序规则](#程序顺序规则): as-if-serial一个线程中的每个操作,happens-before于该线程中的任意后续操作
-- [监视器锁规则](#监视器锁规则): 对一个锁的解锁, happens-before 于随后对这个锁加锁
-- [volatile变量规则](#volatile变量规则): 对一个 volatile 域的写,happens-before 于任意后续对这个 volatile 域的读
-- 传递性 : 如果 A happens-before B , 且 B happens-before C , 那么 A 一定 happens-before C
-- start 规则:  如果线程 A 执行操作 ThreadB.start( ), 那么A 线程的 ThreadB.start() 操作 happen-before 线程 B 中的任意操作
-- join 规则: 如果线程 A 执行 ThreadB.join(). 那么线程 B 中的任意操作 happen-before与线程 A 从ThreadB.jion 操作成功返回
+1. 程序顺序规则: as-if-serial一个线程中的每个操作, happens-before于该线程中的任意后续操作
+2. 监视器锁规则 : 对一个锁的解锁, happens-before 于随后对这个锁加锁
+3. volatile变量规则 : 对一个 volatile 域的写,happens-before 于任意后续对这个 volatile 域的读
+4. 传递性 : 如果 A happens-before B , 且 B happens-before C , 那么 A 一定 happens-before C
+5. start 规则 :  如果线程 A 执行操作 ThreadB.start( ),  那么A 线程的 ThreadB.start() 操作 happen-before 线程 B 中的任意操作
+6. join 规则 : 如果线程 A 执行 ThreadB.join(). 那么线程 B 中的任意操作 happen-before与线程 A 从ThreadB.jion 操作成功返回
 
-> 两个操作之间有 happens-before 关系,并不意味着前一个操作必须要在后一个操作之前执行,happens-before 仅仅要求前一个操作(执行的结果) 对于后一个操作可见,且前一个操作按顺序排在第二个操作之前(the first is visible to the ordered before the second)
+## 原则1 程序顺序性原则
 
-<img src="../../../assets/image-20200306122005450.png" alt="image-20200306122005450" style="zoom: 33%;" />
-
-对于 Java 程序来说,happens-before 规则简单容易懂,避免Java 程序员为了理解 JMM 提供的内存可见性保证而去学习复杂的重排序规则以及这些规则的具体实现
-
-## 具体的规则和其屏蔽的细节
-
-#### 程序顺序规则
-
-**一个线程中的每个操作, happens-before 于该线程中的任意后续操作**
+一个线程中的每个操作, happens-before 于该线程中的任意后续操作
 
 这显然是 JMM 对 重排序的承诺  :  **已经正确同步程序的执行顺序就是程序员代码编写的顺序** ， 我们都知道，JMM 定义了很多重排序规则，以便于优化代码的执行效率 ，主要分为以下三种重排序
 
-> 知识点：  [02-重排序.md](02-重排序.md) 
+ [02-重排序.md](02-重排序.md) 
 
 - 编译器重排序
 
@@ -57,7 +51,7 @@
 
 所以实际上 程序顺序规则 就是对着一系列重排序的规则的总结， 让程序员不关心其实现方式，只要按照约定编写程序
 
-#### 监视器锁规则
+## 原则2 监视器锁规则
 
 对一个锁的解锁, happens-before 于随后对这个锁加锁
 
@@ -68,7 +62,7 @@
 
 实际上监视器锁的规则就是对加锁和解锁的底层实现的总结，让程序员不关系其实现，只要在需要获取锁的地方加锁即可
 
-#### volatile变量规则
+## 原则3 volatile变量规则
 
 对一个 volatile 域的写,happens-before 于任意后续对这个 volatile 域的读
 
