@@ -81,9 +81,9 @@ $ tree -d
 
 #### 分析一下目录结构
 
-- BOOT-INF/classes 存放应用编译后的 class 文件
-- BOOT-INF/lib  目录存放应用依赖的 jar 包
-- META-INF 存放的是应用相关的元信息 , 可执行的 jar 包都有 `MANIFEST.MF`文件
+- **BOOT-INF/classes** 存放应用编译后的 class 文件
+- **BOOT-INF/lib**  目录存放应用依赖的 jar 包
+  - META-INF 存放的是应用相关的元信息 , 可执行的 jar 包都有 `MANIFEST.MF`文件
 - org/springframework/boot/loader SpringBoot 引导相关文件,在 maven 插件打包时就添加进去了
 
 

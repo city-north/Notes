@@ -1,4 +1,4 @@
-# j040-SpringBoot打包-War方式
+# 040-SpringBoot打包-War方式
 
 [TOC]
 
@@ -62,4 +62,3 @@ Main-Class: org.springframework.boot.loader.WarLauncher
 
 ![image-20210120210001688](../../assets/image-20210120210001688.png)
 
-## 
