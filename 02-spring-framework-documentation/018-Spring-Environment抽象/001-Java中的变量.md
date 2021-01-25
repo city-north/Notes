@@ -2,17 +2,17 @@
 
 [TOC]
 
-## 简介
+## Java中的变量分为两类
 
-- **System.getenv() 返回的是系统级别的环境变量, 例如可以直接获取环境变量名为 JAVA_HOME 的环境变量**
+- System.getenv() 返回的是系统级别的环境变量, 例如可以直接获取环境变量名为 JAVA_HOME 的环境变量
 
-- **System.getProperties()返回的是给对应的JVM设置的属性值, 它可以同过运行 *java -D* 来进行改变**
+- System.getProperties()返回的是给对应的JVM设置的属性值, 它可以同过运行 *java -D* 来进行改变
 
-  ​	设置方式为(这里设置file.encoding和os.name两个属性)：
+设置方式为(这里设置file.encoding和os.name两个属性)：
 
-  ```java
-  java -Dfile.encoding=utf-8 -Dos.name=windows7
-  ```
+```java
+java -Dfile.encoding=utf-8 -Dos.name=windows7
+```
 
 ## System.getenv()
 

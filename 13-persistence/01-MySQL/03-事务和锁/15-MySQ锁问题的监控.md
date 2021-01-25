@@ -1,8 +1,10 @@
-# MySQL 锁问题的监控
+# 15-MySQ锁问题的监控
 
-#### 查看事务中锁的情况
+[TOC]
 
-```
+## 查看事务中锁的情况
+
+```sql
 show full processlist
 ```
 
@@ -12,7 +14,7 @@ show full processlist
 show engine innodb status
 ```
 
-#### 三张重要的表
+## 三张重要的表
 
 - INNODB_TRX
 - INNODB_LOCKS
