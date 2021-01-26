@@ -8,80 +8,80 @@ SpringCloud 实现了自己的监听器：`BootstrapApplicationListener`，来�
 
 ```java
 @Override
-    public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-        ConfigurableEnvironment environment = event.getEnvironment();
-        //如果未开启SpringCloud，直接返回
-        if (!environment.getProperty("spring.cloud.bootstrap.enabled", Boolean.class,
-                true)) {
-            return;
-        }
-        // don't listen to events in a bootstrap context
-        //判断该监听器是否已经执行过，如果执行过，直接返回
-        if (environment.getPropertySources().contains(BOOTSTRAP_PROPERTY_SOURCE_NAME)) {
-            return;
-        }
-        //这里返回了一个 Spring 容器
-        ConfigurableApplicationContext context = bootstrapServiceContext(environment,
-                event.getSpringApplication());
-        apply(context, event.getSpringApplication(), environment);
-    }
+public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+  ConfigurableEnvironment environment = event.getEnvironment();
+  //如果未开启SpringCloud，直接返回
+  if (!environment.getProperty("spring.cloud.bootstrap.enabled", Boolean.class,
+                               true)) {
+    return;
+  }
+  // don't listen to events in a bootstrap context
+  //判断该监听器是否已经执行过，如果执行过，直接返回
+  if (environment.getPropertySources().contains(BOOTSTRAP_PROPERTY_SOURCE_NAME)) {
+    return;
+  }
+  //这里返回了一个 Spring 容器
+  ConfigurableApplicationContext context = bootstrapServiceContext(environment,
+                                                                   event.getSpringApplication());
+  apply(context, event.getSpringApplication(), environment);
+}
 ```
 
 `bootstrapServiceContext`方法创建了一个 Spring 容器：
 
 ```java
 private ConfigurableApplicationContext bootstrapServiceContext(
-            ConfigurableEnvironment environment, final SpringApplication application) {
-        StandardEnvironment bootstrapEnvironment = new StandardEnvironment();
-        MutablePropertySources bootstrapProperties = bootstrapEnvironment
-                .getPropertySources();
-        for (PropertySource<?> source : bootstrapProperties) {
-            bootstrapProperties.remove(source.getName());
-        }
-        //设置读取 bootstrap 文件
-        String configName = environment
-                .resolvePlaceholders("${spring.cloud.bootstrap.name:bootstrap}");
-        //设置 bootstrap 文件路径
-        String configLocation = environment
-                .resolvePlaceholders("${spring.cloud.bootstrap.location:}");
-        Map<String, Object> bootstrapMap = new HashMap<>();
-        bootstrapMap.put("spring.config.name", configName);
-        if (StringUtils.hasText(configLocation)) {
-            bootstrapMap.put("spring.config.location", configLocation);
-        }
-        //设置是否已经初始化BootStrap环境
-        bootstrapProperties.addFirst(
-                new MapPropertySource(BOOTSTRAP_PROPERTY_SOURCE_NAME, bootstrapMap));
-        for (PropertySource<?> source : environment.getPropertySources()) {
-            bootstrapProperties.addLast(source);
-        }
-            //......
-            //加载BootstrapConfiguration 配置类
-            List<String> names = SpringFactoriesLoader
-                .loadFactoryNames(BootstrapConfiguration.class, classLoader);
-            for (String name : StringUtils.commaDelimitedListToStringArray(
-                    environment.getProperty("spring.cloud.bootstrap.sources", ""))) {
-                names.add(name);
-            }
-        //创建 Spring 容器
-        SpringApplicationBuilder builder = new SpringApplicationBuilder()
-                .profiles(environment.getActiveProfiles()).bannerMode(Mode.OFF)
-                .environment(bootstrapEnvironment)
-                .properties("spring.application.name:" + configName)
-                .registerShutdownHook(false)
-                .logStartupInfo(false)
-                .web(false);
-        List<Class<?>> sources = new ArrayList<>();
+  ConfigurableEnvironment environment, final SpringApplication application) {
+  StandardEnvironment bootstrapEnvironment = new StandardEnvironment();
+  MutablePropertySources bootstrapProperties = bootstrapEnvironment
+    .getPropertySources();
+  for (PropertySource<?> source : bootstrapProperties) {
+    bootstrapProperties.remove(source.getName());
+  }
+  //设置读取 bootstrap 文件
+  String configName = environment
+    .resolvePlaceholders("${spring.cloud.bootstrap.name:bootstrap}");
+  //设置 bootstrap 文件路径
+  String configLocation = environment
+    .resolvePlaceholders("${spring.cloud.bootstrap.location:}");
+  Map<String, Object> bootstrapMap = new HashMap<>();
+  bootstrapMap.put("spring.config.name", configName);
+  if (StringUtils.hasText(configLocation)) {
+    bootstrapMap.put("spring.config.location", configLocation);
+  }
+  //设置是否已经初始化BootStrap环境
+  bootstrapProperties.addFirst(
+    new MapPropertySource(BOOTSTRAP_PROPERTY_SOURCE_NAME, bootstrapMap));
+  for (PropertySource<?> source : environment.getPropertySources()) {
+    bootstrapProperties.addLast(source);
+  }
+  //......
+  //加载BootstrapConfiguration 配置类
+  List<String> names = SpringFactoriesLoader
+    .loadFactoryNames(BootstrapConfiguration.class, classLoader);
+  for (String name : StringUtils.commaDelimitedListToStringArray(
+    environment.getProperty("spring.cloud.bootstrap.sources", ""))) {
+    names.add(name);
+  }
+  //创建 Spring 容器
+  SpringApplicationBuilder builder = new SpringApplicationBuilder()
+    .profiles(environment.getActiveProfiles()).bannerMode(Mode.OFF)
+    .environment(bootstrapEnvironment)
+    .properties("spring.application.name:" + configName)
+    .registerShutdownHook(false)
+    .logStartupInfo(false)
+    .web(false);
+  List<Class<?>> sources = new ArrayList<>();
 
-        builder.sources(sources.toArray(new Class[sources.size()]));
-        AnnotationAwareOrderComparator.sort(sources);
-        final ConfigurableApplicationContext context = builder.run();
-        //创建祖先容器
-        addAncestorInitializer(application, context);
-        bootstrapProperties.remove(BOOTSTRAP_PROPERTY_SOURCE_NAME);
-        mergeDefaultProperties(environment.getPropertySources(), bootstrapProperties);
-        return context;
-    }
+  builder.sources(sources.toArray(new Class[sources.size()]));
+  AnnotationAwareOrderComparator.sort(sources);
+  final ConfigurableApplicationContext context = builder.run();
+  //创建祖先容器
+  addAncestorInitializer(application, context);
+  bootstrapProperties.remove(BOOTSTRAP_PROPERTY_SOURCE_NAME);
+  mergeDefaultProperties(environment.getPropertySources(), bootstrapProperties);
+  return context;
+}
 ```
 
 首先，`SpringBoot`项目是通过`SpringApplicationBuilder`启动，在上述逻辑中又构建了一个`SpringApplicationBuilder`对象，再次执行run方法，所以启动流程会执行两遍，只是读取的配置文件和配置类不同。
