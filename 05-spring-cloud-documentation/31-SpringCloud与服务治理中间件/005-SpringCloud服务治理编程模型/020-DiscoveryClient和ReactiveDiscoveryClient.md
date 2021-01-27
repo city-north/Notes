@@ -4,7 +4,7 @@
 
 ## DiscoveryClient简介
 
-DiscoveryClient和ReactiveDiscoveryClient 代表 Consumer 从注册中心发现Provider的服务发现操作, 接口定义如下
+DiscoveryClient和 ReactiveDiscoveryClient 代表 Consumer 从注册中心发现Provider的服务发现操作, 接口定义如下
 
 ```java
 
