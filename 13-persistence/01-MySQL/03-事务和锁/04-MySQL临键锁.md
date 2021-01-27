@@ -1,4 +1,6 @@
-# 04-MySQL临键锁next-key-锁
+# 04-MySQL临键锁
+
+[TOC]
 
 ## MySQL三种锁算法图示
 

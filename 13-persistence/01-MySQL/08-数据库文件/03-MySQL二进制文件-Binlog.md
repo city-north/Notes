@@ -1,17 +1,21 @@
-# MySQL二进制文件-Binlog
+# 03-MySQL二进制文件-Binlog
 
 ## 目录
 
-- [BinLog是什么](#BinLog是什么)
-- [BinLog什么时候写入的](#BinLog什么时候写入的)
-- BinLog格式
-- [使用实例](#使用实例)
+[TOC]
 
-## BinLog是什么
+## 什么是BinLog
 
-插入前存储到硬盘的逻辑日志 , 以事件的形式记录了所有的 DDL 和 DML 语句 (因为它记录的是操作而不是数据值，属于逻辑日志)，可以用来做主从复制和数据恢复。binlog 不包含 select 和 show 这样的语句, 如果需要记录, 需要开启全量日志功能
+> **binlog是记录所有数据库表结构变更（例如CREATE、ALTER TABLE…）以及表数据修改（INSERT、UPDATE、DELETE…）的二进制日志。
+> binlog不会记录SELECT和SHOW这类操作，因为这类操作对数据本身并没有修改，但你可以通过查询通用日志来查看MySQL执行过的所有语句。**
 
-#### 有什么用
+多说一句，如果`update`操作没有造成数据变化，也是会记入`binlog`
+
+插入前存储到硬盘的逻辑日志 , 以事件的形式记录了所有的 DDL 和 DML 语句 (因为它记录的是操作而不是数据值，属于逻辑日志)，可以用来做主从复制和数据恢复。
+
+binlog 不包含 select 和 show 这样的语句, 如果需要记录, 需要开启全量日志功能
+
+### BinLog有什么用
 
 - 恢复 (recovery) : 某些数据的恢复需要二进制日志, 例如, 在一个数据库全备文件恢复后,用户可以通过而二进制日志进行 point-in-time (基于时间点和基于位置) 的恢复
 - 复制 (replication) : 其原理与恢复类似 , 通过复制和执行二进制日志使一台远程的 MySQL 数据库(slave) 实时同步
@@ -91,7 +95,7 @@ show variables like '%log_bin%'
 
 ![image-20200828084530122](../../../assets/image-20200828084530122.png)
 
-#### 查看所有binlog和其大小
+## 查看所有binlog和其大小
 
 ```sql
 show binary logs

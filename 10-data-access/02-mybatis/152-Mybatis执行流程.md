@@ -1,9 +1,14 @@
-# 运行流程
+# 152-Mybatis执行流程
+
+## 目录
+
+[TOC]
+
+## 执行流程图示
 
 <img src="../../assets/image-20200221213904693.png" alt="image-20200221213904693" style="zoom: 67%;" />
 
-- [加载 Configuration 对象](#加载 Configuration 对象)
-- [创建 SqlSession 对象](#创建 SqlSession 对象)
+## 
 
 #### 加载 Configuration 对象
 

@@ -9,6 +9,8 @@
 3. “Cache-Control”字段也可以控制缓存代理，常用的有“private”“s-maxage”“no-transform”等，同样必须配合“Last-modified”“ETag”等字段才能使用；
 4. 缓存代理有时候也会带来负面影响，缓存不良数据，需要及时刷新或删除。
 
+## 缓存代理简介
+
 在[第 20 讲](https://time.geekbang.org/column/article/106804)中，我介绍了 HTTP 的缓存控制，[第 21 讲](https://time.geekbang.org/column/article/107577)我介绍了 HTTP 的代理服务。那么，把这两者结合起来就是这节课所要说的“**缓存代理**”，也就是支持缓存控制的代理服务。
 
 之前谈到缓存时，主要讲了客户端（浏览器）上的缓存控制，它能够减少响应时间、节约带宽，提升客户端的用户体验。
