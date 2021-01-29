@@ -9,23 +9,23 @@ Eureka Server中获取注册表的服务实例信息主要通过两个方法实�
 - AbstractInstanceRegistry#getApplicationsFromMultipleRegions从多地区获取全量注册表数据，
 - AbstractInstanceRegistry#getApplicationDeltasFromMultipleRegions从多地区获取增量式注册表数据
 
-### 从多地区获取全量注册表数据getApplicationsFromMultipleRegions
+## 从多地区获取全量注册表数据getApplicationsFromMultipleRegions
 
 getApplicationsFromMultipleRegions方法将会从多个地区中获取全量注册表信息，并封装成Applications返回，实现代码如下所示：
 
 ```java
 //AbstractInstanceRegistry.java
 public Applications getApplicationsFromMultipleRegions(String[] remoteRegions) {
-    boolean includeRemoteRegion = null != remoteRegions &amp;&amp; remoteRegions.length != 0;
+    boolean includeRemoteRegion = null != remoteRegions && remoteRegions.length != 0;
     Applications apps = new Applications();
     apps.setVersion(1L);
     // 从本地registry获取所有的服务实例信息InstanceInfo
-    for (Entry〈String, Map〈String, Lease〈InstanceInfo〉〉〉 entry : registry.entrySet()) {
+    for (Entry<String, Map<String, Lease<InstanceInfo>>> entry : registry.entrySet()) {
         Application app = null;
         if (entry.getValue() != null) {
-            for (Entry〈String, Lease〈InstanceInfo〉〉 stringLeaseEntry : entry.
+            for (Entry<String, Lease<InstanceInfo>> stringLeaseEntry : entry.
                 getValue().entrySet()) {
-                Lease〈InstanceInfo〉 lease = stringLeaseEntry.getValue();
+                Lease<InstanceInfo> lease = stringLeaseEntry.getValue();
                 if (app == null) {
                     app = new Application(lease.getHolder().getAppName());
                 }
@@ -60,11 +60,11 @@ public Applications getApplicationDeltasFromMultipleRegions(String[] remoteRegio
     boolean includeRemoteRegion = remoteRegions.length != 0;
     Applications apps = new Applications();
     apps.setVersion(responseCache.getVersionDeltaWithRegions().get());
-    Map〈String, Application〉 applicationInstancesMap = new HashMap〈String, Application〉();
+    Map<String, Application> applicationInstancesMap = new HashMap<String, Application>();
     try {
         write.lock();// 开启写锁
         // 遍历recentlyChangedQueue队列获取最近变化的服务实例信息InstanceInfo
-        Iterator〈RecentlyChangedItem〉 iter = this.recentlyChangedQueue.iterator();
+        Iterator<RecentlyChangedItem> iter = this.recentlyChangedQueue.iterator();
         while (iter.hasNext()) {
             //...()) {
             //...

@@ -11,8 +11,6 @@ Eureka Server集群同步包含两个部分，
 - 一部分是Eureka Server在启动过程中从它的peer节点中拉取注册表信息，并将这些服务实例的信息注册到本地注册表中；
 - 另一部分是Eureka Server每次对本地注册表进行操作时，同时会将操作同步到它的peer节点中，达到集群注册表数据统一的目的。
 
-
-
 ## Eureka Server初始化本地注册表信息
 
 在Eureka Server启动的过程中，会从它的peer节点中拉取注册表来初始化本地注册表，这部分主要通过PeerAwareInstanceRegistry#syncUp方法完成，它将从可能存在的peer节点中，拉取peer节点中的注册表信息，并将其中的服务实例信息注册到本地注册表中，如下所示：
@@ -88,8 +86,6 @@ public boolean renew(final String appName, final String id, final boolean isRepl
     }
     return false;
 }
-
-
 ```
 
 同步的操作主要有：

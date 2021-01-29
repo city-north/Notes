@@ -19,14 +19,14 @@ public void evict(long additionalLeaseMs) {
     };
     }
     // 遍历注册表register，一次性获取所有的过期租约
-    List〈Lease〈InstanceInfo〉〉 expiredLeases = new ArrayList〈〉();
-    for (Entry〈String, Map〈String, Lease〈InstanceInfo〉〉〉 groupEntry : registry.
+    List<Lease<InstanceInfo>> expiredLeases = new ArrayList<>();
+    for (Entry<String, Map<String, Lease<InstanceInfo>>> groupEntry : registry.
         entrySet()) {
-        Map〈String, Lease〈InstanceInfo〉〉 leaseMap = groupEntry.getValue();
+        Map<String, Lease<InstanceInfo>> leaseMap = groupEntry.getValue();
         if (leaseMap != null) {
-            for (Entry〈String, Lease〈InstanceInfo〉〉 leaseEntry : leaseMap.
+            for (Entry<String, Lease<InstanceInfo>> leaseEntry : leaseMap.
                 entrySet()) {
-                Lease〈InstanceInfo〉 lease = leaseEntry.getValue();
+                Lease<InstanceInfo> lease = leaseEntry.getValue();
                 // 1
                 if (lease.isExpired(additionalLeaseMs) &amp;&amp; lease.getHolder() != null) {
                     expiredLeases.add(lease);
@@ -41,13 +41,13 @@ public void evict(long additionalLeaseMs) {
     int evictionLimit = registrySize - registrySizeThreshold;
     // 计算剔除租约的数量
     int toEvict = Math.min(expiredLeases.size(), evictionLimit);
-    if (toEvict 〉 0) {
+    if (toEvict > 0) {
         Random random = new Random(System.currentTimeMillis());
         // 逐个随机剔除
-        for (int i = 0; i 〈 toEvict; i++) {
+        for (int i = 0; i < toEvict; i++) {
             int next = i + random.nextInt(expiredLeases.size() - i);
             Collections.swap(expiredLeases, i, next);
-            Lease〈InstanceInfo〉 lease = expiredLeases.get(i);
+            Lease<InstanceInfo> lease = expiredLeases.get(i);
             String appName = lease.getHolder().getAppName();
             String id = lease.getHolder().getId();
             EXPIRED.increment();

@@ -2,7 +2,7 @@
 
 [TOC]
 
-## EurekaServer 简介
+## EurekaServer简介
 
 Eureka Server作为一个开箱即用的服务注册中心，提供了以下的功能，用以满足与Eureka Client交互的需求：
 
