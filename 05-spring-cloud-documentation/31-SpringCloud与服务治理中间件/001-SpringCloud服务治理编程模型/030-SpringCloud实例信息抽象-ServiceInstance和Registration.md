@@ -31,12 +31,57 @@ SpringCloud 提供的ServiceInstance和 Registration的作用是抽象实例在�
 
 ![image-20210126221926488](../../../assets/image-20210126221926488.png)
 
+
+
+## Zookeeper注册中心内部数据结构
+
+在 Zookeeper 中，每一个数据节点都是一个 ZNode，上图根目录下有两个节点，分别是：app1 和 app2，其中 app1 下面又有三个子节点.
+
+![image-20210128201234830](../../../assets/image-20210128201234830.png)
+
+在SpringCloud注册中心的使用场景下包含
+
+- name
+- id
+- address
+- port
+- sslPort
+- payload
+
+等等信息
+
+## Eureka注册中心的内部数据结构
+
+Eureka注册中心内部的数据模型, 所有的实例信息在 Eureka内部都是一个InstanceInfo对象实例 , 该类还包含 
+
+- instanceId
+- appName
+- status
+- port
+- asgName
+- dataCenterInfo
+
+![image-20210128202136617](../../../assets/image-20210128202136617.png)
+
+
+
+## Nacos注册中心的数据模型
+
+Nacos注册信息由3元组namespace 、group(分组) 和ServiceName服务名组成,
+
+所有注册的实例信息在Nacos内部都是一个 com.alibaba.nacos.api,naming.pojo.Instance对象实例
+
+
+
+![image-20210128202421039](../../../assets/image-20210128202421039.png)
+
+
+
 ## ServiceInstance源码
 
 ```java
 /**
  * Represents an instance of a service in a discovery system.
- *
  */
 public interface ServiceInstance {
 
@@ -103,9 +148,6 @@ public interface ServiceInstance {
 ```java
 /**
  * A marker interface used by a {@link ServiceRegistry}.
- *
- * @author Spencer Gibb
- * @since 1.2.0
  */
 public interface Registration extends ServiceInstance {
 

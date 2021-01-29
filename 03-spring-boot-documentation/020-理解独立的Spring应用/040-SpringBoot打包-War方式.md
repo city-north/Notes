@@ -8,14 +8,14 @@ SpringBoot可以用jar直接运行,当然也可以使用传统的war包部署的
 
 打包War文件是一种兼容措施,
 
-- 既能被 WarLauncher 启动, 
+- 既能被 WarLauncher 启动
 - 又能兼容Servlet容器环境
 
 WarLauncher  和 JarLauncher  并没有本质差距 都可以用java -jar 运行, 但是 WarLanucher 的打包方式可以兼容容器内部署,因为打包的文件格式都是按照容器要求来的, 没有 BOOT-INF 这样的目录 
 
 ## WarLauncher
 
-```
+```java
 org.springframework.boot.loader.WarLauncher
 ```
 
@@ -55,7 +55,6 @@ Build-Jdk-Spec: 1.8
 Spring-Boot-Version: 2.2.6.RELEASE
 Created-By: Maven Archiver 3.4.0
 Main-Class: org.springframework.boot.loader.WarLauncher
-
 ```
 
 ## 图示

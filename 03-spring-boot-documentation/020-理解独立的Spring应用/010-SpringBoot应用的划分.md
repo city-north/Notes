@@ -20,7 +20,7 @@ Web应用在Spring 2.0 开始, 支持
 
 ## 如何切换Web应用和非Web应用
 
-```
+```java
 SpringApplicationBuilder builder = new SpringApplicationBuilder(HlsCoreApplication.class)
 .web(WebApplicationType.NONE);
 final SpringApplication build = builder.build(args);

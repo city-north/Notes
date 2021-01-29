@@ -8,11 +8,12 @@
 
 ## 校验组件
 
-1. 校验器 : `org.springframework.validation.Validator`
-2. 错误收集器 : `org.springframework.validation.Errors`
-3. Java Bean 错误描述 : `org.springframework.validation.ObjectError`
-4. Java Bean  属性 错误描述 : `org.springframework.validation.FieldError`
-5. Bean Validation 适配:
-   - `org.springframework.validation.beanvalidation.LocalValidatorFactoryBean`
-6. 后置处理器 `org.springframework.validation.beanvalidation.MethodValidationPostProcessor`
+| 组件名称                 | 类                                                           |
+| ------------------------ | ------------------------------------------------------------ |
+| 校验器                   | org.springframework.validation.Validator                     |
+| 错误收集器               | org.springframework.validation.Errors                        |
+| Java Bean 错误描述       | org.springframework.validation.ObjectError                   |
+| Java Bean  属性 错误描述 | org.springframework.validation.FieldError                    |
+| Bean Validation 适配     | org.springframework.validation.beanvalidation.LocalValidatorFactoryBean |
+| 后置处理器               | org.springframework.validation.beanvalidation.MethodValidationPostProcessor |
 

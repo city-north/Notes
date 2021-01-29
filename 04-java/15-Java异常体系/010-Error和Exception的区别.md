@@ -31,9 +31,9 @@ Error 是指在正常情况下，不大可能出现的情况，绝大部分的 E
 
 - NoClassDefFoundError继承自Error,在Java中Error一般属于不可恢复的系统错误，有JVM抛出，并且不能被开发者处理。
 
-### 产生的原因
+## 产生的原因
 
 - ClassNotFoundException：当Java程序在运行时在类路径中找不到指定的类或者用Class.forName动态加载一个在类路径中不存在的类时，就会产生ClassNotFoundException异常。
 
-- NoClassDefFoundError： 表示程序在编译时可以找到所依赖的类，但是在运行时找不到指定的类文件的情况，找不到的原因可能是打包时遗漏了某个类或者jar出现损坏等。
+- NoClassDefFoundError：表示程序在编译时可以找到所依赖的类，但是在运行时找不到指定的类文件的情况，找不到的原因可能是打包时遗漏了某个类或者jar出现损坏等。
 

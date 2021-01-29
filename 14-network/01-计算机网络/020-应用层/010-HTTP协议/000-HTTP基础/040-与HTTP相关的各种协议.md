@@ -64,7 +64,7 @@ URI 另一个更常用的表现形式是 URL（**U**niform **R**esource **L**oca
 
 我就拿 Nginx 网站来举例，看一下 URI 是什么样子的。
 
-```
+```html
 http://nginx.org/en/download.html
 ```
 

@@ -21,9 +21,17 @@ SpringCloud统一了服务注册和服务发现编程模型, 其代码在spring-
 
 ## 服务发现组件的配置
 
-| 服务注册/服务发现组件 | maven依赖                                    | 配置项与配置值                                               |
-| --------------------- | -------------------------------------------- | ------------------------------------------------------------ |
-| Alibaba Nacos         | spring-cloud-starter-alibaba-nacos-discovery | spring.cloud.nacos.discovery.server-addr=localhost:8848      |
-| Netflix Eureka        | spring-cloud-starter-netflix-eureka-client   | eureka.client.service-url.defaultZone=http://localhost:8761/eureka |
+| 服务注册/服务发现组件                             | maven依赖                                    | 配置项与配置值                                               |
+| ------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------ |
+| Alibaba Nacos                                     | spring-cloud-starter-alibaba-nacos-discovery | spring.cloud.nacos.discovery.server-addr=localhost:8848      |
+| Netflix Eureka                                    | spring-cloud-starter-netflix-eureka-client   | eureka.client.service-url.defaultZone=http://localhost:8761/eureka |
+| [Apache Zookeeper](https://zookeeper.apache.org/) | spring-cloud-starter-zookeeper-discovery     |                                                              |
+| Consul                                            | spring-cloud-starter-consul-discovery        |                                                              |
 
-## 
+##DiscoveryClient和ReactiveDiscoveryClient
+
+ [020-DiscoveryClient和ReactiveDiscoveryClient.md](020-DiscoveryClient和ReactiveDiscoveryClient.md) 
+
+## ServiceInstance和Registration
+
+ [030-ServiceInstance和Registration.md](030-ServiceInstance和Registration.md) 

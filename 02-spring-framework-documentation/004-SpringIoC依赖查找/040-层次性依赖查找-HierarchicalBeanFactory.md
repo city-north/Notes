@@ -61,6 +61,8 @@ BeanFactoryUtils#beanOfTypeIncludingAncestors(ListableBeanFactory, java.lang.Cla
 
 ## 根据Java注解查找名称列表
 
+![image-20210128101258312](../../assets/image-20210128101258312.png)
+
 ```java
 //@since 4.2 根据类型查找
 BeanFactoryUtils#beanNamesForTypeIncludingAncestors(ListableBeanFactory, ResolvableType)

@@ -7,7 +7,6 @@
 DiscoveryClient和 ReactiveDiscoveryClient 代表 Consumer 从注册中心发现Provider的服务发现操作, 接口定义如下
 
 ```java
-
 /**
  * Represents read operations commonly available to discovery services such as Netflix
  * Eureka or consul.io.
@@ -48,9 +47,7 @@ public interface DiscoveryClient extends Ordered {
 	default int getOrder() {
 		return DEFAULT_ORDER;
 	}
-
 }
-
 ```
 
 ## DiscoveryClient不同实现
@@ -69,8 +66,6 @@ public interface DiscoveryClient extends Ordered {
 /**
  * Represents read operations commonly available to discovery services such as Netflix
  * Eureka or consul.io.
- *
- * @author Tim Ysewyn
  */
 public interface ReactiveDiscoveryClient extends Ordered {
 
