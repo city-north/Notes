@@ -1,3 +1,0 @@
-# 21-SpringCloudCommons公共抽象
-
-Spring Cloud将服务发现、负载均衡和断路器等通用模型封装在一个公共抽象中，可以被所有的Spring Cloud客户端使用，不依赖于具体的实现(例如服务发现就有Eureka和Consul等不同的实现)，这些公共抽象位于Spring Cloud Commons项目中。

@@ -25,28 +25,28 @@ org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcesso
 主要是将配置文件的属性进行merge , 比如配置了层级关系的user和SuperUser, 经过这个方法就会合并
 
 ```xml
-    <!-- 经过合并后 GenericBeanDefinition 变成 RootBeanDefinition -->
-    <bean id="user" class="org.geekbang.thinking.in.spring.ioc.overview.domain.User">
-        <property name="id" value="1"/>
-        <property name="name" value="小马哥"/>
-        <property name="city" value="HANGZHOU"/>
-        <property name="workCities" value="BEIJING,HANGZHOU"/>
-        <property name="lifeCities">
-            <list>
-                <value>BEIJING</value>
-                <value>SHANGHAI</value>
-            </list>
-        </property>
-        <property name="configFileLocation" value="classpath:/META-INF/user-config.properties"/>
-    </bean>
+<!-- 经过合并后 GenericBeanDefinition 变成 RootBeanDefinition -->
+<bean id="user" class="org.geekbang.thinking.in.spring.ioc.overview.domain.User">
+  <property name="id" value="1"/>
+  <property name="name" value="小马哥"/>
+  <property name="city" value="HANGZHOU"/>
+  <property name="workCities" value="BEIJING,HANGZHOU"/>
+  <property name="lifeCities">
+    <list>
+      <value>BEIJING</value>
+      <value>SHANGHAI</value>
+    </list>
+  </property>
+  <property name="configFileLocation" value="classpath:/META-INF/user-config.properties"/>
+</bean>
 
-    <!-- 普通 beanDefinition GenericBeanDefinition -->
-    <!-- 合并后 GenericBeanDefinition 变成 RootBeanDefinition，并且覆盖 parent 相关配置-->
-    <!-- primary = true , 增加了一个 address 属性 -->
-    <bean id="superUser" class="org.geekbang.thinking.in.spring.ioc.overview.domain.SuperUser" parent="user"
-          primary="true">
-        <property name="address" value="杭州"/>
-    </bean>
+<!-- 普通 beanDefinition GenericBeanDefinition -->
+<!-- 合并后 GenericBeanDefinition 变成 RootBeanDefinition，并且覆盖 parent 相关配置-->
+<!-- primary = true , 增加了一个 address 属性 -->
+<bean id="superUser" class="org.geekbang.thinking.in.spring.ioc.overview.domain.SuperUser" parent="user"
+      primary="true">
+  <property name="address" value="杭州"/>
+</bean>
 ```
 
 经过这个方法后superUser也拥有了User相关的元信息

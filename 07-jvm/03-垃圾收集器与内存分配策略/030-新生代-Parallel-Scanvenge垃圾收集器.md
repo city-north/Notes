@@ -1,4 +1,4 @@
-# ParallelScanvenge 垃圾收集器 吞吐量优先收集器
+# 030-新生代-Parallel-Scanvenge垃圾收集器
 
 ## 目录
 
