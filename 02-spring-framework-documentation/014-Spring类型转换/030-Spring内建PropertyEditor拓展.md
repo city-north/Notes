@@ -12,6 +12,8 @@
 | String -> Charset   | org.springframework.beans.propertyeditors.CharsetEditor      |
 | String -> Currency  | org.springframework.beans.propertyeditors.CurrencyEditor     |
 
+## 注册到Spring中
+
 org.springframework.beans.PropertyEditorRegistrySupport中存储了所有的内建实现
 
 ```java

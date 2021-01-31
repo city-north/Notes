@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 一言蔽之
+
+
+
 ## UML继承结构
 
 ![image-20201225171042461](../../assets/image-20201225171042461.png)
@@ -29,6 +33,10 @@
 ## 通用类型转换接口-GenericConverter
 
 org.springframework.core.convert.converter.GenericConverter
+
+- 核心方法 : convert(@Nullable Object source, TypeDescriptor sourceType, TypeDescriptor targetType)
+- 配对类型 : org.springframework.core.convert.converter.GenericConverter.ConvertiblePair
+- 类型描述 : org.springframework.core.convert.TypeDescriptor
 
 GenericConverter 支持多个键值对转换，可以使用getConvertibleTypes 获取转换类型的关联关系
 

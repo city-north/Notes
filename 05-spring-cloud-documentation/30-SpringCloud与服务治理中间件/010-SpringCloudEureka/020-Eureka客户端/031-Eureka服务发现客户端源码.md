@@ -2,6 +2,14 @@
 
 [TOC]
 
+## 一言蔽之
+
+DiscoveryClient 在启动时, 初始化了一个2个线程的线程池
+
+- 一个用来拉取注册表中的信息更新到本地, 
+
+- 另一个用于发送心跳
+
 ## DiscoveryClient的构造函数总结
 
 在DiscoveryClient的构造函数中，主要依次做了以下的事情：

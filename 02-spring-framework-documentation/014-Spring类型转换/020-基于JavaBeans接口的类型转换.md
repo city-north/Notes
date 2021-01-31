@@ -29,19 +29,20 @@ public class StringToPropertiesPropertyEditor extends PropertyEditorSupport {
         } catch (Exception e) {
             throw new IllegalArgumentException("");
         }
-
         //3.临时存储 Properties 对象 将目标类型的对象传入PropertyEditor#setValue(Object)方法
         setValue(properties);
-    }
-
-    public static void main(String[] args) {
-        String text = "name=EricChen";
-        StringToPropertiesPropertyEditor stringToPropertiesPropertyEditor = new StringToPropertiesPropertyEditor();
-        stringToPropertiesPropertyEditor.setAsText(text);
-        final Object value = stringToPropertiesPropertyEditor.getValue();
-        System.out.println(value);
     }
 }
 
 ```
 
+```Java
+public static void main(String[] args) {
+  // 模拟 Spring Framework 操作
+  String text = "name=EricChen";
+  StringToPropertiesPropertyEditor stringToPropertiesPropertyEditor = new StringToPropertiesPropertyEditor();
+  stringToPropertiesPropertyEditor.setAsText(text);
+  final Object value = stringToPropertiesPropertyEditor.getValue();
+  System.out.println(value);
+}
+```

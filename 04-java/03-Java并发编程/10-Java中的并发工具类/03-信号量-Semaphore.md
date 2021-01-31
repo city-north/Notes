@@ -87,50 +87,50 @@ static final class NonfairSync extends Sync {
 我们可以看到 Sync 中的 公平锁 的获取
 
 ```java
-        protected int tryAcquireShared(int acquires) {
-            for (;;) {
-              //队列是是否有前驱节点,如果有需要等待
-                if (hasQueuedPredecessors())
-                    return -1;
-                int available = getState();
-                int remaining = available - acquires;
-                if (remaining < 0 ||
-                    compareAndSetState(available, remaining))
-                    return remaining;
-            }
-        }
+protected int tryAcquireShared(int acquires) {
+  for (;;) {
+    //队列是是否有前驱节点,如果有需要等待
+    if (hasQueuedPredecessors())
+      return -1;
+    int available = getState();
+    int remaining = available - acquires;
+    if (remaining < 0 ||
+        compareAndSetState(available, remaining))
+      return remaining;
+  }
+}
 ```
 
 非公平锁获取
 
 ```java
-        final int nonfairTryAcquireShared(int acquires) {
-            for (;;) {
-              //不判断是否有先驱节点
-                int available = getState();
-                int remaining = available - acquires;
-                if (remaining < 0 ||
-                    compareAndSetState(available, remaining))
-                    return remaining;
-            }
-        }
+final int nonfairTryAcquireShared(int acquires) {
+  for (;;) {
+    //不判断是否有先驱节点
+    int available = getState();
+    int remaining = available - acquires;
+    if (remaining < 0 ||
+        compareAndSetState(available, remaining))
+      return remaining;
+  }
+}
 ```
 
 ## acquire
 
 ```java
-    public void acquire(int permits) throws InterruptedException {
-        if (permits < 0) throw new IllegalArgumentException();
-        sync.acquireSharedInterruptibly(permits);
-    }
+public void acquire(int permits) throws InterruptedException {
+  if (permits < 0) throw new IllegalArgumentException();
+  sync.acquireSharedInterruptibly(permits);
+}
 
-    public final void acquireSharedInterruptibly(int arg)
-            throws InterruptedException {
-        if (Thread.interrupted())
-            throw new InterruptedException();
-        if (tryAcquireShared(arg) < 0)
-            doAcquireSharedInterruptibly(arg);
-    }
+public final void acquireSharedInterruptibly(int arg)
+  throws InterruptedException {
+  if (Thread.interrupted())
+    throw new InterruptedException();
+  if (tryAcquireShared(arg) < 0)
+    doAcquireSharedInterruptibly(arg);
+}
 ```
 
 ### release
@@ -173,16 +173,15 @@ Semaphore 对锁的申请和释放和 ReentrantLock 类似,通过 acquire 方法
 #### void acquire()方法
 
 ```java
-    public final void acquireSharedInterruptibly(int arg)
-            throws InterruptedException {
-      // ① 如果线程被中断,则抛出中断异常
-        if (Thread.interrupted())
-            throw new InterruptedException();
-      //否则调用 Sync 子类方法尝试获取,这里根据构造函数确定使用公平策略
-        if (tryAcquireShared(arg) < 0)
-          //如果获取是吧加入 AQS 队列
-            doAcquireSharedInterruptibly(arg);
-    }
+public final void acquireSharedInterruptibly(int arg) throws InterruptedException {
+  // ① 如果线程被中断,则抛出中断异常
+  if (Thread.interrupted())
+    throw new InterruptedException();
+  //否则调用 Sync 子类方法尝试获取,这里根据构造函数确定使用公平策略
+  if (tryAcquireShared(arg) < 0)
+    //如果获取是吧加入 AQS 队列
+    doAcquireSharedInterruptibly(arg);
+}
 ```
 
 由如上代码可知， acquire() 在内部调用了 Sync 的 `acquireSharedlnterruptibly` 方法，后 者会对中断进行响应(如果当前线程被中断， 则 抛出中断异常) 。尝 试获取信号 量 资源的 AQS 的方法 tryAcquireShared 是 由 Sync 的子 类实 现的，所以这 里分 别从两 方 面来讨论 。 先讨论非公平策略 NonfairSync类的 tryAcquireShared方法
@@ -222,34 +221,34 @@ final int nonfairTryAcquireShared(int acquires) {
 下面看公平性的 FairSync类是如何保证公平性 的。
 
 ```java
-    protected int tryAcquireShared(int acquires) {
-        for (;;) {
-            if (hasQueuedPredecessors())
-                return -1;
-            int available = getState();
-            int remaining = available - acquires;
-            if (remaining < 0 ||
-                compareAndSetState(available, remaining))
-                return remaining;
-        }
-    }
+protected int tryAcquireShared(int acquires) {
+  for (;;) {
+    if (hasQueuedPredecessors())
+      return -1;
+    int available = getState();
+    int remaining = available - acquires;
+    if (remaining < 0 ||
+        compareAndSetState(available, remaining))
+      return remaining;
+  }
+}
 }
 ```
 
 可见公平性还是靠 `hasQueuedPredecessors` 这个函数来保证的 。
 
 ```java
-    public final boolean hasQueuedPredecessors() {
-        // The correctness of this depends on head being initialized
-        // before tail and on head.next being accurate if the current
-        // thread is first in queue.
-        Node t = tail; // Read fields in reverse initialization order
-        Node h = head;
-        Node s;
-        return h != t &&
-       		// 如果后续没有节点， 或者下一个节点的线程不是当前线程，则存在前驱节点
-            ((s = h.next) == null || s.thread != Thread.currentThread());
-    }
+public final boolean hasQueuedPredecessors() {
+  // The correctness of this depends on head being initialized
+  // before tail and on head.next being accurate if the current
+  // thread is first in queue.
+  Node t = tail; // Read fields in reverse initialization order
+  Node h = head;
+  Node s;
+  return h != t &&
+    // 如果后续没有节点， 或者下一个节点的线程不是当前线程，则存在前驱节点
+    ((s = h.next) == null || s.thread != Thread.currentThread());
+}
 ```
 
 
@@ -261,19 +260,19 @@ final int nonfairTryAcquireShared(int acquires) {
 该方法的作用是把当前 Semaphore对象的信号量值增加 l，如果当前有线程因为调用 aquire方法被阻塞而被放入了 AQS 的阻塞队列，则会根据公平策略选择一个信号量个数 能被满足的线程进行激活， 激活的线程会尝试获取刚增加的信号量，下面看代码实现。
 
 ```java
-        protected final boolean tryReleaseShared(int releases) {
-            for (;;) {
-              //(4)获取信号量
-                int current = getState();
-              //(5)信号量+1
-                int next = current + releases;
-                if (next < current) // overflow 移除
-                    throw new Error("Maximum permit count exceeded");
-              //使用 CAS 保证鞥新信号量值的原子性
-                if (compareAndSetState(current, next))
-                    return true;
-            }
-        }
+protected final boolean tryReleaseShared(int releases) {
+  for (;;) {
+    //(4)获取信号量
+    int current = getState();
+    //(5)信号量+1
+    int next = current + releases;
+    if (next < current) // overflow 移除
+      throw new Error("Maximum permit count exceeded");
+    //使用 CAS 保证鞥新信号量值的原子性
+    if (compareAndSetState(current, next))
+      return true;
+  }
+}
 ```
 
 

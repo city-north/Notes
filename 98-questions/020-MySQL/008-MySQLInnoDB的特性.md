@@ -1,5 +1,7 @@
 # [QA]MySQLInnoDB的特性
 
+[TOC]
+
 > InnoDB的体系结构
 
 首先 MySQL的体系结构是分为 server 层和 存储引擎层, 存储引擎层才有可插拔的插件形式 ,InnoDB 就是一个插件

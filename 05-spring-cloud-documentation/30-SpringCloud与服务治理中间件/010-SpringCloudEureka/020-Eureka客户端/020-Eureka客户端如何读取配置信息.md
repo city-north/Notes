@@ -4,7 +4,7 @@
 
 ## 一言蔽之
 
-
+自动化配置类EurekaDiscoveryClientConfiguration 主要做的是将 配置信息 (EurekaClientConfig) 和 客户端 EurekaClient封装成对象适配器EurekaDiscoveryClient 中
 
 ## 先入为主的核心类
 

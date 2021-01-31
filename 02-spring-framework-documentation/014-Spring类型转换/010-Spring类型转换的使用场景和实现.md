@@ -8,7 +8,7 @@
   
   - 基于 java.beans.PropertyEditor 接口拓展
   
-  Spring3.0之后，通用类型转换实现
+- Spring3.0之后，通用类型转换实现
 
 ## Spring类型转换的使用场景
 

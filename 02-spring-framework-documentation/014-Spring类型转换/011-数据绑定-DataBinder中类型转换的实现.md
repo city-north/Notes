@@ -1,5 +1,9 @@
 # 011-数据绑定-DataBinder中类型转换的实现
 
+[TOC]
+
+## 一言蔽之
+
 ## 数据绑定和PropertyEditor的关系
 
 ![image-20201224124446547](../../assets/image-20201224124446547.png)

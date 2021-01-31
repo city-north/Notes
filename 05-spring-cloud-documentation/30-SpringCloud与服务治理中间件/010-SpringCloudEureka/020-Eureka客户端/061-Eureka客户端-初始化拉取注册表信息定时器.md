@@ -12,7 +12,9 @@ Eureka客户端在启动时会定时拉取注册表信息, 并且刷新本地缓
 
 ## 初始化刷新线程
 
-在DiscoveryClient#initScheduledTasks方法中，通过ScheduledExecutorService#schedule的方式提交缓存刷新任务和发送心跳任务，任务执行的方式为延时执行并且不循环，这两个任务的定时循环逻辑由TimedSupervisorTask提供实现。TimedSupervisorTask继承了TimerTask，提供执行定时任务的功能。它在run方法中定义执行定时任务的逻辑。具体代码如下所示：
+在DiscoveryClient#initScheduledTasks方法中，通过ScheduledExecutorService#schedule的方式提交缓存刷新任务和发送心跳任务，任务执行的方式为延时执行并且不循环，这两个任务的定时循环逻辑由TimedSupervisorTask提供实现。TimedSupervisorTask继承了TimerTask，提供执行定时任务的功能。它在run方法中定义执行定时任务的逻辑。
+
+具体代码如下所示：
 
 ```java
 //com.netflix.discovery.TimedSupervisorTask#TimedSupervisorTask

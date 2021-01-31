@@ -4,7 +4,7 @@
 
 ## 一言蔽之
 
-
+按需注册定时器任务, StatusChangeListener监听器会监听服务状态的变化,实时更新状态并发送给服务端
 
 ## 按需注册定时任务的处理流程
 
@@ -12,7 +12,9 @@
 
 ## 按需注册定时器具体实现
 
-按需注册定时任务的作用是当Eureka Client中的InstanceInfo或者status发生变化时，重新向Eureka Server发起注册请求，更新注册表中的服务实例信息，保证Eureka Server注册表中服务实例信息有效和可用。按需注册定时任务的代码如下：
+按需注册定时任务的作用是当Eureka Client中的InstanceInfo或者status发生变化时，重新向Eureka Server发起注册请求，更新注册表中的服务实例信息，保证Eureka Server注册表中服务实例信息有效和可用。
+
+按需注册定时任务的代码如下：
 
 ```java
 // DiscoveryClient.java
@@ -70,8 +72,11 @@ public void run() {
         scheduledPeriodicRef.set(next);
     }
 }
+```
 
 DiscoveryClient中刷新本地服务实例信息和检查服务状态变化的代码如下：
+
+```java
 // DiscoveryClient.java
 void refreshInstanceInfo() {
     // 刷新服务实例信息
@@ -91,7 +96,9 @@ void refreshInstanceInfo() {
 }
 ```
 
-run方法首先调用了discoveryClient#refreshInstanceInfo方法刷新当前的服务实例信息，查看当前服务实例信息和服务状态是否发生变化，如果当前服务实例信息或者服务状态发生变化将向Eureka Server重新发起服务注册操作。最后声明了下一个延时任务，用于再次调用run方法，继续检查服务实例信息和服务状态的变化，在服务实例信息发生变化的情况下重新发起注册。
+run方法首先调用了discoveryClient#refreshInstanceInfo方法刷新当前的服务实例信息，查看当前服务实例信息和服务状态是否发生变化，如果当前服务实例信息或者服务状态发生变化将向Eureka Server重新发起服务注册操作。
+
+最后声明了下一个延时任务，用于再次调用run方法，继续检查服务实例信息和服务状态的变化，在服务实例信息发生变化的情况下重新发起注册。
 
 如果Eureka Client的状态发生变化(在Spring Boot通过Actuator对服务状态进行监控，具体实现为EurekaHealthCheckHandler)，注册在ApplicationInfoManager的状态改变监控器将会被触发，从而调用InstanceInfoReplicator#onDemandUpdate方法，检查服务实例信息和服务状态的变化，可能会引发按需注册任务。代码如下所示：
 
@@ -118,5 +125,7 @@ public boolean onDemandUpdate() {
 }
 ```
 
-InstanceInfoReplicator#onDemandUpdate方法调用InstanceInfoReplicator#run方法检查服务实例信息和服务状态的变化，并在服务实例信息发生变化的情况下向Eureka Server发起重新注册的请求。为了防止重复执行run方法，onDemandUpdate方法还会取消执行上次已提交且未完成的run方法，执行最新的按需注册任务。
+InstanceInfoReplicator#onDemandUpdate方法调用InstanceInfoReplicator#run方法检查服务实例信息和服务状态的变化，并在服务实例信息发生变化的情况下向Eureka Server发起重新注册的请求。
+
+为了防止重复执行run方法，onDemandUpdate方法还会取消执行上次已提交且未完成的run方法，执行最新的按需注册任务。
 

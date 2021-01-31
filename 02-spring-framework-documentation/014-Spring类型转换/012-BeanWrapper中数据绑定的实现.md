@@ -2,6 +2,13 @@
 
 [TOC]
 
+## 一言蔽之
+
+BeanWrapper数据绑定的实现实际上有两种
+
+- 基于JavaBean 的PropertyEditor方式进行属性的编辑
+- 基于Spring3.0以后的ConversionService来进行类型转换
+
 ## BeanWrapper中数据绑定的类型转换
 
 先看BeanWrapper 的上层接口 ConfigurablePropertyAccessor ，这个接口在Spring3.0之后提供了
@@ -19,7 +26,6 @@ public interface ConfigurablePropertyAccessor extends PropertyAccessor, Property
 
     ...
 }
-
 ```
 
 从上面的特点我们可以看出，实际上3.0之后，“可设置的属性访问”抽象实际上就支持了ConversionService的实现，并设置可开关，用以切换
@@ -35,7 +41,7 @@ PropertyEditorRegistrySupport实际上是默认实现，或者说兜底实现，
 - 首先它集成了内置的所有3.0之前的PropertyEditor实现
 - 其次它又可以设置一个conversionService
 
-```
+```java
 public class PropertyEditorRegistrySupport implements PropertyEditorRegistry {
 
 	//spring 3.0之后提供了另外的选择
