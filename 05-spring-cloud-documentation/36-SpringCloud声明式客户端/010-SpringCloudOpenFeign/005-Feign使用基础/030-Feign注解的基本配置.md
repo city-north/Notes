@@ -1,8 +1,8 @@
-# feign的注解配置
+# 030-Feign注解的基本配置
 
 [TOC]
 
-## 源码
+## Feign接口的源码
 
 ```java
 @Target(ElementType.TYPE)
@@ -26,7 +26,34 @@ public @interface FeignClient {
 
 ```
 
-- **@Target(ElementType.TYPE)** 元注解,标识 FeignClient 注解的作用目标在接口上
+## Feign接口的常用配置
+
+```yml
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      feignName: #需要配置的feignName
+        connectTimeout: 5000 #连接超时时间
+        readTimeout: 5000 # 读超时时间设置
+        loggerLevel: full # 配置feign的日志级别
+          errorDecoder: com.example.SimpleErrorDecoder # Feign的错误解码器
+          retryer: com.example.SimpleRetryer # 配置重试
+          requestInterceptors: #配置拦截器
+            - com.example.FooRequestInterceptor
+            - com.example.BarRequestInterceptor
+          decode404: false
+          encoder: com.example.Encoder # Feign的编码器
+          decoder: com.example.Decoder # Feign的解码器
+          contract: com.example.Contract #Feign 的Contract
+```
+
+
+
+
+
+## Feign接口属性
 
 | 配置项            | 说明                                                         | 备注                                                         |
 | ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -50,15 +77,12 @@ public @interface FeignClient {
 ```java
 @Configuration(proxyBeanMethods = false)
 public class FeignClientsConfiguration {
- 
-
 	@Bean
 	@ConditionalOnMissingBean
 	public Decoder feignDecoder() {
 		return new OptionalDecoder(
 				new ResponseEntityDecoder(new SpringDecoder(this.messageConverters)));
 	}
-
 	@Bean
 	@ConditionalOnMissingBean
 	@ConditionalOnMissingClass("org.springframework.data.domain.Pageable")
@@ -66,20 +90,16 @@ public class FeignClientsConfiguration {
     //使用的是 SpringMVC 消息转换工厂处理
 		return new SpringEncoder(this.messageConverters);
 	}
-
 	@Bean
 	@ConditionalOnMissingBean
 	public Contract feignContract(ConversionService feignConversionService) {
     //
 		return new SpringMvcContract(this.parameterProcessors, feignConversionService);
 	}
-
 	....
 
 }
 
 ```
 
-## Feign 的常用配置
-
-![image-20200726134945895](../../assets/image-20200726134945895.png)
+## 
