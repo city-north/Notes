@@ -8,4 +8,3 @@ org.springframework.cloud.client.discovery.event
 
 ![image-20210128145416324](../../../assets/image-20210128145416324.png)
 
-## 

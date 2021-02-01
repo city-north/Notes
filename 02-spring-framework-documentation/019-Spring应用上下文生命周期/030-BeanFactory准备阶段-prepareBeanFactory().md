@@ -2,7 +2,11 @@
 
 [TOC]
 
-## 030-BeanFactory准备阶段做了什么?
+## 一言蔽之
+
+
+
+## BeanFactory准备阶段做了什么?
 
 - 关联ClassLoader
 

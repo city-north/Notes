@@ -1,9 +1,20 @@
-# Lock 接口
+# 030-Lock接口
+
+[TOC]
+
+## Lock接口和synchronized的对比
 
 锁用来控制多个线程访问共享资源的方式,在 Lock 接口之前,Java 程序员使用 sychronized 关键字实现锁的功能
 
 - Lock 缺少了(通过 synchronized 块或者方法所提供的)隐式获取释放锁的便捷性,
 - 但是却拥有了锁获取与释放的可操作性, 可中断的获取锁以及超时获取锁的多种方式
+
+具体来说
+
+- synchronized 阻塞不释放锁,无法破解死锁中的不可抢占
+- lockInterruptibly 允许 中断释放资源
+- tryLock 允许超时
+- tryLock允许非阻塞获取锁
 
 ## Lock接口提供了 synchronized 关键不具备的主要特性
 

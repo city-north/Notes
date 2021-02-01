@@ -1,4 +1,4 @@
-# 060-初始化内建Bean：MessageSource
+# 060-初始化内建Bean：MessageSource-initMessageSource()
 
 [TOC]
 

@@ -19,7 +19,7 @@ Java 内存模型是个很复杂的规范，可以从不同的视角来解读，
 
 具体来说，这些方法包括 **volatile**、**synchronized** 和 **final** 三个关键字，以及六项 **Happens-Before 规则**，这也正是本期的重点内容。
 
-## 使用 volatile 的困惑
+## 使用volatile的困惑
 
 volatile 关键字并不是 Java 语言的特产，古老的 C 语言里也有，它最原始的意义就是禁用 CPU 缓存。
 
@@ -69,9 +69,13 @@ class VolatileExample {
 Happens-Before 规则应该是 Java 内存模型里面最晦涩的内容了，和程序员相关的规则一共有如下六项，都是关于可见性的。
 
 1. 程序的顺序性规则
-2. 
+2. volatile 变量规则
+3. 传递性
+4. 管程中锁的规则
+5. 线程start规则
+6. 线程join规则
 
-
+> 相关知识点  [07-happens-before.md](../../05-Java内存模型/07-happens-before.md) 
 
 恰好前面示例代码涉及到这六项规则中的前三项，为便于你理解，我也会分析上面的示例代码，来看看规则 1、2 和 3 到底该如何理解。至于其他三项，我也会结合其他例子作以说明。
 
@@ -85,7 +89,7 @@ class VolatileExample {
   int x = 0;
   volatile boolean v = false;
   public void writer() {
-    x = 42;
+    x = 42;    
     v = true;
   }
   public void reader() {

@@ -1,4 +1,4 @@
-# 070-初始化内建Bean：Spring事件广播器
+# 070-初始化内建Bean：Spring事件广播器-initApplicationEventMulticaster()
 
 [TOC]
 

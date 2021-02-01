@@ -1,6 +1,10 @@
-# 020-BeanFactory创建阶段
+# 020-BeanFactory创建阶段-refrehBeanFactory()
 
 [TOC]
+
+## 一言蔽之
+
+准备阶段完成后, 开始进行BeanFactory的创建
 
 ## BeanFactory创建阶段做了什么?
 

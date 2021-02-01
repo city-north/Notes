@@ -1,4 +1,4 @@
-# 100-BeanFactory初始化完成阶段
+# 100-BeanFactory初始化完成阶段-finishBeanFactoryInitialization
 
 [TOC]
 

@@ -2,6 +2,29 @@
 
 [TOC]
 
+
+
+## 一言蔽之
+
+
+
+## BeanFactory准备阶段-增加对属性编辑器的支持
+
+```java
+protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+  // Tell the internal bean factory to use the context's class loader etc.
+  beanFactory.setBeanClassLoader(getClassLoader());
+  beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
+
+  //----------↓↓↓↓↓↓-----本段关注的重点---------↓↓↓↓↓↓↓------------//
+  beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
+  //----------↑↑↑↑↑↑-----本段关注的重点---------↑↑↑↑↑↑------------//
+
+}
+```
+
+
+
 ## 什么是属性编辑器
 
 在Spring DI注入的时候可以把普通属性注入进来，但是像Date类型就无法被识别。例如：
