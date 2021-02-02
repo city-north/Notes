@@ -14,7 +14,7 @@
 
 一个阻塞队列，需要两个条件变量，一个是队列不空（空队列不允许出队），另一个是队列不满（队列已满不允许入队），这个例子我们前面在介绍[管程](https://time.geekbang.org/column/article/86089)的时候详细说过，这里就不再赘述。相关的代码，我这里重新列了出来，你可以温故知新一下。
 
-```
+```java
 public class BlockedQueue<T>{
   final Lock lock = new ReentrantLock();
   // 条件变量：队列不满  
@@ -65,7 +65,7 @@ Java SDK 并发包里的 Lock 和 Condition 不过就是管程的一种实现而
 
 比如在下面的代码里，有一个计算圆周率小数点后 100 万位的方法`pai1M()`，这个方法可能需要执行俩礼拜，如果调用`pai1M()`之后，线程一直等着计算结果，等俩礼拜之后结果返回，就可以执行 `printf("hello world")`了，这个属于同步；如果调用`pai1M()`之后，线程不用等待计算结果，立刻就可以执行 `printf("hello world")`，这个就属于异步。
 
-```
+```java
 // 计算圆周率小说点后 100 万位 
 String pai1M() {
   // 省略代码无数
@@ -88,10 +88,9 @@ printf("hello world")
 
 对于下面一个简单的 RPC 调用，默认情况下 sayHello() 方法，是个同步方法，也就是说，执行 service.sayHello(“dubbo”) 的时候，线程会停下来等结果。
 
-```
+```java
 DemoService service = 初始化部分省略
-String message = 
-  service.sayHello("dubbo");
+String message = service.sayHello("dubbo");
 System.out.println(message);
 ```
 
@@ -181,8 +180,6 @@ Dubbo 的源代码在[Github 上](https://github.com/apache/incubator-dubbo)，D
 ```
 incubator-dubbo/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/exchange/support/DefaultFuture.java。
 ```
-
-
 
 ## 课后思考
 

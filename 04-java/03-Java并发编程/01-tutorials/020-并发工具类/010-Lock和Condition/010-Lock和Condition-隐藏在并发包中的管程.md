@@ -37,7 +37,7 @@ boolean tryLock();
 
 Java SDK 里面 Lock 的使用，有一个经典的范例，就是`try{}finally{}`，需要重点关注的是在 finally 里面释放锁。这个范例无需多解释，你看一下下面的代码就明白了。但是有一点需要解释一下，那就是可见性是怎么保证的。你已经知道 Java 里多线程的可见性是通过 Happens-Before 规则保证的，而 synchronized 之所以能够保证可见性，也是因为有一条 synchronized 相关的规则：synchronized 的解锁 Happens-Before 于后续对这个锁的加锁。那 Java SDK 里面 Lock 靠什么保证可见性呢？例如在下面的代码中，线程 T1 对 value 进行了 +=1 操作，那后续的线程 T2 能够看到 value 的正确结果吗？
 
-```
+```java
 class X {
   private final Lock rtl =
   new ReentrantLock();
@@ -61,7 +61,7 @@ class X {
 2. **volatile 变量规则**：由于 state = 1 会先读取 state，所以线程 T1 的 unlock() 操作 Happens-Before 线程 T2 的 lock() 操作；
 3. **传递性规则**：线程 T1 的 value+=1 Happens-Before 线程 T2 的 lock() 操作。
 
-```
+```java
 class SampleLock {
   volatile int state;
   // 加锁
@@ -85,7 +85,7 @@ class SampleLock {
 
 除了可重入锁，可能你还听说过可重入函数，可重入函数怎么理解呢？指的是线程可以重复调用？显然不是，所谓**可重入函数，指的是多个线程可以同时调用该函数**，每个线程都能得到正确结果；同时在一个线程内支持线程切换，无论被切换多少次，结果都是正确的。多线程可以同时执行，还支持线程切换，这意味着什么呢？线程安全啊。所以，可重入函数是线程安全的。
 
-```
+```java
 class X {
   private final Lock rtl =
   new ReentrantLock();
@@ -117,7 +117,7 @@ class X {
 
 在使用 ReentrantLock 的时候，你会发现 ReentrantLock 这个类有两个构造函数，一个是无参构造函数，一个是传入 fair 参数的构造函数。fair 参数代表的是锁的公平策略，如果传入 true 就表示需要构造一个公平锁，反之则表示要构造一个非公平锁。
 
-```
+```java
 // 无参构造函数：默认非公平锁
 public ReentrantLock() {
     sync = new NonfairSync();
@@ -153,7 +153,7 @@ Java SDK 并发包里的 Lock 接口里面的每个方法，你可以感受到�
 
 你已经知道 tryLock() 支持非阻塞方式获取锁，下面这段关于转账的程序就使用到了 tryLock()，你来看看，它是否存在死锁问题呢？
 
-```
+```java
 class Account {
   private int balance;
   private final Lock lock
