@@ -49,7 +49,6 @@ public class InsertionSort {
             }
             a[j + 1] = value;
         }
-
     }
 
     public static void main(String[] args) {

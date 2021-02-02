@@ -38,7 +38,7 @@ public class BubbleSort {
 
 
     public static void main(String[] args) {
-        int[] array = {7, 4, 9, 8, 2, 9, 9, 8, 7};
+        int[] array = {1, 7, 5, 2, 1, 6, 2, 5, 2, 7, 3};
 //        bubbleSort(array, array.length);
         bubbleSort2(array);
         for (int i : array) {
@@ -47,10 +47,10 @@ public class BubbleSort {
     }
 
     public static void bubbleSort2(int[] a) {
-        if (a.length <= 1) {
+        int n = a.length;
+        if (n <= 1) {
             return;
         }
-        int n = a.length;
         for (int i = 0; i < n; i++) {
             boolean flag = false;
             for (int j = 0; j < n - i - 1; j++) {
@@ -62,7 +62,7 @@ public class BubbleSort {
                 }
             }
             if (!flag) {
-                return;
+                break;
             }
         }
     }

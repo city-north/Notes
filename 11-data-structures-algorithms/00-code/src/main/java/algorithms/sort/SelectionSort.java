@@ -1,7 +1,6 @@
 package algorithms.sort;
 
 /**
- *
  * @author EricChen 2021/02/01 15:23
  */
 public class SelectionSort {
@@ -42,17 +41,17 @@ public class SelectionSort {
         }
         for (int i = 0; i < n; i++) {
             int minIndex = i;
-            for (int j = i; j < n; j++) {
+            for (int j = i + 1; j < n; j++) {
                 if (a[j] < a[minIndex]) {
                     minIndex = j;
                 }
             }
-            if (i != minIndex) {
-                int t = a[i];
-                a[i] = a[minIndex];
-                a[minIndex] = t;
+            if (minIndex == i) {
+                continue;
             }
+            int temp = a[i];
+            a[i] = a[minIndex];
+            a[minIndex] = temp;
         }
-
     }
 }
