@@ -60,7 +60,7 @@ toFile（）
 
 ```java
 Path toPath（）7
-从该文件中创建一个Path对象。
+//从该文件中创建一个Path对象。
 ```
 
 ## 绝对路径和相对路径
@@ -100,7 +100,7 @@ final Path resolve = basePath.resolve("work");  //resolve path :/Users/ec/work
 
 一个很方便的方法resolveSibling，它通过解析指定路径的父路径产生其兄弟路径。例如，如果workPath是/opt/myapp/work，那么下面的调用
 
-```
+```java
 Path tempPath = workPath.resoveSibling("temp");  //opt/myapp/temp
 ```
 

@@ -1,4 +1,8 @@
-# 默认 Client 的替换
+# 060-Feign替换默认的Client实现
+
+[TOC]
+
+## 简介
 
 默认情况下,使用的是 JDK 原生的 URLCnnection 发送 HTTP 请求.没有连接池,但是对每个地址会保持一个长链接,即利用 HTTP的 persistece connection 
 
@@ -9,23 +13,23 @@
 
 ## 使用 Http Client 替换 Feign 默认 Client
 
-```
-        <!-- 使用Apache HttpClient替换Feign原生httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
+```xml
+<!-- 使用Apache HttpClient替换Feign原生httpclient -->
+<dependency>
+  <groupId>org.apache.httpcomponents</groupId>
+  <artifactId>httpclient</artifactId>
+</dependency>
 
-        <dependency>
-            <groupId>com.netflix.feign</groupId>
-            <artifactId>feign-httpclient</artifactId>
-            <version>8.17.0</version>
-        </dependency>
+<dependency>
+  <groupId>com.netflix.feign</groupId>
+  <artifactId>feign-httpclient</artifactId>
+  <version>8.17.0</version>
+</dependency>
 ```
 
 application.yml
 
-```
+```yaml
 feign:
   httpclient:
       enabled: true
@@ -40,7 +44,7 @@ http 是目前通用的网络请求方式,用来访问请求交换数据,有效�
 - 使用 GZIP 压缩减少传输的数据量
 - 避免相应重复的网络请求
 
-```
+```yaml
 feign:
     httpclient:
          enabled: false
@@ -50,7 +54,7 @@ feign:
 
 OkHttpClient 是 okhttp 的核心功能的执行者,可以通过 new 创建
 
-```
+```java
 @Configuration
 @ConditionalOnClass(Feign.class)
 @AutoConfigureBefore(FeignAutoConfiguration.class)

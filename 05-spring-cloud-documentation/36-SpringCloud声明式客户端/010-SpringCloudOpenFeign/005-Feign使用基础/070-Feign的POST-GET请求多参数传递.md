@@ -1,6 +1,10 @@
-# Feign 的 Post和 Get 的多参数传递
+# 070-Feign的POST-GET请求多参数传递
 
-在 web 开发中,SPringMVC 支持 GET 方法直接绑定 pojo 的,但是 Feign 的实现并未覆盖所有的 SpringMVC 的功能,目前解决方法有多个,最常见的解决办法如下
+[TOC]
+
+## 为什么要多参数传递
+
+在 web 开发中,SpringMVC 支持 GET 方法直接绑定 pojo 的,但是 Feign 的实现并未覆盖所有的 SpringMVC 的功能,目前解决方法有多个,最常见的解决办法如下
 
 - 将 POJO 拆散成一个个单独的属性放在方法参数里
 - 把方法参数编程 Map 传递
@@ -8,7 +12,7 @@
 
 本案例给出最佳实践方式,通过 Feign 拦截器方式处理
 
-#### 实现拦截器接口
+## 实现拦截器接口
 
 通过 Feign 的 RequestInterceptor 中的 apply 方法来进行统一拦截转换处理 Feign 中的 GET 方法多参数传递的问题,
 
@@ -73,7 +77,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
 ```
 
-## 统一 Token 拦截器
+## 统一Token拦截器
 
 ```java
 /**
