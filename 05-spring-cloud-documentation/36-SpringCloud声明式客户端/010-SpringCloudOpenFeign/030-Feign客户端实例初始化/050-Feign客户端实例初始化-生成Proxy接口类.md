@@ -16,8 +16,11 @@ for(DefaultMethodHandler defaultMethodHandler : defaultMethodHandlers) {
     defaultMethodHandler.bindTo(proxy);
 }
 return proxy;
+```
 
 OpenFeign使用Proxy的newProxyInstance方法来创建FeignClient接口类的实例，然后将InvocationHandler绑定到接口类实例上，用于处理接口类函数调用，如下所示：
+
+```java
 //Default.java
 static final class Default implements InvocationHandlerFactory {
     @Override
@@ -27,8 +30,15 @@ static final class Default implements InvocationHandlerFactory {
 }
 ```
 
+
+
 Default实现了InvocationHandlerFactory接口，其create方法返回ReflectiveFeign.FeignInvocationHandler实例。
-ReflectiveFeign的内部类FeignInvocationHandler是InvocationHandler的实现类，其主要作用是将接口类相关函数的调用分配给对应的MethodToHandler实例，即SynchronousMethodHandler来处理。当调用接口类实例的函数时，会直接调用到FeignInvocationHandler的invoke方法。invoke方法会根据函数名称来调用不同的MethodHandler实例的invoke方法，如下所示：
+
+ReflectiveFeign的内部类FeignInvocationHandler是InvocationHandler的实现类，其主要作用是将接口类相关函数的调用分配给对应的MethodToHandler实例，即SynchronousMethodHandler来处理。
+
+当调用接口类实例的函数时，会直接调用到FeignInvocationHandler的invoke方法。
+
+invoke方法会根据函数名称来调用不同的MethodHandler实例的invoke方法，如下所示：
 
 ```java
 //FeignInvocationHandler.java

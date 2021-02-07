@@ -4,7 +4,13 @@
 
 ## 前言
 
-在上一篇文章中，我们讲到 Java SDK 并发包里的 Lock 有别于 synchronized 隐式锁的三个特性：能够响应中断、支持超时和非阻塞地获取锁。那今天我们接着再来详细聊聊 Java SDK 并发包里的 Condition，**Condition 实现了管程模型里面的条件变量**。
+在上一篇文章中，我们讲到 Java SDK 并发包里的 Lock 有别于 synchronized 隐式锁的三个特性：
+
+- 能够响应中断
+- 支持超时
+- 非阻塞地获取锁。
+
+那今天我们接着再来详细聊聊 Java SDK 并发包里的 Condition，**Condition 实现了管程模型里面的条件变量**。
 
 在[《08 | 管程：并发编程的万能钥匙》](https://time.geekbang.org/column/article/86089)里我们提到过 Java 语言内置的管程里只有一个条件变量，而 Lock&Condition 实现的管程是支持多个条件变量的，这是二者的一个重要区别。
 
@@ -12,7 +18,12 @@
 
 **那如何利用两个条件变量快速实现阻塞队列呢？**
 
-一个阻塞队列，需要两个条件变量，一个是队列不空（空队列不允许出队），另一个是队列不满（队列已满不允许入队），这个例子我们前面在介绍[管程](https://time.geekbang.org/column/article/86089)的时候详细说过，这里就不再赘述。相关的代码，我这里重新列了出来，你可以温故知新一下。
+一个阻塞队列，需要两个条件变量，
+
+- 一个是队列不空（空队列不允许出队）
+- 一个是队列不满（队列已满不允许入队）
+
+这个例子我们前面在介绍[管程](https://time.geekbang.org/column/article/86089)的时候详细说过，这里就不再赘述。相关的代码，我这里重新列了出来，你可以温故知新一下。
 
 ```java
 public class BlockedQueue<T>{
@@ -55,15 +66,29 @@ public class BlockedQueue<T>{
 }
 ```
 
-不过，这里你需要注意，Lock 和 Condition 实现的管程，**线程等待和通知需要调用 await()、signal()、signalAll()**，它们的语义和 wait()、notify()、notifyAll() 是相同的。但是不一样的是，Lock&Condition 实现的管程里只能使用前面的 await()、signal()、signalAll()，而后面的 wait()、notify()、notifyAll() 只有在 synchronized 实现的管程里才能使用。如果一不小心在 Lock&Condition 实现的管程里调用了 wait()、notify()、notifyAll()，那程序可就彻底玩儿完了。
+不过，这里你需要注意，Lock 和 Condition 实现的管程，**线程等待和通知需要调用 await()、signal()、signalAll()**，它们的语义和 wait()、notify()、notifyAll() 是相同的。但是不一样的是，
+
+- Lock&Condition 实现的管程里只能使用前面的 await()、signal()、signalAll()，
+
+- 而后面的 wait()、notify()、notifyAll() 只有在 synchronized 实现的管程里才能使用。
+
+如果一不小心在 Lock&Condition 实现的管程里调用了 wait()、notify()、notifyAll()，那程序可就彻底玩儿完了。
 
 Java SDK 并发包里的 Lock 和 Condition 不过就是管程的一种实现而已，管程你已经很熟悉了，那 Lock 和 Condition 的使用自然是小菜一碟。下面我们就来看看在知名项目 Dubbo 中，Lock 和 Condition 是怎么用的。不过在开始介绍源码之前，我还先要介绍两个概念：同步和异步。
 
 ## 同步与异步
 
-我们平时写的代码，基本都是同步的。但最近几年，异步编程大火。那同步和异步的区别到底是什么呢？**通俗点来讲就是调用方是否需要等待结果，如果需要等待结果，就是同步；如果不需要等待结果，就是异步**。
+我们平时写的代码，基本都是同步的。但最近几年，异步编程大火。那同步和异步的区别到底是什么呢？
 
-比如在下面的代码里，有一个计算圆周率小数点后 100 万位的方法`pai1M()`，这个方法可能需要执行俩礼拜，如果调用`pai1M()`之后，线程一直等着计算结果，等俩礼拜之后结果返回，就可以执行 `printf("hello world")`了，这个属于同步；如果调用`pai1M()`之后，线程不用等待计算结果，立刻就可以执行 `printf("hello world")`，这个就属于异步。
+**通俗点来讲就是调用方是否需要等待结果，如果需要等待结果，就是同步；**
+
+**如果不需要等待结果，就是异步**。
+
+比如在下面的代码里，有一个计算圆周率小数点后 100 万位的方法`pai1M()`，这个方法可能需要执行俩礼拜，
+
+- 如果调用`pai1M()`之后，线程一直等着计算结果，等俩礼拜之后结果返回，就可以执行 `printf("hello world")`了，这个属于同步；
+
+- 如果调用`pai1M()`之后，线程不用等待计算结果，立刻就可以执行 `printf("hello world")`，这个就属于异步。
 
 ```java
 // 计算圆周率小说点后 100 万位 
@@ -107,14 +132,19 @@ public class DubboInvoker{
   Result doInvoke(Invocation inv){
     // 下面这行就是源码中 108 行
     // 为了便于展示，做了修改
-    return currentClient 
-      .request(inv, timeout)
+    return currentClient.request(inv, timeout)
       .get();
   }
 }
 ```
 
-DefaultFuture 这个类是很关键，我把相关的代码精简之后，列到了下面。不过在看代码之前，你还是有必要重复一下我们的需求：当 RPC 返回结果之前，阻塞调用线程，让调用线程等待；当 RPC 返回结果后，唤醒调用线程，让调用线程重新执行。不知道你有没有似曾相识的感觉，这不就是经典的等待 - 通知机制吗？这个时候想必你的脑海里应该能够浮现出管程的解决方案了。有了自己的方案之后，我们再来看看 Dubbo 是怎么实现的。
+DefaultFuture 这个类是很关键，我把相关的代码精简之后，列到了下面。不过在看代码之前，你还是有必要重复一下我们的需求：
+
+- 当 RPC 返回结果之前，阻塞调用线程，让调用线程等待；
+
+- 当 RPC 返回结果后，唤醒调用线程，让调用线程重新执行。不知道你有没有似曾相识的感觉，这不就是经典的等待 - 通知机制吗？
+
+这个时候想必你的脑海里应该能够浮现出管程的解决方案了。有了自己的方案之后，我们再来看看 Dubbo 是怎么实现的。
 
 ```java
 // 创建锁与条件变量

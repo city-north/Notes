@@ -42,7 +42,7 @@ public class SelectionSort {
         for (int i = 0; i < n; i++) {
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
-                if (a[j] < a[minIndex]) {
+                if (a[j] < a[i]) {
                     minIndex = j;
                 }
             }

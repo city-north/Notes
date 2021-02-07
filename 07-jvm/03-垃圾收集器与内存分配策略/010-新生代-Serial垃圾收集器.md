@@ -1,4 +1,4 @@
-# Serial 垃圾收集器
+# 010-新生代-Serial垃圾收集器
 
 <img src="../../assets/image-20200908105903706.png" alt="image-20200908105903706" style="zoom:67%;" />
 

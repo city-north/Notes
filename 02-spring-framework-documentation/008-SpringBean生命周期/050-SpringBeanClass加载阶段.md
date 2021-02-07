@@ -28,7 +28,6 @@ private Class<?> doResolveBeanClass(RootBeanDefinition mbd, Class<?>... typesToM
   ClassLoader beanClassLoader = getBeanClassLoader();
   ClassLoader dynamicLoader = beanClassLoader;
   boolean freshResolve = false;
-
 }
 ```
 

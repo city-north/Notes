@@ -63,7 +63,6 @@ public class AnnotatedBeanDefinitionParsingDemo {
                 AnnotatedBeanDefinitionParsingDemo.class);
         System.out.println(demo);
     }
-
 }
 ```
 

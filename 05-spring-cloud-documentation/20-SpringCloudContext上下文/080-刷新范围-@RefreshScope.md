@@ -9,3 +9,4 @@
 RefreshScope是上下文中的一个Bean实例，它有一个公共方法refreshAll，该方法可以通过清除目标缓存来刷新作用域中的所有Bean实例。
 
 RefreshScope也有一个refresh方法来按照名字刷新单个Bean。
+

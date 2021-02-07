@@ -16,7 +16,7 @@ Bean实例化阶段实际上是依赖查找或者依赖注入的时候，通过B
 
 入口
 
-```
+```java
 org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#doCreateBean
 ```
 
@@ -103,9 +103,7 @@ protected BeanWrapper instantiateBean(final String beanName, final RootBeanDefin
 ## 自动注入构造
 
 ```java
-protected BeanWrapper autowireConstructor(
-      String beanName, RootBeanDefinition mbd, @Nullable Constructor<?>[] ctors, @Nullable Object[] explicitArgs) {
-
+protected BeanWrapper autowireConstructor(String beanName, RootBeanDefinition mbd, @Nullable Constructor<?>[] ctors, @Nullable Object[] explicitArgs) {
    return new ConstructorResolver(this).autowireConstructor(beanName, mbd, ctors, explicitArgs);
 }
 ```

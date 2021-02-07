@@ -40,14 +40,13 @@ public class BubbleSort {
     public static void main(String[] args) {
         int[] array = {1, 7, 5, 2, 1, 6, 2, 5, 2, 7, 3};
 //        bubbleSort(array, array.length);
-        bubbleSort2(array);
+        bubbleSort2(array, array.length);
         for (int i : array) {
             System.out.println(i);
         }
     }
 
-    public static void bubbleSort2(int[] a) {
-        int n = a.length;
+    public static void bubbleSort2(int[] a, int n) {
         if (n <= 1) {
             return;
         }

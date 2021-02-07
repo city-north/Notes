@@ -65,7 +65,6 @@ public class SpringBeanPostPopulateDemo {
         });
         System.out.println(beanFactory.getBean(DemoBean.class));
     }
-
 }
 ```
 

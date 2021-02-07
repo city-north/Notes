@@ -4,9 +4,7 @@
 
 ## 一言蔽之
 
-我们注册的BeanDefination 都是 FeignClientFactoryBean, 所以当依赖注入时, 会走 FeignClientFactoryBean 的getObject方法
-
-- 最终使用JDK代理生成Feign的代理
+我们注册的BeanDefination 都是 FeignClientFactoryBean, 所以当依赖注入时, 会走 FeignClientFactoryBean 的getObject方法, 最终使用JDK代理生成Feign的代理
 
 ## FeignClientFactoryBean初始化
 
@@ -72,22 +70,25 @@ public Client feignClient(HttpClient httpClient) {
 
 Targeter是一个接口，它的target方法会生成对应的实例对象。它有两个实现类，分别为DefaultTargeter和HystrixTargeter。
 
-#### DefaultTargeter:OpenFeign默认实现
+- DefaultTargeter : OpenFeign默认实现
 
-OpenFeign使用HystrixTargeter这一层抽象来封装关于Hystrix的实现。DefaultTargeter的实现如下所示，只是调用了Feign.Builder的target方法：
+- HystrixTargeter : 抽象层来封装关于Hystrix的实现
+
+DefaultTargeter的实现如下所示，只是调用了Feign.Builder的target方法：
 
 ```java
 //DefaultTargeter.java
 class DefaultTargeter implements Targeter {
 @Override
-    public <T< T target(FeignClientFactoryBean factory, Feign.Builder feign, FeignContext context,
-                        Target.HardCodedTarget<T< target) {
+    public <T< T target(FeignClientFactoryBean factory, Feign.Builder feign, FeignContext context,Target.HardCodedTarget<T< target) {
         return feign.target(target);
     }
 }
 ```
 
-而Feign.Builder是由FeignClientFactoryBean对象的feign方法创建的。Feign.Builder会设置FeignLoggerFactory、EncoderDecoder和Contract等组件，这些组件的Bean实例都是通过FeignContext获取的，也就是说这些实例都是可配置的，
+而Feign.Builder是由FeignClientFactoryBean对象的feign方法创建的。
+
+Feign.Builder会设置FeignLoggerFactory、EncoderDecoder和Contract等组件，这些组件的Bean实例都是通过FeignContext获取的，也就是说这些实例都是可配置的，
 
 你可以通过OpenFeign的配置机制为不同的FeignClient配置不同的组件实例。
 

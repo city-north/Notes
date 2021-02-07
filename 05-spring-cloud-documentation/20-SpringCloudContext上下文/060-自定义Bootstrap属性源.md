@@ -2,7 +2,7 @@
 
 [TOC]
 
-
+## Bootstrap外部配置属性源
 
 默认的Bootstrap外部配置属性源是Spring Cloud Config Server，即使用配置中心加载外部属性。
 

@@ -1,7 +1,6 @@
 package vip.ericchen.study.io.files;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,12 +25,13 @@ public class CreateFileTest {
     private final String FILE_NAME = "/Users/ec/study/Notes/04-java/00-code/note-java/fileToCreate.txt";
 
 
-//    @AfterEach
+    //    @AfterEach
     @BeforeEach
     public void cleanUpFiles() {
         File targetFile = new File(FILE_NAME);
         targetFile.delete();
     }
+
 
     @Test
     public void givenUsingNio_whenCreatingFile_thenCorrect() throws IOException {
@@ -48,7 +48,7 @@ public class CreateFileTest {
 
     @Test
     void givenUsingFileOutputStream_whenCreatingFile_thenCorrect() throws IOException {
-        try(FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)){
+        try (FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME)) {
         }
     }
 
