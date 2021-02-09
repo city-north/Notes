@@ -172,6 +172,5 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 public <T> T getProperty(String key, Class<T> targetType, T defaultValue) {
     return this.propertyResolver.getProperty(key, targetType, defaultValue);
 }
-
 ```
 

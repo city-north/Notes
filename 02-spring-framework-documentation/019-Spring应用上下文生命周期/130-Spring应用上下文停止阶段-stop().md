@@ -14,7 +14,7 @@
 
 主动调用org.springframework.context.Lifecycle#stop
 
-```
+```java
 @Override
 public void stop() {
    getLifecycleProcessor().stop();
@@ -28,24 +28,19 @@ public void stop() {
 public class LifecycleDemo {
 
     public static void main(String[] args) {
-        GenericApplicationContext context = new GenericApplicationContext();
+GenericApplicationContext context = new GenericApplicationContext();
         // 注解 MyLifecycle 成为一个 Spring Bean
-        context.registerBeanDefinition("myLifecycle", rootBeanDefinition(MyLifecycle.class).getBeanDefinition());
-
+context.registerBeanDefinition("myLifecycle", rootBeanDefinition(MyLifecycle.class).getBeanDefinition());
         // 刷新 Spring 应用上下文
         context.refresh();
-
         // 启动 Spring 应用上下文
         context.start();
-
         // 停止 Spring 应用上下文
         context.stop();
-
         // 关闭 Spring 应用
         context.close();
     }
 }
-
 ```
 
 ```java
@@ -72,5 +67,3 @@ public class MyLifecycle implements Lifecycle {
 }
 ```
 
-MyLifecycle 启动...
-MyLifecycle 停止...

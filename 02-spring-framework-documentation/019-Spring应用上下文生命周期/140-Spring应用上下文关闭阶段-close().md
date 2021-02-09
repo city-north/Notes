@@ -41,6 +41,12 @@ public void close() {
 }
 ```
 
+#### doClose方法
+
+Live Beans JMX 撤销托管
+
+- LiveBeansView.unregisterApplicationContext(ConfigurableApplicationContext)
+
 ```java
 	protected void doClose() {
 		// Check whether an actual close attempt is necessary...
@@ -95,31 +101,41 @@ public void close() {
 
 ## destroyBeans();
 
+销毁 Spring Beans
+
 ```java
-	public void destroySingletons() {
-		if (logger.isTraceEnabled()) {
-			logger.trace("Destroying singletons in " + this);
-		}
-		synchronized (this.singletonObjects) {
-			this.singletonsCurrentlyInDestruction = true;
-		}
+protected void destroyBeans() {
+  getBeanFactory().destroySingletons();
+}
+```
 
-		String[] disposableBeanNames;
-		synchronized (this.disposableBeans) {
-      //并不是所有的Bean都实现了DisposableBean回调
-			disposableBeanNames = StringUtils.toStringArray(this.disposableBeans.keySet());
-		}
-		for (int i = disposableBeanNames.length - 1; i >= 0; i--) {
-      //销毁
-			destroySingleton(disposableBeanNames[i]);
-		}
+销毁单例Bean
 
-		this.containedBeanMap.clear();//清空缓存
-		this.dependentBeanMap.clear();
-		this.dependenciesForBeanMap.clear();
+```java
+public void destroySingletons() {
+  if (logger.isTraceEnabled()) {
+    logger.trace("Destroying singletons in " + this);
+  }
+  synchronized (this.singletonObjects) {
+    this.singletonsCurrentlyInDestruction = true;
+  }
 
-		clearSingletonCache();
-	}
+  String[] disposableBeanNames;
+  synchronized (this.disposableBeans) {
+    //并不是所有的Bean都实现了DisposableBean回调
+    disposableBeanNames = StringUtils.toStringArray(this.disposableBeans.keySet());
+  }
+  for (int i = disposableBeanNames.length - 1; i >= 0; i--) {
+    //销毁
+    destroySingleton(disposableBeanNames[i]);
+  }
+
+  this.containedBeanMap.clear();//清空缓存
+  this.dependentBeanMap.clear();
+  this.dependenciesForBeanMap.clear();
+
+  clearSingletonCache();
+}
 ```
 
 引用脱钩,将容器的map设置为不可达,等待jvm回收,
@@ -141,30 +157,27 @@ protected void clearSingletonCache() {
 在kill -1 优雅关闭
 
 ```java
-	@Override
-	public void registerShutdownHook() {
-		if (this.shutdownHook == null) {
-			// No shutdown hook registered yet.
-			this.shutdownHook = new Thread(SHUTDOWN_HOOK_THREAD_NAME) {
-				@Override
-				public void run() {
-					synchronized (startupShutdownMonitor) {
-						doClose();
-					}
-				}
-			};
-			Runtime.getRuntime().addShutdownHook(this.shutdownHook);
-		}
-	}
+@Override
+public void registerShutdownHook() {
+  if (this.shutdownHook == null) {
+    // No shutdown hook registered yet.
+    this.shutdownHook = new Thread(SHUTDOWN_HOOK_THREAD_NAME) {
+      @Override
+      public void run() {
+        synchronized (startupShutdownMonitor) {
+          doClose();
+        }
+      }
+    };
+    Runtime.getRuntime().addShutdownHook(this.shutdownHook);
+  }
+}
 ```
-
-
 
 registerShutdownHook 以后,就会在结束的时候发送一个ContextClosedEvent事件
 
 ```java
 public class SpringShutdownHookThreadDemo {
-
     public static void main(String[] args) throws IOException {
         GenericApplicationContext context = new GenericApplicationContext();
 
@@ -189,3 +202,4 @@ public class SpringShutdownHookThreadDemo {
     }
 }
 ```
+

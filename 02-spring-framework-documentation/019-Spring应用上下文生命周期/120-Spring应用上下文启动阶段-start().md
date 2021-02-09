@@ -27,13 +27,13 @@ public void start() {
 启动LifecycleProcssor提供的回调
 
 ```java
-	LifecycleProcessor getLifecycleProcessor() throws IllegalStateException {
-		if (this.lifecycleProcessor == null) {
-			throw new IllegalStateException("LifecycleProcessor not initialized - " +
-					"call 'refresh' before invoking lifecycle methods via the context: " + this);
-		}
-		return this.lifecycleProcessor;
-	}
+LifecycleProcessor getLifecycleProcessor() throws IllegalStateException {
+  if (this.lifecycleProcessor == null) {
+  throw new IllegalStateException("LifecycleProcessor not initialized - " +
+             "call 'refresh' before invoking lifecycle methods via the context: " + this);
+  }
+  return this.lifecycleProcessor;
+}
 ```
 
 #### 发布Spring应用上下文已启动事件-ContextStaredEvent

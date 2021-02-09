@@ -16,18 +16,9 @@
 
 # 应用上下文-ApplicationContext
 
-## ApplicationContext简介
+## 层级结构
 
-- ApplicationContext 是一个BeanFactory , 提供了 BeanFactory 的所有的所有功能, 主要负责对外 ,相当于外交部 ,
-- 通过继承接口, 它拥有比 Bean工厂更多的功能
-
-## 常用的ApplicationContext
-
-The most commonly used `ApplicationContext` implementations are:
-
-1. **[FileSystemXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you need to provide the full path of the XML bean configuration file to the constructor.
-2. **[ClassPathXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/ClassPathXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you do not need to provide the full path of the XML file but you need to set CLASSPATH properly because this container will look bean configuration XML file in CLASSPATH.
-3. **[WebXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/context/support/XmlWebApplicationContext.html)** – This container loads the XML file with definitions of all beans from within a web application.
+![image-20200919224648982](../../assets/image-20200919224648982.png)
 
 ## 提供的核心功能
 
@@ -36,10 +27,18 @@ The most commonly used `ApplicationContext` implementations are:
 ApplicationContext 提供的核心功能
 
 - 因为继承了[`ListableBeanFactory`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/ListableBeanFactory.html),所以支持访问应用Bean组件的工厂方法,集合BeanFactory相关Bean的功能
-- 因为继承了 [`ResourceLoader`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/ResourceLoader.html)接口, 所以拥有了加载通用资源的能力  [010-Resource机制](../090-Spring机制/010-Resource机制) 
-- 因为继承了[`ApplicationEventPublisher`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html)  接口, 所以拥有了发送事件和注册监听器的能力  [030-ApplicationEvent-事件机制](../090-Spring机制/030-ApplicationEvent-事件机制) 
-- 因为继承了 [`MessageSource`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/MessageSource.html) 接口, 所有拥有了解析国际化消息的能力  [020-MessageSource-国际化消息机制](../090-Spring机制/020-MessageSource-国际化消息机制) 
+- 因为继承了 [`ResourceLoader`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/ResourceLoader.html)接口, 所以拥有了加载通用资源的能力
+- 因为继承了[`ApplicationEventPublisher`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html)  接口, 所以拥有了发送事件和注册监听器的能力
+- 因为继承了 [`MessageSource`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/MessageSource.html) 接口, 所有拥有了解析国际化消息的能力
 - **子上下文的优先级更高** - 继承了 parent 上下文。在后代上下文中的定义将始终具有优先级。例如，这意味着整个web应用程序可以使用单个父上下文，而每个servlet都有独立于任何其他servlet的子上下文。
+
+## 常用的ApplicationContext
+
+The most commonly used `ApplicationContext` implementations are:
+
+1. **[FileSystemXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you need to provide the full path of the XML bean configuration file to the constructor.
+2. **[ClassPathXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/support/ClassPathXmlApplicationContext.html)** – This container loads the definitions of the beans from an XML file. Here you do not need to provide the full path of the XML file but you need to set CLASSPATH properly because this container will look bean configuration XML file in CLASSPATH.
+3. **[WebXmlApplicationContext](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/context/support/XmlWebApplicationContext.html)** – This container loads the XML file with definitions of all beans from within a web application.
 
 ## 生命周期回调
 
@@ -50,10 +49,6 @@ ApplicationContext 提供的核心功能
 -  [`ResourceLoaderAware`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ResourceLoaderAware.html)
 -  [`ApplicationEventPublisherAware`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisherAware.html) 
 -  [`MessageSourceAware`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/MessageSourceAware.html) 
-
-## 层级结构
-
-![image-20200919224648982](../../assets/image-20200919224648982.png)
 
 ## 层次关系hierarchy
 

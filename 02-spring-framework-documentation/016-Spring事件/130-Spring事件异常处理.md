@@ -14,8 +14,6 @@ org.springframework.util.ErrorHandler
   - org.springframework.scheduling.concurrent.ConcurrentTaskScheduler
   - org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
 
-
-
 ## SimpleApplicationEventMulticaster
 
 org.springframework.context.event.SimpleApplicationEventMulticaster#invokeListener
@@ -49,7 +47,6 @@ protected void invokeListener(ApplicationListener<?> listener, ApplicationEvent 
 
 - 如果是启动过程中发布的事件,出现调用Listenr失败,可能会导致整个上下文失败
 
-  
 
 ## 代码演示
 

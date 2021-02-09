@@ -16,5 +16,6 @@ DiscoveryClient目前的实现有
 - spring cloud Alibaba nacos-discovery
 
 DiscoveryClient的实现类会自动将本地的Spring Boot服务注册到远程服务发现中心。可以通过在@EnableDiscoveryClient中设置autoRegister=false来禁止自动注册行为。
+
 在Finchley版本的Spring Cloud中，不需要显式使用@EnableDiscoveryClient来开启客户端的服务注册与发现功能。只要在类路径中，有DiscoveryClient的实现就能使Spring Cloud应用注册到服务发现中心
 
