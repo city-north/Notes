@@ -1,4 +1,4 @@
-# 020-Validator接口设计
+#  020-Validator接口设计
 
 [TOC]
 
@@ -20,11 +20,8 @@
 
 ```java
 public interface Validator {
-
 	boolean supports(Class<?> clazz);
-
 	void validate(Object target, Errors errors);
-
 }
 ```
 
@@ -51,8 +48,7 @@ public class UserLoginValidator implements Validator {
     if (login.getPassword() != null
         && login.getPassword().trim().length() < MINIMUM_PASSWORD_LENGTH) { 
       errors.rejectValue("password", "field.min.length",
-                         new Object[]{Integer.valueOf(MINIMUM_PASSWORD_LENGTH)},
-                         "The password must be at least [" + MINIMUM_PASSWORD_LENGTH + "] characters in length.");
+         new Object[]{Integer.valueOf(MINIMUM_PASSWORD_LENGTH)},"The password must be at least [" + MINIMUM_PASSWORD_LENGTH + "] characters in length.");
     }
   }
 }
@@ -62,15 +58,11 @@ public class UserLoginValidator implements Validator {
 
 ```java
 public abstract class ValidationUtils {
-
    private static final Log logger = LogFactory.getLog(ValidationUtils.class);
-
 //执行校验
    public static void invokeValidator(Validator validator, Object target, Errors errors) {
       invokeValidator(validator, target, errors, (Object[]) null);
    }
-
-  
    public static void invokeValidator(
          Validator validator, Object target, Errors errors, @Nullable Object... validationHints) {
 

@@ -64,7 +64,8 @@ public class CyclicBarrierTest {
 
 ```java
 public class CyclicBarrierTest2 {
-    static CyclicBarrier cyclicBarrier = new CyclicBarrier(2, new A());//达到屏障后,优先执行 A
+    static CyclicBarrier cyclicBarrier = new CyclicBarrier(2, new A());
+    //达到屏障后,优先执行 A
 
     public static void main(String[] args) throws Exception {
         new Thread(() -> {

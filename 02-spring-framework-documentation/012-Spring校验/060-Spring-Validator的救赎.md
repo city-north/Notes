@@ -10,15 +10,15 @@ Errors对象有多重选型,有时候我们也不好区分
 
 ## 怎么救赎
 
-Spring Validation 和 Bean  Validator进行适配
+Spring Validation 和 Bean Validator 还有 Hibernate Validator 进行适配
 
 - 核心组件-org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
-- 依赖Bean Validation -JSR-330 or JSR-349
-- Bean方法参数校验 - org.springframework.validation.beanvalidation.MethodValidationPostProcessor ,基于AOP
+- 依赖 Bean Validation -JSR-330 or JSR-349
+- Bean方法参数校验 - org.springframework.validation.beanvalidation.MethodValidationPostProcessor ,基于AOP ， 去校验方法参数中哪些数据或者哪些参数需要北校验
 
 ## 实例代码
 
-#### 第一步,添加LocalValidatorFactoryBean 的实例
+#### 第一步,添加 LocalValidatorFactoryBean 的实例
 
 注册到MethodValidationPostProcessor,打开注解驱动
 
@@ -218,8 +218,6 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 
 		return returnValue;
 	}
-
-
 }
 
 ```

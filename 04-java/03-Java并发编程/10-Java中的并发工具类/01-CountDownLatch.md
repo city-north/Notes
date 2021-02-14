@@ -1,4 +1,6 @@
-# 等待多线程完成的CountDownLatch
+# 01-CountDownLatch-等待多线程完成的CountDownLatch
+
+[TOC]
 
 `CountDownLatch` 的构造函数接收一个 int 类型的参数作为计数器,你要等待 n个线程完成,就写 n,当然 n也可以是一个线程的 n 个执行步骤
 
@@ -53,41 +55,41 @@ public class CountDownLatchTest {
 ### await
 
 ```javascript
-    public void await() throws InterruptedException {
-        sync.acquireSharedInterruptibly(1);
-    }
+public void await() throws InterruptedException {
+    sync.acquireSharedInterruptibly(1);
+}
 ```
 
 可以看到 await 也是使用了内部定义 AQS实现类的方式 , 在 `CountDownLatch` 内 部写了一个 Sync 并且继承了 AQS 这个抽象类重写了 AQS 中的共享锁方法
 
 ```java
-    private static final class Sync extends AbstractQueuedSynchronizer {
-        private static final long serialVersionUID = 4982264981922014374L;
+private static final class Sync extends AbstractQueuedSynchronizer {
+    private static final long serialVersionUID = 4982264981922014374L;
 
-        Sync(int count) {
-            setState(count);
-        }
+    Sync(int count) {
+        setState(count);
+    }
 
-        int getCount() {
-            return getState();
-        }
+    int getCount() {
+        return getState();
+    }
 
-        protected int tryAcquireShared(int acquires) {
-            return (getState() == 0) ? 1 : -1;
-        }
+    protected int tryAcquireShared(int acquires) {
+        return (getState() == 0) ? 1 : -1;
+    }
 
-        protected boolean tryReleaseShared(int releases) {
-            // Decrement count; signal when transition to zero
-            for (;;) {
-                int c = getState();
-                if (c == 0)
-                    return false;
-                int nextc = c-1;
-                if (compareAndSetState(c, nextc))
-                    return nextc == 0;
-            }
+    protected boolean tryReleaseShared(int releases) {
+        // Decrement count; signal when transition to zero
+        for (;;) {
+            int c = getState();
+            if (c == 0)
+                return false;
+            int nextc = c-1;
+            if (compareAndSetState(c, nextc))
+                return nextc == 0;
         }
     }
+}
 ```
 
 值得注意的是
@@ -95,15 +97,15 @@ public class CountDownLatchTest {
 - `acquireSharedInterruptibly`方法 使用的是共享锁机制,因为 `CountDownLatch` 中使用了**共享锁机制**,因为`CountDownLatch`并不需要实现互斥的作用
 
 ```java
-    public final void acquireSharedInterruptibly(int arg)
-            throws InterruptedException {
-        if (Thread.interrupted())
-            throw new InterruptedException();
-      	//
-        if (tryAcquireShared(arg) < 0)
-          //如果 state 不等于 0 获取共享锁
-            doAcquireSharedInterruptibly(arg);///进入AQS 队列
-    }
+public final void acquireSharedInterruptibly(int arg)
+    throws InterruptedException {
+    if (Thread.interrupted())
+        throw new InterruptedException();
+    //
+    if (tryAcquireShared(arg) < 0)
+        //如果 state 不等于 0 获取共享锁
+        doAcquireSharedInterruptibly(arg);///进入AQS 队列
+}
 ```
 
 `tryAcquireShared`获取了一个计数器的状态
