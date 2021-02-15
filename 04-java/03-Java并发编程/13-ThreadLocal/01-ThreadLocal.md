@@ -1,6 +1,4 @@
-# ThreadLocal
-
----
+# 01-ThreadLocal
 
 [TOC]
 
@@ -16,7 +14,7 @@ ThreadLocal 是 JDK 包提供的,它提供了线程本地变量,也就是如果�
 
 ![image-20200720075559520](../../../assets/image-20200720075559520.png)
 
-#### 总结
+## 总结
 
 每个线程内部都维护了一个名为 threadLocals 的成员变量,该变量的类型为 ThreadLocalMap , 其中 key 为我们定义的 ThreadLocal 变量的 this 引用,value 则为我们使用 set 方法设置的值
 
@@ -58,17 +56,17 @@ Thread 类中有一个 threadLocals 和一个 inheritableThreadLocals
 #### ThreadLocal#set
 
 ```java
-    public void set(T value) {
-      //(1)获取当前线程
-        Thread t = Thread.currentThread();
-      //(2)将当前线程作为 key, 查找对应的线程变量, 找到则设置
-        ThreadLocalMap map = getMap(t);
-        if (map != null)
-            map.set(this, value);
-        else
-          //(3)第一次调用就创建当前线程对应的 HashMap
-            createMap(t, value);
-    }
+public void set(T value) {
+    //(1)获取当前线程
+    Thread t = Thread.currentThread();
+    //(2)将当前线程作为 key, 查找对应的线程变量, 找到则设置
+    ThreadLocalMap map = getMap(t);
+    if (map != null)
+        map.set(this, value);
+    else
+        //(3)第一次调用就创建当前线程对应的 HashMap
+        createMap(t, value);
+}
 ```
 
 在 getMap 方法里, 我们可以看到实际上是拿到了 Thread 类的 threadLocals 变量,这个变量就是 ThreadLocalMap 类型的变量
@@ -90,41 +88,41 @@ void createMap(Thread t, T firstValue) {
 #### ThreadLocal#get
 
 ```java
-    public T get() {
-      //(4) 获取当前线程
-        Thread t = Thread.currentThread();
-     	//获取当前线程的 ThreadLocal 变量
-        ThreadLocalMap map = getMap(t);
-        if (map != null) {
-          //如果不为空则从 Map 中获取
-            ThreadLocalMap.Entry e = map.getEntry(this);
-            if (e != null) {
-                @SuppressWarnings("unchecked")
-                T result = (T)e.value;
-                return result;
-            }
+public T get() {
+    //(4) 获取当前线程
+    Thread t = Thread.currentThread();
+    //获取当前线程的 ThreadLocal 变量
+    ThreadLocalMap map = getMap(t);
+    if (map != null) {
+        //如果不为空则从 Map 中获取
+        ThreadLocalMap.Entry e = map.getEntry(this);
+        if (e != null) {
+            @SuppressWarnings("unchecked")
+            T result = (T)e.value;
+            return result;
         }
-      //如果 threadLocals 为空则初始化当前线程的 threadLocals 成员变量
-        return setInitialValue();
     }
+    //如果 threadLocals 为空则初始化当前线程的 threadLocals 成员变量
+    return setInitialValue();
+}
 
-    private T setInitialValue() {
-      //初始化为空
-        T value = initialValue();
-        Thread t = Thread.currentThread();
-        ThreadLocalMap map = getMap(t);
-      //如果当前线程的 threadlocals 变量不为空
-        if (map != null)
-            map.set(this, value);
-        else
-          //如果当前线程的 threadLocals 变量为空
-            createMap(t, value);
-        return value;
-    }
+private T setInitialValue() {
+    //初始化为空
+    T value = initialValue();
+    Thread t = Thread.currentThread();
+    ThreadLocalMap map = getMap(t);
+    //如果当前线程的 threadlocals 变量不为空
+    if (map != null)
+        map.set(this, value);
+    else
+        //如果当前线程的 threadLocals 变量为空
+        createMap(t, value);
+    return value;
+}
 
-    protected T initialValue() {
-        return null;
-    }
+protected T initialValue() {
+    return null;
+}
 ```
 
 #### ThreadLocal#remove

@@ -19,23 +19,23 @@
 ![image-20200720080520791](../../../assets/image-20200720080520791.png)
 
 ```java
- private void init(ThreadGroup g, Runnable target, String name,
-                      long stackSize, AccessControlContext acc,
-                      boolean inheritThreadLocals) {
-				...
-          //获取当前线程
+private void init(ThreadGroup g, Runnable target, String name,
+                  long stackSize, AccessControlContext acc,
+                  boolean inheritThreadLocals) {
+    ...
+        //获取当前线程
         // ④
         Thread parent = currentThread();
-        SecurityManager security = System.getSecurityManager();
+    SecurityManager security = System.getSecurityManager();
 
-				// 如果父线程的 inheritableThreadLocals 变量不为 null
-        if (inheritThreadLocals && parent.inheritableThreadLocals != null)
-            this.inheritableThreadLocals =
-          // ⑥ 设置子线程中的 inheritableThreadLocals 变量
-                ThreadLocal.createInheritedMap(parent.inheritableThreadLocals);
-				...
-          
-    }
+    // 如果父线程的 inheritableThreadLocals 变量不为 null
+    if (inheritThreadLocals && parent.inheritableThreadLocals != null)
+        this.inheritableThreadLocals =
+        // ⑥ 设置子线程中的 inheritableThreadLocals 变量
+        ThreadLocal.createInheritedMap(parent.inheritableThreadLocals);
+    ...
+
+}
 ```
 
 在创建线程时, 在构造函数里面调用 init 方法

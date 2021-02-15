@@ -34,4 +34,45 @@ java.nio.Buffer 类是一个抽象类， 对应Java的主要数据类型， 在N
 | ShortBuffer      |                                  |
 | MappedByteBuffer | 专门用于内存映射的一种ByteBuffer |
 
-​	
+## 缓冲区分片
+
+在NIO中，可以根据现有的缓冲区对象创建一个子缓冲区，即在现有缓冲区上切出来一片作为新的缓冲区， 但是现有的缓冲区与创建的缓冲区分片底层数据层面上是共享的，也即是说
+
+字缓冲区相当于现有缓冲区的一个视图窗口， 调用slice()方法创建一个子缓冲区
+
+```java
+/**
+ * 缓冲区分片
+ */
+public class BufferSlice {  
+    static public void main( String args[] ) throws Exception {  
+        ByteBuffer buffer = ByteBuffer.allocate( 10 );  
+          
+        // 缓冲区中的数据0-9  
+        for (int i=0; i<buffer.capacity(); ++i) {  
+            buffer.put( (byte)i );  
+        }  
+          
+        // 创建子缓冲区  
+        buffer.position( 3 );  
+        buffer.limit( 7 );  
+        ByteBuffer slice = buffer.slice();  
+          
+        // 改变子缓冲区的内容  
+        for (int i=0; i<slice.capacity(); ++i) {  
+            byte b = slice.get( i );  
+            b *= 10;  
+            slice.put( i, b );  
+        }  
+          
+        buffer.position( 0 );  
+        buffer.limit( buffer.capacity() );  
+          
+        while (buffer.remaining()>0) {  
+            System.out.println( buffer.get() );  
+        }  
+    }  
+}
+```
+
+在上面的实例中，分配一个容器大小为10的缓冲区并在其中放入0-9，而且该缓冲区基础之上又创建了一个子缓冲区，并改变了缓冲区的内容， 子缓冲区改变的值在原缓冲区上也发生了变化，说明是共享的

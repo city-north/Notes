@@ -11,7 +11,7 @@
 | capacity | 容量，既可以容纳的最大数据量，在缓冲区创建时设置并不能改变   |
 | limit    | 上限， 缓冲区中当前的数据量                                  |
 | position | 位置， 缓冲区中下一个要被读或者写的元素的索引                |
-| mark     | 调用mark() 方法来设置 mark=position, 再调用 reset() 可以让 position 可以让 position 恢复到mark 标记位置即 position = mark |
+| mark     | 调用mark() 方法来设置 mark=position, <br />再调用 reset() 可以让 position 可以让 position 恢复到mark 标记位置即 position = mark |
 
 ### 重要属性1-capacity属性
 
@@ -54,11 +54,22 @@ Buffer类的limit属性， 表示读写的最大上限， limit 属性， 也与
 
 创建缓冲区， 刚开始， 缓冲区处于写模式
 
-- position 为 0， limit 是最大容量
+- position 为 0， limit 是最大容量capacity = 10
 
-然后， 向缓冲区写数据， 每写入一个数据， position的值就向后移动一个位置， 也就是position 的值 +1 ， 假如写了5个值， 那么写入完成后， position =5
+![image-20210215145507906](../../../assets/image-20210215145507906.png)
 
-调用flip方法转换冲读模式， limit的值先会被设置成写模式的position， limit = 5 ,意思是读取的最大上限是5 个数
+然后， 向缓冲区写数据， 每写入一个数据， position的值就向后移动一个位置， 也就是position 的值 +1 ， 假如写了4个值， 那么写入完成后， position =4
 
-同时， 新的position会被重置为0， 表示可以从0开始读取
+![image-20210215145532864](../../../assets/image-20210215145532864.png)
 
+
+
+
+
+调用flip方法转换冲读模式， limit的值先会被设置成写模式的position， limit = 4 ,意思是读取的最大上限是4个数同时， 新的position会被重置为0， 表示可以从0开始读取
+
+![image-20210215145603429](../../../assets/image-20210215145603429.png)
+
+调用clear方法
+
+![image-20210215145636093](../../../assets/image-20210215145636093.png)

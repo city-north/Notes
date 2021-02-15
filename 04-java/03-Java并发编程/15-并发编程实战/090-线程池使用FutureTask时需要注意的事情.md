@@ -1,4 +1,8 @@
-# 线程池使用 FutureTask 时需要注意的事情
+# 090-线程池使用FutureTask时需要注意的事情
+
+[TOC]
+
+# 一言蔽之
 
 线程池使用 FutureTask 时,如果把拒绝策略设置为 
 
@@ -131,7 +135,7 @@ private V report(int s) throws ExecutionException {
 - DiscardPolicy
 - DiscardOldestPolice 
 
-策略在拒绝元素时并没有设置 Feture 的状态,所以一直是 new, 所以会一直卡死
+策略在拒绝元素时并没有设置 Future 的状态,所以一直是 new, 所以会一直卡死
 
 #### 使用 AbortPolicy 就没问题
 
