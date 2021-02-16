@@ -6,7 +6,7 @@
 
 在扫描FeignClient接口类所有函数生成对应Handler的过程中，OpenFeign会生成调用该函数时发送网络请求的模板，也就是RequestTemplate实例。
 
-RequestTemplate中包含了发送网络请求的URL和函数参数填充的信息。@RequestMapping、@PathVariable等注解信息也会包含到RequestTemplate中，用于函数参数的填充。
+RequestTemplate中包含了发送网络请求的URL和函数参数填充的 信息。@RequestMapping、@PathVariable等注解信息也会包含到RequestTemplate中，用于函数参数的填充。
 
 ParseHandlersByName类的apply方法就是这一过程的具体实现。
 
