@@ -50,7 +50,7 @@ FeignAutoConfiguration的相关代码如下所示：
 ```java
 //FeignAutoConfiguration.java
 @Autowired(required = false)
-private List〈FeignClientSpecification〉 configurations = new ArrayList〈〉();
+private List<FeignClientSpecification> configurations = new ArrayList<>();
 @Bean
 public FeignContext feignContext() {
     FeignContext context = new FeignContext();
@@ -58,7 +58,7 @@ public FeignContext feignContext() {
     return context;
 }
 //FeignContext.java
-public class FeignContext extends NamedContextFactory〈FeignClientSpecification〉 {
+public class FeignContext extends NamedContextFactory<FeignClientSpecification> {
     public FeignContext() {
         //将默认的FeignClientConfiguration作为参数传递给构造函数
         super(FeignClientsConfiguration.class, "feign", "feign.client.name");
@@ -78,16 +78,16 @@ protected AnnotationConfigApplicationContext createContext(String name) {
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
     //获取该name所对应的configuration,如果有的话，就注册都子context中
     if (this.configurations.containsKey(name)) {
-        for (Class〈?〉 configuration : this.configurations.get(name)
+        for (Class<?> configuration : this.configurations.get(name)
                 .getConfiguration()) {
             context.register(configuration);
         }
     }
     // 注册default的Configuration，也就是FeignClientsRegistrar类的registerDefaultConfiguration
       // 方法中注册的Configuration
-    for (Map.Entry〈String, C〉 entry : this.configurations.entrySet()) {()) {
+    for (Map.Entry<String, C> entry : this.configurations.entrySet()) {()) {
         if (entry.getKey().startsWith("default.")) {
-            for (Class〈?〉 configuration : entry.getValue().getConfiguration()) {
+            for (Class<?> configuration : entry.getValue().getConfiguration()) {
                 context.register(configuration);
             }
         }
@@ -98,7 +98,7 @@ protected AnnotationConfigApplicationContext createContext(String name) {
     // propertySourceName = feign; propertyName = feign.client.name
     context.getEnvironment().getPropertySources().addFirst(new MapPropertySource(
             this.propertySourceName,
-            Collections.〈String, Object〉 singletonMap(this.propertyName, name)));
+            Collections.<String, Object> singletonMap(this.propertyName, name)));
     // 所有context的parent都相同，这样的话，一些相同的Bean可以通过parent context来获取
     if (this.parent != null) {
         context.setParent(this.parent);
@@ -111,13 +111,15 @@ protected AnnotationConfigApplicationContext createContext(String name) {
 
 ### DisposableBean
 
-而由于NamedContextFactory实现了DisposableBean接口，当NamedContextFactory实例消亡时，Spring框架会调用其destroy方法，清除掉自己创建的所有子上下文和自身包含的所有组件实例。NamedContextFactory的destroy方法如下所示：
+而由于NamedContextFactory实现了DisposableBean接口，当NamedContextFactory实例消亡时，Spring框架会调用其destroy方法，清除掉自己创建的所有子上下文和自身包含的所有组件实例。
+
+NamedContextFactory的destroy方法如下所示：
 
 ```java
 //NamedContextFactory.java
 @Override
 public void destroy() {
-    Collection〈AnnotationConfigApplicationContext〉 values = this.contexts.values();
+    Collection<AnnotationConfigApplicationContext> values = this.contexts.values();
     for(AnnotationConfigApplicationContext context : values) {
         context.close();
     }
