@@ -2,11 +2,11 @@
 
 [TOC]
 
-## 
+##扫描FeignClient接口类所有函数生成对应Handler
 
 在扫描FeignClient接口类所有函数生成对应Handler的过程中，OpenFeign会生成调用该函数时发送网络请求的模板，也就是RequestTemplate实例。
 
-RequestTemplate中包含了发送网络请求的URL和函数参数填充的 信息。@RequestMapping、@PathVariable等注解信息也会包含到RequestTemplate中，用于函数参数的填充。
+RequestTemplate中包含了发送网络请求的URL和函数参数填充的信息。@RequestMapping、@PathVariable等注解信息也会包含到RequestTemplate中，用于函数参数的填充。
 
 ParseHandlersByName类的apply方法就是这一过程的具体实现。
 
@@ -38,7 +38,9 @@ public Map<String, MethodHandler> apply(Target key) {
 
 ## SpringMvcContract:Openfeign默认协议实现
 
-OpenFeign默认的Contract实现是SpringMvcContract。SpringMvcContract的父类为BaseContract，而BaseContract是Contract众多子类中的一员，其他还有JAXRSContract和HystrixDelegatingContract等。
+OpenFeign默认的Contract实现是SpringMvcContract。
+
+SpringMvcContract的父类为BaseContract，而BaseContract是Contract众多子类中的一员，其他还有JAXRSContract和HystrixDelegatingContract等。
 
 Contract的parseAndValidateMetadata方法会解析与HTTP请求相关的所有函数的基本信息和注解信息，代码如下所示：
 

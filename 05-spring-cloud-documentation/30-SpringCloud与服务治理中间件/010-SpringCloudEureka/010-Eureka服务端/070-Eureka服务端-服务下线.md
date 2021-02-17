@@ -16,7 +16,6 @@ Eureka Client在应用销毁时，会向Eureka Server发送服务下线请求，
 
 ```java
 // AbstractInstanceRegistry.java
-
 @Override
 public boolean cancel(String appName, String id, boolean isReplication) {
     return internalCancel(appName, id, isReplication);
@@ -35,7 +34,7 @@ protected boolean internalCancel(String appName, String id, boolean isReplicatio
         }
         // 将服务实例信息添加到最近下线服务实例统计队列
         synchronized (recentCanceledQueue) {
-            recentCanceledQueue.add(new Pair〈Long, String〉(System.currentTimeMillis(), appName + "(" + id + ")"));
+recentCanceledQueue.add(new Pair〈Long, String〉(System.currentTimeMillis(), appName + "(" + id + ")"));
         }
         // 租约不存在，返回false
         if (leaseToCancel == null) {

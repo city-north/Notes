@@ -2,7 +2,7 @@
 
 [TOC]
 
-## 
+## FeignInvocationHandler
 
 ReflectiveFeign#newInstance方法的第二部分就是生成相应接口类的实例对象，并设置方法处理器，如下所示：
 
@@ -30,8 +30,6 @@ static final class Default implements InvocationHandlerFactory {
 }
 ```
 
-
-
 Default实现了InvocationHandlerFactory接口，其create方法返回ReflectiveFeign.FeignInvocationHandler实例。
 
 ReflectiveFeign的内部类FeignInvocationHandler是InvocationHandler的实现类，其主要作用是将接口类相关函数的调用分配给对应的MethodToHandler实例，即SynchronousMethodHandler来处理。
@@ -45,9 +43,7 @@ invoke方法会根据函数名称来调用不同的MethodHandler实例的invoke�
 public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     if ("equals".equals(method.getName())) {
         try {
-            Object
-                otherHandler =
-                args.length 〉 0 && args[0] != null ? Proxy.getInvocationHandler(args[0]): null;
+            Object otherHandler =args.length 〉 0 && args[0] != null ? Proxy.getInvocationHandler(args[0]): null;
             return equals(otherHandler);
         } catch (IllegalArgumentException e) {
             return false;

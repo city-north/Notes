@@ -34,8 +34,7 @@ Cache 这个工具类，我们提供了两个方法，一个是读缓存方法 g
 
 ```java
 class Cache<K,V> {
-  final Map<K, V> m =
-    new HashMap<>();
+  final Map<K, V> m =new HashMap<>();
   final ReadWriteLock rwl =new ReentrantReadWriteLock();
   // 读锁
   final Lock r = rwl.readLock();
@@ -74,10 +73,8 @@ class Cache<K,V> {
 
 ```java
 class Cache<K,V> {
-  final Map<K, V> m =
-    new HashMap<>();
-  final ReadWriteLock rwl = 
-    new ReentrantReadWriteLock();
+  final Map<K, V> m =new HashMap<>();
+  final ReadWriteLock rwl = new ReentrantReadWriteLock();
   final Lock r = rwl.readLock();
   final Lock w = rwl.writeLock();
  
@@ -138,7 +135,11 @@ try {
 }
 ```
 
-这样看上去好像是没有问题的，先是获取读锁，然后再升级为写锁，对此还有个专业的名字，叫**锁的升级**。可惜 ReadWriteLock 并不支持这种升级。在上面的代码示例中，读锁还没有释放，此时获取写锁，会导致写锁永久等待，最终导致相关线程都被阻塞，永远也没有机会被唤醒。锁的升级是不允许的，这个你一定要注意。
+这样看上去好像是没有问题的，先是获取读锁，然后再升级为写锁，对此还有个专业的名字，叫**锁的升级**。
+
+**可惜 ReadWriteLock 并不支持这种升级。**
+
+在上面的代码示例中，读锁还没有释放，此时获取写锁，会导致写锁永久等待，最终导致相关线程都被阻塞，永远也没有机会被唤醒。锁的升级是不允许的，这个你一定要注意。
 
 不过，虽然锁的升级是不允许的，但是锁的降级却是允许的。以下代码来源自 ReentrantReadWriteLock 的官方示例，略做了改动。你会发现在代码①处，获取读锁的时候线程还是持有写锁的，这种锁的降级是支持的。
 
@@ -146,8 +147,7 @@ try {
 class CachedData {
   Object data;
   volatile boolean cacheValid;
-  final ReadWriteLock rwl =
-    new ReentrantReadWriteLock();
+  final ReadWriteLock rwl =new ReentrantReadWriteLock();
   // 读锁  
   final Lock r = rwl.readLock();
   // 写锁

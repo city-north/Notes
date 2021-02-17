@@ -29,8 +29,7 @@ public Object getObject() throws Exception {
         builder.client(client);
     }
     Targeter targeter = get(context, Targeter.class);
-    return targeter.target(this, builder, context, new HardCodedTarget<<(
-            this.type, this.name, url));
+    return targeter.target(this, builder, context, new HardCodedTarget<<(this.type, this.name, url));
 }
 ```
 
