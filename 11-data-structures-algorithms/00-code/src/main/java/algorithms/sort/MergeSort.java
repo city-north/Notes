@@ -5,44 +5,19 @@ package algorithms.sort;
  * TODO
  * </p>
  *
- * @author EricChen 2021/02/04 14:53
+ * @author EricChen 2021/02/18 16:20
  */
-public class MergeSort {
+public interface MergeSort {
 
-    public static void main(String[] args) {
-        doMergeSort()
-    }
-
-    private static void doMergeSort(int[] a, int n) {
-        if (n < 2) {
-            returnarr;
+    default void run() {
+        int[] array = {7, 4, 9, 8, 2, 9, 9, 8, 7};
+        doMergeSort(array, 0, array.length - 1);
+        for (int i : array) {
+            System.out.println(i);
         }
-        varmiddle = Math.floor(n / 2),
-                left = arr.slice(0, middle),
-                right = arr.slice(middle);
-        return merge(mergeSort(left), mergeSort(right));
     }
 
+    void doMergeSort(int[] array, int left, int right);
 
-}
-
-    function merge(left, right) {
-        varresult = [];
-
-        while (left.length > 0 && right.length > 0) {
-            if (left[0] <= right[0]) {
-                result.push(left.shift());
-            } else {
-                result.push(right.shift());
-            }
-        }
-
-        while (left.length)
-            result.push(left.shift());
-
-        while (right.length)
-            result.push(right.shift());
-
-        returnresult;
-    }
+    void merge(int[] array, int left, int mid, int right);
 }
