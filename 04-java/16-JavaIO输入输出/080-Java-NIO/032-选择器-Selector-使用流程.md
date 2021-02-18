@@ -10,6 +10,15 @@
 2. 将听到注册到选择器中
 3. 轮询感兴趣的IO就绪事件（选择键集合）
 
+## Java NIO Selector基本工作原理如下
+
+- (1) 初始化Selector对象，服务端ServerSocketChannel对象
+- (2) 向Selector注册ServerSocketChannel的socket-accept事件
+- (3) 线程阻塞于selector.select()，当有客户端请求服务端，线程退出阻塞
+- (4) 基于selector获取所有就绪事件，此时先获取到socket-accept事件，向Selector注册客户端SocketChannel的数据就绪可读事件事件
+- (5) 线程再次阻塞于selector.select()，当有客户端连接数据就绪，可读
+- (6) 基于ByteBuffer读取客户端请求数据，然后写入响应数据，关闭channel
+
 ## 第一步：获取选择器实例
 
 选择器实例是通过调用静态方法open来获取的

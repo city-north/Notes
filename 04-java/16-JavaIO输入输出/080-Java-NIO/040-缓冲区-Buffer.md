@@ -10,6 +10,27 @@ NIO的Buffer和普通的内存块(Java数组) 不同的是， NIO buffer 对象�
 
 Buffer类是一个线程不安全的类
 
+## Buffer底层支持Java堆外内存和堆内内存
+
+**堆外内存**是指与堆内存相对应的，把内存对象分配在JVM堆以外的内存，这些内存直接受操作系统管理（而不是虚拟机，相比堆内内存，I/O操作中使用堆外内存的优势在于：
+
+- 不用被JVM GC线回收，减少GC线程资源占有
+- 在I/O系统调用时，直接操作堆外内存，可以节省一次堆外内存和堆内内存的复制
+
+ByteBuffer底层基于堆外内存的分配和释放基于malloc和free函数，对外allocateDirect方法可以申请分配堆外内存，并返回继承ByteBuffer类的DirectByteBuffer对象：
+
+```java
+public static ByteBuffer allocateDirect(int capacity) {
+    return new DirectByteBuffer(capacity);
+}
+```
+
+堆外内存的回收基于DirectByteBuffer的成员变量Cleaner类，提供clean方法可以用于主动回收，Netty中大部分堆外内存通过记录定位Cleaner的存在，主动调用clean方法来回收；另外，当DirectByteBuffer对象被GC时，关联的堆外内存也会被回收
+
+> **tips**: JVM参数不建议设置-XX:+DisableExplicitGC，因为部分依赖Java NIO的框架(例如Netty)在内存异常耗尽时，会主动调用System.gc()，触发Full GC，回收DirectByteBuffer对象，作为回收堆外内存的最后保障机制，设置该参数之后会导致在该情况下堆外内存得不到清理
+
+堆外内存基于基础ByteBuffer类的DirectByteBuffer类成员变量：Cleaner对象，这个Cleaner对象会在合适的时候执行unsafe.freeMemory(address)，从而回收这块堆外内存
+
 ## Buffer的作用
 
 应用程序与通道（Channel）主要的交互交互操作，就是进行数据的read读取和write写入。
