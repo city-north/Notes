@@ -159,43 +159,9 @@ T2.join();
 
 StampedLock 的使用看上去有点复杂，但是如果你能理解乐观锁背后的原理，使用起来还是比较流畅的。建议你认真揣摩 Java 的官方示例，这个示例基本上就是一个最佳实践。我们把 Java 官方示例精简后，形成下面的代码模板，建议你在实际工作中尽量按照这个模板来使用 StampedLock。
 
-StampedLock 读模板：
+### StampedLock 使用模板
 
-```java
-final StampedLock sl = new StampedLock();
- 
-// 乐观读
-long stamp = 
-  sl.tryOptimisticRead();
-// 读入方法局部变量
-......
-// 校验 stamp
-if (!sl.validate(stamp)){
-  // 升级为悲观读锁
-  stamp = sl.readLock();
-  try {
-    // 读入方法局部变量
-    .....
-  } finally {
-    // 释放悲观读锁
-    sl.unlockRead(stamp);
-  }
-}
-// 使用方法局部变量执行业务操作
-......
-```
-
-StampedLock 写模板：
-
-```java
-long stamp = sl.writeLock();
-try {
-  // 写共享变量
-  ......
-} finally {
-  sl.unlockWrite(stamp);
-}
-```
+<script src="https://gist.github.com/ericchen-vip/2b9c854565e96285aa89b453b6edf240.js"></script>
 
 ## 课后思考
 

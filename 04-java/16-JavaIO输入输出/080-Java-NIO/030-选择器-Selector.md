@@ -37,8 +37,7 @@
 我们可以同时选择多个事件， 使用 按位或机就可以了
 
 ```java
-channel.register(selector,
-        SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 ```
 
 比如说

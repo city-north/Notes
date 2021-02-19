@@ -84,7 +84,6 @@ protected Object initializeBean(final String beanName, final Object bean, @Nulla
   //对BeanPostProcessor后置处理器的postProcessBeforeInitialization
   //回调方法的调用，为Bean实例初始化前做一些处理
   if (mbd == null || !mbd.isSynthetic()) {
-
     wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
   }
 

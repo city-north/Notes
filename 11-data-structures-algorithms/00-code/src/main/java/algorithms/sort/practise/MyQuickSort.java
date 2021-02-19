@@ -13,7 +13,7 @@ public class MyQuickSort implements QuickSort {
 
     @Override
     public void quickSort(int[] array, int begin, int end) {
-        if (end <= begin) {
+        if (begin >= end) {
             return;
         }
         int pivot = partition(array, begin, end);
@@ -27,15 +27,19 @@ public class MyQuickSort implements QuickSort {
         int counter = begin;
         for (int i = begin; i < end; i++) {
             if (array[i] < array[pivot]) {
-                int temp = array[counter];
-                array[counter] = array[i];
-                array[i] = temp;
+                swap(array, i, counter);
                 counter++;
             }
         }
-        int temp = array[pivot];
-        array[pivot] = array[counter];
-        array[counter] = temp;
-        return counter;
+        swap(array, counter, pivot);
+        return pivot;
     }
+
+    private void swap(int[] array, int i, int counter) {
+        int temp = array[i];
+        array[i] = array[counter];
+        array[counter] = temp;
+    }
+
+
 }

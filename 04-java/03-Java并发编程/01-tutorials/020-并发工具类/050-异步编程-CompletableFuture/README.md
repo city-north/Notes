@@ -204,7 +204,7 @@ CompletionStage runAfterEitherAsync(other, action);
 
 下面的示例代码展示了如何使用 applyToEither() 方法来描述一个 OR 汇聚关系。
 
-```
+```java
 CompletableFuture<String> f1 = CompletableFuture.supplyAsync(()->{
     int t = getRandom(5, 10);
     sleep(t, TimeUnit.SECONDS);

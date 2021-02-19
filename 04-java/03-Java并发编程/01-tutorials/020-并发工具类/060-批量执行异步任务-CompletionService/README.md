@@ -2,9 +2,11 @@
 
 [TOC]
 
-## 
+## 需求
 
-在[《23 | Future：如何用多线程实现最优的“烧水泡茶”程序？》](https://time.geekbang.org/column/article/91292)的最后，我给你留了道思考题，如何优化一个询价应用的核心代码？如果采用“ThreadPoolExecutor+Future”的方案，你的优化结果很可能是下面示例代码这样：用三个线程异步执行询价，通过三次调用 Future 的 get() 方法获取询价结果，之后将询价结果保存在数据库中。
+在[《23 | Future：如何用多线程实现最优的“烧水泡茶”程序？》](https://time.geekbang.org/column/article/91292)的最后，我给你留了道思考题，如何优化一个询价应用的核心代码？
+
+如果采用“ThreadPoolExecutor+Future”的方案，你的优化结果很可能是下面示例代码这样：用三个线程异步执行询价，通过三次调用 Future 的 get() 方法获取询价结果，之后将询价结果保存在数据库中。
 
 ```java
 // 创建线程池
@@ -31,11 +33,9 @@ executor.execute(()->save(r));
 
 ## **利用** **CompletionService** **实现询价系统**
 
-不过在实际项目中，并不建议你这样做，因为 Java SDK 并发包里已经提供了设计精良的
+不过在实际项目中，并不建议你这样做，因为 Java SDK 并发包里已经提供了设计精良的CompletionService。
 
-CompletionService。利用 CompletionService 不但能帮你解决先获取到的报价先保存到
-
-数据库的问题，而且还能让代码更简练。
+利用 CompletionService 不但能帮你解决先获取到的报价先保存到数据库的问题，而且还能让代码更简练。
 
 CompletionService 的实现原理也是内部维护了一个阻塞队列，当任务执行结束就把任务
 
@@ -52,20 +52,20 @@ CompletionService 接口的实现类是 ExecutorCompletionService，这个实现
 
 这两个构造方法都需要传入一个线程池，如果不指定 completionQueue，那么默认会使用无界的 LinkedBlockingQueue。任务执行结果的 Future 对象就是加入到 completionQueue 中。
 
-- 下面的示例代码完整地展示了如何利用 CompletionService 来实现高性能的询价系统。其中，我们没有指定 completionQueue，因此默认使用无界的 LinkedBlockingQueue。
+下面的示例代码完整地展示了如何利用 CompletionService 来实现高性能的询价系统。
+
+- 其中，我们没有指定 completionQueue，因此默认使用无界的 LinkedBlockingQueue。
 
 - 之后通过 CompletionService 接口提供的 submit() 方法提交了三个询价操作，这三个询价操作将会被 CompletionService 异步执行。
 - 最后，我们通过 CompletionService 接口提供的 take() 方法获取一个 Future 对象（前面我们提到过，加入到阻塞队列中的是任务执行结果的 Future 对象），调用 Future 对象的 get() 方法就能返回询价操作的执行结果了。
 
 
 
-```
+```java
 // 创建线程池
-ExecutorService executor = 
-  Executors.newFixedThreadPool(3);
+ExecutorService executor = Executors.newFixedThreadPool(3);
 // 创建 CompletionService
-CompletionService<Integer> cs = new 
-  ExecutorCompletionService<>(executor);
+CompletionService<Integer> cs = new ExecutorCompletionService<>(executor);
 // 异步向电商 S1 询价
 cs.submit(()->getPriceByS1());
 // 异步向电商 S2 询价
@@ -90,11 +90,9 @@ CompletionService 接口其余的 3 个方法，都是和阻塞队列相关的�
 ```
 Future<V> submit(Callable<V> task);
 Future<V> submit(Runnable task, V result);
-Future<V> take() 
-  throws InterruptedException;
+Future<V> take() throws InterruptedException;
 Future<V> poll();
-Future<V> poll(long timeout, TimeUnit unit) 
-  throws InterruptedException;
+Future<V> poll(long timeout, TimeUnit unit) throws InterruptedException;
 ```
 
 ## 利用 CompletionService 实现 Dubbo 中的 Forking Cluster
@@ -115,46 +113,13 @@ geocoder(addr) {
 
 利用 CompletionService 可以快速实现 Forking 这种集群模式，比如下面的示例代码就展示了具体是如何实现的。首先我们创建了一个线程池 executor 、一个 CompletionService 对象 cs 和一个`Future<Integer>`类型的列表 futures，每次通过调用 CompletionService 的 submit() 方法提交一个异步任务，会返回一个 Future 对象，我们把这些 Future 对象保存在列表 futures 中。通过调用 `cs.take().get()`，我们能够拿到最快返回的任务执行结果，只要我们拿到一个正确返回的结果，就可以取消所有任务并且返回最终结果了。
 
-```
-// 创建线程池
-ExecutorService executor =
-  Executors.newFixedThreadPool(3);
-// 创建 CompletionService
-CompletionService<Integer> cs =
-  new ExecutorCompletionService<>(executor);
-// 用于保存 Future 对象
-List<Future<Integer>> futures =
-  new ArrayList<>(3);
-// 提交异步任务，并保存 future 到 futures 
-futures.add(
-  cs.submit(()->geocoderByS1()));
-futures.add(
-  cs.submit(()->geocoderByS2()));
-futures.add(
-  cs.submit(()->geocoderByS3()));
-// 获取最快返回的任务执行结果
-Integer r = 0;
-try {
-  // 只要有一个成功返回，则 break
-  for (int i = 0; i < 3; ++i) {
-    r = cs.take().get();
-    // 简单地通过判空来检查是否成功返回
-    if (r != null) {
-      break;
-    }
-  }
-} finally {
-  // 取消所有任务
-  for(Future<Integer> f : futures)
-    f.cancel(true);
-}
-// 返回结果
-return r;
-```
+<script src="https://gist.github.com/ericchen-vip/e72379630187d1ab538733ee852e0e31.js"></script>
 
 ## 总结
 
-当需要批量提交异步任务的时候建议你使用 CompletionService。CompletionService 将线程池 Executor 和阻塞队列 BlockingQueue 的功能融合在了一起，能够让批量异步任务的管理更简单。除此之外，CompletionService 能够让异步任务的执行结果有序化，先执行完的先进入阻塞队列，利用这个特性，你可以轻松实现后续处理的有序性，避免无谓的等待，同时还可以快速实现诸如 Forking Cluster 这样的需求。
+当需要批量提交异步任务的时候建议你使用 CompletionService。
+
+CompletionService 将线程池 Executor 和阻塞队列 BlockingQueue 的功能融合在了一起，能够让批量异步任务的管理更简单。除此之外，CompletionService 能够让异步任务的执行结果有序化，先执行完的先进入阻塞队列，利用这个特性，你可以轻松实现后续处理的有序性，避免无谓的等待，同时还可以快速实现诸如 Forking Cluster 这样的需求。
 
 CompletionService 的实现类 ExecutorCompletionService，需要你自己创建线程池，虽看上去有些啰嗦，但好处是你可以让多个 ExecutorCompletionService 的线程池隔离，这种隔离性能避免几个特别耗时的任务拖垮整个应用的风险。
 
@@ -162,13 +127,10 @@ CompletionService 的实现类 ExecutorCompletionService，需要你自己创建
 
 本章使用 CompletionService 实现了一个询价应用的核心功能，后来又有了新的需求，需要计算出最低报价并返回，下面的示例代码尝试实现这个需求，你看看是否存在问题呢？
 
-```
+```java
 // 创建线程池
-ExecutorService executor = 
-  Executors.newFixedThreadPool(3);
-// 创建 CompletionService
-CompletionService<Integer> cs = new 
-  ExecutorCompletionService<>(executor);
+ExecutorService executor =  Executors.newFixedThreadPool(3);
+// 创建 CompletionServiceCompletionService<Integer> cs = new ExecutorCompletionService<>(executor);
 // 异步向电商 S1 询价
 cs.submit(()->getPriceByS1());
 // 异步向电商 S2 询价
@@ -177,8 +139,7 @@ cs.submit(()->getPriceByS2());
 cs.submit(()->getPriceByS3());
 // 将询价结果异步保存到数据库
 // 并计算最低报价
-AtomicReference<Integer> m =
-  new AtomicReference<>(Integer.MAX_VALUE);
+AtomicReference<Integer> m = new AtomicReference<>(Integer.MAX_VALUE);
 for (int i=0; i<3; i++) {
   executor.execute(()->{
     Integer r = null;
@@ -191,3 +152,4 @@ for (int i=0; i<3; i++) {
 }
 return m;
 ```
+

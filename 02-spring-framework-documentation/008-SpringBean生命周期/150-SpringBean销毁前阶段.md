@@ -14,11 +14,16 @@ SpringBean的生命周期当容器调动
 beanFactory.destroySingleton("demoBean");
 ```
 
-的时候,在销毁前,会调用DestructionAwareBeanPostProcessor实现类的postProcessBeforeDestruction方法销毁前回调
+的时候,在销毁前,会调用 DestructionAwareBeanPostProcessor 实现类的 postProcessBeforeDestruction 方法销毁前回调
+
+```java
+org.springframework.beans.factory.support.DefaultListableBeanFactory#destroySingleton
+org.springframework.beans.factory.support.DefaultSingletonBeanRegistry#destroySingleton
+```
 
 我们可以在这个方法里面做一些销毁前的操作
 
-值得注意的是CommonAnnotationBeanPostProcessor就是实现了DestructionAwareBeanPostProcessor接口实现的
+值得注意的是 CommonAnnotationBeanPostProcessor 就是实现了 DestructionAwareBeanPostProcessor 接口实现的
 
 ## 先入为主的核心类
 
@@ -111,7 +116,7 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
 	}
 ```
 
-![image-20201127164651756](../../assets/image-20201127164651756.png)
+<img src="../../assets/image-20201127164651756.png" alt="image-20201127164651756" style="zoom:67%;" />
 
 可以看到,有两个Processor 
 
@@ -120,7 +125,7 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
 
 ### DisposableBeanAdapter可销毁Bean适配器
 
-![image-20201127162456314](../../assets/image-20201127162456314.png)
+<img src="../../assets/image-20201127162456314.png" alt="image-20201127162456314" style="zoom: 67%;" />
 
 这显然是一个对象适配器,将bean的名称,beanDefinition 和后置处理器放入
 
@@ -194,32 +199,30 @@ main:27, DestructionAwareBeanPostProcessorDemo (cn.eccto.study.springframework.l
 ```java
 //org.springframework.beans.factory.support.DisposableBeanAdapter#destroy
 @Override
-	public void destroy() {
-		if (!CollectionUtils.isEmpty(this.beanPostProcessors)) {
-			for (DestructionAwareBeanPostProcessor processor : this.beanPostProcessors) {
-        //调用析构回调
-				processor.postProcessBeforeDestruction(this.bean, this.beanName);
-			}
-		}
-
-		if (this.invokeDisposableBean) {
-			try {
-        //调用接口 DisposableBean 的destroy回调
-					((DisposableBean) this.bean).destroy();
-			}
-		}
-
-		if (this.destroyMethod != null) {
-      //调用xml中自定义的回调
-			invokeCustomDestroyMethod(this.destroyMethod);
-		}
-		else if (this.destroyMethodName != null) {
-			Method methodToCall = determineDestroyMethod(this.destroyMethodName);
-			if (methodToCall != null) {
-				invokeCustomDestroyMethod(methodToCall);
-			}
-		}
-	}
+public void destroy() {
+  if (!CollectionUtils.isEmpty(this.beanPostProcessors)) {
+    for (DestructionAwareBeanPostProcessor processor : this.beanPostProcessors) {
+      //调用析构回调
+      processor.postProcessBeforeDestruction(this.bean, this.beanName);
+    }
+  }
+  if (this.invokeDisposableBean) {
+    try {
+      //调用接口 DisposableBean 的destroy回调
+      ((DisposableBean) this.bean).destroy();
+    }
+  }
+  if (this.destroyMethod != null) {
+    //调用xml中自定义的回调
+    invokeCustomDestroyMethod(this.destroyMethod);
+  }
+  else if (this.destroyMethodName != null) {
+    Method methodToCall = determineDestroyMethod(this.destroyMethodName);
+    if (methodToCall != null) {
+      invokeCustomDestroyMethod(methodToCall);
+    }
+  }
+}
 ```
 
  [160-SpringBean销毁阶段.md](160-SpringBean销毁阶段.md) 

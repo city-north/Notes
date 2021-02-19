@@ -122,9 +122,9 @@ public void refresh() throws BeansException, IllegalStateException {
 
 		// Instantiate all remaining (non-lazy-init) singletons.
 		//对配置了lazy-init属性的单态模式Bean进行预实例化处理
-                  //----------------------本章关注点---------------------------------------------//
-						beanFactory.preInstantiateSingletons();
-              //----------------------本章关注点---------------------------------------------//
+    //----------------------本章关注点---------------------------------------------//
+    beanFactory.preInstantiateSingletons();
+    //----------------------本章关注点---------------------------------------------//
 
 	}
 ```

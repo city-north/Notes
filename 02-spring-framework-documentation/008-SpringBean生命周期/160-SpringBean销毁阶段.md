@@ -1,5 +1,7 @@
 # 160-SpringBean销毁阶段
 
+[TOC]
+
 ## 三个销毁阶段
 
 - CommonAnnotationBeanPostProcessor(注解驱动)用于解析@PostDestory

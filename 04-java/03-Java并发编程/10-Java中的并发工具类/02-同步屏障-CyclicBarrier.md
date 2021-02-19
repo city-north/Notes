@@ -1,4 +1,4 @@
-# CyclicBarrier 内存屏障
+# 02-同步屏障-CyclicBarrier
 
 [TOC]
 
@@ -130,7 +130,7 @@ public class CyclicBarrierTest3 {
 - `CyclicBarrier` 功能更多, 可以 reset
 - 可以获得` getNumberWaiting` 获取阻塞的线程数量, `isBroken` 可以获取线程是否中断
 
-## 源码
+## 实现原理
 
 `CyclicBarrier` 相比 `CountDownLatch` 来说，要简单很多， 源码实现是基于`ReentrantLock`和 Condition 的组合使 用
 
@@ -145,21 +145,26 @@ CyclicBanier基于独占锁实现， 本质底层还是基于 AQS 的。
 
 - **当 `count` 计数器值变为 0 后 ， 会将 `parties` 的值赋给 `count,` 从而进行复用**
 
+## 源码分析
+
 #### 构造函数
 
 ```java
-    public CyclicBarrier(int parties, Runnable barrierAction) {
-        if (parties <= 0) throw new IllegalArgumentException();
-        this.parties = parties;
-        this.count = parties;
-        this.barrierCommand = barrierAction;
-    }
+public CyclicBarrier(int parties, Runnable barrierAction) {
+  if (parties <= 0) throw new IllegalArgumentException();
+  this.parties = parties;
+  this.count = parties;
+  this.barrierCommand = barrierAction;
+}
 ```
 
-还有一 个 变量 ba1TierCommand 也 通 过构造 函数传递 ，这 是一 个 任务，这个任务的执行时机 是当所有线程都到达屏障点后。使用 lock 首先保 证 了更新计数器 count 的原子性。另外使用 lock的条件变量 trip支持线程间使用 await和 signal操作进行同步。
-最后，在变量 generation 内部有一个变量 broken，其用来记录当前屏障是否被打破。 
+- 变量ba1TierCommand也通过构造函数传递，这是一个任务，这个任务的执行时机是当所有线程都到达屏障点后
 
->  注意 ， 这里 的 broken 并没有被声 明为 volatile 的， 因为是在锁 内使用变量 ， 所 以不需要声明。
+- 使用lock首先保证了更新计数器count的原子性。
+- 使用lock的条件变量trip支持线程间使用await和signal操作进行同步。
+- 最后，在变量generation内部有一个变量broken，其用来记录当前屏障是否被打破。 
+
+>  注意，这里的broken并没有被声明为volatile的，因为是在锁内使用变量，所以不需要声明。
 
 #### public int await()
 
@@ -170,20 +175,22 @@ CyclicBanier基于独占锁实现， 本质底层还是基于 AQS 的。
 - 与当前凭证点关联的 Generation 对象的 broken 标志被标记为 true 时,会抛出`BrokenBarrierException`而返回
 
 ```java
-    public int await() throws InterruptedException, BrokenBarrierException {
-        try {
-            return dowait(false, 0L);
-        } catch (TimeoutException toe) {
-            throw new Error(toe); // cannot happen
-        }
-    }
+public int await() throws InterruptedException, BrokenBarrierException {
+  try {
+    return dowait(false, 0L);
+  } catch (TimeoutException toe) {
+    throw new Error(toe); // cannot happen
+  }
+}
 ```
 
 #### dowait
 
-当一个线程调用了 dowait方法后，首先会获取独占锁 lock，如果创建 CycleBarrier 时传递的参数为 10，那么后面 9 个调用钱程会被阻塞。 
+当一个线程调用了 dowait方法后，首先会获取独占锁 lock，
 
-然后当前获取到锁的线程会对计数器 count进行递减操作，递减后 count=index=9，
+- 如果创建 CycleBarrier 时传递的参数为 10，那么后面 9 个调用钱程会被阻塞。 
+
+- 然后当前获取到锁的线程会对计数器 count进行递减操作，递减后 count=index=9，
 
 因为`index != 0`所以当前线程会执行代码 ④
 
