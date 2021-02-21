@@ -1,4 +1,4 @@
-# LoadBalancer源码分析
+# 010-Ribbon内部的负载均衡抽象-ILoadBalancer
 
 [TOC]
 
@@ -6,7 +6,24 @@
 
 ILoadBalancer是Ribbon的关键类之一，它是定义负载均衡操作过程的接口。
 
+- 维护了所有的Server列表, 可以添加,删除Server或者更新Server的状态
+- 监听机制, 当Server列表(ServerListChangeListener) 或者 Server 状态 (ServerStatusChangeListener)发现变化的时候, 会产生相应的事件
+- IRule :可自定义负载均衡策略IRule
+- IPing :可以自定义服务实例健康状态检查IPing 针对单个Server如何检查是否健康
+- IPingStrategy :可自定义服务实例健康状态检查策略 IPingStrategy (针对所有的Server列表 如何检查, 比如可以过滤特定的Server,可以并行检查)
+
+- ServerListFilter : 可自定义Server列表过滤器 ServerListFilter, 可以基于 Server列表过来出新的Server列表
+- ServerList : 可自定义的Server列表获取方式(ServerList), 用于获取注册中心服务对应的实例
+- ServerListUpdater : 可自定义的Server更新机制(ServerListUpdater) ,默认会使用一个调度线程池每30s从注册中心中获取
+- LoadBalancerStats : 负载均衡器中各个服务实例当前的统计信息
+
+
+
 Ribbon通过**SpringClientFactory**工厂类的getLoadBalancer方法可以获取ILoadBalancer实例。
+
+## ILoadBalancer相关的类图
+
+![image-20200914201408575](../../../../assets/image-20200914201408575.png)
 
 ## 创建ILoadBalancer
 
@@ -29,7 +46,7 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
 }
 ```
 
-![image-20200914201010709](../../../assets/image-20200914201010709.png)
+![image-20200914201010709](../../../../assets/image-20200914201010709.png)
 
 
 
@@ -65,9 +82,7 @@ public IPing ribbonPing(IClientConfig config) {
 }
 ```
 
-## IBalancer相关的类图
 
-![image-20200914201408575](../../../assets/image-20200914201408575.png)
 
 其中的类都是ZoneAwareLoadBalancer构造方法所需参数实例的类型。
 
@@ -158,10 +173,8 @@ public Server chooseServer(Object key) {
 
 #### LoadBalancer集成结构图
 
-![image-20200811205452004](../../../assets/image-20200811205452004.png) 
+![image-20200811205452004](../../../../assets/image-20200811205452004.png) 
 
 #### LoadBalancer流程图
 
-
-
-![image-20200811205841118](../../../assets/image-20200811205841118.png)
+![image-20200811205841118](../../../../assets/image-20200811205841118.png)

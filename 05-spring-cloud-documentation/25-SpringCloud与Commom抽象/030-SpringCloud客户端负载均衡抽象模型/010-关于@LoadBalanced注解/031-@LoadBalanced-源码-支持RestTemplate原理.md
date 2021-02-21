@@ -30,9 +30,7 @@ public class LoadBalancerAutoConfiguration {
 		});
 	}
 	//...省略
-
 }
-
 ```
 
 - ① 获取所有 ApplicationContext中的 被标注 @LoadBalanced 注解的 RestTemplate

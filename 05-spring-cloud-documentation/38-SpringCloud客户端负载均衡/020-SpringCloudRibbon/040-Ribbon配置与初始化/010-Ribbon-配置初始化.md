@@ -1,10 +1,10 @@
-# Ribbon-源码分析-配置和实例初始化
+# 010-Ribbon-配置初始化
 
 [TOC]
 
 ## 图示
 
-<img src="../../../assets/D8E05E30D7E9049DF1EC7051400BD86E.png" alt="img" style="zoom:50%;" />
+<img src="../../../../assets/D8E05E30D7E9049DF1EC7051400BD86E.png" alt="img" style="zoom:50%;" />
 
 ## 核心注解RibbonClient
 
@@ -30,7 +30,7 @@ public @interface RibbonClient {
 
 ## 客户端配置注册器-ClientConfigurationRegistrar
 
-![image-20200914191713693](../../../assets/image-20200914191713693.png)
+![image-20200914191713693](../../../../assets/image-20200914191713693.png)
 
 负责注册客户端的配置
 
@@ -38,7 +38,7 @@ public @interface RibbonClient {
 
   >  ImportBeanDefinitionRegistrar是Spring动态注册BeanDefinition的接口，可以用来注册Ribbon所需的BeanDefinition，比如说Ribbon客户端实例(Ribbon Client)。
 
--  ImportBeanDefinitionRegistrar 的 **registerBeanDefinitions** 方法可以注册Ribbon客户端的配置类，也就是 @RibbonClient 的 configuration 属性值。registerBeanDefinitions方法的具体实现如下所示：
+- ImportBeanDefinitionRegistrar 的 **registerBeanDefinitions** 方法可以注册Ribbon客户端的配置类，也就是 @RibbonClient 的 configuration 属性值。registerBeanDefinitions方法的具体实现如下所示：
 
 ```java
 //RibbonClientConfigurationRegistrar.java
@@ -77,7 +77,7 @@ private void registerClientConfiguration(BeanDefinitionRegistry registry, Object
 
 在 **RibbonAutoConfiguration** 里会进行 **SpringClientFactory** 实例的初始化，并将所有的 **RibbonClientSpecification** 实例都设置给 **SpringClientFactory** ，供其在初始化Ribbon相关组件实例时使用。
 
-![image-20201010202622705](../../../assets/image-20201010202622705.png)
+![image-20201010202622705](../../../../assets/image-20201010202622705.png)
 
 其名称为RibbonClient的名称加上.RibbonClientSpecification。
 
@@ -87,7 +87,7 @@ RibbonClientSpecification是NamedContextFactory.Specification的实现类，是�
 
 在RibbonAutoConfiguration里会进行SpringClientFactory实例的初始化，并将所有的RibbonClientSpecification实例都设置给SpringClientFactory，供其在初始化Ribbon相关组件实例时使用。
 
-![image-20201010202851041](../../../assets/image-20201010202851041.png)
+![image-20201010202851041](../../../../assets/image-20201010202851041.png)
 
 注意这里只是注册一了一个定义,真正的实例化要在后续使用AutoConfiguration机制的时候才会使用
 
@@ -120,4 +120,6 @@ public class RibbonAutoConfiguration {
 }
 ```
 
-如上代码所示，RibbonAutoConfiguration配置类也会进行 LoadBalancerClient 接口的默认实例的初始化。loadBalancerClient方法被@ConditionalOnMissingBean 注解修饰，意味着只有当Spring容器中没有LoadBalancerClient实例时，该方法才会初始化 RibbonLoadBalancerClient 对象， 再将其作为LoadBalancerClient 的实例
+如上代码所示，RibbonAutoConfiguration配置类也会进行 LoadBalancerClient 接口的默认实例的初始化。
+
+loadBalancerClient方法被@ConditionalOnMissingBean 注解修饰，意味着只有当Spring容器中没有LoadBalancerClient实例时，该方法才会初始化 RibbonLoadBalancerClient 对象， 再将其作为LoadBalancerClient 的实例

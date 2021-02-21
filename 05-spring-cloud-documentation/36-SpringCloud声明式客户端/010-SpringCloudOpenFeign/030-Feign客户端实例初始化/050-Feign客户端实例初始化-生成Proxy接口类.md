@@ -10,7 +10,7 @@ ReflectiveFeign#newInstance方法的第二部分就是生成相应接口类的�
 //ReflectiveFeign.java
 //生成Java反射的InvocationHandler
 InvocationHandler handler = factory.create(target, methodToHandler);
-T proxy = (T) Proxy.newProxyInstance(target.type().getClassLoader(), new Class〈?〉[] {target.type()}, handler);
+T proxy = (T) Proxy.newProxyInstance(target.type().getClassLoader(), new Class<?>[] {target.type()}, handler);
 //将defaultMethodHandler绑定到proxy中。
 for(DefaultMethodHandler defaultMethodHandler : defaultMethodHandlers) {
     defaultMethodHandler.bindTo(proxy);
@@ -24,7 +24,7 @@ OpenFeign使用Proxy的newProxyInstance方法来创建FeignClient接口类的实
 //Default.java
 static final class Default implements InvocationHandlerFactory {
     @Override
-    public InvocationHandler create(Target target, Map〈Method, MethodHandler〉 dispatch) {
+    public InvocationHandler create(Target target, Map<Method, MethodHandler> dispatch) {
         return new ReflectiveFeign.FeignInvocationHandler(target, dispatch);
     }
 }
@@ -43,7 +43,7 @@ invoke方法会根据函数名称来调用不同的MethodHandler实例的invoke�
 public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     if ("equals".equals(method.getName())) {
         try {
-            Object otherHandler =args.length 〉 0 && args[0] != null ? Proxy.getInvocationHandler(args[0]): null;
+            Object otherHandler =args.length > 0 && args[0] != null ? Proxy.getInvocationHandler(args[0]): null;
             return equals(otherHandler);
         } catch (IllegalArgumentException e) {
             return false;
@@ -53,7 +53,7 @@ public Object invoke(Object proxy, Method method, Object[] args) throws Throwabl
     } else if ("toString".equals(method.getName())) {
         return toString();
     }
-    //dispatch就是Map〈Method, MethodHandler〉，所以就是将某个函数的调用交给对应的MethodHandler来处理
+    //dispatch就是Map<Method, MethodHandler>，所以就是将某个函数的调用交给对应的MethodHandler来处理
     return dispatch.get(method).invoke(args);
 }
 ```

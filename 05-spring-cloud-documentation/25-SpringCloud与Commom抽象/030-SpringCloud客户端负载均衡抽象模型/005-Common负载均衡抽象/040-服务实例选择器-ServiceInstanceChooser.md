@@ -15,19 +15,11 @@ org.springframework.cloud.client.loadbalancer.ServiceInstanceChooser
 使用 ServiceInstanceChooser 并注入可以根据 serviceName 随机获取一个服务实例
 
 ```java
-/**
- * Implemented by classes which use a load balancer to choose a server to
- * send a request to.
- *
- * @author Ryan Baxter
- */
+//实现该类来选择一个服务器用于发送请求
 public interface ServiceInstanceChooser {
-
     /**
-     * Choose a ServiceInstance from the LoadBalancer for the specified service
-     * @param serviceId the service id to look up the LoadBalancer
-     * @return a ServiceInstance that matches the serviceId
-     */
+     * 根据serviceId从服务器列表中选择一个ServiceInstance
+     **/
     ServiceInstance choose(String serviceId);
 }
 ```

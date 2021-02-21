@@ -2,8 +2,6 @@
 
 [TOC]
 
-
-
 ## NamedContextFactorys是什么
 
 Spring Cloud框架使用NamedContextFactory创建一系列的运行上下文(ApplicationContext)，来让对应的Specification在这些上下文中创建实例对象。

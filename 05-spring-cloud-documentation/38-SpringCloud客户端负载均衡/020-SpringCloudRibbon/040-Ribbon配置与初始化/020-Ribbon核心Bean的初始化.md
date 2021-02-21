@@ -14,7 +14,7 @@
 
   > 加载 Ribbon 的负载均衡客户端
 
- [LoadBalancerClient源码分析](040-LoadBalancerClient源码分析.md) 
+ [010-Ribbon负载均衡器-RibbonLoadBalancerClient.md](../020-Ribbon负载均衡器-LoadBalancerClient/010-Ribbon负载均衡器-RibbonLoadBalancerClient.md) 
 
 ------
 
@@ -32,9 +32,9 @@
 
   >  SmartInitializingSingleton 在 Bean 初始化完毕之后调用方法将 RestTemplateCustomizer 注入到容器中
 
- [LoadBalancer源码分析.md](030-LoadBalancer源码分析.md) 
+ [010-Ribbon内部的负载均衡抽象-ILoadBalancer.md](../030-Ribbon内部的负载均衡抽象-ILoadBalancer/010-Ribbon内部的负载均衡抽象-ILoadBalancer.md) 
 
-![image-20200811201550741](../../../assets/image-20200811201550741.png)
+![image-20200811201550741](../../../../assets/image-20200811201550741.png)
 
 ## 初始化流程
 

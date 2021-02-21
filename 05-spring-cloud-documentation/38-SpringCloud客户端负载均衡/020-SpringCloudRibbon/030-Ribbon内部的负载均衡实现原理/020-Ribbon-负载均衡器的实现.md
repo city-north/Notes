@@ -1,4 +1,4 @@
-# Ribbon负载均衡算法的实现
+# 020-Ribbon-负载均衡器的实现
 
 [TOC]
 
@@ -27,7 +27,7 @@ Ribbon的负载均衡策略既有 **RoundRobinRule** 和 **RandomRule** 这样�
 
 IRule是定义Ribbon负载均衡策略的接口，你可以通过实现该接口来自定义自己的负载均衡策略，RibbonClientConfiguration配置类则会给出IRule的默认实例。IRule接口的choose方法就是从一堆服务器中根据一定规则选出一个服务器。IRule有很多默认的实现类，这些实现类根据不同的算法和逻辑来进行负载均衡。
 
-![image-20200914202832089](../../../assets/image-20200914202832089.png)
+![image-20200601231536043](../../../../assets/image-20200601231536043.png)
 
 ## 轮询策略:RoundRobinRule
 
@@ -93,9 +93,13 @@ public IRule ribbonRule(IClientConfig config) {
 
 如上代码所示，ZoneAvoidanceRule是Ribbon默认的IRule实例，它使用CompositePredicate来根据服务区的运行状况和服务器的可用性选择服务器。
 
-![image-20200914203431948](../../../assets/image-20200914203431948.png)
+![image-20200914203431948](../../../../assets/image-20200914203431948.png)
+
+
 
 ZoneAvoidanceRule是根据服务器所属的服务区的运行状况和可用性来进行负载均衡。PredicateBasedRule是ZoneAvoidanceRule的基类，它选择服务器的策略是先使用ILoadBalancer获取服务器列表，再使用AbstractServerPredicate进行服务器的过滤，最后使用轮询策略从剩余的服务器列表中选出最终的服务器。
+
+
 
 ```java
 public abstract class PredicateBasedRule extends ClientConfigEnabledRoundRobinRule {
@@ -113,7 +117,7 @@ Optional〈Server〉 server = getPredicate().chooseRoundRobinAfterFiltering(lb.g
 }
 ```
 
-
+### PredicateBasedRule
 
 PredicateBasedRule接口的getPredicate抽象接口需要子类实现，不同的子类提供不同的AbstractServerPredicate实例来实现不同的服务器过滤策略。而ZoneAvoidanceRule使用的是由ZoneAvoidancePredicate和AvailabilityPredicate组成的复合策略CompositePredicate，前一个判断判定一个服务区的运行状况是否可用，去除不可用的服务区的所有服务器，后一个用于过滤掉连接数过多的服务器。ZoneAvoidanceRule的getPredicate方法的相关实现如下所示：
 
@@ -140,6 +144,8 @@ public AbstractServerPredicate getPredicate() {
 
 
 ```
+
+### CompositePredicate
 
 CompositePredicate的chooseRoundRobinAfterFiltering方法继承父类AbstractServerPredicate的实现。它会首先调用getEligibleServers方法通过Predicate过滤服务器列表，然后使用轮询策略选择出一个服务器进行返回，如下所示：
 
@@ -189,6 +195,8 @@ private final Predicate〈Server〉 serverOnlyPredicate =　new Predicate〈Serv
     }
 };
 ```
+
+### ZoneAvoidanceRule
 
 ZoneAvoidanceRule类中 CompositePredicate 对象的apply方法就会依次调用 ZoneAvoidancePredicate 和 AvailabilityPredicate 的 apply 方法。
 ZoneAvoidancePredicate 以服务区(Zone)为单位考察所有服务区的整体运行情况，对于不可用的区域整个丢弃，从剩下服务区中选可用的服务器。并且会判断出最差的服务区，排除掉最差服务区。ZoneAvoidancePredicate 的 apply 方法如下代码所示。
@@ -259,12 +267,18 @@ static Map〈String, ZoneSnapshot〉 createSnapshot(LoadBalancerStats lbStats) {
 }
 ```
 
-getAvailableZones方法是用来筛选服务区列表的，首先，它会遍历一遍ZoneSnapshot哈希表，在遍历的过程中，它会做两件事情：依据ZoneSnapshot的实例数、实例的平均负载时间和实例故障率等指标将不符合标准的ZoneSnapshot从列表中删除，它会维护一个最坏ZoneSnapshot列表，当某个ZoneSnapshot的平均负载时间小于但接近全局最坏负载时间时，就会将该ZoneSnapshot加入到最坏ZoneSnapshot列表中，如果某个ZoneSnapshot的平均负载时间大于最坏负载时间时，它将会清空最坏ZoneSnapshot列表，然后以该ZoneSnapshot的平均负载时间作为全局最坏负载时间，继续最坏ZoneSnapshot列表的构建。在方法最后，如果全局最坏负载数据大于系统设定的负载时间阈值，则在最坏ZoneSnapshot列表中随机选择出一个ZoneSnapshot，将其从列表中删除。
-图7-6显示了getAvailableZone方法的筛选流程。
+getAvailableZones方法是用来筛选服务区列表的，
+
+- 首先，它会遍历一遍ZoneSnapshot哈希表，在遍历的过程中，它会做两件事情：
+  - 依据ZoneSnapshot的实例数、实例的平均负载时间和实例故障率等指标将不符合标准的ZoneSnapshot从列表中删除，它会维护一个最坏ZoneSnapshot列表，当某个ZoneSnapshot的平均负载时间小于但接近全局最坏负载时间时，就会将该ZoneSnapshot加入到最坏ZoneSnapshot列表中，
+  - 如果某个ZoneSnapshot的平均负载时间大于最坏负载时间时，它将会清空最坏ZoneSnapshot列表，然后以该ZoneSnapshot的平均负载时间作为全局最坏负载时间，继续最坏ZoneSnapshot列表的构建。
+- 在方法最后，如果全局最坏负载数据大于系统设定的负载时间阈值，则在最坏ZoneSnapshot列表中随机选择出一个ZoneSnapshot，将其从列表中删除。
+
+显示了getAvailableZone方法的筛选流程。
 
 
 
-![image-20200914204044474](../../../assets/image-20200914204044474.png)
+![image-20200914204044474](../../../../assets/image-20200914204044474.png)
 
 而getAvailableZones具体实现如下所示：
 
@@ -321,16 +335,13 @@ public static Set〈String〉 getAvailableZones(
     }
     return availableZones;
 }
-
-
-
 ```
 
+ZoneAvoidancePredicate的apply方法调用结束之后，AvailabilityPredicate的apply方法也会被调用。该预测规则依据断路器是否断开或者服务器连接数是否超出阈值等标准来进行服务过滤。
 
-ZoneAvoidancePredicate的apply方法调用结束之后，AvailabilityPredicate的apply方法也会被调用。该预测规则依据断路器是否断开或者服务器连接数是否超出阈值等标准来进行服务过滤。AvailabilityPredicate的apply方法如下所示：
+AvailabilityPredicate的apply方法如下所示：
 
 ```java
-//AvailabilityPredicate.java
 public boolean apply(@Nullable PredicateKey input) {
     LoadBalancerStats stats = getLBStats();
     if (stats == null) {

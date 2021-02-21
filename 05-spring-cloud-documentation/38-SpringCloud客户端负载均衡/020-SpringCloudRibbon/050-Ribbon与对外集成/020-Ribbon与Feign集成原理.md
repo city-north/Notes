@@ -1,8 +1,6 @@
-# Ribbon源码分析-集成OpenFeign
+# 020-Ribbon与Feign集成原理
 
-**Ribbon是RESTful HTTP客户端OpenFeign负载均衡的默认实现。**
-
-- [OpenFeign引入Ribbon负载均衡](#OpenFeign引入Ribbon负载均衡)
+[TOC]
 
 ## OpenFeign引入Ribbon负载均衡
 
@@ -30,7 +28,7 @@ public Object getObject() throws Exception {
 }
 ```
 
-![image-20201010203414441](../../../assets/image-20201010203414441.png)
+![image-20201010203414441](../../../../assets/image-20201010203414441.png)
 
 如OpenFeign的源码所示，loadBalance方法会生成LoadBalancerFeignClient实例进行返回。LoadBalancerFeignClient实现了OpenFeign的Client接口，负责OpenFeign网络请求的发送和响应的接收，并带有客户端负载均衡机制。loadBalance方法实现如下所示：
 

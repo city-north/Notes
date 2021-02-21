@@ -1,16 +1,13 @@
 # Ribbon-源码分析-集成RestTemplate
 
-## 目录
-
-- [服务调用简图](#服务调用简图)
-- [装配流程](#装配流程)
+[TOC]
 
 ## 服务调用简图
 
 - 订单服务调用 RestTemplate 进行请求
 - Ribbon 在发送网络请求时 替换成 RibbonLoadBalancerClient 进行调用
 
-![image-20200914192629990](../../../assets/image-20200914192629990.png)
+![image-20200914192629990](../../../../assets/image-20200914192629990.png)
 
 ## 装配流程
 
@@ -21,7 +18,7 @@ RibbonLoadBalancerClient 通过使用 RibbonAutoConfiguration 配置类将注入
 
 
 
-![image-20200914193057986](../../../assets/image-20200914193057986.png)
+![image-20200914193057986](../../../../assets/image-20200914193057986.png)
 
 ## LoadBalancerAutoConfiguration
 
@@ -38,9 +35,5 @@ LoadBalancerInterceptor 中持有负载均衡器 [LoadBalancerClient](023-Ribbon
 
 然后使用这个负载均衡器调用
 
-![image-20200914195643549](../../../assets/image-20200914195643549.png)
-
-## ILoadBalancer
-
- [023-Ribbon-源码分析-LoadBalancerClient.md](023-Ribbon-源码分析-LoadBalancerClient.md) 
+![image-20200914195643549](../../../../assets/image-20200914195643549.png)
 

@@ -7,3 +7,9 @@
 ## SpringCloud Common 中的loadbalancer包
 
  [README.md](00-spring-cloud-common-loadbanlancer包/README.md) 
+
+## Common通用调用流程
+
+![image-20210219203722856](../../assets/image-20210219203722856.png)
+
+## 

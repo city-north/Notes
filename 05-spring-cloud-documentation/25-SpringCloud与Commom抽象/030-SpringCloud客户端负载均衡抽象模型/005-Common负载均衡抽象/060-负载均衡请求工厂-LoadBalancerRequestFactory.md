@@ -4,13 +4,13 @@
 
 ## LoadBalancerRequestFactory主要作用
 
-- LoadBalancerRequest 表示一次负载均衡请求, 被 LoadBalancerRequestFactory构造
+- LoadBalancerRequest 表示一次负载均衡请求, 被 LoadBalancerRequestFactory 构造
 - LoadBalancerRequestFactory 构造的实际上是包装类 ServiceRequestWrapper (内部基于 服务实例和请求信息构造出真正的URI)
 - 然后根据 LoadBalancerRequestTransformer 做二次加工
 
 ## 调用中的位置
 
-![image-20210219203722856](../../../assets/image-20210219203722856.png)
+![image-20210219203722856](../../../../assets/image-20210219203722856.png)
 
 ## LoadBalancerRequestFactory源码
 

@@ -1,8 +1,19 @@
-# Ribbon高级使用-只读数据库负载均衡
+# 020-Ribbon只读数据库负载均衡实例.md
 
-读者在学习了FeignLoadBalancer的原理和Ribbon的API之后，可以为任何需要负载均衡策略的项目添加Ribbon的集成。
+[TOC]
+
+## 一言蔽之
+
+我们学习了FeignLoadBalancer的原理和Ribbon的API之后，可以为任何需要负载均衡策略的项目添加Ribbon的集成。
+
+## 需求
+
 比如一个数据库中间件项目，它支持多个读库的数据读取，它希望在对多个读库进行数据读取时可以支持一定的负载均衡策略。那么，读者就可以通过集成Ribbon来实现读库之间的负载均衡。
-首先，你需要定义DBServer类来继承Ribbon的Server类，用于存储只读数据库服务器的状态信息，比如说IP地址、数据库连接数、平均请求响应时间等，然后定义一个DBLoadBalancer来继承BaseLoadBalancer类。下述示例代码通过WeightedResponseTimeRule对DBServer列表进行负载均衡选择，然后使用自定义的DBPing来检测数据库是否可用。示例代码如下所示：
+
+- 首先，你需要定义DBServer类来继承Ribbon的Server类，用于存储只读数据库服务器的状态信息，比如说IP地址、数据库连接数、平均请求响应时间等，
+- 然后定义一个DBLoadBalancer来继承BaseLoadBalancer类。
+
+下述示例代码通过WeightedResponseTimeRule对DBServer列表进行负载均衡选择，然后使用自定义的DBPing来检测数据库是否可用。示例代码如下所示：
 
 ```java
 public DBLoadBalancer buildFixedDBServerListLoadBalancer(List〈DBServer〉 servers) {
@@ -39,11 +50,6 @@ public class DBConnectionLoadBalancer {
                     }
                 }
 ```
-
-学习了FeignLoadBalancer的原理和Ribbon的API之后，可以为任何需要负载均衡策略的项目添加Ribbon的集成。
-比如一个数据库中间件项目，它支持多个读库的数据读取，它希望在对多个读库进行数据读取时可以支持一定的负载均衡策略。那么，读者就可以通过集成Ribbon来实现读库之间的负载均衡。
-
-首先，你需要定义DBServer类来继承Ribbon的Server类，用于存储只读数据库服务器的状态信息，比如说IP地址、数据库连接数、平均请求响应时间等，然后定义一个DBLoadBalancer来继承BaseLoadBalancer类。下述示例代码通过WeightedResponseTimeRule对DBServer列表进行负载均衡选择，然后使用自定义的DBPing来检测数据库是否可用。示例代码如下所示：
 
 ```java
 public DBLoadBalancer buildFixedDBServerListLoadBalancer(List〈DBServer〉 servers) {
@@ -84,8 +90,6 @@ public class DBConnectionLoadBalancer {
             }).toBlocking().first();
     }
 }
-
-
 ```
 
-ILoadBalancer通过一定的负载策略从读数据库列表中选出一个数据库来让DBManager执行SQL语句，通过这种方式，读者就可以实现读数据库的负载均衡机制。
+ILoadBalancer通过一定的负载策略从读数据库列表中选出一个数据库来让DBManager执行SQL语句，通过这种方式，就可以实现读数据库的负载均衡机制。
