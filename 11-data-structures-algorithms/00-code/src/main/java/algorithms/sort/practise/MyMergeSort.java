@@ -20,16 +20,16 @@ public class MyMergeSort implements MergeSort {
         if (left >= right) {
             return;
         }
-        //mid
         int mid = (left + right) >> 1;
-        doMergeSort(array, left, mid);
+        doMergeSort(array, left, mid );
         doMergeSort(array, mid + 1, right);
         merge(array, left, mid, right);
+
     }
 
     @Override
     public void merge(int[] array, int left, int mid, int right) {
-        int temp[] = new int[right - left + 1];
+        int[] temp = new int[right - left + 1];
         int i = left;
         int j = mid + 1;
         int k = 0;

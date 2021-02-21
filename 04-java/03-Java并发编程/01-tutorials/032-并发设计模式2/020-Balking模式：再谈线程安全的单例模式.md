@@ -2,19 +2,22 @@
 
 [TOC]
 
-## 
+##前言 
 
-上一篇文章中，我们提到可以用“多线程版本的 if”来理解 Guarded Suspension 模式，不同于单线程中的 if，这个“多线程版本的 if”是需要等待的，而且还很执着，必须要等到条件为真。但很显然这个世界，不是所有场景都需要这么执着，有时候我们还需要快速放弃。
+上一篇文章中，我们提到可以用“多线程版本的 if”来理解 Guarded Suspension 模式，不同于单线程中的 if，这个“多线程版本的 if”是需要等待的，而且还很执着，必须要等到条件为真。
 
-需要快速放弃的一个最常见的例子是各种编辑器提供的自动保存功能。自动保存功能的实现逻辑一般都是隔一定时间自动执行存盘操作，存盘操作的前提是文件做过修改，如果文件没有执行过修改操作，就需要快速放弃存盘操作。下面的示例代码将自动保存功能代码化了，很显然 AutoSaveEditor 这个类不是线程安全的，因为对共享变量 changed 的读写没有使用同步，那如何保证 AutoSaveEditor 的线程安全性呢？
+但很显然这个世界，不是所有场景都需要这么执着，有时候我们还需要快速放弃。
+
+需要快速放弃的一个最常见的例子是各种编辑器提供的自动保存功能。自动保存功能的实现逻辑一般都是隔一定时间自动执行存盘操作，存盘操作的前提是文件做过修改，如果文件没有执行过修改操作，就需要快速放弃存盘操作。
+
+下面的示例代码将自动保存功能代码化了，很显然 AutoSaveEditor 这个类不是线程安全的，因为对共享变量 changed 的读写没有使用同步，那如何保证 AutoSaveEditor 的线程安全性呢？
 
 ```java
 class AutoSaveEditor{
   // 文件是否被修改过
   boolean changed=false;
   // 定时任务线程池
-  ScheduledExecutorService ses = 
-    Executors.newSingleThreadScheduledExecutor();
+  ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
   // 定时执行自动保存
   void startAutoSave(){
     ses.scheduleWithFixedDelay(()->{
@@ -65,7 +68,11 @@ void edit(){
 }  
 ```
 
-如果你深入地分析一下这个示例程序，你会发现，示例中的共享变量是一个状态变量，业务逻辑依赖于这个状态变量的状态：当状态满足某个条件时，执行某个业务逻辑，其本质其实不过就是一个 if 而已，放到多线程场景里，就是一种“多线程版本的 if”。这种“多线程版本的 if”的应用场景还是很多的，所以也有人把它总结成了一种设计模式，叫做**Balking 模式**。
+如果你深入地分析一下这个示例程序，你会发现，示例中的共享变量是一个状态变量，业务逻辑依赖于这个状态变量的状态：
+
+- 当状态满足某个条件时，执行某个业务逻辑，
+
+其本质其实不过就是一个 if 而已，放到多线程场景里，就是一种“多线程版本的 if”。这种“多线程版本的 if”的应用场景还是很多的，所以也有人把它总结成了一种设计模式，叫做**Balking 模式**。
 
 ## Balking 模式的经典实现
 
@@ -103,7 +110,9 @@ void change(){
 
 前面我们用 synchronized 实现了 Balking 模式，这种实现方式最为稳妥，建议你实际工作中也使用这个方案。不过在某些特定场景下，也可以使用 volatile 来实现，但**使用 volatile 的前提是对原子性没有要求**。
 
-在[《29 | Copy-on-Write 模式：不是延时策略的 COW》](https://time.geekbang.org/column/article/93154)中，有一个 RPC 框架路由表的案例，在 RPC 框架中，本地路由表是要和注册中心进行信息同步的，应用启动的时候，会将应用依赖服务的路由表从注册中心同步到本地路由表中，如果应用重启的时候注册中心宕机，那么会导致该应用依赖的服务均不可用，因为找不到依赖服务的路由表。为了防止这种极端情况出现，RPC 框架可以将本地路由表自动保存到本地文件中，如果重启的时候注册中心宕机，那么就从本地文件中恢复重启前的路由表。这其实也是一种降级的方案。
+在[《29 | Copy-on-Write 模式：不是延时策略的 COW》](https://time.geekbang.org/column/article/93154)中，有一个 RPC 框架路由表的案例，在 RPC 框架中，本地路由表是要和注册中心进行信息同步的，应用启动的时候，会将应用依赖服务的路由表从注册中心同步到本地路由表中，如果应用重启的时候注册中心宕机，那么会导致该应用依赖的服务均不可用，因为找不到依赖服务的路由表。
+
+为了防止这种极端情况出现，RPC 框架可以将本地路由表自动保存到本地文件中，如果重启的时候注册中心宕机，那么就从本地文件中恢复重启前的路由表。这其实也是一种降级的方案。
 
 自动保存路由表和前面介绍的编辑器自动保存原理是一样的，也可以用 Balking 模式实现，不过我们这里采用 volatile 来实现，实现的代码如下所示。之所以可以采用 volatile 来实现，是因为对共享变量 changed 和 rt 的写操作不存在原子性的要求，而且采用 scheduleWithFixedDelay() 这种调度方式能保证同一时刻只有一个线程执行 autoSave() 方法。
 
@@ -145,8 +154,7 @@ public class RouterTable {
   }
   // 增加路由
   public void add(Router router) {
-    Set<Router> set = rt.computeIfAbsent(
-      route.iface, r -> 
+    Set<Router> set = rt.computeIfAbsent(route.iface, r -> 
         new CopyOnWriteArraySet<>());
     set.add(router);
     // 路由表已发生变化
@@ -155,7 +163,9 @@ public class RouterTable {
 }
 ```
 
-Balking 模式有一个非常典型的应用场景就是单次初始化，下面的示例代码是它的实现。这个实现方案中，我们将 init() 声明为一个同步方法，这样同一个时刻就只有一个线程能够执行 init() 方法；init() 方法在第一次执行完时会将 inited 设置为 true，这样后续执行 init() 方法的线程就不会再执行 doInit() 了。
+Balking 模式有一个非常典型的应用场景就是单次初始化，下面的示例代码是它的实现。
+
+这个实现方案中，我们将 init() 声明为一个同步方法，这样同一个时刻就只有一个线程能够执行 init() 方法；init() 方法在第一次执行完时会将 inited 设置为 true，这样后续执行 init() 方法的线程就不会再执行 doInit() 了。
 
 ```java
 class InitTest{
@@ -188,7 +198,11 @@ class Singleton{
 }
 ```
 
-办法当然是有的，那就是经典的**双重检查**（Double Check）方案，下面的示例代码是其详细实现。在双重检查方案中，一旦 Singleton 对象被成功创建之后，就不会执行 synchronized(Singleton.class){}相关的代码，也就是说，此时 getInstance() 方法的执行路径是无锁的，从而解决了性能问题。不过需要你注意的是，这个方案中使用了 volatile 来禁止编译优化，其原因你可以参考[《01 | 可见性、原子性和有序性问题：并发编程 Bug 的源头》](https://time.geekbang.org/column/article/83682)中相关的内容。至于获取锁后的二次检查，则是出于对安全性负责。
+办法当然是有的，那就是经典的**双重检查**（Double Check）方案，下面的示例代码是其详细实现。在双重检查方案中，
+
+- 一旦 Singleton 对象被成功创建之后，就不会执行 synchronized(Singleton.class){}相关的代码，也就是说，
+
+此时 getInstance() 方法的执行路径是无锁的，从而解决了性能问题。不过需要你注意的是，这个方案中使用了 volatile 来禁止编译优化，其原因你可以参考[《01 | 可见性、原子性和有序性问题：并发编程 Bug 的源头》](https://time.geekbang.org/column/article/83682)中相关的内容。至于获取锁后的二次检查，则是出于对安全性负责。
 
 ```java
 class Singleton{
@@ -239,4 +253,6 @@ class Test{
 ```
 
 是有问题的，volatile关键字只能保证可见性，无法保证原子性和互斥性。所以calc方法有可能被重复执行。
+
+<script src="https://gist.github.com/ericchen-vip/2cb42182e2a9da9c503b76522057f769.js"></script>
 

@@ -1,19 +1,20 @@
 package algorithms.sort;
 
+import algorithms.sort.base.RunnableSort;
+
 /**
  * <p>
- * TODO
+ * QuickSort
  * </p>
  *
  * @author EricChen 2021/02/18 16:35
  */
-public interface QuickSort {
-    default void run() {
-        int[] array = {7, 4, 9, 8, 2, 9, 9, 8, 7};
-        quickSort(array, 0, array.length - 1);
-        for (int i : array) {
-            System.out.println(i);
-        }
+public interface QuickSort extends RunnableSort {
+
+
+    @Override
+    default void doSort(int[] array, int length) {
+        quickSort(array, 0, length);
     }
 
     void quickSort(int[] array, int begin, int end);

@@ -35,11 +35,6 @@ public class MyQuickSort implements QuickSort {
         return pivot;
     }
 
-    private void swap(int[] array, int i, int counter) {
-        int temp = array[i];
-        array[i] = array[counter];
-        array[counter] = temp;
-    }
 
 
 }

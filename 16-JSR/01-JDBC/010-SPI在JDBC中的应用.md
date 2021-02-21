@@ -1,13 +1,8 @@
-# SPI在 JDBC中的应用
+# 010-SPI在JDBC中的应用
 
-## 目录
+[TOC]
 
-- [什么是SPI](#什么是SPI)
-- [加载过程](#加载过程)
-
----
-
-### 什么是SPI
+## 什么是SPI
 
 >  [spi-service-provider-interface.md](../../04-java/01-basic/spi-service-provider-interface.md) 
 

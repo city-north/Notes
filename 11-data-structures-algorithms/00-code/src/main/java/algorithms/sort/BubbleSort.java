@@ -1,5 +1,7 @@
 package algorithms.sort;
 
+import algorithms.sort.base.RunnableSort;
+
 /**
  * <p>
  * TODO
@@ -7,14 +9,12 @@ package algorithms.sort;
  *
  * @author EricChen 2021/02/18 17:16
  */
-public interface BubbleSort {
+public interface BubbleSort extends RunnableSort {
 
-    default void run() {
-        int[] array = {1, 7, 5, 2, 1, 6, 2, 5, 2, 7, 3};
-        bubbleSort(array, array.length);
-        for (int i : array) {
-            System.out.println(i);
-        }
+
+    @Override
+    default void doSort(int[] array, int length) {
+        bubbleSort(array, length);
     }
 
     /**

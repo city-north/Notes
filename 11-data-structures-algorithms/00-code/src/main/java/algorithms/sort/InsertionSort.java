@@ -1,5 +1,7 @@
 package algorithms.sort;
 
+import algorithms.sort.base.RunnableSort;
+
 /**
  * <p>
  * TODO
@@ -7,7 +9,14 @@ package algorithms.sort;
  *
  * @author EricChen 2021/02/18 17:30
  */
-public interface InsertionSort {
+public interface InsertionSort extends RunnableSort {
+
+
+    @Override
+    default void doSort(int[] array, int length) {
+        insertionSort(array, length);
+    }
+
 
     /**
      * 插入排序
@@ -18,11 +27,5 @@ public interface InsertionSort {
     void insertionSort(int[] a, int n);
 
 
-    default void run() {
-        int[] array = {7, 4, 9, 8, 2, 9, 9, 8, 7};
-        insertionSort(array, array.length);
-        for (int i : array) {
-            System.out.println(i);
-        }
-    }
+
 }
