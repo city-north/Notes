@@ -1,6 +1,7 @@
 package algorithms.sort.standard;
 
 import algorithms.sort.QuickSort;
+import algorithms.sort.practise.MyQuickSort;
 
 /**
  * <p>
@@ -10,6 +11,9 @@ import algorithms.sort.QuickSort;
  * @author EricChen 2021/02/18 12:29
  */
 public class StandardQuickSort implements QuickSort {
+    public static void main(String[] args) {
+        new StandardQuickSort().run();
+    }
 
     @Override
     public  void quickSort(int[] array, int begin, int end) {
@@ -24,7 +28,6 @@ public class StandardQuickSort implements QuickSort {
     /**
      * 返回一个 pivot 的位置, 且保证 pivot左边的元素都是小于pivot , pivot 右边的元素都是大于pivot
      */
-    @Override
     public  int partition(int[] array, int begin, int end) {
         //pivot标杆位置 , counter 小于 pivot 的元素的个数
         //pivot选最后一个

@@ -14,7 +14,7 @@ public interface QuickSort extends RunnableSort {
 
     @Override
     default void doSort(int[] array, int length) {
-        quickSort(array, 0, length);
+        quickSort(array, 0, length -1);
     }
 
     void quickSort(int[] array, int begin, int end);
@@ -23,7 +23,9 @@ public interface QuickSort extends RunnableSort {
      * 返回一个 pivot 的位置, 且保证 pivot左边的元素都是小于pivot
      * pivot 右边的元素都是大于pivot
      */
-    int partition(int[] array, int begin, int end);
+//    default int partition(int[] array, int begin, int end) {
+//        return 0;
+//    }
 
 
 }

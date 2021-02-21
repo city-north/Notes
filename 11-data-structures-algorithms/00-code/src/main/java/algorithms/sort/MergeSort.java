@@ -14,11 +14,11 @@ public interface MergeSort extends RunnableSort {
 
     @Override
     default void doSort(int[] array, int length) {
-        doMergeSort(array, 0, length);
+        doMergeSort(array, 0, length -1);
     }
 
 
     void doMergeSort(int[] array, int left, int right);
 
-    void merge(int[] array, int left, int mid, int right);
+
 }

@@ -21,8 +21,7 @@ public class MyQuickSort implements QuickSort {
         quickSort(array, pivot + 1, end);
     }
 
-    @Override
-    public int partition(int[] array, int begin, int end) {
+    private int partition(int[] array, int begin, int end) {
         int pivot = end;
         int counter = begin;
         for (int i = begin; i < end; i++) {
@@ -32,9 +31,8 @@ public class MyQuickSort implements QuickSort {
             }
         }
         swap(array, counter, pivot);
-        return pivot;
+        return counter;
     }
-
 
 
 }

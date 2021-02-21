@@ -21,27 +21,27 @@ public class MyMergeSort implements MergeSort {
             return;
         }
         int mid = (left + right) >> 1;
-        doMergeSort(array, left, mid );
+        doMergeSort(array, left, mid);
         doMergeSort(array, mid + 1, right);
         merge(array, left, mid, right);
-
     }
 
-    @Override
-    public void merge(int[] array, int left, int mid, int right) {
-        int[] temp = new int[right - left + 1];
-        int i = left;
-        int j = mid + 1;
+    private void merge(int[] array, int begin, int mid, int end) {
+        int[] temp = new int[end - begin + 1];
+        int L = begin;
+        int R = mid + 1;
         int k = 0;
-        while (i <= mid && j <= right) {
-            temp[k++] = array[i] < array[j] ? array[i++] : array[j++];
+        while (L <= mid && R <= end) {
+            temp[k++] = array[L] < array[R] ? array[L++] : array[R++];
         }
-        while (i <= mid) {
-            temp[k++] = array[i++];
+        while (L <= mid) {
+            temp[k++] = array[L++];
         }
-        while (j <= right) {
-            temp[k++] = array[j++];
+        while (R <= end) {
+            temp[k++] = array[R++];
         }
-        System.arraycopy(temp, 0, array, left, temp.length);
+        System.arraycopy(temp, 0, array, begin, temp.length);
     }
+
+
 }

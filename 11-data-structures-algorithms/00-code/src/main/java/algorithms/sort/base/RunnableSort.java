@@ -13,7 +13,7 @@ public interface RunnableSort extends SortAlgorithm, ArraySwapSupport {
      * 跑
      */
     default void run() {
-        int[] array = {7, 4, 9, 8, 2, 9, 9, 8, 7};
+        int[] array = {1, 8, 4, 2, 9, 6, 5, 7, 3};
         final long start = System.currentTimeMillis();
         doSort(array, array.length);
         final long end = System.currentTimeMillis();

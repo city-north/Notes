@@ -35,7 +35,6 @@ public class StandardMergeSort implements MergeSort {
     /**
      * 一个数组, left - mid 已经有序了, mid  - right 也已经有序了, 怎么合并到一起
      */
-    @Override
     public void merge(int[] array, int left, int mid, int right) {
         //中间数组 temp
         int[] temp = new int[right - left + 1];

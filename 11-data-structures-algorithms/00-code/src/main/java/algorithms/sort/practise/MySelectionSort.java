@@ -16,21 +16,19 @@ public class MySelectionSort implements SelectionSort {
     }
 
     @Override
-    public void selectionSort(int[] a, int n) {
+    public void selectionSort(int[] array, int n) {
         if (n <= 1) {
             return;
         }
-        for (int i = 0; i < n; i++) {
-            int minIndex = i;
+        for (int i = 0; i < n - 1; i++) {
+            int min = i;
             for (int j = i + 1; j < n; j++) {
-                if (a[j] < a[minIndex]) {
-                    minIndex = j;
+                if (array[j] < array[i]) {
+                    min = j;
                 }
             }
-            if (minIndex != i) {
-                int temp = a[minIndex];
-                a[minIndex] = a[i];
-                a[i] = temp;
+            if (min != i) {
+                swap(array, i, min);
             }
         }
     }
