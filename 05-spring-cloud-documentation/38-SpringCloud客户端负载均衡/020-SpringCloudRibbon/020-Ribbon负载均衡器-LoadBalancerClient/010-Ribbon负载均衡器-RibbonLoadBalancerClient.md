@@ -38,7 +38,7 @@ excute方法的具体实现如下所示：
 
 ```java
 //RibbonLoadBalancerClient.java
-public 〈T〉 T execute(String serviceId, LoadBalancerRequest〈T〉 request) throws IOException {
+public <T> T execute(String serviceId, LoadBalancerRequest<T> request) throws IOException {
     //每次发送请求都会获取一个ILoadBalancer,会涉及负载均衡规则(IRule)、服务器列表集群(ServerList)和检验服务是否存在(IPing)等细节实现
     ILoadBalancer loadBalancer = getLoadBalancer(serviceId);
     Server server = getServer(loadBalancer);
@@ -83,7 +83,7 @@ public 〈T〉 T execute(String serviceId, LoadBalancerRequest〈T〉 request) t
 
   ```java
   //RibbonLoadBalancerClient.java
-  public 〈T〉 T execute(String serviceId, ServiceInstance serviceInstance, LoadBalancerRequest〈T〉 request) throws IOException {
+  public <T> T execute(String serviceId, ServiceInstance serviceInstance, LoadBalancerRequest<T> request) throws IOException {
       Server server = null;
       if(serviceInstance instanceof RibbonServer) {
           server = ((RibbonServer)serviceInstance).getServer();
@@ -120,8 +120,6 @@ RibbonServer 是RibbonLoadBalancerClient的内部类, 实现了ServiceInstance�
 - ServiceId:String (服务名)
 - secure:boolean(是否使用HTTPS)
 - metadata:Map<String,String> 服务器实例的元数据
-
-#### 
 
 ```java
 package org.springframework.cloud.netflix.ribbon;

@@ -94,7 +94,7 @@ public class FilterOutputStream extends OutputStream {
 
 我们读取一个文件
 
-```
+```java
 FileInputStream fin = new FileInputStream("xxx.txt");
 ```
 

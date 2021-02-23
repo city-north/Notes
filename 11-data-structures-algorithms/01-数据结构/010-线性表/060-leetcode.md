@@ -11,13 +11,13 @@
 
 解法固定，熟能生巧
 
-| 题目 | URI 解法固定，熟能生巧                                     |
-| ---- | ---------------------------------------------------------- |
-|      | https://leetcode-cn.com/problems/reverse-linked-list/      |
-|      | https://leetcode-cn.com/problems/swap-nodes-in-pairs       |
-|      | https://leetcode-cn.com/problems/linked-list-cycle         |
-|      | https://leetcode-cn.com/problems/linked-list-cycle-ii      |
-|      | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/ |
+| 题目                                                         | URI 解法固定，熟能生巧                                     |
+| ------------------------------------------------------------ | ---------------------------------------------------------- |
+| [0206-反转链表.md](../../04-leetcode/0206-反转链表.md)       | https://leetcode-cn.com/problems/reverse-linked-list/      |
+| [0024-两两交换链表中的节点.md](../../04-leetcode/0024-两两交换链表中的节点.md) | https://leetcode-cn.com/problems/swap-nodes-in-pairs       |
+| [0141-环形链表.md](../../04-leetcode/0141-环形链表.md)       | https://leetcode-cn.com/problems/linked-list-cycle         |
+|                                                              | https://leetcode-cn.com/problems/linked-list-cycle-ii      |
+|                                                              | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/ |
 
 ## extra
 

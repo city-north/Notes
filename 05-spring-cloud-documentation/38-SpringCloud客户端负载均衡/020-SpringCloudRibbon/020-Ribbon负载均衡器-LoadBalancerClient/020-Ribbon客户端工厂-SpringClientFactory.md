@@ -1,3 +1,5 @@
+
+
 # 020-Ribbon客户端工厂-SpringClientFactory
 
 [TOC]
@@ -15,8 +17,6 @@ SpringClientFactory 是一个与LoadBalancerClientFactory 作用类似的工厂�
 
 
 ## SpringClientFactory源码
-
-
 
 ```java
 public class SpringClientFactory extends NamedContextFactory<RibbonClientSpecification> {

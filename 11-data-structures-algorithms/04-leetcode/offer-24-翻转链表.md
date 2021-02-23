@@ -15,7 +15,7 @@ https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/
 > 0 <= 节点个数 <= 5000
 >
 
-```
+```java
     /**
      * 翻转
      * 时间复杂度O(n), 空间复杂度O(1)

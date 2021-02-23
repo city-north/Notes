@@ -203,7 +203,6 @@ public static void generateCharacters(String filePath) throws IOException {
     out.write(i);
   }
 }
-
 ```
 
 输出

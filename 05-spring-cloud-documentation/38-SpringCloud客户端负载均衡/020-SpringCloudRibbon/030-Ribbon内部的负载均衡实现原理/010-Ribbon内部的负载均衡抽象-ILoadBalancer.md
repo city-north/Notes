@@ -17,9 +17,7 @@ ILoadBalancer是Ribbon的关键类之一，它是定义负载均衡操作过程�
 - ServerListUpdater : 可自定义的Server更新机制(ServerListUpdater) ,默认会使用一个调度线程池每30s从注册中心中获取
 - LoadBalancerStats : 负载均衡器中各个服务实例当前的统计信息
 
-
-
-Ribbon通过**SpringClientFactory**工厂类的getLoadBalancer方法可以获取ILoadBalancer实例。
+Ribbon通过**SpringClientFactory**工厂类的getLoadBalancer方法可以获取ILoadBalancer实例
 
 ## ILoadBalancer相关的类图
 
@@ -41,14 +39,11 @@ public ILoadBalancer ribbonLoadBalancer(IClientConfig config,
     if (this.propertiesFactory.isSet(ILoadBalancer.class, name)) {
         return this.propertiesFactory.get(ILoadBalancer.class, config, name);
     }
-    return new ZoneAwareLoadBalancer〈〉(config, rule, ping, serverList,
-            serverListFilter, serverListUpdater);
+    return new ZoneAwareLoadBalancer〈〉(config, rule, ping, serverList, serverListFilter, serverListUpdater);
 }
 ```
 
 ![image-20200914201010709](../../../../assets/image-20200914201010709.png)
-
-
 
 ## 创建IRule
 
@@ -158,7 +153,6 @@ public Server chooseServer(Object key) {
     counter.increment();
     if (rule == null) {
         return null;
-
 } else {
         try {
             return rule.choose(key);

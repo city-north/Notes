@@ -24,10 +24,10 @@ RibbonLoadBalancerClient 通过使用 RibbonAutoConfiguration 配置类将注入
 
 LoadBalancerAutoConfiguration实际上是 spring-cloud-commons包中的负载均衡配置实现,说明它是抽象的,负责初始化
 
-- LoadBalancerInterceptor 负载均衡拦截器 , 实际上就是用它作为 RestTemplate的拦截器
+- LoadBalancerInterceptor 负载均衡拦截器 , 实际上就是用它作为 RestTemplate 的拦截器
 
 - RestTemplateCustomizer 这个方法就是将拦截器添加到 restTemplate 
-- SmartInitializingSingleton 将 所有的RestTemplateCustomizer 执行一遍
+- SmartInitializingSingleton 将所有的 RestTemplateCustomizer 执行一遍
 
 ## LoadBalancerInterceptor
 

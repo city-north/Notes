@@ -1,5 +1,19 @@
-- [ Netfix Hystrix](https://github.com/Netflix/Hystrix)
-- [Resilience4J](https://github.com/resilience4j/resilience4j)
-- [Sentinel](https://github.com/alibaba/Sentinel)
-- [Spring Retry](https://github.com/spring-projects/spring-retry)
+# 39-SpringCloud与熔断器
 
+
+
+| 功能名称       | Sentinel                                       | Hystrix                       | Resilience4j          |
+| :------------- | :--------------------------------------------- | :---------------------------- | --------------------- |
+| 隔离策略       | 基于并发数                                     | 线程池隔离/信号量隔离         | 信号量隔离            |
+| 熔断降级策略   | 基于响应时间或失败比率                         | 基于失败比率                  | 基于异常比率/响应时间 |
+| 实时指标实现   | 滑动窗口                                       | 滑动窗口（基于 RxJava）       |                       |
+| 规则配置       | 支持多种数据源                                 | 支持多种数据源                |                       |
+| 扩展性         | 多个扩展点                                     | 插件的形式                    |                       |
+| 基于注解的支持 | 即将发布                                       | 支持                          |                       |
+| 调用链路信息   | 支持同步调用                                   | 不支持                        |                       |
+| 限流           | 基于 QPS / 并发数，支持基于调用关系的限流      | 不支持                        |                       |
+| 流量整形       | 支持慢启动、匀速器模式                         | 不支持                        |                       |
+| 系统负载保护   | 支持                                           | 不支持                        |                       |
+| 实时监控 API   | 各式各样                                       | 较为简单                      |                       |
+| 控制台         | 开箱即用，可配置规则、查看秒级监控、机器发现等 | 不完善                        |                       |
+| 常见框架的适配 | Servlet、Spring Cloud、Dubbo、gRPC 等          | Servlet、Spring Cloud Netflix |                       |
