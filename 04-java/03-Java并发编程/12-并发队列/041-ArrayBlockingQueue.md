@@ -1,4 +1,4 @@
-# ArrayBlockingQueue
+# 041-ArrayBlockingQueue
 
  [010-ArrayBlockingQueue的使用.md](../15-并发编程实战/010-ArrayBlockingQueue的使用.md) 
 
@@ -21,28 +21,26 @@ ArrayBlockingQueue 通过使用全局独占锁实现了同时只能有一个线�
 ![image-20200715200144026](../../../assets/image-20200715200144026.png)
 
 ```java
-    /** Main lock guarding all access */
-    final ReentrantLock lock;
-
-    /** Condition for waiting takes */
-    private final Condition notEmpty;
-
-    /** Condition for waiting puts */
-    private final Condition notFull;
+/** Main lock guarding all access */
+final ReentrantLock lock;
+/** Condition for waiting takes */
+private final Condition notEmpty;
+/** Condition for waiting puts */
+private final Condition notFull;
 ```
 
 - LinkedBlockingQueue 是使用单向链表实现的, 存储两个 Node , 一个 是 head 代表 头节点 , 一个是是 tail节点代表尾节点
 - count 变量 的初始值为 0 , 用来计算元素的个数
 
 ```java
-    public ArrayBlockingQueue(int capacity, boolean fair) {
-        if (capacity <= 0)
-            throw new IllegalArgumentException();
-        this.items = new Object[capacity];
-        lock = new ReentrantLock(fair);
-        notEmpty = lock.newCondition();
-        notFull =  lock.newCondition();
-    }
+public ArrayBlockingQueue(int capacity, boolean fair) {
+  if (capacity <= 0)
+    throw new IllegalArgumentException();
+  this.items = new Object[capacity];
+  lock = new ReentrantLock(fair);
+  notEmpty = lock.newCondition();
+  notFull =  lock.newCondition();
+}
 ```
 
 由以上代码可知, 默认情况下使用 ReentrantLock 提供的非公平独占锁进行出入队列操作
@@ -51,30 +49,30 @@ ArrayBlockingQueue 通过使用全局独占锁实现了同时只能有一个线�
 
 #### 插入方法
 
-|      | 插入方法            | 特点       | 备注                                                         |
-| ---- | ------------------- | ---------- | ------------------------------------------------------------ |
-|      | add(e)              | 抛出异常   | 当队列满时,如果再插入元素,会抛出`illegalStateException("Queeue full ")`异常 |
-|      | offer(e)            | 返回特殊值 | 成功返回 true                                                |
-|      | put(e)              | 一直阻塞   | 当队列满时,会一直阻塞插入方法,直到中断或者队列可用           |
-|      | offer(e, time,unit) | 超时退出   | 等待一段时间后退出                                           |
+| 插入方法            | 特点       | 备注                                                         |
+| ------------------- | ---------- | ------------------------------------------------------------ |
+| add(e)              | 抛出异常   | 当队列满时,如果再插入元素,会抛出`illegalStateException("Queeue full ")`异常 |
+| offer(e)            | 返回特殊值 | 成功返回 true                                                |
+| put(e)              | 一直阻塞   | 当队列满时,会一直阻塞插入方法,直到中断或者队列可用           |
+| offer(e, time,unit) | 超时退出   | 等待一段时间后退出                                           |
 
 #### 移除方法
 
-|      | 插入方法           | 特点       | 备注                                                       |
-| ---- | ------------------ | ---------- | ---------------------------------------------------------- |
-| 1    | remove()           | 抛出异常   | 当队列为空时,再获取元素,会抛出`NoSuchElementException`异常 |
-| 2    | poll               | 返回特殊值 | 成功返回元素,失败返回 null                                 |
-| 3    | take               | 一直阻塞   | 当队列为空时,阻塞当前队列,知道队列中有数据返回             |
-| 4    | poll(e, time,unit) | 超时退出   | 等待一段时间后退出                                         |
+| 插入方法           | 特点       | 备注                                                       |
+| ------------------ | ---------- | ---------------------------------------------------------- |
+| remove()           | 抛出异常   | 当队列为空时,再获取元素,会抛出`NoSuchElementException`异常 |
+| poll               | 返回特殊值 | 成功返回元素,失败返回 null                                 |
+| take               | 一直阻塞   | 当队列为空时,阻塞当前队列,知道队列中有数据返回             |
+| poll(e, time,unit) | 超时退出   | 等待一段时间后退出                                         |
 
 #### 检查方法
 
-|      | 检查方法 | 特点       | 备注 |
-| ---- | -------- | ---------- | ---- |
-| 1    | element  | 抛出异常   |      |
-| 2    | peek     | 返回特殊值 |      |
-| 3    | 不支持   | 一直阻塞   |      |
-| 4    | 不支持   | 超时退出   |      |
+| 检查方法 | 特点       | 备注 |
+| -------- | ---------- | ---- |
+| element  | 抛出异常   |      |
+| peek     | 返回特殊值 |      |
+| 不支持   | 一直阻塞   |      |
+| 不支持   | 超时退出   |      |
 
 ## ArrayBlockingQueue 原理
 
