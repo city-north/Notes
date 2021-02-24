@@ -50,11 +50,6 @@
 
 package leetcode.editor.cn;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-
 /**
  * 11：盛最多水的容器
  *
@@ -64,25 +59,39 @@ public class P11ContainerWithMostWater {
     public static void main(String[] args) {
         Solution solution = new P11ContainerWithMostWater().new Solution();
         // TO TEST
+        int[] array = new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7};
+        solution.maxArea(array);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int maxArea(int[] height) {
-            int max = 0;
-            //i和j 不重复模板,要滚瓜烂熟
+            int maxArea = 0;
             for (int i = 0; i < height.length - 1; i++) {
-                for (int j = i; j < height.length; j++) {
-                    int area = (j - i) * Math.min(height[j], height[i]);
-                    max = Math.max(area, max);
+                for (int j = i + 1; j < height.length ; j++) {
+                    int w = j - i;
+                    int h = Math.min(height[i], height[j]);
+                    maxArea = Math.max(w * h, maxArea);
                 }
             }
-            HashMap hashMap = new HashMap();
-            final Collection values = hashMap.values();
-            new ArrayList<>(values);
-            return max;
+            return maxArea;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
+
+/*
+
+    public int maxArea(int[] height) {
+        int maxArea = 0;
+        for (int i = 0, j = height.length -1; i < j; ){
+            int width= j - i;
+            int minHeight = height[i] < height[j]? height[i++] : height[j--];
+            int area = width * minHeight;
+            maxArea = Math.max(area, maxArea);
+        }
+        return maxArea;
+    }
+
+ */

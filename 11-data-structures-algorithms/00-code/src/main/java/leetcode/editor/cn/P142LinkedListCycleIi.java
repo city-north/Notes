@@ -57,32 +57,56 @@
 
 
 package leetcode.editor.cn;
+
 /**
  * 142：环形链表 II
+ *
  * @author EricChen
  */
-public class P142LinkedListCycleIi{
+public class P142LinkedListCycleIi {
     public static void main(String[] args) {
         Solution solution = new P142LinkedListCycleIi().new Solution();
         // TO TEST
     }
     //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode detectCycle(ListNode head) {
-        
+
+    /**
+     * Definition for singly-linked list.
+     * class ListNode {
+     * int val;
+     * ListNode next;
+     * ListNode(int x) {
+     * val = x;
+     * next = null;
+     * }
+     * }
+     */
+    public class Solution {
+        public ListNode detectCycle(ListNode head) {
+            if (head == null) {
+                return head;
+            }
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast != null) {
+                slow = slow.next;
+                if (fast.next != null) {
+                    fast = fast.next.next;
+                } else {
+                    return null;
+                }
+                if (fast == slow) {
+                    ListNode ptr = head;
+                    while (ptr != slow) {
+                        ptr = ptr.next;
+                        slow = slow.next;
+                    }
+                    return ptr;
+                }
+            }
+            return null;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
