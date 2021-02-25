@@ -12,7 +12,6 @@ public interface CircuitBreaker {
          throw new NoFallbackAvailableException("No fallback available.", throwable);
       });
    };
-
    <T> T run(Supplier<T> toRun, Function<Throwable, T> fallback);
 
 }

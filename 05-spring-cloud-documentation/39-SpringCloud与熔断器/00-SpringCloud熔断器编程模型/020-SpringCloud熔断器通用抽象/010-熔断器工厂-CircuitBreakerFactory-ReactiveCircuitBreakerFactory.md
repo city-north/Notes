@@ -7,9 +7,7 @@
 ```java
 public abstract class CircuitBreakerFactory<CONF, CONFB extends ConfigBuilder<CONF>>
       extends AbstractCircuitBreakerFactory<CONF, CONFB> {
-
    public abstract CircuitBreaker create(String id);
-
 }
 ```
 

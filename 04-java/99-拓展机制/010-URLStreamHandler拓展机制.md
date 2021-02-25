@@ -1,5 +1,7 @@
 # 010-URLStreamHandler拓展机制
 
+[TOC]
+
 URL的关联协议(Protocool)对应 URLStreamHandler 实现类, JDK默认支持一下格式
 
 | 格式  | 描述      | 实现类                               |

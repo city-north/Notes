@@ -13,18 +13,18 @@ public class MyInsertionSort implements InsertionSort {
 
     @Override
     public void insertionSort(int[] array, int n) {
-        for (int i = 1; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             int value = array[i];
             int j = i - 1;
-            for (; j >= 0; j--) {
-                if (array[j] >= value) {
+            while (j >= 0) {
+                if (array[j] > value) {
                     array[j + 1] = array[j];
                 } else {
                     break;
                 }
+                j--;
             }
             array[j + 1] = value;
         }
     }
-
 }
