@@ -1,4 +1,4 @@
-# Eric Chen's Humble Plans
+# North Chen's Humble Plans
 
 ##  [设计模式 Design-Pattern](01-design-patterns) 
 

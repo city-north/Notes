@@ -1,10 +1,10 @@
-# ShortcutConfigurable
+# 32-SpringCloud与网关中间件
 
 > https://www.cnblogs.com/liukaifeng/p/10055867.html
 
 ShortcutConfigurable 接口提供的默认方法，主要用于对过滤器和断言参数进行标准化处理，将表达式和生成的键进行转换。
 
-```
+```java
 public interface ShortcutConfigurable {
 
 	enum ShortcutType {
