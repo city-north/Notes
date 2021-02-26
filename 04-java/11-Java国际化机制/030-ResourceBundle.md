@@ -1,10 +1,10 @@
-# ResourceBoundle详解
+# 030-ResourceBundle
 
 [TOC]
 
 ## 什么是ResouceBoundle
 
-当本地化一个应用时，会产生很多资源包（resource bundle）。每一个包都是一个属性文件或者是一个描述了与locale相关的项的类（比如消息、标签等）。对于每一个包，都要为所有你想要支持的locale提供相应的版本。
+当本地化一个应用时，会产生很多资源包（resource bundle）。每一个包都是一个属性文件或者是一个描述了与 Locale 相关的项的类（比如消息、标签等）。对于每一个包，都要为所有你想要支持的locale提供相应的版本。
 
 需要对这些包使用一种统一的命名规则。
 
