@@ -1,14 +1,13 @@
-# LinkedList Class In Java
+# 050-LinkedList
+
+[TOC]
 
 ## 1. LinkedList Hierarchy
 
 The LinkedList class **extends AbstractSequentialList** class and **implements List and Deque** interfaces. Here `'E'` is the type of values linkedlist stores.
 
 ```java
-public class LinkedList<E>
-    extends AbstractSequentialList<E>
-    implements List<E>, Deque<E>, Cloneable, java.io.Serializable
-{
+public class LinkedList<E> extends AbstractSequentialList<E> implements List<E>, Deque<E>, Cloneable, java.io.Serializable{
     //implementation
 }
 ```

@@ -1,4 +1,6 @@
-# Vector
+# 080-Vector
+
+[TOC]
 
 The `Vector` class implements a growable array of objects. Like an array, it contains components that can be accessed using an integer index. However, the size of a `Vector` can grow or shrink as needed to accommodate adding and removing items after the `Vector` has been created.
 

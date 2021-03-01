@@ -1,4 +1,6 @@
-# Diference between ArrayList and Vector
+# 030-ArrayList和Vector的区别
+
+[TOC]
 
 **ArrayList** and **Vector**, both implements `java.util.List` interface and provide capability to store and get objects within using simple API methods. Still they are different in many aspects and we need to understand both classes in detail to make a wise decision when to use which class.
 

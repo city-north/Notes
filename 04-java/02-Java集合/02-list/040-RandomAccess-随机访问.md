@@ -1,11 +1,8 @@
-# RadomAccess 
+# 040-RandomAccess-随机访问
 
-> 作者：云大数据社区
-> 链接：https://juejin.im/post/5a26134af265da43085de060
-> 来源：掘金
-> 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+[TOC]
 
-### RandomAccess 是:
+## 什么是随机访问
 
 - 一个标记接口
 - 表明 **支持快速(通常是固定时间)随机访问**
@@ -20,15 +17,15 @@
 ### 简而言之 
 
 ```
-     for (int i=0, n=list.size(); i < n; i++)
-         list.get(i);
- 
+for (int i=0, n=list.size(); i < n; i++){
+	list.get(i);
+}
 ```
 
 ```
-     for (Iterator i=list.iterator(); i.hasNext(); )
-         i.next();
- 
+for (Iterator i=list.iterator(); i.hasNext(); ) {
+	i.next(); 
+}
 ```
 
 如果使用第一种 for 循环的方式遍历速度比第二种使用迭代器的方式快,那么就使用这个接口

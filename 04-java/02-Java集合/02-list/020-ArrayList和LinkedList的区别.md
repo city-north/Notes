@@ -1,6 +1,6 @@
-# ArrayList 和 LinkedList 的区别
+# 020-ArrayList和LinkedList的区别
 
-> #### Difference between LinkedList vs ArrayList in Java
+[TOC]
 
 ## 相同点
 

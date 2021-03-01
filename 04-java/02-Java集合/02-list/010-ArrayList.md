@@ -1,22 +1,28 @@
 # ArrayList
 
-####  ArrayList
+[TOC]
+
+##  ArrayList特性
 
 增删慢,查找快(因为可以随机访问,二分法),线程不安全
 
-#### 默认容量
+#### 1.ArrayList默认容量
 
 add 对象的时候给一个初始值 10
 
-#### 扩容
+#### 2.ArrayList扩容
 
-重新创建一个列表 `int newCapacity = oldCapacity + (oldCapacity >> 1);`,原来 1.5 倍,然后进行拷贝
+重新创建一个列表, 原来 1.5 倍, 然后进行拷贝
 
-#### ArrayList插入删除一定慢么？
+```
+int newCapacity = oldCapacity + (oldCapacity >> 1);
+```
+
+#### 3.ArrayList插入删除一定慢么
 
 取决于你删除的元素离数组末端有多远，ArrayList拿来作为堆栈来用还是挺合适的，push和pop操作完全不涉及数据移动操作。
 
-#### 删除怎么实现的呢？
+#### 4.ArrayList删除怎么实现的呢？
 
 不过叫是叫删除，但是在代码里面我们发现，他还是在copy一个数组
 
@@ -32,53 +38,41 @@ index5的位置就成功被”删除“了其实就是被覆盖了，给了你�
 
 同理他的效率也低，因为数组如果很大的话，一样需要复制和移动的位置就大了。
 
-### 线程安全吗
+#### 5.ArrayList线程安全吗
 
 不安全,线程安全版本的数组容器是Vector。
 
-#### ArrayList用来做队列合适么？
+#### 6.ArrayList用来做队列合适么？
 
 不适合,因为队列是 FIFO, ArrayList不适合做队列。
 
 新增和删除会涉及到数据的复制.效率低
 
-#### ArrayList的遍历和LinkedList遍历性能比较如何？
+#### 7.ArrayList的遍历和LinkedList遍历性能比较如何？
 
 ArrayList遍历最大的优势在于内存的连续性，CPU的内部缓存结构会缓存连续的内存片段，可以大幅降低读取内存的性能开销。
 
-#### ArrayList 的迭代器
+## ArrayList 的迭代器
 
-> 什么时候会抛出`ConcurrentModificationException`？
+#### 1.什么时候会抛出`ConcurrentModificationException`？
 
 在迭代的时候，会校验`modCount`是否等于`expectedModCount`，不等于就会抛出著名的`ConcurrentModificationException`异常。
 
 原因就是因为Itr的`remove()`方法，移除之后将`modCount`重新赋值给 `expectedModCount`。这就是源码，不管单线程还是多线程，只要违反了规则，就会抛异常。
 
-> 快速失败
+#### 2.快速失败
 
 `iterator()`和`listIterator(int)`方法是`fail-fast`的，如果在迭代器创建之后，列表进行结构化修改，迭代器会抛出`ConcurrentModificationException`。
 
-> 为什么`elementData`要被`transient`修饰
+#### 3.为什么`elementData`要被`transient`修饰
 
 `elementData`之所以用`transient`修饰，是因为JDK不想将整个`elementData`都序列化或者反序列化，而只是将`size`和实际存储的元素序列化或反序列化，从而节省空间和时间。通过重写`readObject` 和  `writeObject `方法
 
-> 为什么`elementData`没有被`private`修饰？难道正如注释所写的**non-private to simplify nested class access**
-
-简化内部类的访问
-
-> 查询快,增删慢
-
-
+#### 4.为什么`elementData`没有被`private`修饰？难道正如注释所写的**non-private to simplify nested class access
 
 ![ArrayList Hierarchy](assets/ArrayList.jpg)
 
-##### 
-
-
-
 ![image-20200124195914255](assets/image-20200124195914255.png)
-
-
 
 - 实现了`RandomAccess`接口，可以随机访问
 - 实现了`Cloneable`接口，可以克隆
@@ -87,7 +81,7 @@ ArrayList遍历最大的优势在于内存的连续性，CPU的内部缓存结�
 - 实现了`Collection`接口，是`Java Collections Framework`成员之一
 - 实现了`Iterable`接口，可以使用`for-each`迭代
 
-## 1. ArrayList Features
+##  ArrayList Features
 
 ArrayList has following features –
 
@@ -161,7 +155,7 @@ private void grow(int minCapacity) {
 
 ## Example 
 
-### Set方法
+#### 1.Set方法
 
 ```java
 /**
@@ -192,7 +186,7 @@ public class ArrayListExample {
 
 ```
 
-### Repalce element in arrayList while iterating
+#### 2.Repalce element in arrayList while iterating
 
 ```java
     /**
@@ -224,7 +218,7 @@ public class ArrayListExample {
     }
 ```
 
-### Add only selected items to arraylist
+#### 3.Add only selected items to arraylist
 
 ```java
     /**
@@ -235,7 +229,6 @@ public class ArrayListExample {
     private static void addOnlySelectedItemToArrayList() {
         //List 1
         List<String> namesList = Arrays.asList("alex", "brian", "charles");
-
         //List 2
         ArrayList<String> otherList = new ArrayList<>();
 
@@ -248,7 +241,7 @@ public class ArrayListExample {
 
 ```
 
-### remove duplicate elements in ArrayList
+#### 4.remove duplicate elements in ArrayList
 
 - 使用 java8 stream API
 - 使用 `LinkedListHashSet`
@@ -291,7 +284,7 @@ public class ArrayListExample {
     }
 ```
 
-### How to convert ArrayList to String Array in Java
+#### 5.How to convert ArrayList to String Array in Java
 
 - Convert arraylist to array  - List.toArray()
 - Convert arraylist to string array - use java8 stream api
