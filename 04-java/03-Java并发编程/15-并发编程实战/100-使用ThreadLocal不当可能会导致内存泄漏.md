@@ -1,12 +1,22 @@
 # 使用 ThreadLocal不当可能会导致内存泄漏
 
+[TOC]
+
 参考 : [01-ThreadLocal.md](../13-ThreadLocal/01-ThreadLocal.md) 
 
 ## 为什么会出现内存泄漏
 
-> 使用完记得 remove
+我们知道，ThreadLocal是基于ThreadLocalMap实现的，
 
-#### 什么是内存泄漏
+- 这个Map的Entry继承了WeakReference，而Entry对象中的key使用了WeakReference封装，也就是说Entry中的key是一个弱引用类型，而弱引用类型只能存活在下次GC之前。
+
+如果一个线程调用ThreadLocal的set设置变量，当前ThreadLocalMap则新增一条记录，但发生一次垃圾回收，此时key值被回收，而value值依然存在内存中，由于当前线程一直存在，所以value值将一直被引用。.
+
+这些被垃圾回收掉的key就存在一条引用链的关系一直存在：Thread --> ThreadLocalMap-->Entry-->Value，这条引用链会导致Entry不会回收，Value也不会回收，但Entry中的Key却已经被回收的情况，造成内存泄漏。
+
+我们只需要在使用完该key值之后，通过remove方法remove掉，就可以防止内存泄漏了。
+
+## 什么是内存泄漏
 
 *内存泄漏*（Memory Leak）是指程序中己动态分配的堆内存由于某种原因程序未释放或无法释放，造成系统内存的浪费，导致程序运行速度减慢甚至系统崩溃等严重后果。
 
@@ -36,12 +46,12 @@ static class ThreadLocalMap {
 
 - 如果这个 ThreadLocal 变量没有其他强依赖,而当前线程还存在
 
-  > 由于 key 是弱依赖,所以当前线程的 ThreadLocalMap 里面的 key 在 gc 时会被回收
-  >
+  由于 key 是弱依赖,所以当前线程的 ThreadLocalMap 里面的 key 在 gc 时会被回收
+  
   > 但是对应的 value 不会被回收,就导致了 这样的Entry 
   >
   > - key = null
-  > - value != null
+  >- value != null
 
 #### 对于线程池来说
 
@@ -175,4 +185,8 @@ private int expungeStaleEntry(int staleSlot) {
 循环退出的条件是遇到 table 里面有 null 的元素
 
 所以这里知道 null 元素后面的 Entry 里面的 key 为 null 的元素不会被清理
+
+```
+
+```
 

@@ -103,46 +103,46 @@ Condition 在 AQS 的基础上,额外添加了一个单向的**等待队列**,�
 <img src="../../../assets/image-20200405002650107.png" alt="image-20200405002650107" style="zoom:50%;" />
 
 ```java
-        public final void signal() {
-            if (!isHeldExclusively())
-                throw new IllegalMonitorStateException();
-          //获取等待线程的首节点
-            Node first = firstWaiter;
-            if (first != null)
-              //唤醒
-                doSignal(first);
-        }
+public final void signal() {
+  if (!isHeldExclusively())
+    throw new IllegalMonitorStateException();
+  //获取等待线程的首节点
+  Node first = firstWaiter;
+  if (first != null)
+    //唤醒
+    doSignal(first);
+}
 
-        private void doSignal(Node first) {
-            do {
-                if ( (firstWaiter = first.nextWaiter) == null)
-                    lastWaiter = null;
-                first.nextWaiter = null;
-              //移动到等待队列 transfer
-            } while (!transferForSignal(first) &&
-                     (first = firstWaiter) != null);
-        }
+private void doSignal(Node first) {
+  do {
+    if ( (firstWaiter = first.nextWaiter) == null)
+      lastWaiter = null;
+    first.nextWaiter = null;
+    //移动到等待队列 transfer
+  } while (!transferForSignal(first) &&
+           (first = firstWaiter) != null);
+}
 
-    final boolean transferForSignal(Node node) {
-        /*
+final boolean transferForSignal(Node node) {
+  /*
          * If cannot change waitStatus, the node has been cancelled.
          */
-        if (!compareAndSetWaitStatus(node, Node.CONDITION, 0))
-            return false;
+  if (!compareAndSetWaitStatus(node, Node.CONDITION, 0))
+    return false;
 
-        /*
+  /*
          * Splice onto queue and try to set waitStatus of predecessor to
          * indicate that thread is (probably) waiting. If cancelled or
          * attempt to set waitStatus fails, wake up to resync (in which
          * case the waitStatus can be transiently and harmlessly wrong).
          */
-      //加入阻塞队列
-        Node p = enq(node);
-        int ws = p.waitStatus;
-        if (ws > 0 || !compareAndSetWaitStatus(p, ws, Node.SIGNAL))
-          //唤醒之前在 await 方法中调用的阻塞方法
-            LockSupport.unpark(node.thread);
-        return true;
+  //加入阻塞队列
+  Node p = enq(node);
+  int ws = p.waitStatus;
+  if (ws > 0 || !compareAndSetWaitStatus(p, ws, Node.SIGNAL))
+    //唤醒之前在 await 方法中调用的阻塞方法
+    LockSupport.unpark(node.thread);
+  return true;
 ```
 
 #### 等待队列图示

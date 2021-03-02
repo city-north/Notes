@@ -14,7 +14,7 @@ https://xiaomi-info.github.io/2020/03/16/java-beans-introspection/
 
 在计算机科学中，内省是指计算机程序在运行时（Run time）检查对象（Object）类型的一种能力，通常也可以称作运行时类型检查。
 
-#### Java 官方对 Java Beans 内省的定义：
+#### Java官方对Java Beans自省的定义：
 
 > At runtime and in the builder environment we need to be able to figure out which properties, events, and methods a Java Bean supports. We call this process introspection.
 
@@ -26,7 +26,7 @@ Java Beans 内省其实就是对反射的一种封装，这个从源码中或者
 
 > By default we will use a low level reflection mechanism to study the methods supported by a target bean and then apply simple design patterns to deduce from those methods what properties, events, and public methods are supported.
 
-## JavaBean内省机制详解
+## JavaBean自省机制详解
 
 ### 核心类库
 
