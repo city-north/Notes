@@ -1,4 +1,6 @@
-# 重新认识 explain 
+# 030-重新认识explain
+
+[TOC]
 
 查看 explain 生成的执行计划 
 

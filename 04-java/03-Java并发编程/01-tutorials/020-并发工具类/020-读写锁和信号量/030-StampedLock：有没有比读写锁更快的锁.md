@@ -8,11 +8,13 @@
 
 下面我们就来介绍一下 StampedLock 的使用方法、内部工作原理以及在使用过程中需要注意的事项。
 
-## StampedLock 支持的三种锁模式
+## StampedLock支持的三种锁模式
 
 我们先来看看在使用上 StampedLock 和上一篇文章讲的 ReadWriteLock 有哪些区别。
 
-ReadWriteLock 支持两种模式：一种是读锁，一种是写锁。而 StampedLock 支持三种模式，分别是：
+ReadWriteLock 支持两种模式：一种是读锁，一种是写锁。
+
+而 StampedLock 支持三种模式，分别是：
 
 - 写锁
 - 悲观读锁
@@ -64,8 +66,7 @@ class Point {
   // 计算到原点的距离  
   int distanceFromOrigin() {
     // 乐观读
-    long stamp = 
-      sl.tryOptimisticRead();
+    long stamp =  sl.tryOptimisticRead();
     // 读入局部变量，
     // 读的过程数据可能被修改
     int curX = x, curY = y;

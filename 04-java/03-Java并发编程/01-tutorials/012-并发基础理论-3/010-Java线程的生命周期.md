@@ -49,7 +49,7 @@ Java 语言中线程共有六种状态，分别是：
 
 其中，BLOCKED、WAITING、TIMED_WAITING 可以理解为线程导致休眠状态的三种原因。那具体是哪些情形会导致线程从 RUNNABLE 状态转换到这三种状态呢？而这三种状态又是何时转换回 RUNNABLE 的呢？以及 NEW、TERMINATED 和 RUNNABLE 状态是如何转换的？
 
-### 1. RUNNABLE 与 BLOCKED 的状态转换
+### 1. RUNNABLE与BLOCKED的状态转换
 
 只有一种场景会触发这种转换，就是线程等待 synchronized 的隐式锁。
 
@@ -59,7 +59,7 @@ synchronized 修饰的方法、代码块同一时刻只允许一个线程执行�
 
 而我们平时所谓的 Java 在调用阻塞式 API 时，线程会阻塞，指的是操作系统线程的状态，并不是 Java 线程的状态。
 
-### 2. RUNNABLE 与 WAITING 的状态转换
+### 2. RUNNABLE与WAITING的状态转换
 
 总体来说，有三种场景会触发这种转换。
 
@@ -69,7 +69,7 @@ synchronized 修饰的方法、代码块同一时刻只允许一个线程执行�
 
 第三种场景，调用 LockSupport.park() 方法。其中的 LockSupport 对象，也许你有点陌生，其实 Java 并发包中的锁，都是基于它实现的。调用 LockSupport.park() 方法，当前线程会阻塞，线程的状态会从 RUNNABLE 转换到 WAITING。调用 LockSupport.unpark(Thread thread) 可唤醒目标线程，目标线程的状态又会从 WAITING 状态转换到 RUNNABLE。
 
-### 3. RUNNABLE 与 TIMED_WAITING 的状态转换
+### 3. RUNNABLE与TIMED_WAITING 的状态转换
 
 有五种场景会触发这种转换：
 
