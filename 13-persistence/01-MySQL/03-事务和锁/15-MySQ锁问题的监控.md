@@ -1,8 +1,4 @@
-# 15-MySQ锁问题的监控
-
-[TOC]
-
-## 查看事务中锁的情况
+# 15-MySQ锁问题的监控15-MySQ锁问题的监控
 
 ```sql
 show full processlist

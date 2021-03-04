@@ -14,7 +14,8 @@ public class MyHeapSort implements HeapSort {
     public static void main(String[] args) {
         new MyHeapSort().run();
     }
-    private PriorityQueue<Integer> queue = new PriorityQueue<>();
+
+    PriorityQueue<Integer> queue = new PriorityQueue<>();
 
     @Override
     public void heapSort(int[] a, int n) {
@@ -24,5 +25,6 @@ public class MyHeapSort implements HeapSort {
         for (int i = 0; i < n; i++) {
             a[i] = queue.poll();
         }
+
     }
 }

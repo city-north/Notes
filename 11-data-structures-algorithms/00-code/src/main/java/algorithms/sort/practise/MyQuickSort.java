@@ -19,6 +19,7 @@ public class MyQuickSort implements QuickSort {
         int pivot = partition(array, begin, end);
         quickSort(array, begin, pivot - 1);
         quickSort(array, pivot + 1, end);
+
     }
 
     private int partition(int[] array, int begin, int end) {

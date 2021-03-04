@@ -1,4 +1,4 @@
-# ConcurrentHashMap-put操作
+# 061-ConcurrentHashMap-put操作
 
 [TOC]
 
@@ -16,7 +16,7 @@
 
 ## 整体流程
 
-```
+```java
 for (Node<K,V>[] tab = table;;) {
     Node<K,V> f; int n, i, fh;
     if (tab == null || (n = tab.length) == 0)
@@ -28,7 +28,7 @@ for (Node<K,V>[] tab = table;;) {
         //正在迁移，协助迁移
     else {
    	// 如果不为空，要锁node c插入
-   }
+}
 ```
 
 ## [put方法准备阶段-spread](062-ConcurrentHashMap-put操作-spread.md) 

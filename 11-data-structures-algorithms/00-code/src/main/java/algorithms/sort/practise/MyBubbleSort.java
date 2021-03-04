@@ -17,7 +17,7 @@ public class MyBubbleSort implements BubbleSort {
             boolean flag = false;
             for (int j = 0; j < n - i - 1; j++) {
                 if (array[j] > array[j + 1]) {
-                    swap(array, j + 1, j);
+                    swap(array, j, j + 1);
                     flag = true;
                 }
             }

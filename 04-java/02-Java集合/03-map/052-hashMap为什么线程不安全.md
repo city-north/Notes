@@ -104,8 +104,6 @@ void transfer(Entry[] newTable, boolean rehash) {
 
 然后在多线程环境下，假设有两个线程A和B都在进行put操作。线程A在执行到transfer函数中第11行代码处挂起，因为该函数在这里分析的地位非常重要，因此再次贴出来。
 
-
-
 ```java
 void transfer(Entry[] newTable, boolean rehash) {
         int newCapacity = newTable.length;

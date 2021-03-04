@@ -118,8 +118,6 @@ private transient volatile CounterCell[] counterCells;/ /counterCells数组，�
 
 值得注意的是 **@sun.misc.Contended** 注解 是为了解决伪共享问题  
 
-
-
 #### fullAddCount源码分析
 
 fullAddCount 主要是用来初始化 CounterCell，来记录元素个数，里面包含扩容，初始化等 操作

@@ -26,21 +26,21 @@ public class MyMergeSort implements MergeSort {
         merge(array, left, mid, right);
     }
 
-    private void merge(int[] array, int begin, int mid, int end) {
-        int[] temp = new int[end - begin + 1];
-        int L = begin;
-        int R = mid + 1;
+    private void merge(int[] array, int left, int mid, int right) {
+        int i = left;
+        int j = mid + 1;
         int k = 0;
-        while (L <= mid && R <= end) {
-            temp[k++] = array[L] < array[R] ? array[L++] : array[R++];
+        int[] temp = new int[right - left + 1];
+        while (i <= mid && j <= right) {
+            temp[k++] = array[i] < array[j] ? array[i++] : array[j++];
         }
-        while (L <= mid) {
-            temp[k++] = array[L++];
+        while (i <= mid) {
+            temp[k++] = array[i++];
         }
-        while (R <= end) {
-            temp[k++] = array[R++];
+        while (j <= right) {
+            temp[k++] = array[j++];
         }
-        System.arraycopy(temp, 0, array, begin, temp.length);
+        System.arraycopy(temp, 0, array, left, temp.length);
     }
 
 
