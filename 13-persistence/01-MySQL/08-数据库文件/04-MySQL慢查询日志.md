@@ -1,4 +1,4 @@
-# MySQL慢查询日志(slow log)
+# 04-MySQL慢查询日志
 
 > https://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html
 

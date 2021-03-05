@@ -1,7 +1,5 @@
 # 03-MySQL二进制文件-Binlog
 
-## 目录
-
 [TOC]
 
 ## 什么是BinLog
