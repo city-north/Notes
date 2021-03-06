@@ -1,0 +1,109 @@
+# 02-Redis基本操作.md
+
+[TOC]
+
+## DB操作
+
+默认有 16 个库(0-15)，可以在配置文件中修改，默认使用第一个 db0。
+
+```
+databases 16
+```
+
+因为没有完全隔离，不像数据库的 database，不适合把不同的库分配给不同的业务使用。
+
+#### 切换数据库
+
+```
+select 0
+```
+
+#### 清空当前数据库
+
+```
+flushdb
+```
+
+#### 清空所有数据库
+
+```
+flushall
+```
+
+## 存取
+
+Redis 是字典结构的存储方式，采用 key-value 存储。key 和 value 的最大长度限制 是 512M(来自官网 https://redis.io/topics/data-types-intro/)。
+
+#### 存值取值
+
+```
+127.0.0.1:6379> set name EricChen
+OK
+127.0.0.1:6379> get name
+"EricChen"
+```
+
+#### 查看所有键
+
+```
+127.0.0.1:6379> keys n*
+1) "name"
+```
+
+#### 获取总键数
+
+```
+127.0.0.1:6379> dbsize
+(integer) 1
+```
+
+#### 查看键是否存在
+
+```
+127.0.0.1:6379> exists name
+(integer) 1
+```
+
+#### 删除键
+
+```
+127.0.0.1:6379> del name
+(integer) 1
+127.0.0.1:6379> get name
+(nil)
+```
+
+#### 重命名键
+
+```
+127.0.0.1:6379> set name EricChen
+OK
+127.0.0.1:6379> rename name RealName
+OK
+127.0.0.1:6379> keys *
+1) "RealName"
+```
+
+#### 查看类型
+
+```
+127.0.0.1:6379> type RealName
+string
+```
+
+## 在远程服务器上执行命令
+
+```
+redis-cli -h host -p port -a password
+```
+
+#### 实例
+
+以下实例演示了如何连接主机为 127.0.0.1 ,端口为 6379 ,密码为 mypass Redis 服务器
+
+```
+$redis-cli -h 127.0.0.1 -p 6379 -a "mypass"
+redis 127.0.0.1:6379>
+redis 127.0.0.1:6379> PING
+```
+
