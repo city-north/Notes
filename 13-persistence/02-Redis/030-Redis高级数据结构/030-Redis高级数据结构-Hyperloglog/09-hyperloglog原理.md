@@ -32,15 +32,15 @@ Redis 的 HyperLogLog 通过牺牲准确率来减少内存空间的消耗，只�
 
 下面是 Lua 的脚本，不了解 Redis 执行 Lua 脚本的同学可以看一下我之前写的文章[《基于Redis和Lua的分布式限流》](https://mp.weixin.qq.com/s?__biz=Mzg2NjE5NDQyOA==&mid=2247483767&idx=1&sn=eb9d22513ec856eabe9a14dbbe9b41a2&scene=21#wechat_redirect)。
 
-<img src="../../../assets/image-20200625171523164.png" alt="image-20200625171523164" style="zoom: 33%;" />
+<img src="../../../../assets/image-20200625171523164.png" alt="image-20200625171523164" style="zoom: 33%;" />
 
 我们通过 redis-cli 的 script load 命令将 Lua 脚本加载到 Redis 中, 然后 `evalsha`命令分别向 HashMap, HyperLogLog 和 BitMap 三种数据结构中插入一千万个数,然后使用 rdb 命令查看内存消耗
 
-<img src="../../../assets/image-20200625171755716.png" alt="image-20200625171755716" style="zoom:50%;" />
+<img src="../../../../assets/image-20200625171755716.png" alt="image-20200625171755716" style="zoom:50%;" />
 
 我们进行了两轮实验，分别插入一万数字和一千万数字，三种数据结构消耗的内存统计如下所示。
 
-<img src="../../../assets/image-20200625171828233.png" alt="image-20200625171828233" style="zoom:33%;" />
+<img src="../../../../assets/image-20200625171828233.png" alt="image-20200625171828233" style="zoom:33%;" />
 
 从表中可以明显看出，一万数量级时 BitMap 消耗内存最小， 一千万数量级时 HyperLogLog 消耗内存最小，但是总体来看，HyperLogLog 消耗的内存都是 14392 字节，可见 HyperLogLog 在内存消耗方面有自己的独到之处。
 
@@ -54,7 +54,7 @@ HyperLogLog 是一种概率数据结构，它使用概率算法来统计集合�
 
 根据一顿数学推导，我们可以得出一个结论： 2^{k_ max} 来作为n的估计值。也就是说你可以根据最大投掷次数近似的推算出进行了几次伯努利过程。
 
-<img src="../../../assets/image-20200625172016710.png" alt="image-20200625172016710" style="zoom:50%;" />
+<img src="../....//../assets/image-20200625172016710.png" alt="image-20200625172016710" style="zoom:50%;" />
 
 下面，我们就来讲解一下 HyperLogLog 是如何模拟伯努利过程，并最终统计集合基数的。
 
@@ -62,17 +62,17 @@ HyperLogLog 在添加元素时，会通过Hash函数，将元素转为64位比�
 
 所以 HyperLogLog 的基本思想是利用集合中数字的比特串第一个 1 出现位置的最大值来预估整体基数，但是这种预估方法存在较大误差，为了改善误差情况，HyperLogLog中引入分桶平均的概念，计算 m 个桶的调和平均值。
 
-<img src="../../../assets/image-20200625172114043.png" alt="image-20200625172114043" style="zoom:50%;" />
+<img src="../../../../assets/image-20200625172114043.png" alt="image-20200625172114043" style="zoom:50%;" />
 
 Redis 中 HyperLogLog 一共分了 2^14 个桶，也就是 16384 个桶。每个桶中是一个 6 bit 的数组，如下图所示。
 
-<img src="../../../assets/image-20200625172137458.png" alt="image-20200625172137458" style="zoom:50%;" />
+<img src="../../../../assets/image-20200625172137458.png" alt="image-20200625172137458" style="zoom:50%;" />
 
 HyperLogLog 将上文所说的 64 位比特串的低 14 位单独拿出，它的值就对应桶的序号，然后将剩下 50 位中第一次出现 1 的位置值设置到桶中。50位中出现1的位置值最大为50，所以每个桶中的 6 位数组正好可以表示该值。
 
 在设置前，要设置进桶的值是否大于桶中的旧值，如果大于才进行设置，否则不进行设置。示例如下图所示。 
 
-<img src="../../../assets/image-20200625172200022.png" alt="image-20200625172200022" style="zoom:50%;" />
+<img src="../../../../assets/image-20200625172200022.png" alt="image-20200625172200022" style="zoom:50%;" />
 
 此时为了性能考虑，是不会去统计当前的基数的，而是将 HyperLogLog 头的 card 属性中的标志位置为 1，表示下次进行 pfcount 操作的时候，当前的缓存值已经失效了，需要重新统计缓存值。在后面 pfcount 流程的时候，发现这个标记为失效，就会去重新统计新的基数，放入基数缓存。
 

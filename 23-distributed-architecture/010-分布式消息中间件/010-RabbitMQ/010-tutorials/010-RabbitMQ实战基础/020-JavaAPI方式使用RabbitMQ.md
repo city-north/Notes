@@ -1,7 +1,5 @@
 # 020-JavaAPI方式使用RabbitMQ
 
-## 目录
-
 ------
 
 [TOC]
