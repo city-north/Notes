@@ -22,7 +22,7 @@ SocketChannel 或者是ServerSocketChannel  都支持 非阻塞模式
 - 然后将socket套接字设置为非阻塞模式
 - 最后， 通过 connect() 实例方法， 对服务器的ip和端口发起连接
 
-```
+```java
 // 1、获取通道（channel）
 SocketChannel socketChannel = SocketChannel.open(address);
 // 2、切换成非阻塞模式

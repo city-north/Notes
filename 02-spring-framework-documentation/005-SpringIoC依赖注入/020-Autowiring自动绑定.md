@@ -31,10 +31,10 @@ Spring容器可以自动绑定bean和它的合作者（不一定是bean,也有�
 - type
 
 ```xml
-    <bean class="org.geekbang.thinking.in.spring.ioc.dependency.injection.UserHolder"
-          autowire=""> 
-        <property name= "user" ref="superUser" /> 替换成 autowiring 模式 -->
-    </bean>
+<bean class="org.geekbang.thinking.in.spring.ioc.dependency.injection.UserHolder"
+      autowire=""> 
+  <property name= "user" ref="superUser" /><!-- 替换成 autowiring 模式 -->
+</bean>
 ```
 
 ## 自动绑定的限制与不足

@@ -8,7 +8,9 @@
 
 ## 接受服务心跳核心逻辑
 
-Eureka Server处理心跳请求的核心逻辑位于AbstractInstanceRegistry#renew方法中。renew方法是对Eureka Client位于注册表中的租约的续租操作，不像register方法需要服务实例信息，仅根据服务实例的服务名和服务实例id即可更新对应租约的有效时间。具体代码如下所示：
+Eureka Server处理心跳请求的核心逻辑位于AbstractInstanceRegistry#renew方法中。
+
+renew方法是对Eureka Client位于注册表中的租约的续租操作，不像register方法需要服务实例信息，仅根据服务实例的服务名和服务实例id即可更新对应租约的有效时间。具体代码如下所示：
 
 ```java
 // AbstractInstanceRegistry.java

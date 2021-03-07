@@ -89,12 +89,10 @@ while (selector.select() > 0)
             // 11、客户端新连接，切换为非阻塞模式
             socketChannel.configureBlocking(false);
             // 12、将客户端新连接通道注册到selector选择器上
-            SelectionKey selectionKey =
-                    socketChannel.register(selector, SelectionKey.OP_READ);
+            SelectionKey selectionKey = socketChannel.register(selector, SelectionKey.OP_READ);
             // 余下为业务处理
             Client client = new Client();
-            client.remoteAddress
-                    = (InetSocketAddress) socketChannel.getRemoteAddress();
+            client.remoteAddress = (InetSocketAddress) socketChannel.getRemoteAddress();
             clientMap.put(socketChannel, client);
             Logger.debug(socketChannel.getRemoteAddress() + "连接成功...");
 

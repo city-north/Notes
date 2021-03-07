@@ -168,7 +168,7 @@ public static void rewindTest() {
 }
 ```
 
-rewind（）方法， 主要是调整缓冲区的position值， 具体调整规则如下
+rewind()方法， 主要是调整缓冲区的position值， 具体调整规则如下
 
 1. position 重置为0， 所以可以重读缓冲区中的所有数据
 2. limit保持不变， 数据量还是一样的， 仍然表示能从缓冲区中读取杜少个元素

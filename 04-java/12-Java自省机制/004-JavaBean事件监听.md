@@ -21,8 +21,7 @@
 `PropertyChangeEvent` 的构造方法：
 
 ```java
-public PropertyChangeEvent(Object source, String propertyName,
-    Object oldValue, Object newValue) {
+public PropertyChangeEvent(Object source, String propertyName, Object oldValue, Object newValue) {
     super(source);
     this.propertyName = propertyName;
     this.newValue = newValue;

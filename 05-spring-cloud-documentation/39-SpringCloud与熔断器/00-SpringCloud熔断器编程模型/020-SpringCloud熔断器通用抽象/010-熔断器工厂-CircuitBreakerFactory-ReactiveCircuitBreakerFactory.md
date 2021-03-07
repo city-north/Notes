@@ -2,6 +2,10 @@
 
 [TOC]
 
+## 熔断器工厂有什么用
+
+CircuitBreakerFactory 用于创建 CurcuitBreaker熔断器
+
 ## CircuitBreakerFactory
 
 ```java
@@ -15,6 +19,8 @@ public abstract class CircuitBreakerFactory<CONF, CONFB extends ConfigBuilder<CO
 - CONB 代表 ConfigBuilder接口
 
 ## 抽象通用实现
+
+抽象实现封装了配置的容器
 
 ```java
 public abstract class AbstractCircuitBreakerFactory<CONF, CONFB extends ConfigBuilder<CONF>> {

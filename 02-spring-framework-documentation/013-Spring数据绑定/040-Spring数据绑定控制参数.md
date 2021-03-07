@@ -8,8 +8,6 @@
 - 当PropertyValues 中包含x的PropertyValue, 目标对象B中存在X属性,当bind方法执行的时候会?
 - 当PropertyValues 中包含`x.y`的PropertyValue, 目标对象B中存在X属性(嵌套Y属性),当bind方法执行的时候会?
 
-
-
 ## Spring数据绑定控制参数
 
 - ignoreInvalidFields 是否忽略未知字段,默认true
