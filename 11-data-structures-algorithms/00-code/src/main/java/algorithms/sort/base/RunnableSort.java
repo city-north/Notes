@@ -19,7 +19,7 @@ public interface RunnableSort extends SortAlgorithm, ArraySwapSupport {
         final long end = System.currentTimeMillis();
         System.out.println("-----排序时间:" + (end - start) + "-----");
         for (int i : array) {
-            System.out.println(i);
+            System.out.print(" "+i);
         }
     }
 

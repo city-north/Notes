@@ -1,6 +1,5 @@
 # 050-Session-Bean作用域
 
----
 [TOC]
 
 在一个 HTTP Session 中,每个 Bean 定义对应一个实例,该作用域仅仅在基于 Web 的 Spring( 上下文例如 SpringMVC) 中才有效

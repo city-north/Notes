@@ -19,7 +19,11 @@ public class MyHeapSort implements HeapSort {
 
     @Override
     public void heapSort(int[] a, int n) {
-
-
+        for (int i = 0; i < n; i++) {
+            queue.add(i);
+        }
+        for (int i = 0; i < n; i++) {
+            a[i] = queue.poll();
+        }
     }
 }

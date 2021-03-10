@@ -1,6 +1,4 @@
-# BeanDefinition定义SpringBean
-
----
+# 010-BeanDefinition-定义SpringBean
 
 [TOC]
 
@@ -11,6 +9,10 @@ BeanDefinition是Spring对Bean定义的逻辑抽象,子接口或者实现:
 - GenericBeanDefinition:通用型BeanDefinition
 - RootBeanDefinition:无Parent的BeanDefinition或者合并后的BeanDefinition
 - AnnotatedBeanDefinition:注解标注的BeanDefinition
+
+## Hierarchy
+
+![image-20201116213208976](../../assets/image-20201116213208976.png)
 
 ## 接口源码
 
@@ -78,8 +80,8 @@ String getScope();
 
 boolean isSingleton();
 /**
-	 * @since 3.0
-	 */
+	* @since 3.0
+	*/
 boolean isPrototype();
 
 boolean isAbstract();
@@ -148,14 +150,6 @@ setFactoryMethodName(@Nullable String factoryMethodName);
 @Nullable
 String getFactoryMethodName();
 ```
-
-
-
-
-
-
-
-![image-20201116213208976](../../assets/image-20201116213208976.png)
 
 BeanDefinition 是Spring Framework 中定义Bean的配置元信息接口,包括:
 

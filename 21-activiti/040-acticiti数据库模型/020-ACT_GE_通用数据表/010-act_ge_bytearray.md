@@ -1,9 +1,8 @@
-# ACT_GE*相关表结构-通用数据库
+# 资源表-act_ge_bytearray
 
-## 目录
+[TOC]
 
-- [资源表-act_ge_bytearray](#资源表-act_ge_bytearray)
-- [属性表-act_ge_property](#属性表-act_ge_property)
+## 资源表-act_ge_bytearray
 
 `RE’表示repository
 
@@ -14,7 +13,7 @@ act_ge_bytearray 属性表(保存流程引擎的kv键值属性)
 act_ge_property  资源表(存储流程定义相关的数据)
 ```
 
-## 资源表-act_ge_bytearray
+## 表结构
 
 
 ```sql
@@ -31,7 +30,7 @@ CONSTRAINT `ACT_FK_BYTEARR_DEPL` FOREIGN KEY ( `DEPLOYMENT_ID_` ) REFERENCES `ac
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin COMMENT = '属性表(保存流程引擎的 KV 键值属性)';
 ```
 
-#### 列信息
+## 列信息
 
 | COLUMN\_NAME     | COLUMN\_TYPE   | column\_comment                                              |
 | :--------------- | :------------- | :----------------------------------------------------------- |
@@ -42,22 +41,4 @@ CONSTRAINT `ACT_FK_BYTEARR_DEPL` FOREIGN KEY ( `DEPLOYMENT_ID_` ) REFERENCES `ac
 | bytes\_          | longblob       | 资源内容,数据类型为long                                      |
 | generated\_      | tinyint\(4\)   | 是否由Activiti自动产生的资源, 0 代表false, 1 代表true        |
 
-## 属性表-act_ge_property
-
-```sql
-CREATE TABLE `act_ge_property` (
-  `NAME_` varchar(64) COLLATE utf8_bin NOT NULL COMMENT 'Key',
-  `VALUE_` varchar(300) COLLATE utf8_bin DEFAULT NULL COMMENT 'Value',
-  `REV_` int(11) DEFAULT NULL COMMENT '版本号',
-  PRIMARY KEY (`NAME_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='资源表(存储流程定义相关的数据)';
-```
-
-#### 列信息
-
-| COLUMN\_NAME | COLUMN\_TYPE   | column\_comment |
-| :----------- | :------------- | :-------------- |
-| name\_       | varchar\(64\)  | 属性名称        |
-| value\_      | varchar\(300\) | 属性值          |
-| rev\_        | int\(11\)      | 数据的版本号    |
-
+## 

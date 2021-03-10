@@ -1,4 +1,4 @@
-# BeanDefiniation的注册
+# 030-BeanDefinition的注册
 
 ---
 
@@ -13,28 +13,28 @@
   - @Import
 - [JavaAPI配置元信息](#JavaAPI配置元信息)
 
-## JavaAPI配置元信息
+## 1.JavaAPI配置元信息
 
-#### 命名方式 
+#### 1.1命名方式BeanDefinitionRegistry
 
 ```java
 BeanDefinitionRegistry#registerBeanDefinition(String beanName, BeanDefinition beanDefinition)
 ```
 
-#### 非命名方式
+#### 1.2非命名方式BeanDefinitionReaderUtils
 
 ```java
 BeanDefinitionReaderUtils#registerBeanDefinitionn(
 			BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)
 ```
 
-#### 配置类方式
+#### 1.3配置类方式
 
 ```
 AnnotationConfigApplicationContext#register
 ```
 
-## 代码实例
+## 2.代码实例
 
 ```java
 // 3. 通过 @Import 来进行导入
@@ -104,7 +104,7 @@ public class AnnotationBeanDefinitionDemo {
 }
 ```
 
-## 注册中心
+## 3.注册中心
 
 ```java
 public interface BeanDefinitionRegistry extends AliasRegistry {

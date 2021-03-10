@@ -7,3 +7,5 @@
 -  [005-分布式锁-公平锁.md](005-分布式锁-公平锁.md) 
 -  [006-分布式锁-读写锁.md](006-分布式锁-读写锁.md) 
 
+<img src="http://assets.processon.com/chart_image/6047084e1e08531bf8d2d406.png">
+

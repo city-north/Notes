@@ -1,9 +1,5 @@
 # 040-SpringBeanDefinition合并阶段
 
-## 目录
-
----
-
 [TOC]
 
 ## 先入为主

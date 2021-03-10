@@ -36,8 +36,8 @@ FeignClientSpecification类实现了NamedContextFactory.Specification接口，�
 上述代码中的两句添加构造参数, 实际上就是SpringCloud 兜底实现
 
 ```java
-    builder.addConstructorArgValue(name); 				 //设置名称
-    builder.addConstructorArgValue(configuration); //设置默认属性
+builder.addConstructorArgValue(name); 				 //设置名称
+builder.addConstructorArgValue(configuration); //设置默认属性
 ```
 
 ```java

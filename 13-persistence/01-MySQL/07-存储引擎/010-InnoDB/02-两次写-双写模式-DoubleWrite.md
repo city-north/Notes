@@ -1,12 +1,12 @@
-# 两次写(Double Write)
-
----
+# 02-两次写-双写模式-DoubleWrite
 
 [TOC]
 
 ## 一言蔽之
 
-> 如果说 ChangeBuffer 带给 InnoDB 存储引擎的是性能上的提升,那么 Double Write 两次写带给 InnoDB 存储引擎的是数据页的可靠性
+- 如果说 ChangeBuffer 带给 InnoDB 存储引擎的是性能上的提升
+
+- 那么 Double Write 两次写带给 InnoDB 存储引擎的是**数据页的可靠性**
 
 ## 为什么要保证数据页的可靠性
 
@@ -33,9 +33,13 @@
 
 ![image-20200824132806563](../../../../assets/image-20200824132806563.png)
 
-在对缓冲池的脏页进行刷新时,并不直接写磁盘,而是通过memcy函数将脏页先复制到内存中的doublewrite buffer , 之后通过doublewrite buffer 再分两次,每次 1MB顺序地写入共享表空间的物理磁盘上,然后马上调用fsync函数,同步磁盘,避免缓冲写带来的问题
+在对缓冲池的脏页进行刷新时,并不直接写磁盘,
 
-在整个过程中,因为doublewrite 页是连续的,因此这个过程是顺序写的,开销并不是很大,在完成doublewrite页的写入后,再将doublewrite buffer中的页写入各个表空间文件中,此时写入则是离散的
+- 而是通过 **memcy** 函数将脏页先复制到内存中的 **doublewrite buffer** 
+- 之后通过 **doublewrite buffer** 再分两次,每次 1MB顺序地写入共享表空间的物理磁盘上
+- 然后马上调用fsync函数,同步磁盘,避免缓冲写带来的问题
+
+在整个过程中,因为 **doublewrite** 页是连续的,因此这个过程是顺序写的,开销并不是很大,在完成 **doublewrite** 页的写入后,再将 **doublewrite buffer** 中的页写入各个表空间文件中,此时写入则是离散的
 
 ## 流程
 

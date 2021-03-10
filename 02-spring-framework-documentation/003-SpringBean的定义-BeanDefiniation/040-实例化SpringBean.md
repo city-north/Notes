@@ -1,8 +1,10 @@
-# 实例化SpringBean
+# 040-实例化SpringBean
 
 ---
 
 [TOC]
+
+## 1.实例化的方式
 
 - 常规方式
   - 通过构造器 (配置元信息: XML, Java注解, Java API)
@@ -73,25 +75,25 @@ private static void loadWithJavaSPI() {
 public class AutowireCapableBeanFactoryExample {
 
 
-    public static void main(String[] args) throws Exception {
-        loadWithServiceLoaderFactoryBean();
-    }
+  public static void main(String[] args) throws Exception {
+    loadWithServiceLoaderFactoryBean();
+  }
 
-    private static void loadWithServiceLoaderFactoryBean() throws Exception {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AutowireCapableBeanFactoryExample.class);
-        final AutowireCapableBeanFactory autowireCapableBeanFactory = applicationContext.getAutowireCapableBeanFactory();
-      	//创建一个Bean
-      final UserFactory bean = autowireCapableBeanFactory.createBean(DefaultUserFactory.class);
-      
-        final User user = bean.createUser();
-        System.out.println(user);
-    }
+  private static void loadWithServiceLoaderFactoryBean() throws Exception {
+    AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AutowireCapableBeanFactoryExample.class);
+    final AutowireCapableBeanFactory autowireCapableBeanFactory = applicationContext.getAutowireCapableBeanFactory();
+    //创建一个Bean
+    final UserFactory bean = autowireCapableBeanFactory.createBean(DefaultUserFactory.class);
+
+    final User user = bean.createUser();
+    System.out.println(user);
+  }
 
 
-    @Bean
-    public UserFactory userFactory() {
-        return new DefaultUserFactory();
-    }
+  @Bean
+  public UserFactory userFactory() {
+    return new DefaultUserFactory();
+  }
 }
 ```
 

@@ -66,5 +66,3 @@ public class GenericBeanDefinition extends AbstractBeanDefinition {
 }
 ```
 
-## AbstractBeanDefinition
-

@@ -1,4 +1,4 @@
-# 15-MySQ锁问题的监控15-MySQ锁问题的监控
+# 15-MySQ锁问题的监控
 
 ```sql
 show full processlist

@@ -16,7 +16,7 @@
 | java.lang.reflect.TypeVariable      | 描述类型变量(如T extends Comparable＜？super T＞)<br />又比如Collection<E> 中的E |
 | java.lang.reflect.WildcardType      | 描述通配符类型 (如？super T)。                               |
 
-核心API
+## 核心API
 
 | 类型                             | 说明                                   |
 | -------------------------------- | -------------------------------------- |

@@ -7,3 +7,8 @@
 - 一个业务请求修改多个数据,保证都完成或者失败
 - 发生异常的时候进行数据回滚
 
+## 脑图
+
+
+
+<img src="http://assets.processon.com/chart_image/60470cd81e08531bf8d2e874.png">

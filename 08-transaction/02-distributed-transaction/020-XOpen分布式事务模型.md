@@ -53,5 +53,7 @@ X/Open DTP（X/Open Distributed Transaction Processing Reference Model）是X/Op
 
 需要注意的是，TM和多个RM之间的事务控制，是基于XA协议（XA Specification）来完成的。
 
-XA协议是X/Open提出的分布式事务处理规范，也是分布式事务处理的工业标准，它定义了xa_和ax_系列的函数原型及功能描述、约束等。目前Oracle、MySQL、DB2都实现了XA接口，所以它们都可以作为RM
+XA协议是X/Open提出的分布式事务处理规范，也是分布式事务处理的工业标准，它定义了xa_和ax_系列的函数原型及功能描述、约束等。
+
+目前Oracle、MySQL、DB2都实现了XA接口，所以它们都可以作为RM
 

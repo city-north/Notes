@@ -1,10 +1,8 @@
-# BeanNameGenerator-Bean名称生成器
-
----
+# 020-BeanNameGenerator-Bean名称生成器
 
 [TOC]
 
-## 继承结构
+## Hierarchy
 
 核心接口-BeanNameGenerator
 
