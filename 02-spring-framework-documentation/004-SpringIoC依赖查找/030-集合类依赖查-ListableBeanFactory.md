@@ -1,7 +1,5 @@
 # 030-集合类依赖查-ListableBeanFactory
 
----
-
 [TOC]
 
 ## ListableBeanFactory简介

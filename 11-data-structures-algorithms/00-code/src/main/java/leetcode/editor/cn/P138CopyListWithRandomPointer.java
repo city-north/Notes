@@ -100,12 +100,13 @@ public class P138CopyListWithRandomPointer {
         public Node copyRandomList(Node head) {
             HashMap<Node, Node> map = new HashMap<>();
             Node newHead = head;
+            //random
             while (newHead != null) {
                 if (!map.containsKey(newHead)) {
                     map.put(newHead, new Node(newHead.val));
                 }
-                if (newHead.random != null) {
-                    Node random = newHead.random;
+                final Node random = newHead.random;
+                if (random != null) {
                     if (!map.containsKey(random)) {
                         map.put(random, new Node(random.val));
                     }
@@ -113,6 +114,7 @@ public class P138CopyListWithRandomPointer {
                 }
                 newHead = newHead.next;
             }
+            //next
             newHead = head;
             while (newHead != null) {
                 Node next = newHead.next;

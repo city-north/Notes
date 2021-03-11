@@ -2,7 +2,7 @@
 
 [TOC]
 
-## 前言
+## 1.前言
 
 今天我们重点介绍 Lock 的使用，在介绍 Lock 的使用之前，有个问题需要你首先思考一下：
 
@@ -10,9 +10,11 @@
 
 难道 Java 标准委员会还能同意“重复造轮子”的方案？很显然它们之间是有巨大区别的。那区别在哪里呢？如果能深入理解这个问题，对你用好 Lock 帮助很大。下面我们就一起来剖析一下这个问题。
 
-## 再造管程的理由
+## 2.再造管程的理由
 
-你也许曾经听到过很多这方面的传说，例如在 Java 的 1.5 版本中，synchronized 性能不如 SDK 里面的 Lock，但 1.6 版本之后，synchronized 做了很多优化，将性能追了上来，所以 1.6 之后的版本又有人推荐使用 synchronized 了。那性能是否可以成为“重复造轮子”的理由呢？显然不能。因为性能问题优化一下就可以了，完全没必要“重复造轮子”。
+你也许曾经听到过很多这方面的传说，例如在 Java 的 1.5 版本中，synchronized 性能不如 SDK 里面的 Lock，但 1.6 版本之后，synchronized 做了很多优化，将性能追了上来，所以 1.6 之后的版本又有人推荐使用 synchronized 了。那性能是否可以成为“重复造轮子”的理由呢？
+
+显然不能。因为性能问题优化一下就可以了，完全没必要“重复造轮子”。
 
 到这里，关于这个问题，你是否能够想出一条理由来呢？如果你细心的话，也许能想到一点。那就是我们前面在介绍[死锁问题](https://time.geekbang.org/column/article/85001)的时候，提出了一个**破坏不可抢占条件**方案，但是这个方案 synchronized 没有办法解决。原因是 synchronized 申请资源的时候，如果申请不到，线程直接进入阻塞状态了，而线程进入阻塞状态，啥都干不了，也释放不了线程已经占有的资源。但我们希望的是：
 
@@ -39,12 +41,15 @@ boolean tryLock();
 
 Java SDK 里面 Lock 的使用，有一个经典的范例，就是`try{}finally{}`，需要重点关注的是在 finally 里面释放锁。这个范例无需多解释，你看一下下面的代码就明白了。
 
-但是有一点需要解释一下，那就是可见性是怎么保证的。你已经知道 Java 里多线程的可见性是通过 Happens-Before 规则保证的，而 synchronized 之所以能够保证可见性，也是因为有一条 synchronized 相关的规则：synchronized 的解锁 Happens-Before 于后续对这个锁的加锁。那 Java SDK 里面 Lock 靠什么保证可见性呢？例如在下面的代码中，线程 T1 对 value 进行了 +=1 操作，那后续的线程 T2 能够看到 value 的正确结果吗？
+但是有一点需要解释一下，那就是可见性是怎么保证的。你已经知道 Java 里多线程的可见性是通过 Happens-Before 规则保证的，而 synchronized 之所以能够保证可见性，也是因为有一条 synchronized 相关的规则：
+
+- synchronized 的解锁 Happens-Before 于后续对这个锁的加锁。
+
+那 Java SDK 里面 Lock 靠什么保证可见性呢？例如在下面的代码中，线程 T1 对 value 进行了 +=1 操作，那后续的线程 T2 能够看到 value 的正确结果吗？
 
 ```java
 class X {
-  private final Lock rtl =
-  new ReentrantLock();
+  private final Lock rtl =new ReentrantLock();
   int value;
   public void addOne() {
     // 获取锁
@@ -61,7 +66,11 @@ class X {
 
 答案必须是肯定的。**Java SDK 里面锁**的实现非常复杂，这里我就不展开细说了，但是原理还是需要简单介绍一下：它是**利用了 volatile 相关的 Happens-Before 规则**。
 
-Java SDK 里面的 ReentrantLock，内部持有一个 volatile 的成员变量 state，获取锁的时候，会读写 state 的值；解锁的时候，也会读写 state 的值（简化后的代码如下面所示）。也就是说，在执行 value+=1 之前，程序先读写了一次 volatile 变量 state，在执行 value+=1 之后，又读写了一次 volatile 变量 state。根据相关的 Happens-Before 规则：
+Java SDK 里面的 ReentrantLock，内部持有一个 volatile 的成员变量 state，获取锁的时候，会读写 state 的值；
+
+- 解锁的时候，也会读写 state 的值（简化后的代码如下面所示）。
+
+也就是说，在执行 value+=1 之前，程序先读写了一次 volatile 变量 state，在执行 value+=1 之后，又读写了一次 volatile 变量 state。根据相关的 Happens-Before 规则：
 
 1. **顺序性规则**：对于线程 T1，value+=1 Happens-Before 释放锁的操作 unlock()；
 2. **volatile 变量规则**：由于 state = 1 会先读取 state，所以线程 T1 的 unlock() 操作 Happens-Before 线程 T2 的 lock() 操作；
@@ -162,8 +171,7 @@ Java SDK 并发包里的 Lock 接口里面的每个方法，你可以感受到�
 ```java
 class Account {
   private int balance;
-  private final Lock lock
-          = new ReentrantLock();
+  private final Lock lock = new ReentrantLock();
   // 转账
   void transfer(Account tar, int amt){
     while (true) {

@@ -1,8 +1,10 @@
-# BGREWRITEAOF
+# 022-Redis持久化-重写命令-bgrewriteaof
 
 > 可用版本： >= 1.0.0
 >
 > 时间复杂度： O(N)， `N` 为要追加到 AOF 文件中的数据数量。
+
+[TOC]
 
 执行一个 [AOF文件](http://redis.io/topics/persistence#append-only-file) 重写操作。重写会创建一个当前 AOF 文件的体积优化版本。
 

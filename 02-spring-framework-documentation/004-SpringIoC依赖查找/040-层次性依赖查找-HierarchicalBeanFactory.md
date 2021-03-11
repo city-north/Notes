@@ -28,10 +28,6 @@ BeanFactory的直接子接口,
 - HierarchicalBeanFactory
 - 工具类BeanFactoryUtils
 
-
-
-
-
 ![image-20200917212321381](../../assets/image-20200917212321381.png)
 
 ## 双亲BeanFactory

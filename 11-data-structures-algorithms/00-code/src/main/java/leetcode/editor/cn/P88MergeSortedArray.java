@@ -47,26 +47,27 @@ public class P88MergeSortedArray {
         // TO TEST [1,2,3,0,0,0]
     }
 
+    //    输入：nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+//    输出：[1,2,2,3,5,6]
+//    输入：nums1 = [1], m = 1, nums2 = [], n = 0
+//    输出：[1]
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public void merge(int[] nums1, int m, int[] nums2, int n) {
-            int p1 = 0, p2 = 0;
-            int[] sorted = new int[m + n];
-            int cur;
-            int k = 0;
-            while (p1 < m || p2 < n) {
-                if (p1 == m) {
-                    cur = nums2[p2++];
-                } else if (p2 == n) {
-                    cur = nums1[p1++];
-                } else if (nums1[p1] < nums2[p2]) {
-                    cur = nums1[p1++];
+            int a = m - 1;
+            int b = n - 1;
+            int[] t = new int[m + n];
+            int k = m + n - 1;
+            while (a >= 0 || b >= 0) {
+                if (a < 0) {
+                    t[k--] = nums2[b--];
+                } else if (b < 0) {
+                    t[k--] = nums1[a--];
                 } else {
-                    cur = nums2[p2++];
+                    t[k--] = nums1[a] > nums2[b] ? nums1[a--] : nums2[b--];
                 }
-                sorted[k++] = cur;
             }
-            System.arraycopy(sorted, 0, nums1, 0, m + n);
+            System.arraycopy(t, 0, nums1, 0, t.length);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
