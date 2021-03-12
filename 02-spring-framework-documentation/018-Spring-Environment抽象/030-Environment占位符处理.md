@@ -8,8 +8,6 @@ Environment通过聚合一个PropertySourcesPlaceholderConfigurer从而实现了
 
 调用的逻辑通过在PlaceholderConfigurerSupport里的BeanFactoryProcesser回调中获取bean后解析
 
-
-
 ## 核心类
 
 - Spring 3.1 之前的占位符处理 
@@ -41,7 +39,6 @@ public class PropertyPlaceholderConfigurerDemo {
         context.close();
     }
 }
-
 ```
 
 配置文件

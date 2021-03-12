@@ -6,7 +6,7 @@
 
 ![image-20210113123624597](../../assets/image-20210113123624597.png)
 
-## Spring-Environment使用场景
+## 1.Spring-Environment使用场景
 
 - 用于属性占位符处理
 
@@ -21,11 +21,10 @@
 在Environment 中聚合了一个ConfigurablePropertyResolver解析器,实际上Environment中的属性解析功能均由其进行解析
 
 ```java
-private final ConfigurablePropertyResolver propertyResolver =
-  new PropertySourcesPropertyResolver(this.propertySources);
+private final ConfigurablePropertyResolver propertyResolver = new PropertySourcesPropertyResolver(this.propertySources);
 ```
 
-## 用于属性占位符处理
+### 1.1用于属性占位符处理
 
 占位符是一种比较通用的编程手段, 防止我们在一些配置尤其是一些属性上面进行硬编码,主要有接口 PropertyResolver 和 ConfigurablePropertyResolver 提供这些行为
 
@@ -35,7 +34,7 @@ String resolvePlaceholders(String text);
 String resolveRequiredPlaceholders(String text) throws IllegalArgumentException;
 ```
 
-## 用于转换Spring配置属性类型 
+### 1.2用于转换Spring配置属性类型 
 
 配置存储形式一般是key-value , 通常是文本形式表达, 这就涉及到字符串属性->指定类型 , 主要由 `PropertyResolver.getProperty(String key, Class<T> targetType)`提供相关功能 , 
 
@@ -48,16 +47,16 @@ String getRequiredProperty(String key) throws IllegalStateException;
 <T> T getRequiredProperty(String key, Class<T> targetType) throws IllegalStateException;
 ```
 
-## 用于存储Spring配置属性源(PropertySource)
+### 1.3用于存储Spring配置属性源(PropertySource)
 
 ConfigurableEnvironment 接口提供,主要提供的是PropertySource的获取
 
-```
+```java
 //org.springframework.core.env.ConfigurableEnvironment#getPropertySources
 MutablePropertySources getPropertySources();
 ```
 
-## 用于Profiles状态的维护
+#### 1.4用于Profiles状态的维护
 
 ConfigurableEnvironment 和 Envoronment 提供,主要维护相关的激活或者默认Profiles
 
@@ -78,4 +77,3 @@ void setActiveProfiles(String... profiles);
 void addActiveProfile(String profile);
 void setDefaultProfiles(String... profiles);
 ```
-

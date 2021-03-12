@@ -27,3 +27,5 @@ io.seata.server.Server
 -Dbasedir=/data/hls-hzero/hls-seata
 ```
 
+![img](https://processon.com/chart_image/604a1234e0b34d091d96ae19.png)
+
