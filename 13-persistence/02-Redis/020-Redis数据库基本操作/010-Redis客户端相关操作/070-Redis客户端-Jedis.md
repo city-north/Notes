@@ -1,7 +1,6 @@
-# Jedis
+# 070-Redis客户端-Jedis
 
--  [011-Jedis-连接Sentinel原理.md](011-Jedis-连接Sentinel原理.md) 
--  [012-Jedis-连接Cluster原理.md](012-Jedis-连接Cluster原理.md) 
+[TOC]
 
 ## 特点
 
@@ -35,3 +34,4 @@ Pipeline 模式是一次性发送多个命令，最后一 次取回所有的返�
 #### 事务模式
 
 Transaction 模式即开启 Redis 的事务管理，事务模式开 启后，所有的命令(除了 exec，discard，multi 和 watch)到达服务端以后不会立即执 行，会进入一个等待队列。
+

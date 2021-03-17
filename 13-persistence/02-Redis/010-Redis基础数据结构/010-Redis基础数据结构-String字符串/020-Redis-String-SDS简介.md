@@ -8,6 +8,10 @@ Simple Dynamic String , 带长度信息的字节数组
 
 ## SDS特点
 
+https://processon.com/mindmap/60520627e401fd11ed1ecbfa
+
+![image-20210317214957332](../../../../assets/image-20210317214957332.png)
+
 - 不内存溢出 , 不用担心内存溢出问题，如果需要会对 SDS 进行扩容。
 
 - O(1)获取长度 , 获取字符串长度时间复杂度为 O(1)，因为定义了 len 属性。

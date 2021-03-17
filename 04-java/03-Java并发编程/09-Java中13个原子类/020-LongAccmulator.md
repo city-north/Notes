@@ -1,16 +1,15 @@
-# LongAccumulator类原理
+# 020-LongAccmulator
 
 [TOC]
 
 ## 总结
 
-LongAdder 类是 LongAccumulator  的一个特例, LongAccumulator 比 LongAdder 更强大
+LongAdder 类是 LongAccumulator 的一个特例, LongAccumulator 比 LongAdder 更强大
 
 ## 构造函数
 
 ```java
-public LongAccumulator(LongBinaryOperator accumulatorFunction,
-                       long identity) {
+public LongAccumulator(LongBinaryOperator accumulatorFunction,long identity) {
   this.function = accumulatorFunction;
   base = this.identity = identity;
 }
