@@ -68,7 +68,6 @@ public class RealObject implements Action {
         System.out.println("The real object is doing");
     }
 }
-
 ```
 
 ##### 代理对象
@@ -76,7 +75,6 @@ public class RealObject implements Action {
 ```java
 /**
  * 代理对象
- *
  * @author EricChen 2020/01/01 11:58
  */
 public class ProxyObject implements Action {
@@ -95,9 +93,7 @@ public class ProxyObject implements Action {
     private void enhance() {
         System.out.println("Proxy object is enhancing ");
     }
-
 }
-
 ```
 
 测试：

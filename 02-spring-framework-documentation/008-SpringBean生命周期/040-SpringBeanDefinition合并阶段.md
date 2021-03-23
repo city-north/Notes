@@ -148,8 +148,7 @@ protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throw
 由于BeanDefinition是可以嵌套的,所以提供了containingBd属性来判断
 
 ```java
-protected RootBeanDefinition getMergedBeanDefinition(
-  String beanName, BeanDefinition bd, 
+protected RootBeanDefinition getMergedBeanDefinition(String beanName, BeanDefinition bd, 
   @Nullable BeanDefinition containingBd // 嵌套Bean
 )throws BeanDefinitionStoreException {
   //线程不安全,加锁,ConcurrentHashMap仅仅是put和get是线程安全的
@@ -194,8 +193,7 @@ protected RootBeanDefinition getMergedBeanDefinition(
             }
             else {
               throw new NoSuchBeanDefinitionException(parentBeanName,
-                                                      "Parent name '" + parentBeanName + "' is equal to bean name '" + beanName +
-                                                      "': cannot be resolved without an AbstractBeanFactory parent");
+"Parent name '" + parentBeanName + "' is equal to bean name '" + beanName +"': cannot be resolved without an AbstractBeanFactory parent");
             }
           }
         }

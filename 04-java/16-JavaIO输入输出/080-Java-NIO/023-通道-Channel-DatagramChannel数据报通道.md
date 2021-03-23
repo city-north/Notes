@@ -104,7 +104,7 @@ public class UDPClient {
 - 首先调用bind方法绑定datagramChannel的监听端口
 - 当数据来到后，调用receive方法， 从datagramChannel数据包通道接收数据，再写入byteBuffer缓冲区中
 
-```
+```java
 public class UDPServer {
 
     public void receive() throws IOException {

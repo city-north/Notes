@@ -26,7 +26,7 @@ Java NIO组件, 提供了统一的API, 屏蔽了底层不同操作系统的差�
 - NIO 的操作是非阻塞的; OIO 的操作是阻塞的
 - NIO 基于多路复用技术, 有选择器 (Selector) 的概念
 
-#### NIO 是面向缓冲区的( Buffer Channel) ; OIO 是面向流的 (Stream Oriended) 的]
+#### NIO 是面向缓冲区的( Buffer Channel) ; OIO 是面向流的 (Stream Oriended) 的
 
 - OIO的是面向字节流或者字符流的, 在一般的OIO 操作中, 我们以流式的方式顺序地从一个流 (Stream) 中读取一个或者多个字节, 因为, 我们不能随便的改变指针的位置
 

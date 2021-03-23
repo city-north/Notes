@@ -4,6 +4,8 @@
 
 [TOC]
 
+<img src="../../assets/image-20200922174843774.png" alt="image-20200922174843774"  />
+
 ## 一言蔽之
 
 SpringBean属性赋值前回调的执行时机是

@@ -1,9 +1,5 @@
 # 020-SpringBean元信息解析阶段.md
 
-目录
-
----
-
 [TOC]
 
 ## 简介
@@ -95,7 +91,6 @@ public class AnnotatedBeanDefinitionParsingDemo {
         System.out.println(demo);
     }
 }
-
 ```
 
 小细节
@@ -110,7 +105,7 @@ public class AnnotatedBeanDefinitionReader {
 	private ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
 
 	private ConditionEvaluator conditionEvaluator;
-
+}
 ```
 
 注册bean时如果没有指定,则使用这个方式获取JavaBean的Bean名称
@@ -160,7 +155,6 @@ private <T> void doRegisterBean(Class<T> beanClass, @Nullable String name,
   //注册到容器
   BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 }
-
 ```
 
 

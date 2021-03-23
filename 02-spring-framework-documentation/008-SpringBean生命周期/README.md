@@ -1,6 +1,6 @@
 # 008-SpringBean生命周期
 
-# BeanFactory是怎么控制Bean的生命周期
+### BeanFactory是怎么控制Bean的生命周期
 
 BeanFactory的默认实现是DefaultListableBeanFactory , 其中Bean声明周期与方法映射如下:
 

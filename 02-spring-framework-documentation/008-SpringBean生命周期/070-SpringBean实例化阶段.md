@@ -6,6 +6,8 @@
 
 [TOC]
 
+<img src="../../assets/image-20200922174843774.png" alt="image-20200922174843774"  />
+
 ## 一言蔽之
 
 Bean实例化阶段实际上是依赖查找或者依赖注入的时候，通过Bean的名称、BeanDefinition和构造参数，创建一个代理对BeanWrapper对象的过程

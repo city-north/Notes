@@ -1,7 +1,5 @@
 # 030-BeanDefinition的注册
 
----
-
 [TOC]
 
 ## 注册的方式
@@ -30,7 +28,7 @@ BeanDefinitionReaderUtils#registerBeanDefinitionn(
 
 #### 1.3配置类方式
 
-```
+```java
 AnnotationConfigApplicationContext#register
 ```
 

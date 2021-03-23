@@ -75,108 +75,108 @@ after exexute
 
 ```java
 protected Object create(Object key) {
-        try {
-          //获取当前类加载器，应用类加载器
-            ClassLoader loader = this.getClassLoader();
-            Map<ClassLoader, AbstractClassGenerator.ClassLoaderData> cache = CACHE;
-            AbstractClassGenerator.ClassLoaderData data = (AbstractClassGenerator.ClassLoaderData)cache.get(loader);
-            if (data == null) {
-                Class var5 = AbstractClassGenerator.class;
-                synchronized(AbstractClassGenerator.class) {
-                    cache = CACHE;
-                    data = (AbstractClassGenerator.ClassLoaderData)cache.get(loader);
-                    if (data == null) {
-                        Map<ClassLoader, AbstractClassGenerator.ClassLoaderData> newCache = new WeakHashMap(cache);
-                        //创建AbstractClassGenerator
-                        data = new AbstractClassGenerator.ClassLoaderData(loader);
-                        newCache.put(loader, data);
-                        CACHE = newCache;
-                    }
-                }
-            }
-
-            this.key = key;
-            //调用 get方法获取字节码，如果没有字节码，则会创建字节码
-            Object obj = data.get(this, this.getUseCache());
-            return obj instanceof Class ? this.firstInstance((Class)obj) : this.nextInstance(obj);
-        } catch (RuntimeException var9) {
-            throw var9;
-        } catch (Error var10) {
-            throw var10;
-        } catch (Exception var11) {
-            throw new CodeGenerationException(var11);
+  try {
+    //获取当前类加载器，应用类加载器
+    ClassLoader loader = this.getClassLoader();
+    Map<ClassLoader, AbstractClassGenerator.ClassLoaderData> cache = CACHE;
+    AbstractClassGenerator.ClassLoaderData data = (AbstractClassGenerator.ClassLoaderData)cache.get(loader);
+    if (data == null) {
+      Class var5 = AbstractClassGenerator.class;
+      synchronized(AbstractClassGenerator.class) {
+        cache = CACHE;
+        data = (AbstractClassGenerator.ClassLoaderData)cache.get(loader);
+        if (data == null) {
+          Map<ClassLoader, AbstractClassGenerator.ClassLoaderData> newCache = new WeakHashMap(cache);
+          //创建AbstractClassGenerator
+          data = new AbstractClassGenerator.ClassLoaderData(loader);
+          newCache.put(loader, data);
+          CACHE = newCache;
         }
+      }
     }
+
+    this.key = key;
+    //调用 get方法获取字节码，如果没有字节码，则会创建字节码
+    Object obj = data.get(this, this.getUseCache());
+    return obj instanceof Class ? this.firstInstance((Class)obj) : this.nextInstance(obj);
+  } catch (RuntimeException var9) {
+    throw var9;
+  } catch (Error var10) {
+    throw var10;
+  } catch (Exception var11) {
+    throw new CodeGenerationException(var11);
+  }
+}
 ```
 
 跟进去`get`方法：
 
 ```java
-   public Object get(AbstractClassGenerator gen, boolean useCache) {
-               //判断是否开启缓存，可直接设置：enhancer.setUseCache(false);默认为true
-            if (!useCache) {
-                return gen.generate(this);
-            } else {
-                Object cachedValue = this.generatedClasses.get(gen);
-                return gen.unwrapCachedValue(cachedValue);
-            }
-        }
+public Object get(AbstractClassGenerator gen, boolean useCache) {
+  //判断是否开启缓存，可直接设置：enhancer.setUseCache(false);默认为true
+  if (!useCache) {
+    return gen.generate(this);
+  } else {
+    Object cachedValue = this.generatedClasses.get(gen);
+    return gen.unwrapCachedValue(cachedValue);
+  }
+}
 ```
 
 继续跟进生成方法:
 
 ```java
-    protected Class generate(AbstractClassGenerator.ClassLoaderData data) {
-        Object save = CURRENT.get();
-        CURRENT.set(this);
+protected Class generate(AbstractClassGenerator.ClassLoaderData data) {
+  Object save = CURRENT.get();
+  CURRENT.set(this);
 
-        Class var8;
-        try {
-            ClassLoader classLoader = data.getClassLoader();
-            if (classLoader == null) {
-                throw new IllegalStateException("ClassLoader is null while trying to define class " + this.getClassName() + ". It seems that the loader has been expired from a weak reference somehow. Please file an issue at cglib's issue tracker.");
-            }
-
-            String className;
-            //生成代理类名称
-            synchronized(classLoader) {
-                className = this.generateClassName(data.getUniqueNamePredicate());
-                data.reserveName(className);
-                this.setClassName(className);
-            }
-
-            Class gen;
-            //这里通过应用类加载器和类名称尝试加载，如果加载不到，才开始创建字节码
-            if (this.attemptLoad) {
-                try {
-                    gen = classLoader.loadClass(this.getClassName());
-                    Class var25 = gen;
-                    return var25;
-                } catch (ClassNotFoundException var20) {
-                    ;
-                }
-            }
-
-         //通过生成策略创建字节码，当前对象即为Enhancer对象，字节数组形式
-            byte[] b = this.strategy.generate(this);
-            className = ClassNameReader.getClassName(new ClassReader(b));
-            ProtectionDomain protectionDomain = this.getProtectionDomain();
-            synchronized(classLoader) {
-                //将字节码加载到JVM内存，同时会触发代理对象初始化
-                if (protectionDomain == null) {
-                    gen = ReflectUtils.defineClass(className, b, classLoader);
-                } else {
-                    gen = ReflectUtils.defineClass(className, b, classLoader, protectionDomain);
-                }
-            }
-
-            var8 = gen;
-       } finally {
-            CURRENT.set(save);
-        }
-
-        return var8;
+  Class var8;
+  try {
+    ClassLoader classLoader = data.getClassLoader();
+    if (classLoader == null) {
+      throw new IllegalStateException("ClassLoader is null while trying to define class " + this.getClassName() + ". It seems that the loader has been expired from a weak reference somehow. Please file an issue at cglib's issue tracker.");
     }
+
+    String className;
+    //生成代理类名称
+    synchronized(classLoader) {
+      className = this.generateClassName(data.getUniqueNamePredicate());
+      data.reserveName(className);
+      this.setClassName(className);
+    }
+
+    Class gen;
+    //这里通过应用类加载器和类名称尝试加载，如果加载不到，才开始创建字节码
+    if (this.attemptLoad) {
+      try {
+        gen = classLoader.loadClass(this.getClassName());
+        Class var25 = gen;
+        return var25;
+      } catch (ClassNotFoundException var20) {
+        ;
+      }
+    }
+
+    //通过生成策略创建字节码，当前对象即为Enhancer对象，字节数组形式
+    byte[] b = this.strategy.generate(this);
+    className = ClassNameReader.getClassName(new ClassReader(b));
+    ProtectionDomain protectionDomain = this.getProtectionDomain();
+    synchronized(classLoader) {
+      //将字节码加载到JVM内存，同时会触发代理对象初始化
+      if (protectionDomain == null) {
+        gen = ReflectUtils.defineClass(className, b, classLoader);
+      } else {
+        gen = ReflectUtils.defineClass(className, b, classLoader, protectionDomain);
+      }
+    }
+
+    var8 = gen;
+  } finally {
+    CURRENT.set(save);
+  }
+
+  return var8;
+}
 ```
 
 来看一下代理类名称的生成规则:
@@ -363,53 +363,53 @@ RealService$$FastClassByCGLIB$$9ae0a699.class
 
 ## 四 动态代理方法调用
 
-```
+```java
 RealService realService = (RealService) enhancer.create();
- realService.realMethod();
+realService.realMethod();
 ```
 
 跟进上面的代理类，执行`realMethod`：
 
-```
-    public final void realMethod() {
-        MethodInterceptor var10000 = this.CGLIB$CALLBACK_0;
-        if (this.CGLIB$CALLBACK_0 == null) {
-            CGLIB$BIND_CALLBACKS(this);
-            var10000 = this.CGLIB$CALLBACK_0;
-        }
+```java
+public final void realMethod() {
+  MethodInterceptor var10000 = this.CGLIB$CALLBACK_0;
+  if (this.CGLIB$CALLBACK_0 == null) {
+    CGLIB$BIND_CALLBACKS(this);
+    var10000 = this.CGLIB$CALLBACK_0;
+  }
 
-        if (var10000 != null) {
-            //这里执行回调
-            var10000.intercept(this, CGLIB$realMethod$0$Method, CGLIB$emptyArgs, CGLIB$realMethod$0$Proxy);
-        } else {
-            super.realMethod();
-        }
-    }
+  if (var10000 != null) {
+    //这里执行回调
+    var10000.intercept(this, CGLIB$realMethod$0$Method, CGLIB$emptyArgs, CGLIB$realMethod$0$Proxy);
+  } else {
+    super.realMethod();
+  }
+}
 ```
 
 上面触发回调，进入我们的拦截器实现类：
 
-```
-  public Object intercept(Object obj, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-        System.out.println("before exexute");
-        Object result=methodProxy.invokeSuper(obj, objects);
-        System.out.println("after exexute");
-        return result;
-    }
+```java
+public Object intercept(Object obj, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+  System.out.println("before exexute");
+  Object result=methodProxy.invokeSuper(obj, objects);
+  System.out.println("after exexute");
+  return result;
+}
 ```
 
 继续跟进`methodProxy.invokeSuper`：
 
-```
-    public Object invokeSuper(Object obj, Object[] args) throws Throwable {
-        try {
-            this.init();
-            MethodProxy.FastClassInfo fci = this.fastClassInfo;
-            return fci.f2.invoke(fci.i2, obj, args);
-        } catch (InvocationTargetException var4) {
-            throw var4.getTargetException();
-        }
-    }
+```java
+public Object invokeSuper(Object obj, Object[] args) throws Throwable {
+  try {
+    this.init();
+    MethodProxy.FastClassInfo fci = this.fastClassInfo;
+    return fci.f2.invoke(fci.i2, obj, args);
+  } catch (InvocationTargetException var4) {
+    throw var4.getTargetException();
+  }
+}
 ```
 
 上面`init()`会进行方法索引绑定：

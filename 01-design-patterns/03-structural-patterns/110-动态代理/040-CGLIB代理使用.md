@@ -35,8 +35,6 @@ Cglib代理也叫做**子类代理，**它是在内存中构建一个子类对�
 public class UserServiceCglibProxyFactory implements MethodInterceptor {
 
     private Logger logger = LoggerFactory.getLogger(UserServiceCglibProxyFactory.class);
-
-
     /**
      * 获取Cglib代理对象
      * @return

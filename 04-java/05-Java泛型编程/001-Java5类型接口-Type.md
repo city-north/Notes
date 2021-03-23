@@ -50,7 +50,6 @@ java.lang.reflect.Method 1.1
 //获得这个方法被声明的泛型返回类型。
 ·Type[]getGenericParameterTypes()5.0
 //获得这个方法被声明的泛型参数类型。如果这个方法没有参数，返回长度为0的数组。
-
 ```
 
 #### ￼java.lang.reflect.TypeVariable 5.0 类型变量

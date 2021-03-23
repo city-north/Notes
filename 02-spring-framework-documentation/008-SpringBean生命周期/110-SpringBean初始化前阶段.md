@@ -4,6 +4,8 @@
 
 [TOC]
 
+<img src="../../assets/image-20200922174843774.png" alt="image-20200922174843774"  />
+
 ## 一言蔽之
 
 初始化Bean之后调用的BeanPostProcessor#postProcessBeforeInitialization
