@@ -64,10 +64,10 @@ put方法的参数就是缓冲区类型的参数
 
 ```java
 main |>  写入 
-    putTest |>  ------------after putTest------------------ 
-    putTest |>  position=5 
-    putTest |>  limit=20 
-    putTest |>  capacity=20 
+putTest |>  ------------after putTest------------------ 
+putTest |>  position=5 
+putTest |>  limit=20 
+putTest |>  capacity=20 
 ```
 写入完成后，position = 5, limit 和 capacity 不变
 
@@ -114,7 +114,7 @@ public final Buffer flip() {
 
 #### 写模式和读取模式之前的转换
 
-![image-20210215071608672](../../../assets/image-20210215071608672.png)
+![image-20210215071608672](../../../../assets/image-20210215071608672.png)
 
 ## get() - 从缓冲区中获取
 
@@ -139,7 +139,7 @@ public static void getTest() {
 }
 ```
 
-               main |>  读取 
+                main |>  读取 
              getTest |>  j = 0 
              getTest |>  j = 1 
              getTest |>  ------------after get 2 int ------------------ 
@@ -215,19 +215,21 @@ public static void reRead() {
 }
 ```
 
-           reRead |>  ------------after reRead------------------ 
-              reRead |>  position=5 
-              reRead |>  limit=5 
-              reRead |>  capacity=20 
-                main |>  make&reset写读 
-          afterReset |>  ------------after reset------------------ 
-          afterReset |>  position=2 
-          afterReset |>  limit=5 
-          afterReset |>  capacity=20 
-          afterReset |>  j = 2 
-          afterReset |>  j = 3 
-          afterReset |>  j = 4 
-                main |>  清空 
+```java
+          reRead |>  ------------after reRead------------------ 
+          reRead |>  position=5 
+          reRead |>  limit=5 
+          reRead |>  capacity=20 
+            main |>  make&reset写读 
+      afterReset |>  ------------after reset------------------ 
+      afterReset |>  position=2 
+      afterReset |>  limit=5 
+      afterReset |>  capacity=20 
+      afterReset |>  j = 2 
+      afterReset |>  j = 3 
+      afterReset |>  j = 4 
+            main |>  清空 
+```
 ## clear () - 清空缓冲区
 
 在读取模式下， 调用clear() 方法将缓冲区切换为写入模式，

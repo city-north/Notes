@@ -44,3 +44,4 @@ channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 
 - 某个SocketChannel 通道， 完成了和对端的握手连接， 则处于“连接就绪状态” OP_CONNECT状态
 - 某个ServerSocketChannel ,服务通道， 监听到一个新链接的到来，则处于 接受就绪（OP_ACCEOT）状态
+

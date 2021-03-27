@@ -24,8 +24,6 @@ RandomAccessFile aFile = new RandomAccessFile(fileName, "rw");
 FileChannel inChannel = aFile.getChannel();
 ```
 
-
-
 ## 需要注意的是
 
 - 在实例代码中，外层的每一次while循环， 都需要两次模式 ByteBuffer切换
@@ -37,7 +35,6 @@ FileChannel inChannel = aFile.getChannel();
 
 ```Java
 public class FileNIOCopyDemo {
-
     /**
      * 演示程序的入口函数
      *
@@ -67,7 +64,6 @@ public class FileNIOCopyDemo {
 
     /**
      * 复制文件
-     *
      * @param srcPath
      * @param destPath
      */

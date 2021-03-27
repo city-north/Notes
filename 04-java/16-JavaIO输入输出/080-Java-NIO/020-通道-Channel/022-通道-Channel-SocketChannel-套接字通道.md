@@ -31,7 +31,7 @@ socketChannel.configureBlocking(false);
 
 在非阻塞的清空下， 与服务器的连接还可能没有真正的建立，socketChannel.connect方法就返回了， 因此需要不断自旋，检查当前是否是连接到了主机
 
-```
+```java
 //不断的自旋、等待连接完成，或者做一些其他的事情
 while (!socketChannel.finishConnect()) {
 
@@ -42,7 +42,7 @@ while (!socketChannel.finishConnect()) {
 
 当新连接事件来到时，在服务端的ServerSocketChannel 能成功的查询出一个新连接事件， 并且通过调用服务端 ServerSocketChannel监听套接字的accept()方法 来获取新连接的套接字通道
 
-```
+```java
 SocketChannel socketChannel = (SocketChannel) selectedKey.channel();
 // 10、若选择键的IO事件是“连接就绪”事件,就获取客户端连接
  socketChannel = serverSocketChannel.accept();

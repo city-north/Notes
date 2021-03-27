@@ -24,7 +24,7 @@ NIO 中, 同一个同一个网络连接使用一个通道表示, 所有的NIO的
 - ServerSocketChannel 服务器嵌套字通道（或者服务器监听通道），允许我们监听TCP连接要求，为每个监听到的请求， 创建一个SocketChannel套接字通道
 - DatagramChannel数据报通道，用于UDP 协议读取
 
-![image-20210215153941558](../../../assets/image-20210215153941558.png)
+![image-20210215153941558](../../../../assets/image-20210215153941558.png)
 
 ## Channel和流
 
