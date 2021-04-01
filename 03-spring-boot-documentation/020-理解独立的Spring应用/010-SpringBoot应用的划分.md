@@ -27,9 +27,7 @@ final SpringApplication build = builder.build(args);
 build.setWebApplicationType(WebApplicationType.NONE);
 ```
 
-的方式进行设置
-
-在切换的同时要加入相应的Starter
+的方式进行设置, 在切换的同时要加入相应的Starter
 
 #### Web应用的Starter
 

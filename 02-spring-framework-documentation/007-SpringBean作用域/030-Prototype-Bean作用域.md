@@ -1,6 +1,5 @@
 # 030-Prototype-Bean作用域
 
----
 [TOC]
 
 ## prototype类型Bean的特点
@@ -44,5 +43,80 @@ applicationContext.addBeanFactoryPostProcessor(beanFactory -> {
 
 // 启动 Spring 应用上下文
 applicationContext.refresh();
+```
+
+#### 推荐使用 DisposableBean逐个销毁
+
+```java
+public class BeanScopeDemo implements DisposableBean {
+
+    @Bean
+    // 默认 scope 就是 "singleton"
+    public static User singletonUser() {
+        return createUser();
+    }
+
+    @Bean
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public static User prototypeUser() {
+        return createUser();
+    }
+
+    private static User createUser() {
+        User user = new User();
+        user.setId(System.nanoTime());
+        return user;
+    }
+
+    @Autowired
+    @Qualifier("singletonUser")
+    private User singletonUser;
+
+    @Autowired
+    @Qualifier("singletonUser")
+    private User singletonUser1;
+
+    @Autowired
+    @Qualifier("prototypeUser")
+    private User prototypeUser;
+
+    @Autowired
+    @Qualifier("prototypeUser")
+    private User prototypeUser1;
+
+    @Autowired
+    @Qualifier("prototypeUser")
+    private User prototypeUser2;
+
+    @Autowired
+    private Map<String, User> users;
+
+    @Autowired
+    private ConfigurableListableBeanFactory beanFactory; // Resolvable Dependency
+
+
+    @Override
+    public void destroy() throws Exception {
+
+        System.out.println("当前 BeanScopeDemo Bean 正在销毁中...");
+
+        this.prototypeUser.destroy();
+        this.prototypeUser1.destroy();
+        this.prototypeUser1.destroy();
+        this.prototypeUser2.destroy();
+        // 获取 BeanDefinition
+        for (Map.Entry<String, User> entry : this.users.entrySet()) {
+            String beanName = entry.getKey();
+            BeanDefinition beanDefinition = beanFactory.getBeanDefinition(beanName);
+          //如果是原型则销毁掉
+            if (beanDefinition.isPrototype()) { // 如果当前 Bean 是 prototype scope
+                User user = entry.getValue();
+                user.destroy();
+            }
+        }
+
+        System.out.println("当前 BeanScopeDemo Bean 销毁完成");
+    }
+}
 ```
 

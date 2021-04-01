@@ -10,3 +10,9 @@
 
   > 使用 CAS 非阻塞算法实现
 
+
+
+## 图示
+
+![](http://processon.com/chart_image/60601373e401fd4c03a384bd.png)
+

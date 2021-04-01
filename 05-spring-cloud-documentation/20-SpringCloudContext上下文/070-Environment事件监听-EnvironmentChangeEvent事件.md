@@ -1,5 +1,3 @@
-
-
 # 070-Environment事件监听-EnvironmentChangeEvent事件
 
 [TOC]

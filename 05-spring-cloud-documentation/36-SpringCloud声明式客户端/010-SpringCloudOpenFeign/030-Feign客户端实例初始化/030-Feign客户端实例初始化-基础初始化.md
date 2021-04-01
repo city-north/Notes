@@ -79,7 +79,7 @@ DefaultTargeter的实现如下所示，只是调用了Feign.Builder的target方�
 //DefaultTargeter.java
 class DefaultTargeter implements Targeter {
 @Override
-    public <T< T target(FeignClientFactoryBean factory, Feign.Builder feign, FeignContext context,Target.HardCodedTarget<T< target) {
+    public <T> T target(FeignClientFactoryBean factory, Feign.Builder feign, FeignContext context,Target.HardCodedTarget<T> target) {
         return feign.target(target);
     }
 }
@@ -137,10 +137,10 @@ ReflectiveFeign的newInstance方法是生成FeignClient实例的关键实现。
 
 ```java
 //ReflectiveFeign.java
-public <T< T newInstance(Target<T< target) {
-    Map<String, MethodHandler< nameToHandler = targetToHandlersByName.apply(target);
-    Map<Method, MethodHandler< methodToHandler = new LinkedHashMap<Method, MethodHandler<();
-    List<DefaultMethodHandler< defaultMethodHandlers = new LinkedList<DefaultMethodHandler<();
+public <T> T newInstance(Target<T> target) {
+    Map<String, MethodHandler> nameToHandler = targetToHandlersByName.apply(target);
+    Map<Method, MethodHandler> methodToHandler = new LinkedHashMap<Method, MethodHandler();
+    List<DefaultMethodHandler> defaultMethodHandlers = new LinkedList<DefaultMethodHandler>();
     for (Method method : target.type().getMethods()) {
         if (method.getDeclaringClass() == Object.class) {
             continue;

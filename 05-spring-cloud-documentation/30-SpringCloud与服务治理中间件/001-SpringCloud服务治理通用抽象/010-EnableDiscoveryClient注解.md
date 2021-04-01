@@ -13,7 +13,7 @@ DiscoveryClient目前的实现有
 - Spring Cloud Netflix Eureka
 - Spring Cloud Consul Discovery
 - Spring Cloud Zookeeper Discovery
-- spring cloud Alibaba nacos-discovery
+- Spring Cloud Alibaba nacos-discovery
 
 DiscoveryClient的实现类会自动将本地的Spring Boot服务注册到远程服务发现中心。可以通过在@EnableDiscoveryClient中设置autoRegister=false来禁止自动注册行为。
 

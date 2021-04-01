@@ -1,6 +1,5 @@
 # 080-自定义Bean作用域
 
----
 [TOC]
 
 ## 简介
@@ -96,11 +95,11 @@ public class ThreadLocalScope implements Scope {
 标注自定义Scope
 
 ```java
-    @Bean
-    @Scope(ThreadLocalScope.SCOPE_NAME)
-    public User user() {
-        return createUser();
-    }
+@Bean
+@Scope(ThreadLocalScope.SCOPE_NAME)
+public User user() {
+  return createUser();
+}
 ```
 
 使用ApplicationContext注册一个Scope
