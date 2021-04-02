@@ -48,15 +48,6 @@ public class PostFactoryBeanFactoryDemo {
         }
     }
 
-    public class TestBeanFactoryAware implements BeanFactoryAware {
 
-        @Override
-        publicvoid setBeanFactory(BeanFactory beanFactory)throwsBeansException {
-
-            System.out.println("[TestBeanFactoryAware] " + beanFactory.getBean(TestBeanFactoryAware.class).getClass().getSimpleName());
-
-        }
-
-    }
 
 }
