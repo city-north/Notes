@@ -1,4 +1,4 @@
-# 030-BeanFactory准备阶段
+# 	030-BeanFactory准备阶段
 
 [TOC]
 
@@ -21,7 +21,7 @@ Bean在注册的时候,没有Class对象,只是知道类的全路径,通过Class
   - ResourceLoader
   - ApplicationEventPublisher
   - ApplicationContext
-- 注册ApplicationContextDetector对象
+- 注册ApplicationListenerDetector对象-扫描所有ApplicationListener对象并进行存储
 - 注册LoadTimeWeaverAwareProcessor对象(AOP对象)
 - 注册单例对象
   - Environment
