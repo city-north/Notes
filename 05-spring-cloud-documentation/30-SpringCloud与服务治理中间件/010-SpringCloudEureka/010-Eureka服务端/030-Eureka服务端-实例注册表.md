@@ -16,8 +16,6 @@
 
 InstanceRegistry是Eureka Server中注册表管理的核心接口。InstanceRegistry分别继承了LeaseManager和LookupService接口。
 
-
-
 <img src="../../../../assets/image-20210129161735471.png" alt="image-20210129161735471" style="zoom: 67%;" />
 
 

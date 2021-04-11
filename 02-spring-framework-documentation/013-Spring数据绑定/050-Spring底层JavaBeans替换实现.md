@@ -15,4 +15,3 @@
 - 属性(Property)
   - java.beans.PropertyEditor
 - 嵌套属性路径(nested path)
-

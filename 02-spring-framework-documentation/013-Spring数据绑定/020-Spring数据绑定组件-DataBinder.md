@@ -45,5 +45,3 @@ public void bind(PropertyValues pvs) {
 - 同时Bean对象User中存在name属性,当bind方法执行时
 - User中的name属性将被绑定为小马哥
 
-### 
-

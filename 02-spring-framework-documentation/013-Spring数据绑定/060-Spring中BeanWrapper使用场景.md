@@ -2,6 +2,8 @@
 
 [TOC]
 
+![img](http://processon.com/chart_image/606ec4a1e401fd710a03d0c2.png)
+
 ## BeanWrapper
 
 BeanWrapper是Spring底层核心API,是JavaBeans 基础设置的中心接口
