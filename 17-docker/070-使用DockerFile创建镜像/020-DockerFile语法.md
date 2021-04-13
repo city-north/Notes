@@ -1,4 +1,6 @@
-# DockerFile 语法
+# 020-DockerFile语法
+
+[TOC]
 
 https://github.com/CentOS/sig-cloud-instance-images/blob/f32666d2af356ed6835942ed753a4970e18bca94/docker/Dockerfile
 
@@ -68,3 +70,4 @@ CMD ["/bin/bash"]
 示例: 生成镜像名为jdk，标签为1.8
 
 `docker build -t jdk:1.8 .`
+
