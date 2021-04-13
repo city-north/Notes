@@ -1,8 +1,10 @@
-# CentOS docker 安装
+# 010-CentOS-docker安装
 
-> 环境
->
-> - CentOS 7.6
+[TOC]
+
+## 环境
+
+CentOS 7.6
 
 ## 更新yum源
 
