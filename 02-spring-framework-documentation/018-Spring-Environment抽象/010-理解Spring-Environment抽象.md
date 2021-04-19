@@ -65,7 +65,7 @@ public interface PropertyResolver {
 Environment抽象主要抽象了环境相关的行为,获取激活的Profile, 默认的ProfIle
 
 ```java
-public interface Environment extends PropertyResolver {
+  public interface Environment extends PropertyResolver {
 	//激活的Profile
 	String[] getActiveProfiles();
 	//默认的Profile

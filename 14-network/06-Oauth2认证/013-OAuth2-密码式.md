@@ -10,13 +10,13 @@
 
 第一步，A 网站要求用户提供 B 网站的用户名和密码。拿到以后，A 就直接向 B 请求令牌。
 
-> ```javascript
-> https://oauth.b.com/token?
->   grant_type=password&
->   username=USERNAME&
->   password=PASSWORD&
->   client_id=CLIENT_ID
-> ```
+```http
+https://oauth.b.com/token?
+grant_type=password&
+username=USERNAME&
+password=PASSWORD&
+client_id=CLIENT_ID
+```
 
 上面 URL 中，`grant_type`参数是授权方式，这里的`password`表示"密码式"，`username`和`password`是 B 的用户名和密码。
 

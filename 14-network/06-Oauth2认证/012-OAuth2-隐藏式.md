@@ -28,9 +28,9 @@ https://b.com/oauth/authorize?
 
 第二步，用户跳转到 B 网站，登录后同意给予 A 网站授权。这时，B 网站就会跳回`redirect_uri`参数指定的跳转网址，并且把令牌作为 URL 参数，传给 A 网站。
 
-> ```javascript
-> https://a.com/callback#token=ACCESS_TOKEN
-> ```
+```http
+https://a.com/callback#token=ACCESS_TOKEN
+```
 
 上面 URL 中，`token`参数就是令牌，A 网站因此直接在前端拿到令牌。
 

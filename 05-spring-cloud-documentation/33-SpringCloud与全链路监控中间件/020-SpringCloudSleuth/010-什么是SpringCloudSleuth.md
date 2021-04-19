@@ -14,7 +14,7 @@ Spring Cloud Sleuth为服务之间的调用提供链路追踪，
 
 - 通过Sleuth还能对链路优化，对于调用比较频繁的服务实施一些优化措施。
 
-## SpringCloudSleut特性
+## SpringCloudSleuth特性
 
 Spring Cloud Sleuth具有如下的特性：
 

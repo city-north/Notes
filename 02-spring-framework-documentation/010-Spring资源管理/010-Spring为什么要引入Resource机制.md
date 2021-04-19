@@ -6,7 +6,7 @@
 
 在Spring之前，Java 是存在一种资源管理机制的，这种机制非常强大也非常复杂，主要特点是
 
-- Java标准的 `java.net.URL` 类以及其标准的URLStreamHandler处理器
+- Java标准的 `java.net.URL` 类以及其标准的 URLStreamHandler 处理器
 - 在访问一些更多层次（low-level)的资源时显得捉襟见肘，例如 classpath 或者 servletContext相对路径的资源
 - 定制资源handler过程非常复杂，不利于开箱即用
 - URL机制没有提供一些基础的方法，如检查当前资源是否存在、检查当前资源是否可读等方法
