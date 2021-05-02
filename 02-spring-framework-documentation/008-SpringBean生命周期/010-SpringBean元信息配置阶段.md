@@ -1,9 +1,5 @@
 # 010-SpringBean元信息配置阶段
 
-## 目录
-
----
-
 [TOC]
 
 ## BeanDefinition配置
