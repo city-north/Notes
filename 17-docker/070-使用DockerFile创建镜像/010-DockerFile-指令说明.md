@@ -93,7 +93,6 @@ ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8 DEBIAN_FRONTEND=nonint
 ```
 ENTRYPOINT["executable","param1","param2"]  #exec 调用执行
 ENTRYPOINT command param1 param2            #shell 中执行
-
 ```
 
 每个 DcokerFile 中只能有一个`ENTRYPOINT`,当指定多个时,只有最后一个起效.
