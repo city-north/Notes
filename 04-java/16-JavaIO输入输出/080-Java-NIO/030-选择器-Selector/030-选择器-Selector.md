@@ -29,10 +29,10 @@
 
 有四种
 
-- 可读 ： SelectKey.OP_READ
-- 可写 ： SelectKey.OP_WRITE
-- 连接 ： SelectKey.OP_CONNECT
-- 接收 ： SelectKey.OP_ACCEPT
+- 可读 ： SelectKey.OP_READ 该操作对客户端和服务端的`SocketChannel`都有效，当OS的读缓冲区中有数据可读时，该操作就绪。
+- 可写 ： SelectKey.OP_WRITE  该操作对客户端和服务端的`SocketChannel`都有效，当OS的写缓冲区中有空闲的空间时(大部分时候都有)，该操作就绪。
+- 连接 ： SelectKey.OP_CONNECT 只有客户端`SocketChannel`会注册该操作，当客户端调用`SocketChannel.connect()`时，该操作会就绪。
+- 接收 ： SelectKey.OP_ACCEPT 当收到一个客户端的连接请求时，该操作就绪。这是`ServerSocketChannel`上唯一有效的操作。
 
 我们可以同时选择多个事件， 使用 按位或机就可以了
 

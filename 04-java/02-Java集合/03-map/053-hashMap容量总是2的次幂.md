@@ -75,10 +75,10 @@ HashMap是根据key的hash值决策key放入到哪个桶（bucket）中，通过
 #### **为什么要保证 capacity 是2的次幂呢？**
 
 ```java
-    public V get(Object key) {
-        Node<K,V> e;
-        return (e = getNode(hash(key), key)) == null ? null : e.value;
-    }
+public V get(Object key) {
+    Node<K,V> e;
+   return (e = getNode(hash(key), key)) == null ? null : e.value;
+}
 ```
 
 在get方法实现中，实际上是匹配链表中的 Node[] tab 中的数据。
