@@ -1,4 +1,4 @@
-# Spring依赖注入过程
+# 001-Spring依赖注入流程
 
 [TOC]
 
@@ -24,7 +24,7 @@
 
 9. [类型转换](#类型转换)
 
-### 转换对应beanName
+### 001-Spring依赖注入流程
 
  [002-DI第一步-转换对应beanName.md](002-DI第一步-转换对应beanName.md) 
 
@@ -34,17 +34,21 @@
 
 取指定alias所表示的最终beanName，例如别名A指向名称为B的bean则返回B；若别名A指向别名B，别名B又指向名称为C
 
-### 尝试从缓存中加载单例
+### 003-DI第二步-尝试从缓存中加载单例
 
  [003-DI第二步-尝试从缓存中加载单例.md](003-DI第二步-尝试从缓存中加载单例.md) 
 
-单例在Spring的同一个容器内只会被创建一次，后续再获取bean，就直接从单例缓存中获取了。当然这里也只是尝试加载，首先尝试从缓存中加载，如果加载不成功则再次尝试从singletonFactories中加载。因为在创建单例bean的时候会存在依赖注入的情况，而在创建依赖的时候为了避免循环依赖，在Spring中创建bean的原则是不等bean创建完成就会将创建bean的ObjectFactory提早曝光加入到缓存中，一旦下一个bean创建时候需要依赖上一个bean则直接使用ObjectFactory。
+单例在Spring的同一个容器内只会被创建一次，后续再获取bean，就直接从单例缓存中获取了。当然这里也只是尝试加载，首先尝试从缓存中加载，如果加载不成功则再次尝试从singletonFactories中加载。
 
-### bean的实例化
+因为在创建单例bean的时候会存在依赖注入的情况，而在创建依赖的时候为了避免循环依赖，在Spring中创建bean的原则是不等bean创建完成就会将创建bean的ObjectFactory提早曝光加入到缓存中，一旦下一个bean创建时候需要依赖上一个bean则直接使用ObjectFactory。
+
+### 004-DI第三步-bean的实例化
 
  [004-DI第三步-bean的实例化.md](004-DI第三步-bean的实例化.md) 
 
-如果从缓存中得到了bean的原始状态，则需要对bean进行实例化。这里有必要强调一下，缓存中记录的只是最原始的bean状态，并不一定是我们最终想要的bean。举个例子，假如我们需要对工厂bean进行处理，那么这里得到的其实是工厂bean的初始状态，但是我们真正需要的是工厂bean中定义的 factory-method方法中返回的 bean，而 getObjectForBeanInstance 就是完成这个工作的，后续会详细讲解。
+如果从缓存中得到了bean的原始状态，则需要对bean进行实例化。这里有必要强调一下，缓存中记录的只是最原始的bean状态，并不一定是我们最终想要的bean。
+
+举个例子，假如我们需要对工厂bean进行处理，那么这里得到的其实是工厂bean的初始状态，但是我们真正需要的是工厂bean中定义的 factory-method方法中返回的 bean，而 getObjectForBeanInstance 就是完成这个工作的，后续会详细讲解。
 
 ### 原型模式的依赖检查
 

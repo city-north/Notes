@@ -28,7 +28,7 @@ java.io.InputStream
 ```java
 package java.io;
 public abstract class InputStream implements Closeable {
-  int	available()//返回从该输入流中可以读取（或跳过）的字节数的估计值，而不会被下一次调用此输入流的方法阻塞。
+int	available()//返回从该输入流中可以读取（或跳过）的字节数的估计值，而不会被下一次调用此输入流的方法阻塞。
   void	close()//关闭此输入流并释放与流相关联的任何系统资源。
   void	mark(int readlimit)//标记此输入流中的当前位置。
   boolean	markSupported()//测试这个输入流是否支持 mark和 reset方法。
