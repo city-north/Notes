@@ -2,7 +2,7 @@
 
 [TOC]
 
-```
+```java
 public class NettyDiscardServer {
     private final int serverPort;
     ServerBootstrap b = new ServerBootstrap();
