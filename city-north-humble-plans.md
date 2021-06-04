@@ -1,4 +1,4 @@
-# North Chen's Humble Plans
+# City-North's Humble Plans
 
 ##  [设计模式 Design-Pattern](01-design-patterns) 
 
@@ -98,8 +98,6 @@
 | 2    |      |        |
 
 ##  [13-persistence](13-persistence) 
-
-
 
 | 序号 | ITEM                                | STATUS |
 | ---- | ----------------------------------- | ------ |

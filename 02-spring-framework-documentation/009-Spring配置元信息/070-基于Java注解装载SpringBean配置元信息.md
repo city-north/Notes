@@ -40,5 +40,3 @@ public boolean shouldSkip(AnnotatedTypeMetadata metadata) ;
 
 解析元数据相关的数据
 
-## 
-
