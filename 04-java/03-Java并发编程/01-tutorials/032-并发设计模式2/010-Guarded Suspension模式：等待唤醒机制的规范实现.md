@@ -265,6 +265,3 @@ Guarded Suspension 模式也常被称作 Guarded Wait 模式、Spin Lock 模式�
 所以，用“多线程版本的 if”来理解这个模式会更简单。
 
 ## 代码模板
-
-<script src="https://gist.github.com/ericchen-vip/6effd6d4fb47a53990925853194a9d72.js"></script>
-
