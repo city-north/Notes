@@ -18,4 +18,3 @@ Netty提供了ByteBuf来代替 Java NIO 的ByteBuffer 缓冲区, 以操纵内存
 - 读取和写入索引分开
 - 方法的链式调用
 - 可以进行引用计数, 方便重复使用
-

@@ -47,3 +47,4 @@ RC 隔离级别下，普通的 select 都是快照读，使用 MVCC 实现。
 - 重复 键检查(duplicate-key checking)时会使用间隙锁封锁区间
 
 所以 RC 会出现幻读的问题。
+
