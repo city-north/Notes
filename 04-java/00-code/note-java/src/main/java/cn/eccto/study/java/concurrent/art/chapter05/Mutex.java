@@ -9,7 +9,7 @@ import java.util.concurrent.locks.Condition;
  * 自定义锁实现,用户使用 Mutex 的时候并不会直接和内部同步器的实现打交道,而是调用了</p>
  * </p>
  *
- * @author EricChen 2020/03/08 21:39
+ * @author Jonathan 2020/03/08 21:39
  */
 public class Mutex {
 

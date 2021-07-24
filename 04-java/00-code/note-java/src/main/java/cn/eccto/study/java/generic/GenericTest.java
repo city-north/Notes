@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * description
  * </p>
  *
- * @author EricChen 2021/01/05 20:34
+ * @author Jonathan 2021/01/05 20:34
  */
 public class GenericTest {
 

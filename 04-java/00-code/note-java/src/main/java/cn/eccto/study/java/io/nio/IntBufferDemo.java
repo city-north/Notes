@@ -7,7 +7,7 @@ import java.nio.IntBuffer;
  * Buffer 的例子 Example
  * </p>
  *
- * @author EricChen 2020/05/11 12:22
+ * @author Jonathan 2020/05/11 12:22
  */
 public class IntBufferDemo {
 

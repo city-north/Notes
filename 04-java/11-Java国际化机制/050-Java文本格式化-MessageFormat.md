@@ -32,7 +32,6 @@ java.text.MessageFormat(线程不安全 )
   - currency
   - percent
 
-  
 
 ## 代码示例
 

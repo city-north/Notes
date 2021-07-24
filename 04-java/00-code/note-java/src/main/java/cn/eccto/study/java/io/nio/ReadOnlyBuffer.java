@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
  * Example of 只读缓冲区
  * </p>
  *
- * @author EricChen 2020/05/11 20:54
+ * @author Jonathan 2020/05/11 20:54
  */
 public class ReadOnlyBuffer {
     public static void main(String[] args) {

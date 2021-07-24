@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 生产者
  * </p>
  *
- * @author EricChen 2020/02/26 15:32
+ * @author Jonathan 2020/02/26 15:32
  */
 public class Producer implements Runnable {
     private volatile boolean isRunning = true;

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.LockSupport;
  * LockSupport 是进入 waiting 状态,这样看来只有一种方式能进入 bolcked 状态,那就是进入 sychronized 块 或者方法
  * </p>
  *
- * @author EricChen 2020/04/05 00:41
+ * @author Jonathan 2020/04/05 00:41
  */
 public class LockSupportTest {
 

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Example of ArrayList
  *
- * @author EricChen 2020/01/20 15:45
+ * @author Jonathan 2020/01/20 15:45
  * @see java.util.ArrayList
  */
 public class ArrayListExample {
@@ -153,7 +153,7 @@ public class ArrayListExample {
         while (iterator.hasNext()) {
             String next = iterator.next();
             if ("brian".equalsIgnoreCase(next)) {
-                namesList.set(index, "EricChen");
+                namesList.set(index, "Jonathan");
             }
             index++;
         }

@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
  * description
  * </p>
  *
- * @author EricChen 2020/05/11 21:26
+ * @author Jonathan 2020/05/11 21:26
  */
 public class FileOutputDemo {
     static private final byte message[] = {83, 111, 109, 101, 32,

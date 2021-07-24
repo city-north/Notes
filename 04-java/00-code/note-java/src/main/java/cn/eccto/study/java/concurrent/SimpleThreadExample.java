@@ -3,7 +3,7 @@ package cn.eccto.study.java.concurrent;
 /**
  * description
  *
- * @author EricChen 2020/01/19 21:05
+ * @author Jonathan 2020/01/19 21:05
  */
 public class SimpleThreadExample extends Thread {
 

@@ -5,7 +5,7 @@ package cn.eccto.study.java.concurrent.art.chapter04.threadPoolDemo;
  * description
  * </p>
  *
- * @author EricChen 2020/03/07 23:07
+ * @author Jonathan 2020/03/07 23:07
  */
 public interface ThreadPool<T extends Thread> {
 

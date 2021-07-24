@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * {@link Collection} 类测试类
  *
- * @author EricChen 2020/01/06 18:00
+ * @author Jonathan 2020/01/06 18:00
  * @see java.util.Collection
  */
 public class CollectionExample {

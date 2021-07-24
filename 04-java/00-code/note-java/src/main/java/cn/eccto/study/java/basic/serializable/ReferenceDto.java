@@ -10,7 +10,7 @@ import java.io.ObjectOutput;
  * description
  * </p>
  *
- * @author EricChen 2020/06/12 09:35
+ * @author Jonathan 2020/06/12 09:35
  */
 public class ReferenceDto implements Externalizable {
 

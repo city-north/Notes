@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Lock 接口的实例
  * </p>
  *
- * @author EricChen 2020/03/08 21:01
+ * @author Jonathan 2020/03/08 21:01
  */
 public class LockExample implements Runnable {
     private Lock lock;

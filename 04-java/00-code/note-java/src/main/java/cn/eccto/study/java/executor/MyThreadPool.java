@@ -9,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
  * description
  * </p>
  *
- * @author EricChen 2021/02/02 14:55
+ * @author Jonathan 2021/02/02 14:55
  */
 public class MyThreadPool {
     // 利用阻塞队列实现生产者 - 消费者模式

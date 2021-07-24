@@ -11,7 +11,7 @@ import java.nio.file.StandardCopyOption;
  * use Example for {@link FileInputStream} and {@link FileOutputStream}
  * </p>
  *
- * @author EricChen 2020/12/18 22:32
+ * @author Jonathan 2020/12/18 22:32
  */
 public class FileInputStreamDemo {
 

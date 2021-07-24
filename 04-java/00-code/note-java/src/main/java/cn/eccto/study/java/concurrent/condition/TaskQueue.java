@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * {@link Condition} 实例,任务队列
  * </p>
  *
- * @author EricChen 2020/03/10 15:48
+ * @author Jonathan 2020/03/10 15:48
  */
 public class TaskQueue {
     private final Lock lock = new ReentrantLock();

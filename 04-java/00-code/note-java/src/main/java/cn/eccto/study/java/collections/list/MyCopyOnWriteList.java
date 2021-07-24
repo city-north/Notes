@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * a beggar version of {@link java.util.concurrent.CopyOnWriteArrayList}
  *
- * @author EricChen 2020/01/30 18:23
+ * @author Jonathan 2020/01/30 18:23
  */
 public class MyCopyOnWriteList<E> implements MyList<E>, RandomAccess, Cloneable, Serializable {
 

@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
  * description
  * </p>
  *
- * @author EricChen 2020/06/23 21:32
+ * @author Jonathan 2020/06/23 21:32
  */
 public class ThreadPool {
     public static void main(String[] args) {

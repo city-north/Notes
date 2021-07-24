@@ -8,7 +8,7 @@ import java.beans.PropertyChangeListener;
  * description
  * </p>
  *
- * @author EricChen 2020/11/02 14:27
+ * @author Jonathan 2020/11/02 14:27
  */
 public class PropertyChangeListenerExample {
 

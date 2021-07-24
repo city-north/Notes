@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
  * </p>
  * 测试序列化与反序列化
  *
- * @author EricChen 2020/01/19 15:18
+ * @author Jonathan 2020/01/19 15:18
  */
 public class SerializableExample {
 
@@ -25,7 +25,7 @@ public class SerializableExample {
         try (//创建一个ObjectOutputStream输出流
              ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("object.txt"))) {
             //将对象序列化到文件s
-            SerializableDto person = new SerializableDto("EricChen", 23);
+            SerializableDto person = new SerializableDto("Jonathan", 23);
             oos.writeObject(person);
             System.out.println(person);
             return person;

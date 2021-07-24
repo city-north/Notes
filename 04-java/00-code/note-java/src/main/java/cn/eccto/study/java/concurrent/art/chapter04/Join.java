@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * description
  * </p>
  *
- * @author EricChen 2020/03/07 17:34
+ * @author Jonathan 2020/03/07 17:34
  */
 public class Join {
     public static void main(String[] args) throws Exception {

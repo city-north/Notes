@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * description
  * </p>
  *
- * @author EricChen 2020/04/04 22:37
+ * @author Jonathan 2020/04/04 22:37
  */
 public class ConditionTest {
     public static void main(String[] args) throws Exception {

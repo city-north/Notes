@@ -6,7 +6,7 @@ package cn.eccto.study.java.jvm;
  * 原因:
  * </p>
  *
- * @author EricChen 2020/05/02 17:51
+ * @author Jonathan 2020/05/02 17:51
  */
 public class ThreadJVMOOM {
 

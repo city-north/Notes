@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
  * Example of {@link CompletableFuture}
  * </p>
  *
- * @author EricChen 2020/03/10 20:40
+ * @author Jonathan 2020/03/10 20:40
  */
 public class CompletableFutureExample {
 

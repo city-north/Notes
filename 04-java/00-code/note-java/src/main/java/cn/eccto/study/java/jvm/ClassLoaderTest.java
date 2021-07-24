@@ -7,7 +7,7 @@ import java.io.InputStream;
  * 不同的类加载器与 instanceof  关键字演示
  * </p>
  *
- * @author EricChen 2020/07/10 20:27
+ * @author Jonathan 2020/07/10 20:27
  */
 public class ClassLoaderTest {
     public static void main(String[] args) throws Exception {

@@ -9,7 +9,7 @@ import java.beans.PropertyChangeSupport;
  * description
  * </p>
  *
- * @author EricChen 2020/10/30 21:57
+ * @author Jonathan 2020/10/30 21:57
  */
 public class User {
     private String username;

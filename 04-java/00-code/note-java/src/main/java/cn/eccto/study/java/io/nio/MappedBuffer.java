@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
  * description
  * </p>
  *
- * @author EricChen 2020/05/11 21:02
+ * @author Jonathan 2020/05/11 21:02
  */
 public class MappedBuffer {
     static private final int start = 0;

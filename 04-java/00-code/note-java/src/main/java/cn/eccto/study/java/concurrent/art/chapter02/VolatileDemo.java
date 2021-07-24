@@ -5,7 +5,7 @@ package cn.eccto.study.java.concurrent.art.chapter02;
  * description
  * </p>
  *
- * @author EricChen 2020/02/28 13:52
+ * @author Jonathan 2020/02/28 13:52
  */
 public class VolatileDemo {
 

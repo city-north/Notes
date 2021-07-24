@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
  * Example of 缓冲区分片
  * </p>
  *
- * @author EricChen 2020/05/11 20:49
+ * @author Jonathan 2020/05/11 20:49
  */
 public class BufferSlice {
     public static void main(String[] args) {

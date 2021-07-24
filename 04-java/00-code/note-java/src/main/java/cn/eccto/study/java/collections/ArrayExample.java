@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 /**
  * Example of Array in Java
  *
- * @author EricChen 2020/01/20 10:33
+ * @author Jonathan 2020/01/20 10:33
  */
 public class ArrayExample {
 

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * description
  * </p>
  *
- * @author EricChen 2020/03/07 17:37
+ * @author Jonathan 2020/03/07 17:37
  */
 public class Profiler {
     // 第一次get()方法调用时会进行初始化（如果set方法没有调用），每个线程会调用一次

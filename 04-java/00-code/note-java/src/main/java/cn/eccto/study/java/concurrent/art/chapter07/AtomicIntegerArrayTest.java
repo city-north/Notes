@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
  * A Test example of {@link java.util.concurrent.atomic.AtomicInteger}
  * </p>
  *
- * @author EricChen 2020/04/07 12:52
+ * @author Jonathan 2020/04/07 12:52
  */
 public class AtomicIntegerArrayTest implements Runnable {
     static int[] value = new int[]{1, 2};
