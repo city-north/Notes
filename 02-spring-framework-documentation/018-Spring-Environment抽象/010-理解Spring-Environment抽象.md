@@ -56,7 +56,13 @@ public interface PropertyResolver {
 
 从这个接口来看，很像是BeanFactory接口，封装了最顶层的属性解析（只读）的方法，获取属性，
 
-值得注意的时尝试进行类型转换的`	<T> T getProperty(String key, Class<T> targetType);` 一定使用了Spring类型转换机制
+值得注意的时尝试进行类型转换的
+
+```
+	<T> T getProperty(String key, Class<T> targetType);
+```
+
+一定使用了Spring类型转换机制
 
  [080-Spring类型转换在Environment中的运用.md](080-Spring类型转换在Environment中的运用.md) 
 
@@ -97,16 +103,16 @@ ConfigurableEnvironment接口抽象了可配置的环境信息
 - 合并Environment
 
 ```java
-public interface ConfigurableEnvironment extends Environment, ConfigurablePropertyResolver {
+public interface ConfigurableEnvironment extends Environment,ConfigurablePropertyResolver {
 	void setActiveProfiles(String... profiles);
 	void addActiveProfile(String profile);
 	void setDefaultProfiles(String... profiles);
-  //获取PropertySources属性源
+  	//获取PropertySources属性源
 	MutablePropertySources getPropertySources();
 	
-  //获取系统变量
-  Map<String, Object> getSystemProperties();
-  //获取环境信息
+  	//获取系统变量
+  	Map<String, Object> getSystemProperties();
+  	//获取环境信息
 	Map<String, Object> getSystemEnvironment();
 
 	void merge(ConfigurableEnvironment parent);
