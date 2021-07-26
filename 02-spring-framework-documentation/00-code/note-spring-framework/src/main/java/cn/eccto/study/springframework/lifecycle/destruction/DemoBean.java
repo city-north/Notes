@@ -5,7 +5,7 @@ package cn.eccto.study.springframework.lifecycle.destruction;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/27 15:53
+ * @author JonathanChen 2020/11/27 15:53
  */
 public class DemoBean {
 

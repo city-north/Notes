@@ -3,7 +3,7 @@ package cn.eccto.study.springframework.tutorials.spring5;
 /**
  * description
  *
- * @author EricChen 2019/11/27 18:06
+ * @author JonathanChen 2019/11/27 18:06
  */
 public interface OrderService {
     void placeOrder(String item, int qty);

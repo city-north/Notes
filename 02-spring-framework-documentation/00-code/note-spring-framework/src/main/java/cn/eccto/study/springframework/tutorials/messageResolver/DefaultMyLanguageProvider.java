@@ -14,7 +14,7 @@ import java.util.Locale;
  * 3. 创建语言提供者 {@link LanguageProvider},主要获取所有语言
  * 4. {@link LanguageValidator } 对标有注解的属性进行校验
  *
- * @author EricChen 2019/11/22 22:31
+ * @author JonathanChen 2019/11/22 22:31
  */
 @Component
 public class DefaultMyLanguageProvider implements LanguageProvider {

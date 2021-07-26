@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 /**
  * description
  *
- * @author EricChen 2019/11/24 15:19
+ * @author JonathanChen 2019/11/24 15:19
  */
 @Configuration
 public class ConcurrentTaskExecutorExample {

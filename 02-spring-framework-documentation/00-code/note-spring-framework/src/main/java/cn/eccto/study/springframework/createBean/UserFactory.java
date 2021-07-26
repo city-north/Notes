@@ -8,7 +8,7 @@ import cn.eccto.study.springframework.User;
  * A Factory of User
  * </p>
  *
- * @author EricChen 2020/10/22 18:54
+ * @author JonathanChen 2020/10/22 18:54
  */
 public interface UserFactory {
 

@@ -8,7 +8,7 @@ import javax.xml.ws.Provider;
 /**
  * 使用 {@link Provider} 来解决更小 Scope bean 注入问题
  *
- * @author EricChen 2019/11/16 20:38
+ * @author JonathanChen 2019/11/16 20:38
  */
 @Configuration
 public class NarrowerScopeBeanExample {

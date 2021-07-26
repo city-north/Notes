@@ -11,7 +11,7 @@ import org.springframework.util.ObjectUtils;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/24 19:24
+ * @author JonathanChen 2020/11/24 19:24
  */
 public class MyInstantiationAwareBeanPostProcessor implements InstantiationAwareBeanPostProcessor {
 

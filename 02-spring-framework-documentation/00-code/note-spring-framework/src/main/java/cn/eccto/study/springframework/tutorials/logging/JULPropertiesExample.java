@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 /**
  * 实例: 简单使用 Java Util Logging 打印 ,配置文件地址 classpath:logging.properties
  *
- * @author EricChen 2019/11/29 22:36
+ * @author JonathanChen 2019/11/29 22:36
  */
 public class JULPropertiesExample {
     public static void main(String[] args) throws FileNotFoundException {

@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * 自定义 {@link Converter} 实现类以及使用方式
  *
- * @author EricChen 2019/11/24 11:43
+ * @author JonathanChen 2019/11/24 11:43
  */
 @Configuration
 public class CustomConverterExample {

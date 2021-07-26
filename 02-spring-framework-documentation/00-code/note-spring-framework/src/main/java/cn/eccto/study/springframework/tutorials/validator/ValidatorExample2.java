@@ -14,7 +14,7 @@ import java.util.Locale;
  * Spring 校验机制实例,
  * 使用 {@link ValidationUtils#invokeValidator}方法调用一个自定义的 Validator
  *
- * @author EricChen 2019/11/21 20:53
+ * @author JonathanChen 2019/11/21 20:53
  */
 public class ValidatorExample2 {
     public static void main(String[] args) {

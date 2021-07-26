@@ -10,7 +10,7 @@ import java.util.Date;
  * 此案例展示了如何使用 {@link GenericBeanDefinition} 手动注册 bean 到 {@link DefaultListableBeanFactory}
  * 并且使用{@link MutablePropertyValues} 设置 bean 的属性 date
  *
- * @author EricChen 2019/11/27 19:03
+ * @author JonathanChen 2019/11/27 19:03
  */
 public class GenericBeanDefinitionExample {
     public static void main(String[] args) {

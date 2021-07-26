@@ -11,7 +11,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 /**
  * {@link ThreadPoolTaskExecutor} 代码实例
  *
- * @author EricChen 2019/11/24 15:13
+ * @author JonathanChen 2019/11/24 15:13
  */
 @Configuration
 public class ThreadPoolTaskExecutorExample {

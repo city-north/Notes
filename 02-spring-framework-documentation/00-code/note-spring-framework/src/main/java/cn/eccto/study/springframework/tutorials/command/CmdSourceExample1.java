@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * 不使用 SpringContext 的情况下使用{@link SimpleCommandLinePropertySource}
  *
- * @author EricChen 2019/11/16 22:01
+ * @author JonathanChen 2019/11/16 22:01
  */
 public class CmdSourceExample1 {
     public static void main(String[] args) {

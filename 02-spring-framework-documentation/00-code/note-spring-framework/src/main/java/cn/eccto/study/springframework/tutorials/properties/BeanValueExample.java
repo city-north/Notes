@@ -10,7 +10,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 /**
  * description
  *
- * @author EricChen 2019/11/16 21:35
+ * @author JonathanChen 2019/11/16 21:35
  */
 @Configuration
 @PropertySource("classpath:tutorials/properties/app.properties")

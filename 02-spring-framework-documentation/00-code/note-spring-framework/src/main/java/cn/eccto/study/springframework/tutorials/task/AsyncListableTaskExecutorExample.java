@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
 /**
  * 具有成功或者失败回调的任务执行器
  *
- * @author EricChen 2019/11/24 15:02
+ * @author JonathanChen 2019/11/24 15:02
  * @see AsyncListenableTaskExecutor  自定义监听 Task 执行器
  * @see ListenableFutureCallback 回调
  */

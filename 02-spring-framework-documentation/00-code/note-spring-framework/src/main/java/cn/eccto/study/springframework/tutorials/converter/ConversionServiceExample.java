@@ -9,7 +9,7 @@ import java.util.Currency;
 /**
  * 本实例演示了如何使用 {@link ConversionService} 的默认实现类 {@link DefaultConversionService}
  *
- * @author EricChen 2019/11/22 23:22
+ * @author JonathanChen 2019/11/22 23:22
  */
 public class ConversionServiceExample {
     public static void main(String[] args) {

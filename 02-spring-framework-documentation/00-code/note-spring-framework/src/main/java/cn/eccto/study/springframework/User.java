@@ -18,7 +18,7 @@ import java.util.Properties;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/23 21:16
+ * @author JonathanChen 2020/11/23 21:16
  */
 @Data
 public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAware, EnvironmentAware, EmbeddedValueResolverAware, ResourceLoaderAware, ApplicationEventPublisherAware, MessageSourceAware, ApplicationContextAware {

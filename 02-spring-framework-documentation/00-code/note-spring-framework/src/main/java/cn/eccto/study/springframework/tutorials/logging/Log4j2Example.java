@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 代码实例 log4j2 使用
  *
- * @author EricChen 2019/11/29 23:32
+ * @author JonathanChen 2019/11/29 23:32
  */
 @Configuration
 public class Log4j2Example {

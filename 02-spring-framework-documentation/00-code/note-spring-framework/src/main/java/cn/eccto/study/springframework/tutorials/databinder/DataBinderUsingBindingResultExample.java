@@ -10,7 +10,7 @@ import org.springframework.validation.DataBinder;
 /**
  * 本例介绍如何使用 {@link BindingResult},以及 {@link BeanWrapper} 和 {@link DataBinder} 的异常
  *
- * @author EricChen 2019/11/21 20:14
+ * @author JonathanChen 2019/11/21 20:14
  * @see #bindWithBeanBinder DataBinder 在进行数据绑定时,如果类型不匹配,不会进行实际的转换,所以不会抛出异常
  * @see #bindWithBeanWapper BeanWrapper 在进行数据绑定时,如果类型不匹配,不会进行实际的转换,所以不会抛出异常TypeMismatchException
  */

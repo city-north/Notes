@@ -13,7 +13,7 @@ import java.util.ServiceLoader;
  * {@link ServiceLoaderFactoryBean} 方式创建一个Bean
  * </p>
  *
- * @author EricChen 2020/10/22 18:53
+ * @author JonathanChen 2020/10/22 18:53
  */
 public class ServiceLoaderFactoryBeanExample {
 

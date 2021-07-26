@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * 本例是 自定义 一个{@link ConverterFactory} 实例,实例用于产生一个自定义的 {@link IdToEntityConverter}
  *
- * @author EricChen 2019/11/24 12:05
+ * @author JonathanChen 2019/11/24 12:05
  * @see CustomConverterFactoryExample.IdToEntityConverterFactory  the Custom Converter Factory
  * @see CustomConverterFactoryExample.IdToEntityConverter the Custom Converter
  */

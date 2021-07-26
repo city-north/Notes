@@ -14,7 +14,7 @@ import java.util.Map;
  * TODO
  * </p>
  *
- * @author EricChen 2021/01/06 18:59
+ * @author JonathanChen 2021/01/06 18:59
  */
 public class GenericTypeResolverDemo {
 

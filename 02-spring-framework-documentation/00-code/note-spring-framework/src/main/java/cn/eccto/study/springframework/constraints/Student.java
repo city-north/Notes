@@ -6,7 +6,7 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * description
  *
- * @author EricChen 2019/11/04 23:00
+ * @author JonathanChen 2019/11/04 23:00
  */
 @Data
 public class Student implements InitializingBean {

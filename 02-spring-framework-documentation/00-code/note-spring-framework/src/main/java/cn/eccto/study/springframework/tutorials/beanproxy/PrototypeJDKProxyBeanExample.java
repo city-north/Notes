@@ -6,7 +6,7 @@ import org.springframework.context.annotation.*;
 /**
  * 使用 JDK 代理技术
  *
- * @author EricChen 2019/11/16 20:20
+ * @author JonathanChen 2019/11/16 20:20
  */
 @Configuration
 public class PrototypeJDKProxyBeanExample {

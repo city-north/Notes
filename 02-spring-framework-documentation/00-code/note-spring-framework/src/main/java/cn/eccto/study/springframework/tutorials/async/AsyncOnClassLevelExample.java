@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 /**
  * description
  *
- * @author EricChen 2019/11/24 17:13
+ * @author JonathanChen 2019/11/24 17:13
  */
 public class AsyncOnClassLevelExample {
 

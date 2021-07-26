@@ -11,7 +11,7 @@ import java.time.LocalTime;
 /**
  * 使用{@link SchedulingConfigurer} 器配置一个定时任务
  *
- * @author EricChen 2019/11/24 17:02
+ * @author JonathanChen 2019/11/24 17:02
  */
 public class SchedulingConfigurerExample {
 

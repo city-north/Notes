@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * {@link MessageSourceAware} 代码实例
  *
- * @author EricChen 2019/11/18 20:31
+ * @author JonathanChen 2019/11/18 20:31
  */
 @Configuration
 public class MessageSourceAwareExample {

@@ -11,14 +11,14 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
  * TODO
  * </p>
  *
- * @author EricChen 2021/01/06 11:31
+ * @author JonathanChen 2021/01/06 11:31
  */
 public class PropertyValuesTest {
 
     public static void main(String[] args) {
         DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
-        builder.addPropertyValue("name", "EricChen");
+        builder.addPropertyValue("name", "JonathanChen");
         final AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
         defaultListableBeanFactory.registerBeanDefinition("user", beanDefinition);
         final Object user = defaultListableBeanFactory.getBean("user");

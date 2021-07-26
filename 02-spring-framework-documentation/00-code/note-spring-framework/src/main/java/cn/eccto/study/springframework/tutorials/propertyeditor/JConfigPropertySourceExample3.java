@@ -16,7 +16,7 @@ import java.text.NumberFormat;
  * JavaConfig 配置方式, 自定义一个 Custom Editor 一次进行使用
  * 如果我们不想使用 Spring custom PropertyEditor 作为一个全局的类型转换类型,我们可以在运行时一个 custom Editor 实例.这样我们就可在一个指定的注入点使用一次
  *
- * @author EricChen 2019/11/21 20:10
+ * @author JonathanChen 2019/11/21 20:10
  * @see Config#getPrice 注册了一个自定义的 {@link CustomNumberEditor}
  */
 public class JConfigPropertySourceExample3 {

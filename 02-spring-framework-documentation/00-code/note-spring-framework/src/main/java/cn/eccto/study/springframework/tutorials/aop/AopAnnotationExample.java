@@ -6,7 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * Example of Spring AOP features , using java config instead of xml config file
  *
- * @author EricChen 2020/01/10 19:19
+ * @author JonathanChen 2020/01/10 19:19
  */
 public class AopAnnotationExample {
     public static void main(String[] args) {

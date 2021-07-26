@@ -18,7 +18,7 @@ import java.util.Set;
  * 3. 使用 formatter 去绑定注解 {@link LocaleFormatAnnotationFormatterFactory}
  * 4. 使用自定义注解 {@link LocaleFormat} 去标注 {@link MyBean} 内的属性
  *
- * @author EricChen 2019/11/04 20:43
+ * @author JonathanChen 2019/11/04 20:43
  */
 public class LocaleFormatAnnotationFormatterFactory implements
         AnnotationFormatterFactory<LocaleFormat> {

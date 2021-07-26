@@ -5,7 +5,7 @@ package cn.eccto.study.springframework.aop.interceptor;
  * TODO
  * </p>
  *
- * @author EricChen
+ * @author JonathanChen
  */
 public interface EchoService {
 

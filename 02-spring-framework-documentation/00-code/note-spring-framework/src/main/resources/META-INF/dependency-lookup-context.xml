@@ -15,7 +15,7 @@
     <!-- 经过合并后 GenericBeanDefinition 变成 RootBeanDefinition -->
     <bean id="user" class="cn.eccto.study.springframework.User">
         <property name="id" value="11"/>
-        <property name="name" value="EricChen"/>
+        <property name="name" value="JonathanChen"/>
     </bean>
 
     <!-- 普通 beanDefinition GenericBeanDefinition -->

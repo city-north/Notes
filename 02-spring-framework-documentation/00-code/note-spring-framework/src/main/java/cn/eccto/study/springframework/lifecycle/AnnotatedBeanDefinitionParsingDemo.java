@@ -8,7 +8,7 @@ import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
  * 注解 BeanDefinition 解析
  * </p>
  *
- * @author EricChen 2020/11/23 21:43
+ * @author JonathanChen 2020/11/23 21:43
  */
 public class AnnotatedBeanDefinitionParsingDemo {
 

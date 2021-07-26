@@ -3,7 +3,7 @@ package cn.eccto.study.springframework.tutorials.scope;
 /**
  * description
  *
- * @author EricChen 2019/11/14 20:03
+ * @author JonathanChen 2019/11/14 20:03
  */
 public class UserInfo {
 

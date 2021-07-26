@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 /**
  * description
  *
- * @author EricChen 2019/11/24 16:41
+ * @author JonathanChen 2019/11/24 16:41
  */
 public class ConcurrentTaskSchedulerExample {
     public static void main(String[] args) throws InterruptedException {

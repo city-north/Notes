@@ -10,7 +10,7 @@
     <!-- 普通 beanDefinition GenericBeanDefinition -->
     <!-- 经过合并后 GenericBeanDefinition 变成 RootBeanDefinition -->
     <bean id="demoBean" class="cn.eccto.study.springframework.lifecycle.destruction.DemoBean">
-        <property name="name" value="ericchen"/>
+        <property name="name" value="JonathanChen"/>
     </bean>
 
 </beans>

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * 3. 配置校验器 {@link OrderValidator}
  * 4. 配置配置类 {@link Config}
  *
- * @author EricChen 2019/11/04 19:29
+ * @author JonathanChen 2019/11/04 19:29
  */
 public class ValidatorExample {
     public static void main(String[] args) {

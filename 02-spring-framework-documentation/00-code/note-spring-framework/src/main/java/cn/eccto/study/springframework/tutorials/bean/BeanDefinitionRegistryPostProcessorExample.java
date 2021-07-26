@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * 它允许注册bean定义。
  * 它的方法`postProcessBeanDefinitionRegistry`在`BeanFactoryPostProcessor#postProcessBeanFactory`之前被调用。这个接口更关注于`BeanDefinition`注册，而不是通用的`BeanFactoryPostProcessor`。
  *
- * @author EricChen 2019/11/27 17:56
+ * @author JonathanChen 2019/11/27 17:56
  */
 @Configuration
 public class BeanDefinitionRegistryPostProcessorExample implements BeanDefinitionRegistryPostProcessor {

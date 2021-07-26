@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans
         xmlns="http://www.springframework.org/schema/beans"
-        xmlns:users="http://www.ericchen.vip/users"
+        xmlns:users="http://www.JonathanChen.vip/users"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.ericchen.vip/users
-        http://www.ericchen.vip/users.xsd">
+        http://www.JonathanChen.vip/users
+        http://www.JonathanChen.vip/users.xsd">
 
-    <users:user id="12" name="EricChenChengBei" city="Beijing"/>
+    <users:user id="12" name="JonathanChenChengBei" city="Beijing"/>
 
 
 

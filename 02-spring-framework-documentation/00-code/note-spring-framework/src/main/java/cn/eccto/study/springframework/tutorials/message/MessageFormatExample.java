@@ -9,7 +9,7 @@ import java.util.Locale;
  * description
  * </p>
  *
- * @author EricChen
+ * @author JonathanChen
  */
 public class MessageFormatExample {
 

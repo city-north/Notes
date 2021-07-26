@@ -8,7 +8,7 @@ import java.util.Currency;
 /**
  * 使用 {@link BeanWrapperImpl} 可以胡哦哦去一个类的默认系统注册的 Editor
  *
- * @author EricChen 2019/11/21 20:30
+ * @author JonathanChen 2019/11/21 20:30
  */
 public class BeanWrapperExample {
     public static void main(String[] args) {

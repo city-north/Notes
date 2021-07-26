@@ -13,7 +13,7 @@ import org.springframework.context.event.EventListener;
  * 2. 自定义 事件发布类{@link MyEvenPublisherBean},引入了 发布器{@link ApplicationEventPublisher}
  * 3. 自定义监听类 {@link AListenerBean} ,标注注解{@link EventListener} 形参就是自定义的事件
  *
- * @author EricChen 2019/11/18 20:19
+ * @author JonathanChen 2019/11/18 20:19
  */
 public class CustomEventWithApplicationEventExample {
 

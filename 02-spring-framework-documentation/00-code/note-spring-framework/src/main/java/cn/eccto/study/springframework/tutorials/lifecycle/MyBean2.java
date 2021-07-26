@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * description
  *
- * @author EricChen 2019/11/14 20:22
+ * @author JonathanChen 2019/11/14 20:22
  */
 public class MyBean2 {
     private OtherBean otherBean;

@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * description
  *
- * @author EricChen 2019/11/14 20:02
+ * @author JonathanChen 2019/11/14 20:02
  */
 public interface UserRegistrationBean {
     public static String KEY_EMAIL = "email";

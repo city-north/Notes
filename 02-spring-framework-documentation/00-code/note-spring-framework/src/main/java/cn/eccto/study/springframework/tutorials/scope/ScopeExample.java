@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  * description
  *
- * @author EricChen 2019/11/14 20:05
+ * @author JonathanChen 2019/11/14 20:05
  */
 public class ScopeExample {
     private static Scanner scanner = new Scanner(System.in);

@@ -6,7 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Example of Spring Aop features , using xml config file
  *
- * @author EricChen 2020/01/10 19:22
+ * @author JonathanChen 2020/01/10 19:22
  */
 public class AopXmlAnnotationExample {
     public static void main(String[] args) {
