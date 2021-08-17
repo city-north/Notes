@@ -166,6 +166,7 @@ public String resolveEmbeddedValue(@Nullable String value) {
   }
   String result = value;
   for (StringValueResolver resolver : this.embeddedValueResolvers) {
+    //这里的embeddedValueResolvers 实际上是ApplicationContext里的getEnvironment().resolvePlaceholders(strVal)
     result = resolver.resolveStringValue(result);
     if (result == null) {
       return null;
@@ -174,3 +175,35 @@ public String resolveEmbeddedValue(@Nullable String value) {
   return result;
 }
 ```
+
+## 解析器
+
+PropertySourcesPropertyResolver
+
+```java
+	@Nullable
+	protected <T> T getProperty(String key, Class<T> targetValueType, boolean resolveNestedPlaceholders) {
+		if (this.propertySources != null) {
+			for (PropertySource<?> propertySource : this.propertySources) {
+				if (logger.isTraceEnabled()) {
+					logger.trace("Searching for key '" + key + "' in PropertySource '" +
+							propertySource.getName() + "'");
+				}
+				Object value = propertySource.getProperty(key);
+				if (value != null) {
+					if (resolveNestedPlaceholders && value instanceof String) {
+						value = resolveNestedPlaceholders((String) value);
+					}
+					logKeyFound(key, propertySource, value);
+					return convertValueIfNecessary(value, targetValueType);
+				}
+			}
+		}
+		if (logger.isTraceEnabled()) {
+			logger.trace("Could not find key '" + key + "' in any property source");
+		}
+		return null;
+	}
+
+```
+
