@@ -80,8 +80,6 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 </beans>
 ```
 
-
-
 ### 4.3.2 SpringProcessEngineConfiguration
 
 通过**org.activiti.spring.SpringProcessEngineConfiguration 与**Spring整合。 
