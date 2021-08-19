@@ -5,7 +5,7 @@ package cn.eccto.study.java.leetcode;
  * description
  * </p>
  *
- * @author EricChen 2020/08/04 12:22
+ * @author Jonathan 2020/08/04 12:22
  */
 public class Solution283 {
 

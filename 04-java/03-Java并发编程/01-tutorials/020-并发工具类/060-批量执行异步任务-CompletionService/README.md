@@ -59,8 +59,6 @@ CompletionService 接口的实现类是 ExecutorCompletionService，这个实现
 - 之后通过 CompletionService 接口提供的 submit() 方法提交了三个询价操作，这三个询价操作将会被 CompletionService 异步执行。
 - 最后，我们通过 CompletionService 接口提供的 take() 方法获取一个 Future 对象（前面我们提到过，加入到阻塞队列中的是任务执行结果的 Future 对象），调用 Future 对象的 get() 方法就能返回询价操作的执行结果了。
 
-
-
 ```java
 // 创建线程池
 ExecutorService executor = Executors.newFixedThreadPool(3);

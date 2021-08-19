@@ -3,7 +3,7 @@ package cn.eccto.study.java.basic;
 /**
  * Example of Label Statement
  *
- * @author EricChen 2020/01/14 17:08
+ * @author Jonathan 2020/01/14 17:08
  */
 public class LabelExample {
     public static void main(String[] args) {

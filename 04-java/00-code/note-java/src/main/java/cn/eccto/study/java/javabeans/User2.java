@@ -10,7 +10,7 @@ import java.beans.VetoableChangeSupport;
  * description
  * </p>
  *
- * @author EricChen 2020/11/02 14:33
+ * @author Jonathan 2020/11/02 14:33
  */
 public class User2 {
 

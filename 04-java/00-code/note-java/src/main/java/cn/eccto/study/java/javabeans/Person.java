@@ -6,7 +6,7 @@ package cn.eccto.study.java.javabeans;
  * 可写 |  可读
  * </p>
  *
- * @author EricChen 2020/10/17 20:59
+ * @author Jonathan 2020/10/17 20:59
  */
 public class Person {
 

@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * 寻找包含指定关键字的文件
  * </p>
  *
- * @author EricChen 2020/10/31 12:17
+ * @author Jonathan 2020/10/31 12:17
  */
 public class FutureTest {
     private static String dir = "/Users/ec/study/Notes/04-java/00-code/note-java/src/main/java/cn/eccto/study/java/concurrent";

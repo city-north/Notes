@@ -8,7 +8,7 @@ import java.util.List;
  * JVM 堆内存溢出测试, VM Args = -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError  -XX:HeapDumpPath=/Users/ec/study/Notes/04-java/00-code/note-java
  * </p>
  *
- * @author EricChen 2020/05/02 16:55
+ * @author Jonathan 2020/05/02 16:55
  */
 public class ExampleOfHeapOOM {
     static class OOMObject {

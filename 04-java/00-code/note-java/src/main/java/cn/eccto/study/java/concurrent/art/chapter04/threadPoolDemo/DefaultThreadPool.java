@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * description
  * </p>
  *
- * @author EricChen 2020/03/07 23:11
+ * @author Jonathan 2020/03/07 23:11
  */
 public class DefaultThreadPool<T extends Thread> implements ThreadPool<T> {
 

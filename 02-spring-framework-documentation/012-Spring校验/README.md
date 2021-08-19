@@ -16,4 +16,3 @@
 | Java Bean  属性 错误描述 | org.springframework.validation.FieldError                    |
 | Bean Validation 适配     | org.springframework.validation.beanvalidation.LocalValidatorFactoryBean |
 | 后置处理器               | org.springframework.validation.beanvalidation.MethodValidationPostProcessor |
-

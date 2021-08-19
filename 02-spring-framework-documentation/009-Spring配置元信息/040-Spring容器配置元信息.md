@@ -59,8 +59,6 @@ protected void populateDefaults(DocumentDefaultsDefinition defaults, @Nullable D
 }
 ```
 
-
-
 ## SpringXML配置元信息-context上下文相关
 
 ![image-20201208212651963](../../assets/image-20201208212651963.png)

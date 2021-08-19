@@ -8,7 +8,7 @@ import java.util.concurrent.CyclicBarrier;
  * description
  * </p>
  *
- * @author EricChen 2020/04/05 19:47
+ * @author Jonathan 2020/04/05 19:47
  */
 public class CyclicBarrierTest3 {
 

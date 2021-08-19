@@ -18,12 +18,13 @@ Future 接口的任务有返回值且可以抛出受检异常
 package java.util.concurrent;
 
 public interface Future<V> {
-    //
+    //取消
   	boolean cancel(boolean mayInterruptIfRunning);
   	//是否已经取消  
   	boolean isCancelled();
   	//是否完成
     boolean isDone();
+  	//阻塞获取返回值
     V get() throws InterruptedException, ExecutionException;
   
     V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException;

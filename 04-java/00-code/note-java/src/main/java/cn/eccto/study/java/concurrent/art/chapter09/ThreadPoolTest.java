@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
  * 简单的线程池使用
  * </p>
  *
- * @author EricChen 2020/04/05 22:24
+ * @author Jonathan 2020/04/05 22:24
  */
 public class ThreadPoolTest implements Runnable {
     public static void main(String[] args) {

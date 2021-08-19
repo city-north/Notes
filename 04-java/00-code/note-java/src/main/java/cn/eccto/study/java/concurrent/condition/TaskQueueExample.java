@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Example of {@link TaskQueue}
  * </p>
  *
- * @author EricChen 2020/03/10 15:54
+ * @author Jonathan 2020/03/10 15:54
  */
 public class TaskQueueExample {
     public static void main(String[] args) {

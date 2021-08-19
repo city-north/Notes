@@ -7,7 +7,7 @@ import java.util.concurrent.*;
  * 使用 Callable
  * </p>
  *
- * @author EricChen 2020/02/26 23:14
+ * @author Jonathan 2020/02/26 23:14
  */
 public class CallableExample implements Callable<String> {
     private String name;

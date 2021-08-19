@@ -1,5 +1,7 @@
 # 020-SpringCloudBootStrap上下文
 
+[TOC]
+
 在之前的博客《[SpringBoot | 第一篇：启动流程源码分析（上）](https://mp.weixin.qq.com/s?__biz=MzUwOTk1MTE5NQ==&mid=2247483664&idx=1&sn=4c384c9f1f49c9a3e4a481bceeba012b&chksm=f90b2ca4ce7ca5b2c1762e526c8bd0f34fd387552e182f3fa480386ad57e1cf3980d189e8b3d&token=302932053&lang=zh_CN&scene=21#wechat_redirect)》中，提到了 SpringBoot 在启动时，会触发相关一系列监听器，监听器各司其职，做一些初始化预处理操作。
 
 SpringCloud 实现了自己的监听器：`BootstrapApplicationListener`，来初始化SpringCloud上下文环境。
@@ -21,8 +23,7 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
     return;
   }
   //这里返回了一个 Spring 容器
-  ConfigurableApplicationContext context = bootstrapServiceContext(environment,
-                                                                   event.getSpringApplication());
+  ConfigurableApplicationContext context = bootstrapServiceContext(environment, event.getSpringApplication());
   apply(context, event.getSpringApplication(), environment);
 }
 ```
@@ -96,8 +97,7 @@ private ConfigurableApplicationContext bootstrapServiceContext(
 ancestor 中文祖先的意思。具体来看一下：
 
 ```java
-private void addAncestorInitializer(SpringApplication application,
-            ConfigurableApplicationContext context) {
+private void addAncestorInitializer(SpringApplication application,ConfigurableApplicationContext context) {
         boolean installed = false;
         //遍历所有的initializer，判断是否已经存在 祖先initializer
         for (ApplicationContextInitializer<?> initializer : application
@@ -120,8 +120,7 @@ private void addAncestorInitializer(SpringApplication application,
 当BootStrap环境初始化完毕后，再次回到SpringBoot初始化流程会触发所有的initializers，当执行AncestorInitializer时，将BootStrap ApplicationContext容器设为父容器：
 
 ```java
-private static class AncestorInitializer implements
-            ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
+private static class AncestorInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
 
         private ConfigurableApplicationContext parent;
 

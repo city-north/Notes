@@ -7,7 +7,7 @@ import java.util.Properties;
 /**
  * example of SystemProperties
  *
- * @author EricChen 2020/01/18 15:26
+ * @author Jonathan 2020/01/18 15:26
  */
 public class SystemPropertiesExample {
 

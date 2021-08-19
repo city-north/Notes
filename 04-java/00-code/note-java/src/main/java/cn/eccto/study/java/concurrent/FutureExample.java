@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
  * description
  * </p>
  *
- * @author EricChen 2020/03/10 18:38
+ * @author Jonathan 2020/03/10 18:38
  */
 public class FutureExample implements Callable<String> {
 

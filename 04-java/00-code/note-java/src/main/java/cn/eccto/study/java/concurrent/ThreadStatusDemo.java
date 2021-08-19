@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * description
  * </p>
  *
- * @author EricChen 2020/02/26 16:18
+ * @author Jonathan 2020/02/26 16:18
  */
 public class ThreadStatusDemo {
 

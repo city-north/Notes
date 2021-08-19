@@ -1,4 +1,4 @@
-package vip.ericchen.study.io.files;
+package vip.Jonathan.study.io.files;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import java.nio.file.Paths;
  * description
  * </p>
  *
- * @author EricChen 2021/01/04 13:29
+ * @author Jonathan 2021/01/04 13:29
  */
 public class PathTest {
 

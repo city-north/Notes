@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * description
  * </p>
  *
- * @author EricChen 2020/02/26 23:36
+ * @author Jonathan 2020/02/26 23:36
  */
 public class InterruptDemo {
     private static int i;

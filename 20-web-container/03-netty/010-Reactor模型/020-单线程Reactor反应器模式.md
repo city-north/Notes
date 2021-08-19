@@ -17,18 +17,28 @@
 
 - Handlers和Reactor反应器在一个线程内执行， 它是最简单的反应器模式
 
-![](http://processon.com/chart_image/608aa4f01e085313505873d3.png)
+![image-20210506211413163](../../../assets/image-20210506211413163.png)
 
-## 重要实现原理
+## Thread-pre_connection
+
+![image-20210516111525717](../../../assets/image-20210516111525717.png)
+
+- read和send操作都是阻塞操作
+
+### 代码实现
+
+![image-20210516111650549](../../../assets/image-20210516111650549.png)
+
+## 改良版本重要实现原理
 
 - 基于 Java NIO
-- 使用SelectionKey选择器里的几个重要成员方法
+- 使用 SelectionKey 选择器里的几个重要成员方法
   - void attach(Object o)  : 传入Pojo对象， 作为附件存储到SelectionKey
   - Object attachment() : 取出之前通过attach (Object o) 添加到 SelectionKey 选择键中的附件
 
 - 在传递事件时， 实际上传递的是Handler
 
-总之， 在反应器模式中， 需要 attch 方法 和 attachment方法结合使用
+总之， 在反应器模式中， 需要 `attch` 方法 和 `attachment` 方法结合使用
 
 - 在选择键注册完成之后， 调用 attach方法， 将Handler 处理器绑定到选择键
 - 当事件发生时， 调用 attachment 方法， 可以从选择键中取出Handler 处理器，将事件分发到Handler处理器中
@@ -91,15 +101,14 @@ class EchoServerReactor implements Runnable {
             try {
                 SocketChannel channel = serverSocket.accept();
                 Logger.info("接收到一个连接");
-                if (channel != null)
+                if (channel != null) {
                     new EchoHandler(selector, channel);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-
-
     public static void main(String[] args) throws IOException {
         new Thread(new EchoServerReactor()).start();
     }
@@ -131,9 +140,7 @@ class EchoHandler implements Runnable {
     }
 
     public void run() {
-
         try {
-
             if (state == SENDING) {
                 //写入通道
                 channel.write(byteBuffer);
@@ -168,11 +175,16 @@ class EchoHandler implements Runnable {
             }
         }
     }
-
-
 }
-
 ```
 
+## 单线程Reactor反应器模式的缺点
 
+单线程Reactor反应器模式, 是基于 Java 的NIO实现的, 相对于传统的多线程OIO, 反应器不再需要启动成千上万个进程, 效率大大提升
+
+在单线程反应器模式中, Reactor反应器和 Handler处理器, 都执行在同一条线程上,会带来一个问题: 
+
+当其中某个Handler阻塞时, 会导致其他所有的Handler都得不到执行, 在这种情况下, 如果被阻塞的Handler不仅仅负责输入和输出处理的业务, 还包含负责连接监听的AcceptorHandler处理器, 这是一个非常严重的问题
+
+因为一旦AcceptorHandler处理器阻塞, 会导致整个服务不能接受新的连接, 是的服务器变得不可用
 

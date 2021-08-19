@@ -4,7 +4,7 @@
 
 ## 什么是SPI
 
->  [spi-service-provider-interface.md](../../04-java/01-basic/spi-service-provider-interface.md) 
+>   [spi-service-provider-interface.md](../../04-java/01-Java基础/spi-service-provider-interface.md) 
 
 > SPI全称Service Provider Interface，是Java提供的一套用来被第三方实现或者扩展的API，它可以用来启用框架扩展和替换组件。
 

@@ -9,7 +9,7 @@ import java.util.stream.Stream;
  * Example of {@link java.beans.BeanInfo}
  * </p>
  *
- * @author EricChen 2020/10/17 21:02
+ * @author Jonathan 2020/10/17 21:02
  */
 public class BeanInfoExample {
     public static void main(String[] args) throws IntrospectionException {

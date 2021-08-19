@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * usage Example of RanddmAccess
  *
- * @author EricChen 2020/01/24 20:32
+ * @author Jonathan 2020/01/24 20:32
  * @see RandomAccess
  */
 public class RandomAccessExample {

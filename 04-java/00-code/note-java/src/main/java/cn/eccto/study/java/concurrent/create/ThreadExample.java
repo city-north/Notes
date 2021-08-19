@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * 使用 Thread类创建线程
  * </p>
  *
- * @author EricChen 2020/02/26 23:04
+ * @author Jonathan 2020/02/26 23:04
  */
 public class ThreadExample extends Thread {
 

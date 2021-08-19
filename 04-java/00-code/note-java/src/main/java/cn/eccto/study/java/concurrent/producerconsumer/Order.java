@@ -5,7 +5,7 @@ package cn.eccto.study.java.concurrent.producerconsumer;
  * description
  * </p>
  *
- * @author EricChen 2020/02/26 15:50
+ * @author Jonathan 2020/02/26 15:50
  */
 public class Order {
     private String name;

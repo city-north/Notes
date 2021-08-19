@@ -6,7 +6,7 @@ package cn.eccto.study.java.jvm;
  * 无论是栈帧太大还是虚拟机栈栈容量太小,都会抛出 StackOverflowError
  * </p>
  *
- * @author EricChen 2020/05/02 17:20
+ * @author Jonathan 2020/05/02 17:20
  */
 public class ExampleOfStackOverFlowError {
 

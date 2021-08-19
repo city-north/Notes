@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 当队列满的时候 ,队列的操作将会阻塞插入线程,直到队列出现空位
  * </p>
  *
- * @author EricChen 2020/04/04 21:36
+ * @author Jonathan 2020/04/04 21:36
  */
 public class BoundedQueue<T> {
 

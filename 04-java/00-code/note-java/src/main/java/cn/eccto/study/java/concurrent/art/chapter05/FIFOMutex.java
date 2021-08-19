@@ -10,7 +10,7 @@ import java.util.concurrent.locks.LockSupport;
  * description
  * </p>
  *
- * @author EricChen 2020/07/11 16:47
+ * @author Jonathan 2020/07/11 16:47
  */
 public class FIFOMutex {
 

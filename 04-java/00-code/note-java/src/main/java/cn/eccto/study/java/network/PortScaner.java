@@ -8,7 +8,7 @@ import java.net.Socket;
  * description
  * </p>
  *
- * @author EricChen 2020/11/30 22:03
+ * @author Jonathan 2020/11/30 22:03
  */
 public class PortScaner {
     public String app;

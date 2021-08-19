@@ -7,7 +7,7 @@ import java.util.concurrent.locks.StampedLock;
  * description
  * </p>
  *
- * @author EricChen 2020/07/20 15:24
+ * @author Jonathan 2020/07/20 15:24
  */
 public class Point {
     private double x, y;

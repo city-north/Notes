@@ -9,7 +9,7 @@ import java.lang.management.ThreadMXBean;
  * description
  * </p>
  *
- * @author EricChen 2020/03/06 18:15
+ * @author Jonathan 2020/03/06 18:15
  */
 public class MultiThread {
     public static void main(String[] args) {

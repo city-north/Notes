@@ -8,7 +8,7 @@ import java.util.concurrent.CyclicBarrier;
  * A test for {@link CyclicBarrier}
  * </p>
  *
- * @author EricChen 2020/04/05 17:08
+ * @author Jonathan 2020/04/05 17:08
  */
 public class CyclicBarrierTest2 {
     static CyclicBarrier cyclicBarrier = new CyclicBarrier(2, new A());//达到屏障后,优先执行 A

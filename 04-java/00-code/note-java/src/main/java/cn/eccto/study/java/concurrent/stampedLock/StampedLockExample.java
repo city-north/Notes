@@ -9,7 +9,7 @@ import java.util.concurrent.locks.StampedLock;
  * description
  * </p>
  *
- * @author EricChen 2020/03/10 16:53
+ * @author Jonathan 2020/03/10 16:53
  */
 public class StampedLockExample {
     private final StampedLock stampedLock = new StampedLock();

@@ -5,7 +5,7 @@ package cn.eccto.study.java.generic;
  * description
  * </p>
  *
- * @author EricChen 2021/01/06 18:09
+ * @author Jonathan 2021/01/06 18:09
  */
 public class Problem<T> {
 

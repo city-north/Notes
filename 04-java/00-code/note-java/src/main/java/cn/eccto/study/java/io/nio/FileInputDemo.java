@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
  * .使用 NIO 写入数据
  * </p>
  *
- * @author EricChen 2020/05/11 21:25
+ * @author Jonathan 2020/05/11 21:25
  */
 public class FileInputDemo {
     static public void main(String args[]) throws Exception {

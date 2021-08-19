@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * 连接池
  * </p>
  *
- * @author EricChen 2020/03/07 21:36
+ * @author Jonathan 2020/03/07 21:36
  */
 public class ConnectionPool {
 

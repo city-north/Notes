@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
  * ServerSocketExample
  * </p>
  *
- * @author EricChen 2020/03/12 19:29
+ * @author Jonathan 2020/03/12 19:29
  */
 public class ServerSocketExample {
     public static void main(String[] args) throws IOException {

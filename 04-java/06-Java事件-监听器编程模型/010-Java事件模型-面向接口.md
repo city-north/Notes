@@ -113,11 +113,11 @@ public interface Observer {
 public class ObserverDemo {
 
     public static void main(String[] args) {
-        EventObservable observable = new EventObservable();
-        // 添加观察者（监听者）
-        observable.addObserver(new EventObserver());
-        // 发布消息（事件）
-        observable.notifyObservers("Hello,World");
+          EventObservable observable = new EventObservable();
+          // 添加观察者（监听者）
+          observable.addObserver(new EventObserver());
+          // 发布消息（事件）
+          observable.notifyObservers("Hello,World");
     }
   
   

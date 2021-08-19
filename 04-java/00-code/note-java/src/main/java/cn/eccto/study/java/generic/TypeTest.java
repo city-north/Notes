@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  * description
  * </p>
  *
- * @author EricChen 2021/01/06 17:01
+ * @author Jonathan 2021/01/06 17:01
  */
 public class TypeTest<T> {
     List<String> list1;

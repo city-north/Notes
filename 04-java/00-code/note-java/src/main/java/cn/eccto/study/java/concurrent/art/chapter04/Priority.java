@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * 优先级测试
  * </p>
  *
- * @author EricChen 2020/03/06 19:57
+ * @author Jonathan 2020/03/06 19:57
  */
 public class Priority {
     private static volatile boolean notStart = true;

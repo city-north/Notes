@@ -6,7 +6,7 @@
 
 PropertyValue 是对属性元信息的封装,它的关注点是属性名和属性的值
 
-- 在BeanDefinition中包含一些列PropertyValue 的合集 PropertyValues
+- 在BeanDefinition中包含一些列 PropertyValue 的合集 PropertyValues
 - 经过属性绑定后,会将PropertyValue 中的属性值进行设置
 
 ## SpringBean属性元信息的分类
@@ -30,7 +30,6 @@ DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanF
 BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
 builder.addPropertyValue("name", "EricChen");
 final AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
-
 //-- 
 defaultListableBeanFactory.registerBeanDefinition("user", beanDefinition);
 final Object user = defaultListableBeanFactory.getBean("user");

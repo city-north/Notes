@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * description
  * </p>
  *
- * @author EricChen 2020/06/30 07:12
+ * @author Jonathan 2020/06/30 07:12
  */
 public class InterruptiblyReentrantLock {
 

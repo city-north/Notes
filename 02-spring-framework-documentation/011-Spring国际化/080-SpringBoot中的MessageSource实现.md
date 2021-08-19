@@ -20,7 +20,7 @@ org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration
 		MessageSourceProperties properties = messageSourceProperties();
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		if (StringUtils.hasText(properties.getBasename())) {
-			messageSource.setBasenames(StringUtils.commaDelimitedListToStringArray(
+					messageSource.setBasenames(StringUtils.commaDelimitedListToStringArray(
 					StringUtils.trimAllWhitespace(properties.getBasename())));
 		}
 		if (properties.getEncoding() != null) {

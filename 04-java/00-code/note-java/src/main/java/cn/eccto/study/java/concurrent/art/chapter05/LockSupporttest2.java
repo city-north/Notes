@@ -7,7 +7,7 @@ import java.util.concurrent.locks.LockSupport;
  * description
  * </p>
  *
- * @author EricChen 2020/07/11 16:33
+ * @author Jonathan 2020/07/11 16:33
  */
 public class LockSupporttest2 {
 
