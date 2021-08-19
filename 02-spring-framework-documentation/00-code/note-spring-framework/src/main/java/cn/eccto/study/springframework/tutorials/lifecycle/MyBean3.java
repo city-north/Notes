@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * description
  *
- * @author EricChen 2019/11/14 20:26
+ * @author JonathanChen 2019/11/14 20:26
  */
 public class MyBean3 implements InitializingBean, DisposableBean {
     private OtherBean otherBean;

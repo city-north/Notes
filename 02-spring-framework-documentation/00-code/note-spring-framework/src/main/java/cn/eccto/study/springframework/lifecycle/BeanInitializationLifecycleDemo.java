@@ -10,7 +10,7 @@ import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/24 19:23
+ * @author JonathanChen 2020/11/24 19:23
  */
 public class BeanInitializationLifecycleDemo {
 

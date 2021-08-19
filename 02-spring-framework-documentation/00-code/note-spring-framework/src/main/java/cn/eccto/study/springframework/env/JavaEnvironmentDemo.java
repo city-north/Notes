@@ -8,7 +8,7 @@ import java.util.Properties;
  * TODO
  * </p>
  *
- * @author EricChen 2021/01/14 10:57
+ * @author JonathanChen 2021/01/14 10:57
  */
 public class JavaEnvironmentDemo {
 

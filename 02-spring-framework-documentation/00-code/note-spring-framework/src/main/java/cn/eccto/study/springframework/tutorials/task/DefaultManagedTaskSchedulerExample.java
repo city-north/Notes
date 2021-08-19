@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 /**
  * description
  *
- * @author EricChen 2019/11/24 16:44
+ * @author JonathanChen 2019/11/24 16:44
  */
 public class DefaultManagedTaskSchedulerExample {
     public static void main(String[] args) throws NamingException, InterruptedException {

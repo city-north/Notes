@@ -5,7 +5,7 @@ import org.springframework.context.support.GenericApplicationContext;
 /**
  * description
  *
- * @author EricChen 2019/11/27 18:09
+ * @author JonathanChen 2019/11/27 18:09
  */
 public class RegisterBeanExample3 {
     //using registerBean(beanName, beanClass, customizers)

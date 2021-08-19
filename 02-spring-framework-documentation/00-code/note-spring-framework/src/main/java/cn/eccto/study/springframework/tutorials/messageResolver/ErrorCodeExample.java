@@ -15,7 +15,7 @@ import java.util.Locale;
 /**
  * 本例展示了如何使用通过简单的自定义{@link Validator} 以及使用{@link ValidationUtils} 调用自定义校验器的方式
  *
- * @author EricChen 2019/11/22 21:19
+ * @author JonathanChen 2019/11/22 21:19
  */
 @Configuration
 public class ErrorCodeExample {

@@ -11,7 +11,7 @@ import org.springframework.core.env.SimpleCommandLinePropertySource;
 /**
  * 使用 SpringContext 的情况下使用{@link SimpleCommandLinePropertySource}
  *
- * @author EricChen 2019/11/16 22:06
+ * @author JonathanChen 2019/11/16 22:06
  */
 @Configuration
 public class CmdSourceExample2 {

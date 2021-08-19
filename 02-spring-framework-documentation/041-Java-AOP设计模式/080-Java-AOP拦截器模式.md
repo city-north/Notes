@@ -1,5 +1,55 @@
 # 080-Java-AOP拦截器模式
 
+[TOC]
+
+## 拦截类型
+
+- 前置拦截（Before）
+- 后置拦截（After)
+- 异常拦截（Exception）
+- 回环拦截(around)
+
+## 前置通知模拟
+
+```java
+@FunctionalInterface
+public interface BeforeInterceptor {
+
+
+    /**
+     * 前置通知
+     *
+     * @param obj    对象
+     * @param method 方法
+     * @param args   参数
+     */
+    void before(Object obj, Method method, Object... args);
+
+}
+```
+
+## 后置通知模拟
+
+```java
+@FunctionalInterface
+public interface AfterInterceptor {
+
+
+    /**
+     * 后置通知
+     *
+     * @param obj          对象
+     * @param method       方法
+     * @param args         参数
+     * @param returnResult 返回值
+     */
+    void after(Object obj, Method method, Object[] args, Object returnResult);
+}
+
+```
+
+## 测试代码
+
 ```java
 public class ProxyEchoService implements InvocationHandler {
 

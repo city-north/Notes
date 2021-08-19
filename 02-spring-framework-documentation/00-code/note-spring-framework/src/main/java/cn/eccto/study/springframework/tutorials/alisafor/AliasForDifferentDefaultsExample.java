@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 /**
  * 示例: 被 {@link AliasFor} 注解标注的属性默认值必须相同,不然会抛出异常 {@link AnnotationConfigurationException}
  *
- * @author EricChen 2019/11/28 19:56
+ * @author JonathanChen 2019/11/28 19:56
  */
 public class AliasForDifferentDefaultsExample {
     public static void main(String[] args) {

@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * 基于 JSR-349 注解方式进行校验
  *
- * @author EricChen 2019/11/21 20:34
+ * @author JonathanChen 2019/11/21 20:34
  */
 public class ValidationJSR349Example {
 

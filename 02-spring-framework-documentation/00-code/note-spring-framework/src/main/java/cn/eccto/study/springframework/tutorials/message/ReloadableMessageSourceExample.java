@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * {@link ReloadableResourceBundleMessageSource} 测试类,通过反复读取配置文件中的配置,动态修改配置文件中的数据,会输出
  *
- * @author EricChen 2019/11/18 20:42
+ * @author JonathanChen 2019/11/18 20:42
  */
 @Configuration
 public class ReloadableMessageSourceExample {

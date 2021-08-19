@@ -14,7 +14,7 @@ import org.springframework.context.event.EventListener;
  * 2. 自定义 事件发布类{@link CustomEventWithoutApplicationEventExample2.MyEvenPublisherBean},引入了 发布器{@link ApplicationEventPublisher}
  * 3. 自定义监听类 {@link CustomEventWithoutApplicationEventExample2.AListenerBean} ,标注注解{@link EventListener} 形参就是自定义的事件
  *
- * @author EricChen 2019/11/18 20:27
+ * @author JonathanChen 2019/11/18 20:27
  */
 public class CustomEventWithoutApplicationEventExample2 {
 

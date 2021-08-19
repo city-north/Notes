@@ -8,7 +8,7 @@ import org.springframework.core.type.AnnotationMetadata;
 /**
  * 示例: 使用 @Import 注解导入 Selector 选择器
  *
- * @author EricChen 2019/11/27 22:10
+ * @author JonathanChen 2019/11/27 22:10
  */
 public class ImportSelectorExample {
     public static void main(String[] args) {

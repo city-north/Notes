@@ -24,7 +24,7 @@ import java.util.Map;
  * 2. 自定义 {@link ValidationMixedExample.OrderValidator} 实现 Spring 的接口 {@link Validator}
  * 3. 书写通用的校验方式 {@link GenericValidator} 获取所有 Spring 中注册的校验器实例,并循环找到符合要求的校验器进行校验
  *
- * @author EricChen 2019/11/21 20:53
+ * @author JonathanChen 2019/11/21 20:53
  */
 public class ValidationMixedExample {
 

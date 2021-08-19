@@ -10,7 +10,7 @@ import java.beans.PropertyEditorSupport;
  * 本章主要介绍了自定义 {@link PropertyEditor} 的用法,自定义一个 {@link PropertyEditor}
  * Spring XML 配置时 Spring 如何从 text 文本转换成对象
  *
- * @author EricChen 2019/11/21 09:35
+ * @author JonathanChen 2019/11/21 09:35
  */
 public class XmlUserCustomEditorExample {
 

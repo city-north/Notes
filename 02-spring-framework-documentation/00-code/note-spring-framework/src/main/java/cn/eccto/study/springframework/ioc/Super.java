@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * TODO
  * </p>
  *
- * @author EricChen 2020/10/19 21:23
+ * @author JonathanChen 2020/10/19 21:23
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

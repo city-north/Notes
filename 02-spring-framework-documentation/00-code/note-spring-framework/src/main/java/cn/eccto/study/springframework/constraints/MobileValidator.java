@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * description
  *
- * @author EricChen 2019/11/04 22:55
+ * @author JonathanChen 2019/11/04 22:55
  */
 public class MobileValidator implements ConstraintValidator<VaildMobile, String> {
 

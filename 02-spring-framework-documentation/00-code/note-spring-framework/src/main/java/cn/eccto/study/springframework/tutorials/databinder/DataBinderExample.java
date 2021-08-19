@@ -6,7 +6,7 @@ import org.springframework.validation.DataBinder;
 /**
  * 使用 {@link DataBinder} 对 javaBean 进行的属性进行绑定
  *
- * @author EricChen 2019/11/21 20:04
+ * @author JonathanChen 2019/11/21 20:04
  */
 public class DataBinderExample {
     public static void main(String[] args) {

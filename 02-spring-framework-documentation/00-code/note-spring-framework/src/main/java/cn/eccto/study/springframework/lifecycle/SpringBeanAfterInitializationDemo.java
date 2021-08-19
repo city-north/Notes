@@ -13,7 +13,7 @@ import org.springframework.core.io.ClassPathResource;
  * 130-SpringBean初始化后阶段.md
  * </p>
  *
- * @author EricChen 2020/12/04 10:48
+ * @author JonathanChen 2020/12/04 10:48
  */
 public class SpringBeanAfterInitializationDemo {
 

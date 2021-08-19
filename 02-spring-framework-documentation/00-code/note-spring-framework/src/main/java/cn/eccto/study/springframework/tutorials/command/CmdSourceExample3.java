@@ -10,7 +10,7 @@ import org.springframework.core.env.SimpleCommandLinePropertySource;
 /**
  * 使用注解方式{@link Value} 注解
  *
- * @author EricChen 2019/11/16 22:12
+ * @author JonathanChen 2019/11/16 22:12
  */
 @Configuration
 public class CmdSourceExample3 {

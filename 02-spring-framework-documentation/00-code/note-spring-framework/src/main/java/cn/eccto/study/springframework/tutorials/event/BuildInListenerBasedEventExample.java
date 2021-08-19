@@ -8,7 +8,7 @@ import org.springframework.context.event.ContextClosedEvent;
 /**
  * 通过实现{@link ApplicationListener} 使用内置事件,测试类
  *
- * @author EricChen 2019/11/18 20:24
+ * @author JonathanChen 2019/11/18 20:24
  */
 public class BuildInListenerBasedEventExample {
     @Bean

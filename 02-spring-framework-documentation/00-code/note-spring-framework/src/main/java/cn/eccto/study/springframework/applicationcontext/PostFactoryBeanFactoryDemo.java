@@ -12,7 +12,7 @@ import org.springframework.context.support.GenericApplicationContext;
  * TODO
  * </p>
  *
- * @author EricChen 2021/01/16 10:55
+ * @author JonathanChen 2021/01/16 10:55
  */
 public class PostFactoryBeanFactoryDemo {
 

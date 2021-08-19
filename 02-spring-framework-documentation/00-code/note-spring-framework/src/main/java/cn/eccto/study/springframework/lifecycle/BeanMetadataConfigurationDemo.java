@@ -12,7 +12,7 @@ import org.springframework.core.io.support.EncodedResource;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/23 21:05
+ * @author JonathanChen 2020/11/23 21:05
  */
 public class BeanMetadataConfigurationDemo {
 

@@ -12,7 +12,7 @@ import java.util.Locale;
  * 3. 使用 formatter 去绑定注解 {@link LocaleFormatAnnotationFormatterFactory}
  * 4. 使用自定义注解 {@link LocaleFormat} 去标注 {@link MyBean} 内的属性
  *
- * @author EricChen 2019/11/04 20:44
+ * @author JonathanChen 2019/11/04 20:44
  */
 public class MyBean {
     @LocaleFormat(style = LocaleStyle.ISO3Language)

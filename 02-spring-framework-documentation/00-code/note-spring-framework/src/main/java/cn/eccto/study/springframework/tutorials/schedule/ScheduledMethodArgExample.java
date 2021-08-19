@@ -11,7 +11,7 @@ import java.time.LocalTime;
 /**
  * `@Scheduled`标注的方法必须 void 安徽以及不能有任何参数 ,运行会报错
  *
- * @author EricChen 2019/11/24 17:00
+ * @author JonathanChen 2019/11/24 17:00
  */
 @EnableScheduling
 @Configuration

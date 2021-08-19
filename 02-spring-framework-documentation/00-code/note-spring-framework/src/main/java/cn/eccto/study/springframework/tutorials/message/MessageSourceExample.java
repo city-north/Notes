@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * 测试{@link ResourceBundleMessageSource}
  *
- * @author EricChen 2019/11/18 20:39
+ * @author JonathanChen 2019/11/18 20:39
  */
 @Configuration
 public class MessageSourceExample {

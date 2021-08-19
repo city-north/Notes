@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  * <p>
  * 如果有多个执行器(executors) 注册为 bean 时,我们可以通过使用  @Async("qualifierValue") 解决冲突
  *
- * @author EricChen 2019/11/24 17:12
+ * @author JonathanChen 2019/11/24 17:12
  */
 @EnableAsync
 @Configuration

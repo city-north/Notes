@@ -10,7 +10,7 @@ import java.util.List;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/01 11:33
+ * @author JonathanChen 2020/11/01 11:33
  */
 public class ResolvableTypeExample {
 

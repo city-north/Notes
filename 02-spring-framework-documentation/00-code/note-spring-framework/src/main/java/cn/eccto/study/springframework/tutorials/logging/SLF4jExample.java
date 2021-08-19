@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * description
  *
- * @author EricChen 2019/11/29 23:55
+ * @author JonathanChen 2019/11/29 23:55
  */
 public class SLF4jExample {
     private static Logger log = LoggerFactory.getLogger(SLF4jExample.class);

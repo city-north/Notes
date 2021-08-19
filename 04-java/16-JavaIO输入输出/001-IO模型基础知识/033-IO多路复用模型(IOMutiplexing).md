@@ -24,7 +24,7 @@ IO 多路复用模型中，线程首先发起 select 调用，询问内核数据
 ## select&epoll
 
 - select  系统调用, 几乎在所有的操作系统都有支持, 具有良好的跨平台性能
-- epoll 是 Linux 2.6 内核剔除的, 是select 系统调用Linux增强版本
+- epoll 是 Linux 2.6 内核提出的, 是select 系统调用Linux增强版本
 
 在IO多路复用模型中通过 select/epoll 系统调用,单个应用程序的线程, 可以不断地轮询成千上万个select连接
 

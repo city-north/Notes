@@ -7,7 +7,7 @@ import javax.inject.Provider;
 /**
  * description
  *
- * @author EricChen 2019/11/16 20:19
+ * @author JonathanChen 2019/11/16 20:19
  */
 class MyNarrowerSingletonBean {
     @Autowired

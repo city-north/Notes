@@ -4,7 +4,11 @@
 
 ## 一言蔽之
 
+Spring通过不同的Profiles来对配置文件进行分组， profile 可以通过启动脚本来修改
 
+```
+spring.profiles.active = dev
+```
 
 ## Spring3.1条件配置
 
@@ -20,7 +24,7 @@
 
 ```java
 --spring.profiles.active = even
--Dspring.profiles.active=even
+-Dspring.profiles.active=even  // 通过java -D的方式
 ```
 
 ## 代码

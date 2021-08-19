@@ -6,7 +6,7 @@ import org.springframework.beans.factory.support.GenericBeanDefinition;
 /**
  * 将 {@link InjectingOtherBeans.MyOtherBean} 注入到 {@link InjectingOtherBeans.MyBean}中
  *
- * @author EricChen 2019/11/27 17:19
+ * @author JonathanChen 2019/11/27 17:19
  */
 public class InjectingOtherBeans2 {
     public static void main(String[] args) {

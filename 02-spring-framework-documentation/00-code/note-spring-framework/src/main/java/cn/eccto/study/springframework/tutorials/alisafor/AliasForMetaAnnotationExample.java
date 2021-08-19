@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * <p>
  * 我们可以获得@AdminAccess和@AccessRole的属性，尽管我们只在MyObject2上指定了@AdminAccess。重要的是，元注释的属性被目标注释覆盖，这是Spring元注释编程模型的一个非常有用的特性。
  *
- * @author EricChen 2019/11/28 20:00
+ * @author JonathanChen 2019/11/28 20:00
  */
 public class AliasForMetaAnnotationExample {
     public static void main(String[] args) {

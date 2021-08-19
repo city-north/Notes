@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
 /**
  * 示例: 在 bean 中使用 {@link AsyncTaskExecutor}
  *
- * @author EricChen 2019/11/24 14:58
+ * @author JonathanChen 2019/11/24 14:58
  */
 @Configuration
 public class AsyncTaskExecutorExample {

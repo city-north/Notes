@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
  * TODO
  * </p>
  *
- * @author EricChen 2020/10/22 15:30
+ * @author JonathanChen 2020/10/22 15:30
  */
 public class BeanDefinitionRegisterExample {
     public static void main(String[] args) {

@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
  * TODO
  * </p>
  *
- * @author EricChen 2020/12/04 09:54
+ * @author JonathanChen 2020/12/04 09:54
  */
 public class BeanInitializationDemo implements InitializingBean {
 

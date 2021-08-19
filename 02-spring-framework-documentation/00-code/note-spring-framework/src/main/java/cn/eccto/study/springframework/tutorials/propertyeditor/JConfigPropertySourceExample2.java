@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * 本例介绍了, 不适用 XML 注册方式,转而使用 Spring 的 {@link PropertyEditorRegistrar} 去注册一个 custom PropertyEditor 使用 JavaConfig的方式进行注
  *
- * @author EricChen 2019/11/21 20:07
+ * @author JonathanChen 2019/11/21 20:07
  * @see JConfigPropertySourceExample2.MyCustomBeanRegistrar#registerCustomEditors 自定义注册方式
  * @see XmlSpringCustomEditorExample 使用 xml 方式进行注册
  */

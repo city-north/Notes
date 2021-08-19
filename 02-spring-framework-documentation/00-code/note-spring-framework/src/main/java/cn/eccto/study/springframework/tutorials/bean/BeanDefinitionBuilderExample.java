@@ -7,7 +7,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 /**
  * 代码实例: 根据{@link BeanDefinitionBuilder} 建造者模式来构建一个啊 bean 并注册到 {@link DefaultListableBeanFactory}
  *
- * @author EricChen 2019/11/27 19:09
+ * @author JonathanChen 2019/11/27 19:09
  */
 public class BeanDefinitionBuilderExample {
 

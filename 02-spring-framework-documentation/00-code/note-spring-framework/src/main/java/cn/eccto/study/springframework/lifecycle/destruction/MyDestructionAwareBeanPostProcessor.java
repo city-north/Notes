@@ -8,7 +8,7 @@ import org.springframework.beans.factory.config.DestructionAwareBeanPostProcesso
  * 自定义的{@link DestructionAwareBeanPostProcessor}
  * </p>
  *
- * @author EricChen 2020/11/27 15:47
+ * @author JonathanChen 2020/11/27 15:47
  */
 public class MyDestructionAwareBeanPostProcessor implements DestructionAwareBeanPostProcessor {
 

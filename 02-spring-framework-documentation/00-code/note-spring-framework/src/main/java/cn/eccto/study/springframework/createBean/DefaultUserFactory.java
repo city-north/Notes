@@ -11,7 +11,7 @@ import javax.annotation.PreDestroy;
  * TODO
  * </p>
  *
- * @author EricChen 2020/10/22 18:56
+ * @author JonathanChen 2020/10/22 18:56
  */
 public class DefaultUserFactory implements UserFactory, InitializingBean {
 

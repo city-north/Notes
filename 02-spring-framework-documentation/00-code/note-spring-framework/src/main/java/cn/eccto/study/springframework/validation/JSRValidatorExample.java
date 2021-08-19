@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * 2. 新建需要使用到校验的客户端 bean {@link ClientBean}
  * 3. 配置配置类 {@link Config}
  *
- * @author EricChen 2019/11/04 20:09
+ * @author JonathanChen 2019/11/04 20:09
  */
 public class JSRValidatorExample {
     public static void main(String[] args) {

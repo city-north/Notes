@@ -9,7 +9,7 @@ import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/27 15:49
+ * @author JonathanChen 2020/11/27 15:49
  */
 public class DestructionAwareBeanPostProcessorDemo {
 

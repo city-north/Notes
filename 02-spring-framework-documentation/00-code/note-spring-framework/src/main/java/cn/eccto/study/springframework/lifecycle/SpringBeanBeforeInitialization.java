@@ -12,7 +12,7 @@ import org.springframework.core.io.ClassPathResource;
  * 110-SpringBean初始化前阶段
  * </p>
  *
- * @author EricChen 2020/12/03 21:13
+ * @author JonathanChen 2020/12/03 21:13
  */
 public class SpringBeanBeforeInitialization {
 

@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * 本代码简单展示了 {@link GenericConverterExample} 的使用方式
  *
- * @author EricChen 2019/11/24 14:12
+ * @author JonathanChen 2019/11/24 14:12
  */
 public class GenericConverterExample {
     public static void main(String[] args) {

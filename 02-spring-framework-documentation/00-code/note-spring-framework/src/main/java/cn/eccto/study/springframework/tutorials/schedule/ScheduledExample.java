@@ -11,7 +11,7 @@ import java.time.LocalTime;
 /**
  * 简单使用@Scheduled 和 @EnableScheduling
  *
- * @author EricChen 2019/11/24 16:59
+ * @author JonathanChen 2019/11/24 16:59
  */
 public class ScheduledExample {
 

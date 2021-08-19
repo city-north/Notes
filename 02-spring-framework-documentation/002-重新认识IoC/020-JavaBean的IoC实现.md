@@ -18,5 +18,4 @@
 
 - JavaBeans
   - https://www.oracle.com/java/technologies/javase/desktop.html
-- 
 

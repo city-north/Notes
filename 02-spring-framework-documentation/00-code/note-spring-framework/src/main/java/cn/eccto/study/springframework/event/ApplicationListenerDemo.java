@@ -9,7 +9,7 @@ import org.springframework.context.support.GenericApplicationContext;
  * TODO
  * </p>
  *
- * @author EricChen 2021/01/07 18:25
+ * @author JonathanChen 2021/01/07 18:25
  */
 public class ApplicationListenerDemo {
 

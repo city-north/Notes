@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * 示例: 使用自定义注解的方式,导入选择器
  * 自定义注解上要表名@Import 注解
  *
- * @author EricChen 2019/11/27 22:17
+ * @author JonathanChen 2019/11/27 22:17
  */
 public class ImportSelectorWithAnnotationExample {
 

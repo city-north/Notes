@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 /**
  * description
  *
- * @author EricChen 2019/11/24 17:12
+ * @author JonathanChen 2019/11/24 17:12
  */
 public class AsyncConfigurerExample {
     public static void main(String[] args) throws ExecutionException, InterruptedException {

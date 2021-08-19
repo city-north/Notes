@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * 自定义 {@link Condition} 实现, 在Canada环境下使用Canada Locale
  *
- * @author EricChen 2019/11/15 20:49
+ * @author JonathanChen 2019/11/15 20:49
  */
 public class LocaleConditionCanada implements Condition {
 

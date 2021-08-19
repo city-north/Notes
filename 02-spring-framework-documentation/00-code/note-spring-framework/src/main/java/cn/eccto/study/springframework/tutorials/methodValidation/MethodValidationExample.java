@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 /**
  * 方法校验
  *
- * @author EricChen 2019/11/22 22:56
+ * @author JonathanChen 2019/11/22 22:56
  */
 @Configuration
 @ComponentScan("cn.eccto.study.springframework.tutorials.methodValidation")

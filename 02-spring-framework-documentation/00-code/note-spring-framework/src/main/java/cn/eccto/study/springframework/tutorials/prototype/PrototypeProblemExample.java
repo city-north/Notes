@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
  * 将一个 SCOPE_PROTOTYPE 类型的 bean {@link MyPrototypeBean} 多次注入到单例 {@link MySingletonBean}
  * 根据输出结果我们得出结论,{@link MySingletonBean} 引用的 {@link MyPrototypeBean} 是一个对象
  *
- * @author EricChen 2019/11/15 20:14
+ * @author JonathanChen 2019/11/15 20:14
  */
 @Configuration
 public class PrototypeProblemExample {

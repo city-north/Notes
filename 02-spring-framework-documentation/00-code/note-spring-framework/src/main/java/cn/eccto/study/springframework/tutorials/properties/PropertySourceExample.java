@@ -9,7 +9,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * {@link @PropertySource} 注解提供了便利的机制让我们能添加属性源(properties source)到我们环境中
  * (Environment)中
  *
- * @author EricChen 2019/11/16 21:20
+ * @author JonathanChen 2019/11/16 21:20
  */
 @Configuration
 @PropertySource("classpath:tutorials/properties/app.properties")

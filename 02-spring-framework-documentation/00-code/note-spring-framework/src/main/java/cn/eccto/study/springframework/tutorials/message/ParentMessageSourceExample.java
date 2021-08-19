@@ -13,7 +13,7 @@ import java.util.Locale;
 /**
  * 测试 {@link ResourceBundleMessageSource} 的层次结构,如果 child 拿不到相关的信息,那么就去 parent 里拿
  *
- * @author EricChen 2019/11/18 20:47
+ * @author JonathanChen 2019/11/18 20:47
  */
 @Configuration
 public class ParentMessageSourceExample {

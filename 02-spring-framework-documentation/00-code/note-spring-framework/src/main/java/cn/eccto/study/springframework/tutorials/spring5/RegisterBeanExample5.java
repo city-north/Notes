@@ -5,7 +5,7 @@ import org.springframework.context.support.GenericApplicationContext;
 /**
  * description
  *
- * @author EricChen 2019/11/27 18:10
+ * @author JonathanChen 2019/11/27 18:10
  */
 public class RegisterBeanExample5 {
     //injecting other bean via constructor

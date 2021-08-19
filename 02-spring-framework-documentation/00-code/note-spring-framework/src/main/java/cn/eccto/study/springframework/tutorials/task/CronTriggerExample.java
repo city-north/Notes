@@ -8,7 +8,7 @@ import java.time.LocalTime;
 /**
  * description
  *
- * @author EricChen 2019/11/24 16:36
+ * @author JonathanChen 2019/11/24 16:36
  */
 public class CronTriggerExample {
     public static void main(String[] args) throws InterruptedException {

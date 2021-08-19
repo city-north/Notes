@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
  * TODO
  * </p>
  *
- * @author EricChen 2020/12/17 20:30
+ * @author JonathanChen 2020/12/17 20:30
  */
 public class SpiResourceBundle {
     public static void main(String[] args) {
