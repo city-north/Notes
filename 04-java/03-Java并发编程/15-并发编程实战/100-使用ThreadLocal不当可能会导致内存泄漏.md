@@ -186,7 +186,3 @@ private int expungeStaleEntry(int staleSlot) {
 
 所以这里知道 null 元素后面的 Entry 里面的 key 为 null 的元素不会被清理
 
-```
-
-```
-
