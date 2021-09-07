@@ -18,7 +18,7 @@ AOP的判断模式的意思是指， 如何判断是我要拦截的类或者方�
 
 找到方法
 
-```
+```java
 Method targetMethod = ReflectionUtils.findMethod(targetClass, "echo", String.class);
 ```
 

@@ -7,7 +7,7 @@
 - 前置拦截（Before）
 - 后置拦截（After)
 - 异常拦截（Exception）
-- 回环拦截(around)
+- 回环拦截  (Around)
 
 ## 前置通知模拟
 

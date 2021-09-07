@@ -21,7 +21,7 @@ ${spring.application.name}-${spring.profiles.active}.${file-extension}
 例如 
 
 ```java
-eforce-platform-test  //eforce-platform应用的测试环境
+eforce-platform-test.yml  //eforce-platform应用的测试环境
 ```
 
 
