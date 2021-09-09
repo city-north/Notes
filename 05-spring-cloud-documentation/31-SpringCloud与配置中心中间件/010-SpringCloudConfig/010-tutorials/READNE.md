@@ -1,5 +1,7 @@
 # Spring Cloud Config
 
+[TOC]
+
 Spring Cloud Config 是 SpringCloud 微服务体系中的配置中心,是微服务不可或缺的一部分
 
 - 配置各种功能的开关

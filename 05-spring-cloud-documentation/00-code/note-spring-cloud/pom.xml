@@ -44,6 +44,7 @@
         <module>08-spring-cloud-gateway/client-service</module>
         <module>08-spring-cloud-gateway/provider-service</module>
         <module>10-spring-cloud-sleuth</module>
+        <module>11-spring-cloud-boostrap</module>
 
     </modules>
     <dependencies>
@@ -71,7 +72,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.RELEASE</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
