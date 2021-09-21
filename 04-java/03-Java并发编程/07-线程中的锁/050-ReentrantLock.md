@@ -1,4 +1,6 @@
-# 使用ReentrantLock
+# 050-ReentrantLock
+
+[TOC]
 
 ![image-20200701192552421](../../../assets/image-20200701192552421.png)
 
@@ -181,8 +183,6 @@ public class InterruptiblyReentrantLock {
 
 - **线程再次获取锁**,锁需要去识别锁的线程数会否为当前占据的线程,如果是,则再次成功获取
 - **锁的最终释放**: 线程重复 n 次获取了锁,随后在第 n 次释放该锁后,其他线程能够获取到该锁,锁的最终释放要求锁对于获取进行计数自增,计数表示当前锁被重复获取的次数,而锁被释放时,当计数等于0 时表示锁已经被成功释放
-
-
 
 ## 总结 `ReentrantLock` 与`synchronized`的对比
 

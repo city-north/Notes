@@ -1,5 +1,7 @@
 # 为什么要使用 MyBatis
 
+[TOC]
+
 ## MyBatis主要解决什么问题
 
 MyBatis主要解决的是 SQL 和对象的映射问题。ORM 对象关系映射
