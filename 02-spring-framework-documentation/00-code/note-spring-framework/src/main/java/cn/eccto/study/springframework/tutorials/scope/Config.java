@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Scope;
 /**
  * description
  *
- * @author EricChen 2019/11/14 20:05
+ * @author JonathanChen 2019/11/14 20:05
  */
 @Configuration
 public class Config {

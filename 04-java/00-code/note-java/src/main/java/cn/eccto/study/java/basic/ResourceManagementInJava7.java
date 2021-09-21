@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * description
  *
- * @author EricChen 2020/01/18 21:26
+ * @author Jonathan 2020/01/18 21:26
  */
 public class ResourceManagementInJava7 {
     public static void main(String[] args)

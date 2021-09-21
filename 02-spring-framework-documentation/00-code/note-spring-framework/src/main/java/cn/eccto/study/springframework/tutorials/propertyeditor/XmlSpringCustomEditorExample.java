@@ -12,7 +12,7 @@ import java.text.NumberFormat;
 /**
  * 使用 Spring xml 配置 的机制注册一个 {@link CustomNumberEditor}
  *
- * @author EricChen 2019/11/21 20:57
+ * @author JonathanChen 2019/11/21 20:57
  */
 public class XmlSpringCustomEditorExample {
     public static void main(String[] args) {

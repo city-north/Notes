@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * description
  * </p>
  *
- * @author EricChen 2020/04/02 12:36
+ * @author Jonathan 2020/04/02 12:36
  */
 public class LockUseCase {
 

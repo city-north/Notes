@@ -7,7 +7,7 @@ import java.util.concurrent.CountDownLatch;
  * A test for {@link java.util.concurrent.CountDownLatch}
  * </p>
  *
- * @author EricChen 2020/04/05 16:59
+ * @author Jonathan 2020/04/05 16:59
  */
 public class CountDownLatchTest {
 

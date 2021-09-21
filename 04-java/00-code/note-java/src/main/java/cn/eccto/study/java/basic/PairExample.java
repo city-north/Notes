@@ -5,7 +5,7 @@ import javafx.util.Pair;
 /**
  * Example of Pairs in Java
  *
- * @author EricChen 2020/01/18 19:50
+ * @author Jonathan 2020/01/18 19:50
  */
 public class PairExample {
 

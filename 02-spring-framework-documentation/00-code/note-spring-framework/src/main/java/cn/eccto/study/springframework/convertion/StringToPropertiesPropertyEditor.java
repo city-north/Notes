@@ -9,7 +9,7 @@ import java.util.Properties;
  * TODO
  * </p>
  *
- * @author EricChen 2020/12/24 21:46
+ * @author JonathanChen 2020/12/24 21:46
  */
 public class StringToPropertiesPropertyEditor extends PropertyEditorSupport {
 
@@ -28,7 +28,7 @@ public class StringToPropertiesPropertyEditor extends PropertyEditorSupport {
     }
 
     public static void main(String[] args) {
-        String text = "name=EricChen";
+        String text = "name=JonathanChen";
         StringToPropertiesPropertyEditor stringToPropertiesPropertyEditor = new StringToPropertiesPropertyEditor();
         stringToPropertiesPropertyEditor.setAsText(text);
         final Object value = stringToPropertiesPropertyEditor.getValue();

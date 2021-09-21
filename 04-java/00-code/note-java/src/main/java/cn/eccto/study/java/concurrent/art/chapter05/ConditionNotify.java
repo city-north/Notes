@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Lock;
  * description
  * </p>
  *
- * @author EricChen 2020/04/04 22:33
+ * @author Jonathan 2020/04/04 22:33
  */
 public class ConditionNotify extends Thread {
 

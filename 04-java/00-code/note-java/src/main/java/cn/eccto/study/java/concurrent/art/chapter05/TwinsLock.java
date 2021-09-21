@@ -10,7 +10,7 @@ import java.util.concurrent.locks.Lock;
  * 双胞胎锁,同一时刻支持之多两个线程进行访问
  * </p>
  *
- * @author EricChen 2020/03/26 20:53
+ * @author Jonathan 2020/03/26 20:53
  */
 public class TwinsLock implements Lock {
     private Sync sync = new Sync(2);

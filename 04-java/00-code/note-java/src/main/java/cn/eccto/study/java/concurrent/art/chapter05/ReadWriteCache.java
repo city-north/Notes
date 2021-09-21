@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * Read Write 缓存
  * </p>
  *
- * @author EricChen 2020/03/26 21:57
+ * @author Jonathan 2020/03/26 21:57
  */
 public class ReadWriteCache {
     private static Map<String, Object> map = new HashMap<>();

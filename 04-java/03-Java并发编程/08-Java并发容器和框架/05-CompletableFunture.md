@@ -1,4 +1,8 @@
-# CompletableFunture
+# 05-CompletableFunture
+
+[TOC]
+
+## 为什么要有CompletableFuture
 
 使用`Future`获得异步执行结果时，要么调用阻塞方法`get()`，要么轮询看`isDone()`是否为`true`，这两种方法都不是很好，因为主线程也会被迫等待。
 

@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
  * BufferDemo 验证 position、limit 和 capacity 这几个值的变化过程
  * </p>
  *
- * @author EricChen 2020/05/11 12:30
+ * @author Jonathan 2020/05/11 12:30
  */
 public class BufferDemo {
     public static void main(String[] args) throws Exception {

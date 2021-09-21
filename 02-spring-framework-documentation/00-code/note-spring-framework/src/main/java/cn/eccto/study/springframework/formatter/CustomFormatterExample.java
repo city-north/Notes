@@ -16,7 +16,7 @@ import java.util.StringJoiner;
  * 3. 自定义 {@link ConversionService} 的默认实现类 {@link DefaultFormattingConversionService}
  * 4. 使用自定义实现类添加自定义的格式化器进行格式化
  *
- * @author EricChen 2019/11/04 20:16
+ * @author JonathanChen 2019/11/04 20:16
  */
 class CustomFormatterExample {
     public static void main(String[] args) {

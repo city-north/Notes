@@ -2,7 +2,7 @@
 
 [TOC]
 
-##前言 
+## 前言 
 
 上一篇文章中，我们提到可以用“多线程版本的 if”来理解 Guarded Suspension 模式，不同于单线程中的 if，这个“多线程版本的 if”是需要等待的，而且还很执着，必须要等到条件为真。
 
@@ -253,6 +253,3 @@ class Test{
 ```
 
 是有问题的，volatile关键字只能保证可见性，无法保证原子性和互斥性。所以calc方法有可能被重复执行。
-
-<script src="https://gist.github.com/ericchen-vip/2cb42182e2a9da9c503b76522057f769.js"></script>
-

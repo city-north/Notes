@@ -6,6 +6,6 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="demoBean" class="cn.eccto.study.springframework.lifecycle.demoBean.BeanInitializationDemo">
-        <property name="name" value="ericchen"/>
+        <property name="name" value="JonathanChen"/>
     </bean>
 </beans>

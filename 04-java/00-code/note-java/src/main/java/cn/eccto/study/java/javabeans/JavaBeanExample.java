@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  * description
  * </p>
  *
- * @author EricChen 2020/10/17 21:01
+ * @author Jonathan 2020/10/17 21:01
  */
 public class JavaBeanExample {
 

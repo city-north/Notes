@@ -10,7 +10,7 @@ import java.nio.channels.FileChannel;
  * Example of DirectBuffer
  * </p>
  *
- * @author EricChen 2020/05/11 20:58
+ * @author Jonathan 2020/05/11 20:58
  */
 public class DirectBuffer {
     static public void main(String args[]) throws Exception {

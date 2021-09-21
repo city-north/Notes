@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * 在 Async 方法后返回 Future 对象
  *
- * @author EricChen 2019/11/24 17:14
+ * @author JonathanChen 2019/11/24 17:14
  */
 @EnableAsync
 @Configuration

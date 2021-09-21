@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
  * 直接内存可以通过-XX MaxDirectMemorySize 指定,如果不指定,和 Xmx 一直
  * </p>
  *
- * @author EricChen 2020/05/02 17:57
+ * @author Jonathan 2020/05/02 17:57
  */
 public class DirectMemoryOOM {
 

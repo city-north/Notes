@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * 实例: 简单使用 Java Util Logging 打印
  *
- * @author EricChen 2019/11/29 22:36
+ * @author JonathanChen 2019/11/29 22:36
  */
 public class JULExample {
     public static void main(String[] args) {

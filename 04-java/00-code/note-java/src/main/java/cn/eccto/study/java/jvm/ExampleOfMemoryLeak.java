@@ -8,7 +8,7 @@ import java.util.Map;
  * 模拟内存泄漏
  * </p>
  *
- * @author EricChen 2020/04/28 19:57
+ * @author Jonathan 2020/04/28 19:57
  */
 public class ExampleOfMemoryLeak {
 

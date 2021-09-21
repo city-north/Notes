@@ -63,4 +63,3 @@ spring:
         name: eureka-service
 ```
 
-

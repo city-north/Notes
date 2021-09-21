@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * description
  * </p>
  *
- * @author EricChen 2020/07/20 13:32
+ * @author Jonathan 2020/07/20 13:32
  */
 public class ThreadLocalRandomTest {
     public static void main(String[] args) {

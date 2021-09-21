@@ -12,7 +12,7 @@ import javax.validation.ConstraintValidatorContext;
 // * 3. 创建语言提供者 {@link LanguageProvider},主要获取所有语言
 // * 4. {@link LanguageValidator } 对标有注解的属性进行校验
 // *
-// * @author EricChen 2019/11/22 22:22
+// * @author JonathanChen 2019/11/22 22:22
 // */
 //public class LanguageValidator implements ConstraintValidator<MyLanguage, String> {
 //    @Autowired

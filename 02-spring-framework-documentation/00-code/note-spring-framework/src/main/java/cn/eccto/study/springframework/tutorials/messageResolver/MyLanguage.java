@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 // * 3. 创建语言提供者 {@link LanguageProvider},主要获取所有语言
 // * 4. {@link LanguageValidator } 对标有注解的属性进行校验
 // *
-// * @author EricChen 2019/11/22 22:14
+// * @author JonathanChen 2019/11/22 22:14
 // */
 //@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.ANNOTATION_TYPE})
 //@Retention(RetentionPolicy.RUNTIME)

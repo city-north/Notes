@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
  * description
  * </p>
  *
- * @author EricChen 2020/04/05 19:32
+ * @author Jonathan 2020/04/05 19:32
  */
 public class ExchangerTest {
     private static final Exchanger<String> exgr = new Exchanger<String>();

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * A Test for {@link java.util.concurrent.Semaphore}
  * </p>
  *
- * @author EricChen 2020/04/05 19:17
+ * @author Jonathan 2020/04/05 19:17
  */
 public class SemaphoreTest {
     public static void main(String[] args) {

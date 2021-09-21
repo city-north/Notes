@@ -8,7 +8,7 @@ import java.util.concurrent.BlockingQueue;
  * 消费者
  * </p>
  *
- * @author EricChen 2020/02/26 15:41
+ * @author Jonathan 2020/02/26 15:41
  */
 public class Consumer implements Runnable {
 

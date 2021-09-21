@@ -7,7 +7,7 @@ import java.util.Random;
  * description
  * </p>
  *
- * @author EricChen 2020/07/20 11:19
+ * @author Jonathan 2020/07/20 11:19
  */
 public class RandomTest {
     public static void main(String[] args) {

@@ -12,7 +12,7 @@ import org.springframework.validation.DataBinder;
  * <p>
  * 1. 自定义测试类{@link Order},设置注解 NumberFormat 和 DateTimeFormat
  *
- * @author EricChen 2019/11/04 20:29
+ * @author JonathanChen 2019/11/04 20:29
  */
 class SpringFormatAnnotationExample {
 

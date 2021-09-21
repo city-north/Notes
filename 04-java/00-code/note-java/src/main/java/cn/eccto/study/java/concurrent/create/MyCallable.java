@@ -9,7 +9,7 @@ import java.util.concurrent.*;
  * description
  * </p>
  *
- * @author EricChen 2020/06/23 21:18
+ * @author Jonathan 2020/06/23 21:18
  */
 public class MyCallable implements Callable<String> {
     private String name;

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
  * AutowireCapableBeanFactoryExample
  * </p>
  *
- * @author EricChen 2020/10/22 19:14
+ * @author JonathanChen 2020/10/22 19:14
  */
 public class AutowireCapableBeanFactoryExample {
 

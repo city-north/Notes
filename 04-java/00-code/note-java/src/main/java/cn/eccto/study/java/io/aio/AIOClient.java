@@ -10,7 +10,7 @@ import java.nio.channels.CompletionHandler;
  * 异步 IO 客户端
  * </p>
  *
- * @author EricChen 2020/05/11 12:13
+ * @author Jonathan 2020/05/11 12:13
  */
 public class AIOClient {
     private final AsynchronousSocketChannel client;

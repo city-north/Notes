@@ -7,7 +7,7 @@ import org.springframework.core.task.TaskExecutor;
 /**
  * 使用{@link SimpleAsyncTaskExecutor} 执行一个简单的 task
  *
- * @author EricChen 2019/11/24 14:51
+ * @author JonathanChen 2019/11/24 14:51
  */
 public class TaskExecutorStandAloneExample {
     public static void main(String[] args) {

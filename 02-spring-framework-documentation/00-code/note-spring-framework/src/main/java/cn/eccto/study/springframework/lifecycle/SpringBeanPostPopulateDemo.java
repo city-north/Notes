@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  * 090-SpringBean属性赋值前阶段
  * </p>
  *
- * @author EricChen 2020/12/03 21:46
+ * @author JonathanChen 2020/12/03 21:46
  */
 public class SpringBeanPostPopulateDemo {
 

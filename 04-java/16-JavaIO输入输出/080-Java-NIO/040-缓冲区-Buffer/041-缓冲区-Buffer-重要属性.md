@@ -17,7 +17,7 @@
 
 ### 重要属性1-capacity属性
 
-Buffer 类的 capacoity 属性， 表示内部容量的大小，一旦写入的对象数量超过了capacity容量缓冲区就慢了， 不能再写入了
+Buffer 类的 capacoity 属性， 表示内部容量的大小，一旦写入的对象数量超过了capacity容量缓冲区就满了， 不能再写入了
 
 **capacity 容量不是指内存块 byte[] 数组的字节数量， 而是存储的数据对象的数量**
 

@@ -8,7 +8,7 @@ import org.springframework.core.type.AnnotationMetadata;
 /**
  * Configuration order with DeferredImportSelector
  *
- * @author EricChen 2019/11/27 22:28
+ * @author JonathanChen 2019/11/27 22:28
  */
 public class DeferredImportSelectorExample {
 

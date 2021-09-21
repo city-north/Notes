@@ -7,7 +7,7 @@ import cn.eccto.study.springframework.User;
  * TODO
  * </p>
  *
- * @author EricChen 2020/10/19 21:18
+ * @author JonathanChen 2020/10/19 21:18
  */
 public class SuperUser extends User {
 

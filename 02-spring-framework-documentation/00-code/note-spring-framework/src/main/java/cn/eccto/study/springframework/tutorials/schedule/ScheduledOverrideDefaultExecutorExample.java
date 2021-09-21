@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 /**
  * 使用 TaskScheduler 替换默认
  *
- * @author EricChen 2019/11/24 17:02
+ * @author JonathanChen 2019/11/24 17:02
  */
 public class ScheduledOverrideDefaultExecutorExample {
 

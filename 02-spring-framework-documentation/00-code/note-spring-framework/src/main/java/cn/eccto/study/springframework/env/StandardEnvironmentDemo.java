@@ -13,7 +13,7 @@ import java.util.Properties;
  * 代码实例 for {@link org.springframework.core.env.StandardEnvironment}
  * </p>
  *
- * @author EricChen 2021/01/14 09:48
+ * @author JonathanChen 2021/01/14 09:48
  */
 @Configuration
 public class StandardEnvironmentDemo {

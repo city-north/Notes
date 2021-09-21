@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * description
  *
- * @author EricChen 2019/11/24 16:35
+ * @author JonathanChen 2019/11/24 16:35
  */
 public class PeriodicTriggerExample {
     public static void main(String[] args) throws InterruptedException {

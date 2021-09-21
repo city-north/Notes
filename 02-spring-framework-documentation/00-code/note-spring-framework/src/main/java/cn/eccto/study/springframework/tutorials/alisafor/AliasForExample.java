@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * 示例: 如何使用AliasFor 注解
  * 从输出结果中可以看出仅仅标注了 value 属性, accessType属性也得到了赋值
  *
- * @author EricChen 2019/11/28 19:52
+ * @author JonathanChen 2019/11/28 19:52
  */
 public class AliasForExample {
     public static void main(String[] args) {

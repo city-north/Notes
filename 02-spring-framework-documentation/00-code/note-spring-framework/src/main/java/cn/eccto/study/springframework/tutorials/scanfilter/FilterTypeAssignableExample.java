@@ -9,7 +9,7 @@ import org.springframework.context.annotation.FilterType;
 /**
  * 指定不使用标准的 filter ,指定需要引入的类 {@link MyBean1}和{@link MyBean3}
  *
- * @author EricChen 2019/11/14 20:16
+ * @author JonathanChen 2019/11/14 20:16
  */
 @Configuration
 @ComponentScan(useDefaultFilters = false,

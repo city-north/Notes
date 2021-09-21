@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * ReadWriteLockExample
  * </p>
  *
- * @author EricChen 2020/03/10 16:44
+ * @author Jonathan 2020/03/10 16:44
  */
 public class ReadWriteLockExample {
 

@@ -5,7 +5,7 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="user" class="cn.eccto.study.springframework.ioc.User">
-        <property name="name" value="EricChen"/>
+        <property name="name" value="JonathanChen"/>
         <property name="age" value="25"/>
     </bean>
 

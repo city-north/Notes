@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * 标注有 @Configuration 注解的类 实现 {@link BeanFactoryPostProcessor} 接口 实现 postProcessBeanFactory()
  * 方法可在所有 bean load 之后 ,初始化之前执行
  *
- * @author EricChen 2019/11/27 17:22
+ * @author JonathanChen 2019/11/27 17:22
  */
 @Configuration
 public class BeanFactoryPostProcessorExample implements BeanFactoryPostProcessor {

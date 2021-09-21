@@ -5,7 +5,7 @@ package cn.eccto.study.java.concurrent.art.chapter04;
  * description
  * </p>
  *
- * @author EricChen 2020/03/07 16:58
+ * @author Jonathan 2020/03/07 16:58
  */
 public class Synchronized {
     public static void main(String[] args) {

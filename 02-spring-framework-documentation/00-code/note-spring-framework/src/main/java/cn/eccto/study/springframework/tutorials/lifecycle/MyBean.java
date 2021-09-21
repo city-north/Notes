@@ -8,7 +8,7 @@ import javax.annotation.PreDestroy;
 /**
  * description
  *
- * @author EricChen 2019/11/14 20:21
+ * @author JonathanChen 2019/11/14 20:21
  */
 public class MyBean {
     private OtherBean otherBean;

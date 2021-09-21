@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * description
  * </p>
  *
- * @author EricChen 2021/01/06 17:36
+ * @author Jonathan 2021/01/06 17:36
  */
 public class TypeTest2 {
     public static void main(String[] args) {

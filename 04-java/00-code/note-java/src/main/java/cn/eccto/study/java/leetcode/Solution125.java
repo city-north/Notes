@@ -5,7 +5,7 @@ package cn.eccto.study.java.leetcode;
  * 验证是否是回文串
  * </p>
  *
- * @author EricChen 2020/08/04 21:11
+ * @author Jonathan 2020/08/04 21:11
  */
 public class Solution125 {
     public boolean isPalindrome(String s) {

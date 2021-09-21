@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * 连接池驱动
  * </p>
  *
- * @author EricChen 2020/03/07 21:41
+ * @author Jonathan 2020/03/07 21:41
  */
 public class ConnectionDriver {
 

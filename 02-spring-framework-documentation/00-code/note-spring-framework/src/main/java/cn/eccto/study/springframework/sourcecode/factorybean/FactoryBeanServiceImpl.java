@@ -3,7 +3,7 @@ package cn.eccto.study.springframework.sourcecode.factorybean;
 /**
  * description
  *
- * @author EricChen 2020/01/08 10:38
+ * @author JonathanChen 2020/01/08 10:38
  */
 public class FactoryBeanServiceImpl implements FactoryBeanService {
 

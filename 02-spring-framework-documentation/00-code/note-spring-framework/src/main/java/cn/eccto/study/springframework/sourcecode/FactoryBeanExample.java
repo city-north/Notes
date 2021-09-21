@@ -9,7 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 /**
  * description
  *
- * @author EricChen 2020/01/08 10:26
+ * @author JonathanChen 2020/01/08 10:26
  */
 public class FactoryBeanExample {
 

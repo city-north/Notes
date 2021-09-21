@@ -3,7 +3,7 @@ package cn.eccto.study.java.basic;
 /**
  * Example of Static identifier in Java
  *
- * @author EricChen 2020/01/18 15:35
+ * @author Jonathan 2020/01/18 15:35
  */
 public class JavaStaticExample {
 

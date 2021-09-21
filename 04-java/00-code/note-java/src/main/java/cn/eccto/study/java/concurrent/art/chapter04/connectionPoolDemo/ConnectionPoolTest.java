@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 连接池测试
  * </p>
  *
- * @author EricChen 2020/03/07 22:04
+ * @author Jonathan 2020/03/07 22:04
  */
 public class ConnectionPoolTest {
     private static ConnectionPool connectionPool = new ConnectionPool(10);

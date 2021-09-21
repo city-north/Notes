@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
  * description
  * </p>
  *
- * @author EricChen 2020/03/10 20:48
+ * @author Jonathan 2020/03/10 20:48
  */
 public class CompletableFuture2 {
     public static void main(String[] args) throws Exception {

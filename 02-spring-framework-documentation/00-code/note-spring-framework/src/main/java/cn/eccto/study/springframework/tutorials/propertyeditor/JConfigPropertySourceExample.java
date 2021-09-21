@@ -11,7 +11,7 @@ import java.util.Currency;
 /**
  * 本实例介绍了 使用 {@link Value} 注解 和{@link PropertySource} 注解注入 properties 参数值,我们不需要进行任何配置,因为 Spring 已经为我们做了这方便的转换,将 text 文本转换成 对象
  *
- * @author EricChen 2019/11/21 20:05
+ * @author JonathanChen 2019/11/21 20:05
  */
 public class JConfigPropertySourceExample {
     public static void main(String[] args) {

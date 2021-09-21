@@ -10,7 +10,7 @@ import java.util.Map;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/01 12:56
+ * @author JonathanChen 2020/11/01 12:56
  */
 public class HierarchicalBeanFactoryExample {
 

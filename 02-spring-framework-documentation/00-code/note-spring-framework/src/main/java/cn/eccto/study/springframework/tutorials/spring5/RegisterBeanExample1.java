@@ -5,7 +5,7 @@ import org.springframework.context.support.GenericApplicationContext;
 /**
  * 使用 {@link GenericApplicationContext} 的新方法 {@link GenericApplicationContext#registerBean} 注册 bean
  *
- * @author EricChen 2019/11/27 18:06
+ * @author JonathanChen 2019/11/27 18:06
  */
 public class RegisterBeanExample1 {
     //using registerBean(beanClass, customizers)

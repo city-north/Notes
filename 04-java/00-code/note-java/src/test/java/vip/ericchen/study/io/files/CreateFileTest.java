@@ -1,4 +1,4 @@
-package vip.ericchen.study.io.files;
+package vip.Jonathan.study.io.files;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * description
  * </p>
  *
- * @author EricChen 2020/12/26 16:10
+ * @author Jonathan 2020/12/26 16:10
  */
 public class CreateFileTest {
 

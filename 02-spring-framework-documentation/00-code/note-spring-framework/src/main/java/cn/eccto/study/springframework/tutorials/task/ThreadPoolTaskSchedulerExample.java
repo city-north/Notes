@@ -7,7 +7,7 @@ import java.time.LocalTime;
 /**
  * 实例展示了在以固定速率调度任务,使用`ThreadPoolTaskScheduler`
  *
- * @author EricChen 2019/11/24 16:28
+ * @author JonathanChen 2019/11/24 16:28
  */
 public class ThreadPoolTaskSchedulerExample {
     public static void main(String[] args) throws Exception {

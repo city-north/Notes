@@ -5,7 +5,7 @@ package cn.eccto.study.java.jvm;
  * description
  * </p>
  *
- * @author EricChen 2020/04/28 20:00
+ * @author Jonathan 2020/04/28 20:00
  */
 public class TestMemory {
     private String name ="12";

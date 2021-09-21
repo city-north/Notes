@@ -11,7 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * SpringBean实例化后,初始化前的Aware接口回调
  * </p>
  *
- * @author EricChen 2020/11/25 23:52
+ * @author JonathanChen 2020/11/25 23:52
  */
 public class BeanInstantiationLifecycleDemo {
     public static void main(String[] args) {

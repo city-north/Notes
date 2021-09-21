@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * TODO
  * </p>
  *
- * @author EricChen 2020/11/23 19:17
+ * @author JonathanChen 2020/11/23 19:17
  */
 public class MergedBeanDefinitionDemo {
     public static void main(String[] args) {

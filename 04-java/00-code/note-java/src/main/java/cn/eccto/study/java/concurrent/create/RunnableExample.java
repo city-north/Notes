@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * 实现 Runnable 接口的方式
  * </p>
  *
- * @author EricChen 2020/02/26 23:06
+ * @author Jonathan 2020/02/26 23:06
  */
 public class RunnableExample implements Runnable {
     private String name;

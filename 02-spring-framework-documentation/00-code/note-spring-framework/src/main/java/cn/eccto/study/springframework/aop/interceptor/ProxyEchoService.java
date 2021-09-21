@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  * TODO
  * </p>
  *
- * @author EricChen
+ * @author JonathanChen
  */
 public class ProxyEchoService implements InvocationHandler {
 

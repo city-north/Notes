@@ -8,7 +8,7 @@ import org.springframework.core.io.ClassPathResource;
  * XmlBeanFactory
  *
  * @see org.springframework.beans.factory.xml.XmlBeanFactory
- * @author EricChen 2020/01/05 20:48
+ * @author JonathanChen 2020/01/05 20:48
  */
 public class XmlBeanFactoryExample {
 

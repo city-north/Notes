@@ -8,7 +8,7 @@ import org.springframework.core.type.AnnotationMetadata;
 /**
  * description
  *
- * @author EricChen 2019/11/27 22:34
+ * @author JonathanChen 2019/11/27 22:34
  */
 public class ImportSelectorOrderExample {
     public static void main(String[] args) {

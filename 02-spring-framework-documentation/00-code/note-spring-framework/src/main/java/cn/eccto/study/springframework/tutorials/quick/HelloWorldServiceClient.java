@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * description
  *
- * @author EricChen 2019/11/05 22:23
+ * @author JonathanChen 2019/11/05 22:23
  */
 public class HelloWorldServiceClient {
 

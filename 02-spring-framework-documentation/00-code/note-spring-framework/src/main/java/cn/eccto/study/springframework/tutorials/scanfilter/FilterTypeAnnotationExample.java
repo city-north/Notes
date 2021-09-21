@@ -9,7 +9,7 @@ import org.springframework.context.annotation.FilterType;
 /**
  * 指定不使用标准的 filter ,并引入自定义注解 {@link MyAnnotation}
  *
- * @author EricChen 2019/11/14 20:07
+ * @author JonathanChen 2019/11/14 20:07
  */
 @Configuration
 @ComponentScan(useDefaultFilters = false,

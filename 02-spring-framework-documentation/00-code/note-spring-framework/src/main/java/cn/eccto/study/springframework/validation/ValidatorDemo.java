@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
  * A demo for {@link org.springframework.validation.Validator}
  * </p>
  *
- * @author EricChen
+ * @author JonathanChen
  */
 public class ValidatorDemo {
 

@@ -8,7 +8,7 @@ import org.springframework.context.event.*;
 /**
  * 通过 注解 {@link EventListener} 使用内置事件,测试类
  *
- * @author EricChen 2019/11/18 20:20
+ * @author JonathanChen 2019/11/18 20:20
  */
 @Configuration
 public class BuildInAnnotationBasedEventExample {

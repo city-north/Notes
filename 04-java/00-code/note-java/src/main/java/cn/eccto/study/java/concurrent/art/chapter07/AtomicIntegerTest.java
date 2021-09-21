@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * A Test of {@link AtomicInteger} and {@link Integer} increment
  * </p>
  *
- * @author EricChen 2020/04/07 12:55
+ * @author Jonathan 2020/04/07 12:55
  */
 public class AtomicIntegerTest implements Runnable {
     private AtomicInteger atomicInteger = new AtomicInteger(0);

@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
  * UnSafe 机制, JVM 通常会管理内存的使用,你也可以用这个机制去自己创建一个类的实例
  * 但是这个实例不会调用构造方法,更不会调用初始化的任何方法
  *
- * @author EricChen 2020/01/18 21:39
+ * @author Jonathan 2020/01/18 21:39
  */
 public class UnsafeExample {
     public static void main(String[] args) throws Exception {

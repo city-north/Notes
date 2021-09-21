@@ -17,31 +17,31 @@ user:
 配置文件会与对象进行数据绑定。测试代码：
 
 ```java
-   private static void testYmlPropertiesFactoryBean() throws IntrospectionException {
-        //构建Yaml读取
-        YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
-        yaml.setResources(new ClassPathResource("application.yml"));
-        String path = "user.";
-        Properties properties = yaml.getObject();
-        System.out.println(properties);
-        User user = new User();
-        //获取 User Bean 信息，排除 Object
-        BeanInfo userBeanInfo = Introspector.getBeanInfo(User.class, Object.class);
-        //属性描述
-        PropertyDescriptor[] propertyDescriptors = userBeanInfo.getPropertyDescriptors();
-        Stream.of(propertyDescriptors).forEach(propertyDescriptor -> {
-            //获取属性名称
-            String property = propertyDescriptor.getName();
-            try {
-                final Method writeMethod = propertyDescriptor.getWriteMethod();
-                if (writeMethod != null) {
-                    writeMethod.invoke(user, properties.get(path + property));
-                }
-            } catch (IllegalAccessException | InvocationTargetException ignored) {
+private static void testYmlPropertiesFactoryBean() throws IntrospectionException {
+    //构建Yaml读取
+    YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
+    yaml.setResources(new ClassPathResource("application.yml"));
+    String path = "user.";
+    Properties properties = yaml.getObject();
+    System.out.println(properties);
+    User user = new User();
+    //获取 User Bean 信息，排除 Object
+    BeanInfo userBeanInfo = Introspector.getBeanInfo(User.class, Object.class);
+    //属性描述
+    PropertyDescriptor[] propertyDescriptors = userBeanInfo.getPropertyDescriptors();
+    Stream.of(propertyDescriptors).forEach(propertyDescriptor -> {
+        //获取属性名称
+        String property = propertyDescriptor.getName();
+        try {
+            final Method writeMethod = propertyDescriptor.getWriteMethod();
+            if (writeMethod != null) {
+                writeMethod.invoke(user, properties.get(path + property));
             }
-        });
-        System.out.println(user);
-    }
+        } catch (IllegalAccessException | InvocationTargetException ignored) {
+        }
+    });
+    System.out.println(user);
+}
 ```
 
 输出结果

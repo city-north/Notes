@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * multiple Thread
  *
- * @author EricChen 2019/12/31 23:27
+ * @author Jonathan 2019/12/31 23:27
  */
 public class MyThreadPoolExecutor {
 

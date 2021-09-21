@@ -14,7 +14,7 @@ import org.springframework.util.ObjectUtils;
  * A demo for Spring Configuration Metadata
  * </p>
  *
- * @author EricChen 2020/12/01 20:30
+ * @author JonathanChen 2020/12/01 20:30
  */
 public class BeanConfigurationMetadataDemo {
 
@@ -22,7 +22,7 @@ public class BeanConfigurationMetadataDemo {
     public static void main(String[] args) {
         // BeanDefinition 的定义（声明）
         final BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
-        beanDefinitionBuilder.addPropertyValue("name", "EricChen");
+        beanDefinitionBuilder.addPropertyValue("name", "JonathanChen");
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         // 获取 AbstractBeanDefinition
         final AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();

@@ -3,7 +3,7 @@ package cn.eccto.study.springframework.tutorials.objectprovider;
 /**
  * description
  *
- * @author EricChen 2019/11/15 20:20
+ * @author JonathanChen 2019/11/15 20:20
  */
 public class ExampleBean2 {
     private String arg;

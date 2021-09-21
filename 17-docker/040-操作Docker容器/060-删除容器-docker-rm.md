@@ -35,5 +35,9 @@ $ docker rm -f 2ae2ae
 ￼
 ```
 
+## 删除所有容器
 
+```
+sudo docker rm -f $(docker ps -aq)
+```
 

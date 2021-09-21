@@ -3,7 +3,7 @@ package cn.eccto.study.springframework.formatter.info;
 /**
  * description
  *
- * @author EricChen 2019/11/04 20:41
+ * @author JonathanChen 2019/11/04 20:41
  */
 public enum LocaleStyle {
     /**

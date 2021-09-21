@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 序列化测试 dto
  *
- * @author EricChen 2020/01/19 15:26
+ * @author Jonathan 2020/01/19 15:26
  */
 public class SerializableDto implements Serializable {
 
