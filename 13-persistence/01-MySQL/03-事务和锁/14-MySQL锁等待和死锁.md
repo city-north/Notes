@@ -50,7 +50,7 @@ show VARIABLES like 'innodb_lock_wait_timeout';
 
 ### 查看锁信息(日志)
 
-```
+```sql
 //SHOW STATUS 命令中，包括了一些行锁的信息:
 show status like 'innodb_row_lock_%';
 ```
@@ -63,20 +63,19 @@ show status like 'innodb_row_lock_%';
 
 SHOW 命令是一个概要信息。InnoDB 还提供了三张表来分析事务与锁的情况:
 
-```
+```sql
 select * from information_schema.INNODB_TRX; -- 当前运行的所有事务 ，还有具体的语句
 ```
 
 ![image-20200315170921523](assets/image-20200315170921523.png)
 
-```
+```sql
 select * from information_schema.INNODB_LOCKS; -- 当前出现的锁
 ```
 
 ![image-20200315170934354](assets/image-20200315170934354.png)
 
-```
-
+```sql
 select * from information_schema.INNODB_LOCK_WAITS; -- 锁等待的对应关系
 ```
 

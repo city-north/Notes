@@ -47,7 +47,7 @@ Java 在 1.8 版本提供了 CompletableFuture 来支持异步编程，Completab
 2. 语义更清晰，例如 `f3 = f1.thenCombine(f2, ()->{})` 能够清晰地表述“任务 3 要等待任务 1 和任务 2 都完成后才能开始”；
 3. 代码更简练并且专注于业务逻辑，几乎所有代码都是业务逻辑相关的。
 
-```
+```java
 // 任务 1：洗水壶 -> 烧开水
 CompletableFuture<Void> f1 =  CompletableFuture.runAsync(()->{
   System.out.println("T1: 洗水壶...");
