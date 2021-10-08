@@ -38,8 +38,7 @@ throws 类型为 NullPointerException
         ReflectionUtils.doWithMethods(targetClass, new ReflectionUtils.MethodCallback() {
             @Override
             public void doWith(Method method) throws IllegalArgumentException, IllegalAccessException {
-                System.out.println("仅抛出 NullPointerException 方法为：" + method);
-            }
+ 
         }, new ReflectionUtils.MethodFilter() {
             @Override
             public boolean matches(Method method) {
