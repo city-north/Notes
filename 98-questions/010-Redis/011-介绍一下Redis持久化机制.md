@@ -1,6 +1,6 @@
 # 介绍一下 Redis 持久化机制
 
->  知识点  [README.md](../../13-persistence/02-Redis/09-持久化/README.md) 
+>  知识点   [README.md](../../13-persistence/02-Redis/050-Redis底层实现原理/040-Redis底层实现-持久化/README.md) 
 
 Redis 是基于内存实现的,所以断电以后数据会丢失,因此需要进行持久化,默认有两个持久化策略
 
