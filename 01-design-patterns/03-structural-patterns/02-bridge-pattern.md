@@ -90,7 +90,7 @@ public abstract class Abstraction {
 public class RefinedAbstraction extends Abstraction {
      @Override
      protected void operation() {
-         super.getImplementor().operation();
+           super.getImplementor().operation();
      }
 }
 ```

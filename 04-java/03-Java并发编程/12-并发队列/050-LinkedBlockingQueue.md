@@ -22,9 +22,12 @@
 
 ## LinkedBlockingQueue简介
 
-LinkedBlockingQueue 是并发包中的一个 **有界阻塞队列**,默认长度时 **Integer.MAX_VALUE** , 内部
+LinkedBlockingQueue 是并发包中的一个**有界阻塞队列**,默认长度时 **Integer.MAX_VALUE** , 内部维护了一个链表, 一个 head 节点指向队头 , 一个 tail 节点指向队尾 ,还有两个 ReentrantLock  , 
 
-维护了一个链表, 一个 head 节点指向队头 , 一个 tail 节点指向队尾 ,还有两个 ReentrantLock  , 一个是 putLock 一个是 takeLock  来确保原子性
+- 一个是 putLock 
+- 一个是 takeLock 
+
+ 来确保原子性
 
 - 在队列尾部添加元素 时,通过 putLock 控制同时只能有一个线程可以获取锁,, 其他线程必须等待
 - 两个锁的条件队列分别用来存放出队和入队被阻塞的线程 , 这里使用了生产者消费者模型
