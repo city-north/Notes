@@ -4,15 +4,15 @@
 
 ## 为什么要有ByteBuf
 
-Netty提供了ByteBuf来代替 Java NIO 的ByteBuffer 缓冲区, 以操纵内存缓冲区
+Netty提供了	`ByteBuf`    来代替 Java NIO 的 `ByteBuffer` 缓冲区, 以操纵内存缓冲区
 
 ## ByteBuf的优势
 
-与JavaNIO的 ByteBuf相比, ByteBuf的优势如下
+与 `JavaNIO`的 `ByteBuf` 相比, `ByteBuf` 的优势如下
 
-- Pooling 池化技术, 减少了内存复制和GC, 提高效率
+- `Pooling` 池化技术, 减少了内存复制和GC, 提高效率
 - 复合缓冲区类型, 支持零拷贝
-- 不需要调用flip()方法区切换读写模式
+- 不需要调用 `flip()`方法区切换读写模式
 - 拓展性好, 例如 StringBuffer
 - 可以自定义缓冲区类型
 - 读取和写入索引分开
