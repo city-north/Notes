@@ -16,15 +16,24 @@ Semaphore，现在普遍翻译为“信号量”，以前也曾被翻译成“�
 
 ## 信号量模型
 
-信号量模型还是很简单的，可以简单概括为：**一个计数器，一个等待队列，三个方法**。在信号量模型里，计数器和等待队列对外是透明的，所以只能通过信号量模型提供的三个方法来访问它们，这三个方法分别是：init()、down() 和 up()。你可以结合下图来形象化地理解。
+信号量模型还是很简单的，可以简单概括为：**一个计数器，一个等待队列，三个方法**。在信号量模型里，计数器和等待队列对外是透明的，所以只能通过信号量模型提供的三个方法来访问它们，这三个方法分别是：
+
+- init()
+- down()
+- up()
+
+你可以结合下图来形象化地理解。
 
 <img src="../../../../../assets/image-20210131131558066.png" alt="image-20210131131558066" style="zoom:50%;" />
 
 这三个方法详细的语义具体如下所示。
 
 - init()：设置计数器的初始值。
-- down()：计数器的值减 1；如果此时计数器的值小于 0，则当前线程将被阻塞，否则当前线程可以继续执行。
-- up()：计数器的值加 1；如果此时计数器的值小于或者等于 0，则唤醒等待队列中的一个线程，并将其从等待队列中移除。
+- down()：计数器的值减 1；
+  - 如果此时计数器的值大于等于0, 则线程继续执行
+  - 如果此时计数器的值小于 0，则当前线程将被阻塞
+- up()：计数器的值加 1；
+  - 如果此时计数器的值小于或者等于 0，则唤醒等待队列中的一个线程，并将其从等待队列中移除。
 
 这里提到的 init()、down() 和 up() 三个方法都是原子性的，并且这个原子性是由信号量模型的实现方保证的。在 Java SDK 里面，信号量模型是由 java.util.concurrent.Semaphore 实现的，Semaphore 这个类能够保证这三个方法都是原子操作。
 
@@ -58,7 +67,7 @@ class Semaphore{
 }
 ```
 
-这里再插一句，信号量模型里面，down()、up() 这两个操作历史上最早称为 P 操作和 V 操作，所以信号量模型也被称为 PV 原语。另外，还有些人喜欢用 semWait() 和 semSignal() 来称呼它们，虽然叫法不同，但是语义都是相同的。在 Java SDK 并发包里，down() 和 up() 对应的则是 acquire() 和 release()。
+这里再插一句，信号量模型里面，down()、up() 这两个操作历史上最早称为 P 操作和 V 操作，所以信号量模型也被称为 **PV 原语**。另外，还有些人喜欢用 semWait() 和 semSignal() 来称呼它们，虽然叫法不同，但是语义都是相同的。在 Java SDK 并发包里，down() 和 up() 对应的则是 acquire() 和 release()。
 
 ## 如何使用信号量
 
@@ -99,7 +108,40 @@ static void addOne() {
 
 信号量的计数器，在上面的例子中，我们设置成了 1，这个 1 表示只允许一个线程进入临界区，但如果我们把计数器的值设置成对象池里对象的个数 N，就能完美解决对象池的限流问题了。下面就是对象池的示例代码。
 
-<script src="https://gist.github.com/ericchen-vip/39c27b87d6cc40e0421ea3e62cb55e78.js"></script>
+```java
+class ObjPool<T, R> {
+  final List<T> pool;
+  // 用信号量实现限流器
+  final Semaphore sem;
+  // 构造函数
+  ObjPool(int size, T t){
+    pool = new Vector<T>(){};
+    for(int i=0; i<size; i++){
+      pool.add(t);
+    }
+    sem = new Semaphore(size);
+  }
+  // 利用对象池的对象，调用 func
+  R exec(Function<T,R> func) {
+    T t = null;
+    sem.acquire();
+    try {
+      t = pool.remove(0);
+      return func.apply(t);
+    } finally {
+      pool.add(t);
+      sem.release();
+    }
+  }
+}
+// 创建对象池
+ObjPool<Long, String> pool =  new ObjPool<Long, String>(10, 2);
+// 通过对象池获取 t，之后执行  
+pool.exec(t -> {
+    System.out.println(t);
+    return t.toString();
+});
+```
 
 我们用一个 List来保存对象实例，用 Semaphore 实现限流器。
 
@@ -120,3 +162,4 @@ Java 在并发编程领域走的很快，重点支持的还是管程模型。
 ## 课后思考
 
 在上面对象池的例子中，对象保存在了 Vector 中，Vector 是 Java 提供的线程安全的容器，如果我们把 Vector 换成 ArrayList，是否可以呢？
+

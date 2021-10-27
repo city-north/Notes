@@ -31,7 +31,7 @@ Condition 在 AQS 的基础上,额外添加了一个单向的**等待队列**,�
 
 - 跟 Object 比较下 , 总体来说是更有灵活性 , 并且可以同时创建多个 condition 队列 , 使用更加灵活支持在等待的时候,忽略中断,支持等待超时退出
 
-- 支持在等待的时候,忽略中断,支持等待超时退出
+- 9支持在等待的时候,忽略中断,支持等待超时退出
 
 ## Condition实现原理
 
@@ -158,7 +158,7 @@ final boolean transferForSignal(Node node) {
 
 在 Object 监视器模型上,一个对象拥有一个同步队列和等待队列,而并发包中的同步器拥有一个同步队列和多个等待队列
 
-> <img src="../../../assets/image-20200701215828921.png" alt="image-20200701215828921" style="zoom:33%;" />]\
+<img src="../../../assets/image-20200701215828921.png" alt="image-20200701215828921" style="zoom:33%;" />]\
 
 值得注意的是 Condition 的实现是同步器的内部类,因此每个 Condition 实例都能够访问同步器提供的方法,相当于每个 Condition 都拥有所属同步器的引用
 

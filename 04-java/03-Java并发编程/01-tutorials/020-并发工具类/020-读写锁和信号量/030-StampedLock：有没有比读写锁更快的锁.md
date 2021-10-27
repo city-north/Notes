@@ -162,7 +162,17 @@ StampedLock 的使用看上去有点复杂，但是如果你能理解乐观锁�
 
 ### StampedLock 使用模板
 
-<script src="https://gist.github.com/ericchen-vip/2b9c854565e96285aa89b453b6edf240.js"></script>
+```java
+long stamp = sl.writeLock();
+try {
+  // 写共享变量
+  ......
+} finally {
+  sl.unlockWrite(stamp);
+}
+```
+
+
 
 ## 课后思考
 

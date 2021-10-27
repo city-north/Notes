@@ -19,11 +19,9 @@ public class CustomPropertySourceLocator implements PropertySourceLocator {
 }
 ```
 
-
-
 上述代码中传入的Environment参数用于创建应用上下文，它具有Spring Boot提供的属性源，可以使用它们来加载特定的属性源(例如重新设置spring.application.name)。可以在META-INF/spring.factories文件中添加如下记录来配置属性源：
 
-```
+```properties
 org.springframework.cloud.bootstrap.BootstrapConfiguration=\
     sample.custom.CustomPropertySourceLocator
 ```

@@ -56,5 +56,3 @@ dbfilename dump.rdb
 | dbfilename      | 文件名称                                                     |
 | rdbcompiression | 开启压缩可以节省存储空间，但是会消耗一些 CPU 的计算时间，默认开启 |
 | rdbchecksum     | 使用 CRC64 算法来进行数据校验，但是这样做会增加大约 10%的性能消耗，如果希望获取到最 大的性能提升，可以关闭此功能 |
-
-## 
