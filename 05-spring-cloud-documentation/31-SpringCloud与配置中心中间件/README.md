@@ -6,6 +6,9 @@
 
 "统一所有配置格式" 是 SpringBoot 产生的背景之一, 每个SpringBoot应用的基本配置都会在resources目录下的application.properties 或者 application.yml 文件中
 
+- 如何从配置中心获取配置
+- 动态刷新配置后如何生效
+
 ## 为什么要有分布式配置中心
 
 Spring Boot 所有的配置都是跟应用进行绑定的, 配置文件会被打包到JAR中跟随应用一起部署, 这样会有一系列问题:
