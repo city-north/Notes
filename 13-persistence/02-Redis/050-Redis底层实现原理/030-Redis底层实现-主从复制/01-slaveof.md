@@ -1,5 +1,7 @@
 # SLAVEOF host port
 
+[TOC]
+
 > 可用版本： >= 1.0.0
 >
 > 时间复杂度： `SLAVEOF host port` 的复杂度为 O(N)，其中 `N` 为要同步的数据数量； `SLAVEOF NO ONE` 命令的复杂度为 O(1) 。
