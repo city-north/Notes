@@ -7,6 +7,26 @@
 - 使用配置中心必须先对配置中心的地址进行配置, 这个地址需要在配置文件里面配置
 - SpringCloudBootstrap 阶段优先级高, 会先读取配置中心的配置, 这些配置在下一次正常的ApplicationContext启动时使用
 
+SpringCloud Bootstrap 阶段的概念: 
+
+- 在Bootstrap阶段会构造一个 Bootstrap ApplicationContext , 这个 ApplicatoonContext 加载配置的过程会基于bootstrap.properties  或者 bootstrap.yml 文件 去加载文件
+- SpringCloud 在加载文件时, 会有一套机制 (PropertySourceLocator接口的定义)来构建数据源 PropertySources
+- Bootstrap 阶段构造的ApplicationContext会作为正常阶段的 ApplicationContext 的父(parent), 读取顺序是先读取子, 再读取父
+
+## Bootstrap配置的优先级
+
+我们使用配置中心前必须先对配置中心的地址进行配置, 这个地址需要在配置文件内定义, 
+
+Spring Cloud Bootstrap优先级别高, 会先读取配置中心的配置, 这些配置, 用于加载下一个 ApplicationContext 时使用
+
+## Bootstrap初始化阶段
+
+#### 一言蔽之
+
+1. spring-cloud-context 模块内部的 META-INF/spring.factory 添加一个 BootstrapApplicationListener (实现了ApplicationListener接口), 
+2. 用于监听 ApplicationEnvironmentPreparedEvent事件(Environment 刚创建, 但是ApplicationContext还未创建时触发的事件)
+3. 收到该事件后进入Bootstrap阶段, 从配置中心加载配置
+
 #### 监听ApplicationEnvironmentPreparedEvent事件
 
 ```java
@@ -54,6 +74,7 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
       return;
    }
    // don't listen to events in a bootstrap context
+  // 2
    if (environment.getPropertySources().contains(BOOTSTRAP_PROPERTY_SOURCE_NAME)) {
      //防止遍历两次
       return;
@@ -77,6 +98,10 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
    apply(context, event.getSpringApplication(), environment);
 }
 ```
+
+
+
+- 2 处的代码.防止经理两边Bootstrap阶段, Bootstrap阶段执行的时候, 会添加一个名称为 bootstrap 的 PropertySource`
 
 ## 构造bootstrapServiceContext
 
@@ -159,7 +184,7 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
 
 spring-cloud-config-client-3.0.3.jar
 
-```
+```properties
 org.springframework.cloud.bootstrap.BootstrapConfiguration=\
 org.springframework.cloud.config.client.ConfigServiceBootstrapConfiguration,\
 org.springframework.cloud.config.client.DiscoveryClientConfigServiceBootstrapConfiguration
@@ -167,7 +192,7 @@ org.springframework.cloud.config.client.DiscoveryClientConfigServiceBootstrapCon
 
 spring-cloud-context-3.0.2.jar
 
-```
+```properties
 # Spring Cloud Bootstrap components
 org.springframework.cloud.bootstrap.BootstrapConfiguration=\
 org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration,\
