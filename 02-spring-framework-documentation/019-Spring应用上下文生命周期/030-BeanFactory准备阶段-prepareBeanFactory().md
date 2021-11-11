@@ -16,7 +16,7 @@ Bean在注册的时候,没有Class对象,只是知道类的全路径,通过Class
 - 注册PropertyEditorRegistrar实现-ResourceEditorRegistrar
 - 注册Aware回调接口BeanPostProcessor实现-ApplicationContextAwareProcessor
 - 忽略Aware回调接口作为依赖注入接口(也就是说Aware接口不支持依赖注入)
-- 注册ResolvableDependenct对象
+- 注册ResolvableDependence对象
   - BeanFactory
   - ResourceLoader
   - ApplicationEventPublisher
