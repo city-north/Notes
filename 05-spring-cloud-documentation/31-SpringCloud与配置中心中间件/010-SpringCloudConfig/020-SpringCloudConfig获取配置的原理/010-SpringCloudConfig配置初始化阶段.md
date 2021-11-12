@@ -90,8 +90,9 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
       }
    }
    if (context == null) {
-     //没有找到bootstrap ApplicationContext 则调用boostrapServiceContext 方法构建 bootstrap ApplicationContext
+       //5
       context = bootstrapServiceContext(environment, event.getSpringApplication(), configName);
+       //6 
       event.getSpringApplication().addListeners(new CloseContextOnFailureApplicationListener(context));
    }
 
@@ -101,13 +102,22 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
 
 
 
-- 2 处的代码.防止经理两边Bootstrap阶段, Bootstrap阶段执行的时候, 会添加一个名称为 bootstrap 的 PropertySource`
+- 2 处的代码.防止经理两边Bootstrap阶段, Bootstrap阶段执行的时候, 会添加一个名称为 bootstrap 的` PropertySource`
+- 5处代码， 如果没有找到bootstrap ApplicationContext 则调用boostrapServiceContext 方法构建 bootstrap ApplicationContext
+- 6处代码， 给ApplicationCOntext添加一些额外的CloseContextOnFailureApplicationListener， 目的是为了子ApplicationContext启动时关闭父ApplicationContext
 
 ## 构造bootstrapServiceContext
+
+bootstrapServiceContext 方法的内容是构建bootstrap ApplicationContext
+
+1.  这里先构造出一个 StandardEnvoronment（默认机上系统参数和启动参数的PropertySource数据源)，然后删除所有内部的数据， 子ApplicationContext也有系统参数和启动参数的数据源， 所以这里删除重复的数据源， 后续在添加新的数据源， 这个Evironment会作为bootstrapApplicationContext的Environment
+
+
 
 ```java
 	private ConfigurableApplicationContext bootstrapServiceContext(ConfigurableEnvironment environment,
 			final SpringApplication application, String configName) {
+        //1
 		StandardEnvironment bootstrapEnvironment = new StandardEnvironment();
 		MutablePropertySources bootstrapProperties = bootstrapEnvironment.getPropertySources();
 		for (PropertySource<?> source : bootstrapProperties) {
@@ -139,9 +149,11 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
 			bootstrapProperties.addLast(source);
 		}
 		// TODO: is it possible or sensible to share a ResourceLoader?
+        //构造SpringApplicationContextBuilder， 后续偶见出的ApplicationCOntext就是BootstrapApplicationContext, bootstrap ApplicationContext关闭了banner打印的开关
 		SpringApplicationBuilder builder = new SpringApplicationBuilder().profiles(environment.getActiveProfiles())
 				.bannerMode(Mode.OFF).environment(bootstrapEnvironment)
 				// Don't use the default properties in this builder
+           //不注册钩子， 因为这些已经在子上下文里做， 不是 bootstrap 上下文的目的
 				.registerShutdownHook(false).logStartupInfo(false).web(WebApplicationType.NONE);
 		final SpringApplication builderApplication = builder.application();
 		if (builderApplication.getMainApplicationClass() == null) {
@@ -171,6 +183,7 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
 		// during the bootstrap phase.
 		context.setId("bootstrap");
 		// Make the bootstrap context a parent of the app context
+        //为子上下文添加 AncestorInitializer， 如果子上下文已经存在 AncestorInitialzer, 则建立关系， 内部建立的是父子关系
 		addAncestorInitializer(application, context);
 		// It only has properties in it now that we don't want in the parent so remove
 		// it (and it will be added back later)
@@ -204,6 +217,8 @@ org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfigurat
 - PropertySourceBootstrapConfiguration : 内部会获取 PropertySourceLocator列表 用于架子配置中心的配置, 并封装到PropertySource, 之后将列表添加到Envoronment 里的PropertySource
 
 ## PropertySourceBootstrapConfiguration
+
+使用PropertySourceLocator找到对应的PropertySource后并加入的Envoronment
 
 ```java
 	private List<PropertySourceLocator> propertySourceLocators = new ArrayList<>();
