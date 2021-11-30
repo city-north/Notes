@@ -22,8 +22,7 @@ BeanDefinitionRegistry#registerBeanDefinition(String beanName, BeanDefinition be
 #### 1.2非命名方式BeanDefinitionReaderUtils
 
 ```java
-BeanDefinitionReaderUtils#registerBeanDefinitionn(
-			BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)
+BeanDefinitionReaderUtils#registerBeanDefinitionn(BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)
 ```
 
 #### 1.3配置类方式

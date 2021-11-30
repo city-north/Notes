@@ -19,7 +19,7 @@
 2. 实现 InitializingBean 接口的 afterPropertiesSet() 方法
 3. 自定义初始化方法
 
-```kava
+```java
 @PostConstruct : UserFactory 初始化中...
 InitializingBean#afterPropertiesSet() : UserFactory 初始化中...
 @PostConstruct : UserFactory 初始化中...
@@ -67,5 +67,3 @@ Bean销毁(Destroy)
   - XML配置  `<bean destory ="destory" ... />`
   - Java配置 `@Bean(destory="destory")`
   - Java API : AbstractBeanDefinition#setDestoryMethodName(String) 
-
-## 

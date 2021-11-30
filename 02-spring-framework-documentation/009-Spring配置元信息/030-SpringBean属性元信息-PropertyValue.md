@@ -59,7 +59,7 @@ public static void main(String[] args) {
       if (ObjectUtils.nullSafeEquals("user", beanName) && User.class.equals(bean.getClass())) {
         BeanDefinition bd = beanFactory.getBeanDefinition(beanName);
         // 通过 source 判断来
-        if ( BeanConfigurationMetadataDemo.class.equals(bd.getSource())){
+        if (BeanConfigurationMetadataDemo.class.equals(bd.getSource())){
           // 属性（存储）上下文
           final String name = (String) bd.getAttribute("name");
           User user = (User) bean;

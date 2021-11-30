@@ -65,8 +65,7 @@ private static void loadWithJavaSPI() {
         serviceLoaderFactoryBean.setServiceType(UserFactory.class);
         return serviceLoaderFactoryBean;
     }
-
-
+}
 ```
 
 ## 通过AutowireCapableBeanFactory
@@ -88,7 +87,6 @@ public class AutowireCapableBeanFactoryExample {
     final User user = bean.createUser();
     System.out.println(user);
   }
-
 
   @Bean
   public UserFactory userFactory() {
