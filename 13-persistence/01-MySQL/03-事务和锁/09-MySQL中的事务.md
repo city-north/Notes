@@ -58,8 +58,8 @@ InnoDB 可以解决可重复读问题
 
 ## InnoDB是如何实现事务的
 
-InnoDB存储引擎对ACID的实现方式
-利用回滚日志（undo log） 和 重做日志（redo log） 两种表实现事务，并实现 MVCC (多版本并发控制)；
+> InnoDB存储引擎对ACID的实现方式
+> 利用回滚日志（undo log） 和 重做日志（redo log） 两种表实现事务，并实现 MVCC (多版本并发控制)；
 
 在执行事务的每条SQL时，会先将数据原值写入undo log 中， 然后执行SQL对数据进行修改，最后将修改后的值写入redo log中。
 

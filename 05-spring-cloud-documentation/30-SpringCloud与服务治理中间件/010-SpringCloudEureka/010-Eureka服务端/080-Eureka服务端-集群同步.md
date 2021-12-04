@@ -13,7 +13,7 @@ Eureka Server集群同步包含两个部分，
 
 ## Eureka Server初始化本地注册表信息
 
-在Eureka Server启动的过程中，会从它的peer节点中拉取注册表来初始化本地注册表，这部分主要通过PeerAwareInstanceRegistry#syncUp方法完成，它将从可能存在的peer节点中，拉取peer节点中的注册表信息，并将其中的服务实例信息注册到本地注册表中，如下所示：
+在Eureka Server启动的过程中，会从它的peer节点中拉取注册表来初始化本地注册表，这部分主要通过`PeerAwareInstanceRegistry#syncUp`方法完成，它将从可能存在的peer节点中，拉取peer节点中的注册表信息，并将其中的服务实例信息注册到本地注册表中，如下所示：
 
 ```java
 // PeerAwareInstanceRegistry.java
@@ -128,9 +128,8 @@ private void replicateToPeers(Action action, String appName, String id,
 }
 ```
 
-
-
-PeerEurekaNode代表一个可同步共享数据的Eureka Server。在PeerEurekaNode中，具有register、cancel、heartbeat和statusUpdate等诸多用于向peer节点同步注册表信息的操作。
+PeerEurekaNode代表一个可同步共享数据的Eureka Server。
+在PeerEurekaNode中，具有register、cancel、heartbeat和statusUpdate等诸多用于向peer节点同步注册表信息的操作。
 在replicateInstanceActionsToPeers方法中将根据action的不同，调用PeerEurekaNode的不同方法进行同步复制，代码如下所示：
 
 ```java
