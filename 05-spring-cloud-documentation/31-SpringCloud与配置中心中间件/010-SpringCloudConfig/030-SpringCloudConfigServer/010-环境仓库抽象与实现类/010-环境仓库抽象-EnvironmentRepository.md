@@ -50,4 +50,10 @@ public class Environment {
 
 ## 具体实现
 
-- 
+- Git (JGitEnvironmentRepository)
+- SVN (SvnKitEnvironmentRepository)
+- File System (Native EnvironmentRespository)
+- JDBC (JdbcEnvironmentRepositroy)
+- Redis(RedisEnvironmentRepository)
+- AWS S3 云存储( AwsS3EnvironmentRepository)
+

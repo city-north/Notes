@@ -20,8 +20,7 @@
 ## NacosContextRefresher
 
 ```java
-public class NacosContextRefresher
-		implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
+public class NacosContextRefresher implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
 
 		....
 
@@ -57,8 +56,7 @@ public class NacosContextRefresher
 		Listener listener = listenerMap.computeIfAbsent(key,
 				lst -> new AbstractSharedListener() {
 					@Override
-					public void innerReceive(String dataId, String group,
-							String configInfo) {
+					public void innerReceive(String dataId, String group, String configInfo) {
 						refreshCountIncrement();
 						nacosRefreshHistory.addRefreshRecord(dataId, group, configInfo);
 						// todo feature: support single refresh for listening
@@ -94,8 +92,7 @@ public class NacosContextRefresher
 ```java
 @Component
 @ManagedResource
-public class ConfigurationPropertiesRebinder
-		implements ApplicationContextAware, ApplicationListener<EnvironmentChangeEvent> {
+public class ConfigurationPropertiesRebinder implements ApplicationContextAware, ApplicationListener<EnvironmentChangeEvent> {
   
   //维护着所有被@ConfiguratoonProperties修饰的Bean
 	private ConfigurationPropertiesBeans beans;
