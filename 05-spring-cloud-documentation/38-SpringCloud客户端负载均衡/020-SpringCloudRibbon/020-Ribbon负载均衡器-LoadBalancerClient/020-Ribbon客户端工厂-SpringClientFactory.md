@@ -14,8 +14,6 @@ SpringClientFactory 是一个与LoadBalancerClientFactory 作用类似的工厂�
 
  [013-SpringCloud运行上下文-NamedContextFactory.md](../../../36-SpringCloud声明式客户端/010-SpringCloudOpenFeign/020-动态注册BeanDefinition/013-SpringCloud运行上下文-NamedContextFactory.md) 
 
-
-
 ## SpringClientFactory源码
 
 ```java

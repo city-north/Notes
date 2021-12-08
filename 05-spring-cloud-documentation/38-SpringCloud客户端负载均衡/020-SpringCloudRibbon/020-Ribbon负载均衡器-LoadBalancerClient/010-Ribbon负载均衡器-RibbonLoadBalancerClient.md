@@ -45,8 +45,7 @@ public <T> T execute(String serviceId, LoadBalancerRequest<T> request) throws IO
     if (server == null) {
         throw new IllegalStateException("No instances available for " + serviceId);
     }
-    RibbonServer ribbonServer = new RibbonServer(serviceId, server, isSecure(server,
-            serviceId), serverIntrospector(serviceId).getMetadata(server));
+    RibbonServer ribbonServer = new RibbonServer(serviceId, server, isSecure(server, serviceId), serverIntrospector(serviceId).getMetadata(server));
     return execute(serviceId, ribbonServer, request);
 }
 ```
