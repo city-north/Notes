@@ -1,5 +1,11 @@
 # 030-自定义操作-Costomizer
 
+[TOC]
+
+## Costomizer简介
+
+Costomizer自定义操作, 给CurcuitBrekerFactory默认的配置数据
+
 CircuitBreaker 的定义和自定义的CircuitBreaker 对外提供方法一致, 并且多了一个有默认 fallback Function的重载方法
 
 ```java
