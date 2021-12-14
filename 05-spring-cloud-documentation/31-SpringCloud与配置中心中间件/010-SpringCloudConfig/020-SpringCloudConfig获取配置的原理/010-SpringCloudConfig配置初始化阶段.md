@@ -9,7 +9,7 @@
 
 SpringCloud Bootstrap 阶段的概念: 
 
-- 在Bootstrap阶段会构造一个 Bootstrap ApplicationContext , 这个 ApplicatoonContext 加载配置的过程会基于bootstrap.properties  或者 bootstrap.yml 文件 去加载文件
+- 在Bootstrap阶段会构造一个 Bootstrap ApplicationContext , 这个 ApplicatoonContext 加载配置的过程会基于bootstrap.properties  或者 bootstrap.yml 文件去加载文件
 - SpringCloud 在加载文件时, 会有一套机制 (PropertySourceLocator接口的定义)来构建数据源 PropertySources
 - Bootstrap 阶段构造的ApplicationContext会作为正常阶段的 ApplicationContext 的父(parent), 读取顺序是先读取子, 再读取父
 
@@ -111,8 +111,6 @@ public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
 bootstrapServiceContext 方法的内容是构建bootstrap ApplicationContext
 
 1.  这里先构造出一个 StandardEnvoronment（默认机上系统参数和启动参数的PropertySource数据源)，然后删除所有内部的数据， 子ApplicationContext也有系统参数和启动参数的数据源， 所以这里删除重复的数据源， 后续在添加新的数据源， 这个Evironment会作为bootstrapApplicationContext的Environment
-
-
 
 ```java
 	private ConfigurableApplicationContext bootstrapServiceContext(ConfigurableEnvironment environment,
