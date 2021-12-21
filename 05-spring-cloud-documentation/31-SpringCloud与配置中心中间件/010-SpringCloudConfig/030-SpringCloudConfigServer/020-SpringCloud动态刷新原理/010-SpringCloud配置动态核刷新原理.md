@@ -8,10 +8,10 @@
 
 ## SpringCloud动态刷新的本质
 
-SpringCloud动态刷新的本质是事件触发,
+SpringCloud动态刷新的本质是通过事件触发,
 
 - 让客户端再一次从配置文件拉取最新的配置
-- 配合@RefreshScope重新刷新Bean(销毁Bean后从新创建)
+- 配合@RefreshScope重新刷新Bean(销毁Bean后重新创建)
 - 重新刷新Bean会重新读取一遍配置, 以达到配置动态刷新的目的
 
 ## 带来的问题
