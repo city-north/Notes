@@ -30,7 +30,9 @@ ApplicationContext 提供的核心功能
 - 因为继承了 [`ResourceLoader`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/ResourceLoader.html)接口, 所以拥有了加载通用资源的能力
 - 因为继承了[`ApplicationEventPublisher`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationEventPublisher.html)  接口, 所以拥有了发送事件和注册监听器的能力
 - 因为继承了 [`MessageSource`](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/MessageSource.html) 接口, 所有拥有了解析国际化消息的能力
-- **子上下文的优先级更高** - 继承了 parent 上下文。在后代上下文中的定义将始终具有优先级。例如，这意味着整个web应用程序可以使用单个父上下文，而每个servlet都有独立于任何其他servlet的子上下文。
+- **子上下文的优先级更高** - 继承了 parent 上下文。在后代上下文中的定义将始终具有优先级。
+
+例如，这意味着整个web应用程序可以使用单个父上下文，而每个servlet都有独立于任何其他servlet的子上下文。
 
 ## 常用的ApplicationContext
 
@@ -53,4 +55,3 @@ The most commonly used `ApplicationContext` implementations are:
 ## 层次关系hierarchy
 
 ApplicationContext允许上下文嵌套，通过保持父上下文可以维持一个上下文体系。对于Bean的查找可以在这个上下文体系中进行，首先检查当前上下文，其次检查父上下文，逐级向上，这样可以为不同的Spring应用提供一个共享的Bean定义环境。
-

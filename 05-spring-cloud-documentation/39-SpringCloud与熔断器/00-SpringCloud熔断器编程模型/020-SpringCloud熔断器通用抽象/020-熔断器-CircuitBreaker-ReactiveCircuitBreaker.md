@@ -4,6 +4,8 @@
 
 ## 一言蔽之
 
+抽象的断路器, 子类实现 run方法定制具体的需要断路器保护的逻辑
+
 ```java
 public interface CircuitBreaker {
 

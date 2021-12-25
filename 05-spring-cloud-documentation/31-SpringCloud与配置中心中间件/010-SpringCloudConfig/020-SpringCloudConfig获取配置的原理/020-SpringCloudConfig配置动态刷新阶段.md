@@ -87,8 +87,6 @@ public class NacosContextRefresher implements ApplicationListener<ApplicationRea
 
 @ConfigurationProperties 通过 ConfigurationPropertiesRebinder (一个 `EnvironmentChangeEvent`事件的监听器)
 
-
-
 ```java
 @Component
 @ManagedResource

@@ -59,7 +59,7 @@ protected final void refreshBeanFactory() throws BeansException {
   }
   try {
     //创建IOC容器
-    DefaultListableBeanFactory beanFactory = createBeanFactory();
+  DefaultListableBeanFactory beanFactory = createBeanFactory();
     //设置ID为ApplicationContext的ID
     beanFactory.setSerializationId(getId());
     //对IOC容器进行定制化，如设置启动参数，开启注解的自动装配等
