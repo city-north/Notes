@@ -26,3 +26,41 @@
 | 自动装箱 (AutoBoxing) | 3.0+           |                            |
 | 泛型(Generic)         | 3.0+           | ApplicationListener        |
 
+## Spring对JavaAPI的运用
+
+![image-20211226220145577](assets/image-20211226220145577.png)
+
+### Java 1.3
+
+![image-20211226220816219](assets/image-20211226220816219.png)
+
+### Java5
+
+![image-20211226220836560](assets/image-20211226220836560.png)
+
+### Java6
+
+![image-20211226220853615](assets/image-20211226220853615.png)
+
+### Java7
+
+![image-20211226220910029](assets/image-20211226220910029.png)
+
+### 1.8
+
+![image-20211226220922373](assets/image-20211226220922373.png)
+
+## Spring 对 Java EE API 整合 
+
+### Java EE Web 技术相关
+
+![image-20211226221140923](assets/image-20211226221140923.png)
+
+### Java EE 数据存储相关
+
+![image-20211226221209848](assets/image-20211226221209848.png)
+
+### Java EE Bean 技术相关
+
+![image-20211226221249651](assets/image-20211226221249651.png)
+

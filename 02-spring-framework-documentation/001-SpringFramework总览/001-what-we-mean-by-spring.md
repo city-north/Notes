@@ -1,4 +1,6 @@
-## 1. What We Mean by "Spring"
+# What We Mean by "Spring"
+
+[TOC]
 
 The term "Spring" means different things in different contexts. It can be used to refer to the Spring Framework project itself, which is where it all started. Over time, other Spring projects have been built on top of the Spring Framework. Most often, when people say "Spring", they mean the entire family of projects. This reference documentation focuses on the foundation: the Spring Framework itself.
 
