@@ -165,7 +165,7 @@ class B {
 
 例如下面的代码中，Bar 的属性 foo 虽然是 final 的，依然可以通过 setAge() 方法来设置 foo 的属性 age。所以，**在使用 Immutability 模式的时候一定要确认保持不变性的边界在哪里，是否要求属性对象也具备不可变性**。
 
-```
+```java
 class Foo{
   int age=0;
   int name="abc";
