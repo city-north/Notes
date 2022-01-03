@@ -2,6 +2,18 @@
 
 [TOC]
 
+## 简介
+
+Spring-cloud-commons 中参考了 spring-cloud-netflix 的设计，引入了 NamedContextFactory 机制，一般用于对于**不同微服务的客户端模块使用不同的** **子 ApplicationContext** 进行配置。
+
+spring-cloud-commons 是 Spring Cloud 对于微服务基础组件的抽象。在一个微服务中，**调用微服务 A 与调用微服务 B 的配置可能不同。**
+
+- 比较简单的例子就是，A 微服务是一个简单的用户订单查询服务，接口返回速度很快，B 是一个报表微服务，接口返回速度比较慢。这样的话我们就不能对于调用微服务 A 和微服务 B 使用相同的**超时时间配置**。
+
+- 还有就是，我们可能对于服务 A 通过注册中心进行发现，对于服务 B 则是通过 DNS 解析进行服务发现，所以对于不同的微服务我们可能**使用不同的组件**，在 Spring 中就是使用不同类型的 Bean。
+
+在这种需求下，不同微服务的客户端**有不同的以及相同的配置**，**有不同的 Bean，也有相同的 Bean**。所以，我们可以针对每一个微服务将他们的 Bean 所处于 ApplicationContext 独立开来，**不同微服务客户端使用不同的 ApplicationContext**。NamedContextFactory 就是用来实现这种机制的。
+
 ## NamedContextFactorys是什么
 
 Spring Cloud框架使用NamedContextFactory创建一系列的运行上下文(ApplicationContext)，来让对应的Specification在这些上下文中创建实例对象。
@@ -34,6 +46,14 @@ NamedContextFactory#getContextNames
 //销毁
 NamedContextFactory#destroy
 ```
+
+## 测试类
+
+
+
+
+
+
 
 ## FeignContext
 
