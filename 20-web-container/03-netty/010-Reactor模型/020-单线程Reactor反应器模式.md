@@ -184,7 +184,7 @@ class EchoHandler implements Runnable {
 
 在单线程反应器模式中, Reactor反应器和 Handler处理器, 都执行在同一条线程上,会带来一个问题: 
 
-当其中某个Handler阻塞时, 会导致其他所有的Handler都得不到执行, 在这种情况下, 如果被阻塞的Handler不仅仅负责输入和输出处理的业务, 还包含负责连接监听的AcceptorHandler处理器, 这是一个非常严重的问题
+- 当其中某个Handler阻塞时, 会导致其他所有的Handler都得不到执行, 在这种情况下, 如果被阻塞的Handler不仅仅负责输入和输出处理的业务, 还包含负责连接监听的AcceptorHandler处理器, 这是一个非常严重的问题
 
 因为一旦AcceptorHandler处理器阻塞, 会导致整个服务不能接受新的连接, 是的服务器变得不可用
 
