@@ -57,10 +57,10 @@ public class FeignClientApplication {
 
 @EnableFeignClients就像是一个开关，只有使用了该注解，OpenFeign相关的组件和配置机制才会生效。
 
-@EnableFeignClients还可以对OpenFeign相关组件进行自定义配置，它的方法和原理会在本章的源码分析章节再做具体的讲解。
-接下来需要定义一个FeignServiceClient接口，通过@FeignClient注解来指定调用的远程服务名称。这一类被@FeignClient注解修饰的接口类一般被称为FeignClient。
+`@EnableFeignClients`还可以对OpenFeign相关组件进行自定义配置，它的方法和原理会在本章的源码分析章节再做具体的讲解。
+接下来需要定义一个`FeignServiceClient`接口，通过@FeignClient注解来指定调用的远程服务名称。这一类被@FeignClient注解修饰的接口类一般被称为FeignClient。
 
-在FeignClient接口类中，可以使用@RequestMapping定义网络请求相关的方法，如下所示：
+在FeignClient接口类中，可以使用`@RequestMapping`定义网络请求相关的方法，如下所示：
 
 ```java
 @FeignClient("feign-service")
