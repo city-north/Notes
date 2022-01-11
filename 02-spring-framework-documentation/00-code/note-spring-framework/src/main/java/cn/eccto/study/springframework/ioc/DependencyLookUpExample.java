@@ -19,12 +19,12 @@ public class DependencyLookUpExample {
 
     public static void main(String[] args) {
         ClassPathXmlApplicationContext beanFactory = new ClassPathXmlApplicationContext("classpath:tutorials/lookup/dependency-lookup.xml");
-        //lookupInRealTime(beanFactory);
+        lookupInRealTime(beanFactory);
 //        lookupLazy(beanFactory);
-        //根据类型查找
+//        根据类型查找
 //        lookupByType(beanFactory);
 //        lookupCollectionByType(beanFactory);
-        lookupCollectionByAnnotation(beanFactory);
+//        lookupCollectionByAnnotation(beanFactory);
     }
 
     /**

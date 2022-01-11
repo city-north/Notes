@@ -30,6 +30,7 @@ public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAwa
     private BeanFactory beanFactory;
     private String beanName;
     private Properties context;
+    private Integer age;
 
     public String getUser() {
         return user;
@@ -106,6 +107,32 @@ public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAwa
 
     }
 
+    public ClassLoader getClassLoader() {
+        return classLoader;
+    }
+
+    public User setClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+        return this;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
+    }
+
+    public String getBeanName() {
+        return beanName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public User setAge(Integer age) {
+        this.age = age;
+        return this;
+    }
+
     @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
         System.out.println(resourceLoader);
@@ -119,17 +146,5 @@ public class User implements BeanNameAware, BeanClassLoaderAware, BeanFactoryAwa
         this.context = context;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "user='" + user + '\'' +
-                ", id=" + id +
-                ", city='" + city + '\'' +
-                ", name='" + name + '\'' +
-                ", classLoader=" + classLoader +
-                ", beanFactory=" + beanFactory +
-                ", beanName='" + beanName + '\'' +
-                ", context=" + context +
-                '}';
-    }
+
 }
