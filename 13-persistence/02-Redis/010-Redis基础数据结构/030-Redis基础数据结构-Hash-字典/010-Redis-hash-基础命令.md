@@ -2,23 +2,23 @@
 
 [TOC]
 
-| 序号 | 命令                          | 描述                                                         |
-| ---- | ----------------------------- | ------------------------------------------------------------ |
-| 1    | [hdel](#hdel)                 | 删除一个或多个哈希表字段                                     |
-| 2    | [hexists](#hexists)           | 查看哈希表 key 中，指定的字段是否存在。                      |
-| 3    | [hget](#hget)                 | 获取存储在哈希表中指定字段的值。                             |
-| 4    | [hgetall](#hgetall)           | 获取在哈希表中指定 key 的所有字段和值                        |
-| 5    | [hincrby](#hincrby)           | 为哈希表 key 中的指定字段的整数值加上增量 increment 。       |
-| 6    | [hincrbyfloat](#hincrbyfloat) | 为哈希表 key 中的指定字段的浮点数值加上增量 increment 。     |
-| 7    | [hkeys](#hkeys)               | 获取所有哈希表中的字段                                       |
-| 8    | [hlen](#hlen)                 | 获取哈希表中字段的数量                                       |
-| 9    | [hmget](#hmget)               | 获取所有给定字段的值                                         |
-| 10   | [hmset](#hmset)               | 同时将多个 field-value (域-值)对设置到哈希表 key 中。        |
-| 11   | [hset](#hset)                 | 将哈希表 key 中的字段 field 的值设为 value 。                |
-| 12   | [hsetnx](#hsetnx)             | 只有在字段 field 不存在时，设置哈希表字段的值。              |
-| 13   | [hvals](#hvals)               | 获取哈希表中所有值                                           |
-| 14   | hscan                         | 迭代哈希表中的键值对。与 scan 一样                           |
-| 15   | [HSTRLEN](#HSTRLEN)           | 返回哈希表 `key` 中， 与给定域 `field` 相关联的值的字符串长度（string length）。 |
+| 序号  | 命令                              | 描述                                                         |
+| ----- | --------------------------------- | ------------------------------------------------------------ |
+| 1     | [hdel](#hdel)                     | 删除一个或多个哈希表字段                                     |
+| 2     | [hexists](#hexists)               | 查看哈希表 key 中，指定的字段是否存在。                      |
+| 3     | [hget](#hget)                     | 获取存储在哈希表中指定字段的值。                             |
+| 4     | [hgetall](#hgetall)               | 获取在哈希表中指定 key 的所有字段和值                        |
+| 5     | **[hincrby](#hincrby)**           | **为哈希表 key 中的指定字段的整数值加上增量 increment 。**   |
+| **6** | **[hincrbyfloat](#hincrbyfloat)** | **为哈希表 key 中的指定字段的浮点数值加上增量 increment** 。 |
+| 7     | [hkeys](#hkeys)                   | 获取所有哈希表中的字段                                       |
+| 8     | [hlen](#hlen)                     | 获取哈希表中字段的数量                                       |
+| 9     | [hmget](#hmget)                   | 获取所有给定字段的值                                         |
+| 10    | [hmset](#hmset)                   | 同时将多个 field-value (域-值)对设置到哈希表 key 中。        |
+| 11    | [hset](#hset)                     | 将哈希表 key 中的字段 field 的值设为 value 。                |
+| 12    | [hsetnx](#hsetnx)                 | 只有在字段 field 不存在时，设置哈希表字段的值。              |
+| 13    | [hvals](#hvals)                   | 获取哈希表中所有值                                           |
+| 14    | hscan                             | 迭代哈希表中的键值对。与 scan 一样                           |
+| 15    | [HSTRLEN](#HSTRLEN)               | 返回哈希表 `key` 中， 与给定域 `field` 相关联的值的字符串长度（string length）。 |
 
 ## hset
 
