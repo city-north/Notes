@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 /**
  * <p>
- * description
+ * Java不支持实例化类型变量
  * </p>
  *
  * @author Jonathan 2021/01/05 20:34
@@ -29,6 +29,7 @@ public class GenericTest {
         private T right;
 
         public Pair(T left, T right) {
+//            this.left = new T();// error
             this.left = left;
             this.right = right;
         }

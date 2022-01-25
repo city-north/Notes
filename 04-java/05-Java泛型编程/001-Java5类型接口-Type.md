@@ -4,17 +4,25 @@
 
 ## Java5类型接口-java.lang.reflect.Type
 
+Type抽象包含
+
+- Raw Types 原始类型
+- Parameterized Types 参数化类型
+- Array Types 数组类型
+- Type Variables 类型变量
+- Primitive Types 基本类型
+
 这个接口包含下列子类型：
 
 ![image-20210105204220304](../../assets/image-20210105204220304.png)
 
-| 派生类或接口                        | 说明                                                         |
-| ----------------------------------- | ------------------------------------------------------------ |
-| java.lang.Class                     | Java类API, 如java.lang.String ;描述具体类型                  |
-| java.lang.reflect.GenericArrayType  | 描述泛型数组(如T[])                                          |
-| java.lang.reflect.ParameterizedType | 描述泛型类或接口类型(如Comparable＜？super T＞)              |
-| java.lang.reflect.TypeVariable      | 描述类型变量(如T extends Comparable＜？super T＞)<br />又比如Collection<E> 中的E |
-| java.lang.reflect.WildcardType      | 描述通配符类型 (如？super T)。                               |
+| 派生类或接口                        |                | 说明                                                         |
+| ----------------------------------- | -------------- | ------------------------------------------------------------ |
+| java.lang.Class                     | 原始/基本类型  | Java类API, 如java.lang.String ;还包含 int, float 等基本类型  |
+| java.lang.reflect.GenericArrayType  | 泛型数组类型   | 描述泛型数组(如T[]),  并不是我们工作中所使用的数组String[]、Byte[]，这些都是Class，而是带有泛型的数组，即T[]。 |
+| java.lang.reflect.ParameterizedType | 参数化类型     | 描述泛型类或接口类型(如Comparable＜？super T＞)<br />就是我们平常所用到的泛型List、Map（注意和TypeVariable的区别，参数化类型表示的是List这样的一个整体而不是T）。 |
+| java.lang.reflect.TypeVariable      | 类型变量       | 描述类型变量(如T extends Comparable＜？super T＞)<br />又比如Collection<E> 中的E |
+| java.lang.reflect.WildcardType      | 泛型表达式类型 | 描述通配符类型 (如？super T)。                               |
 
 ## 核心API
 

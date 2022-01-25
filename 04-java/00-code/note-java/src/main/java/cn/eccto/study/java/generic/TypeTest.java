@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 /**
  * <p>
- * description
+ * 泛型基础类-Type
  * </p>
  *
  * @author Jonathan 2021/01/06 17:01
