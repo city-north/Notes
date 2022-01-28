@@ -1,2 +1,7 @@
 # 003-SpringBean的定义-BeanDefiniation
 
+BeanDefinition是Spring对Bean定义的逻辑抽象,子接口或者实现:
+
+- GenericBeanDefinition:通用型BeanDefinition
+- RootBeanDefinition:无Parent的BeanDefinition或者合并后的BeanDefinition
+- AnnotatedBeanDefinition:注解标注的BeanDefinition

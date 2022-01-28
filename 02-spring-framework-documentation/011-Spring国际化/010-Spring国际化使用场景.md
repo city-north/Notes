@@ -32,4 +32,3 @@ SpringBoot场景中会默认使用Bean Validation,也就是Bean校验,默认使�
 ## Web MVC 错误消息提示
 
 在国际化的常见下,如果报错,会有一些文字性的描述,友好提示
-

@@ -13,6 +13,10 @@
 
 ## 1.JavaAPI配置元信息
 
+- 命名方式 BeanDefinitionRegistry
+- 非命名方式 BeanDefinitionReaderUtils
+- 配置类方式 AnnotationConfigApplicationContext
+
 #### 1.1命名方式BeanDefinitionRegistry
 
 ```java
