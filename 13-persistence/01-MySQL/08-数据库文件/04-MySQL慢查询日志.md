@@ -24,7 +24,7 @@
 
 ## 慢查询日志相关参数
 
-```
+```sql
 SHOW VARIABLES LIKE '%slow%'
 ```
 
@@ -75,11 +75,11 @@ SELECT * FROM `user_innodb` where phone = '136';
 
 #### 日志内容
 
-```
+```sql
 show global status like 'slow_queries'; -- 查看有多少慢查询 show variables like '%slow_query%'; -- 获取慢日志目录
 ```
 
-```
+```sql
 cat /var/lib/mysql/ localhost-slow.log
 ```
 
@@ -104,7 +104,7 @@ mysqldumpslow --help
 mysqldumpslow -s t -t 20 -g 'select' /var/lib/mysql/localhost-slow.log
 ```
 
-![image-20200315192456318](../../../assets/image-20200315192456318.png)
+<img src="../../../assets/image-20200315192456318.png" alt="image-20200315192456318" style="zoom: 50%;" />
 
 - Count 代表这个 SQL 执行了多少次;
 - Time 代表执行的时间，括号里面是累计时间; Lock 表示锁定的时间，括号是累计;
