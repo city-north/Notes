@@ -10,9 +10,9 @@ SHOW PROFILE 是谷歌高级架构师 Jeremy Cole 贡献给 MySQL 社区的，�
 
 #### 查看是否开启
 
-```
+```sql
 select @@profiling; 
-set @@profiling=1;
+set @@profiling=1; // SESSION 级别开启 prifile 
 ```
 
 #### 查看 profile 统计
@@ -47,11 +47,25 @@ show profile;
 | freeing items  | 0.000011 |
 | cleaning up    | 0.000007 |
 
+## 查看每个状态消耗的事件
+
 也可以根据 ID 查看执行详细信息，在后面带上 for query + ID。
 
 ```
 show profile for query 1;
 ```
 
+
+
+
+
+
+
 除了慢日志和 show profile，如果要分析出当前数据库中执行的慢的 SQL，还可以通过查看运行线程状态和服务器运行信息、存储引擎信息来分析。
+
+
+
+
+
+
 

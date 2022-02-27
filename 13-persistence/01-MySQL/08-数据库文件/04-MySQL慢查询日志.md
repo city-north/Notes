@@ -16,11 +16,16 @@
 
 ## 什么是慢查询日志
 
-慢查询日志可以把超过参数 long_query_time 时间的所有 SQL 记录进来,帮助 DBA 优化有问题的 SQL 语句
+慢查询日志可以把超过参数` long_query_time` 时间的 不小于 `min_examined_row_limit` 的所有 SQL 记录进来, (注意, 获得表锁定的时间不算作执行时间),帮助 DBA 优化有问题的 SQL 语句
 
-- long_query_time 默认是 10s
+- `long_query_time` 默认是 10s, 最小为0, 精度可以到微秒
 - 从 MySQL 5.1 开始, 该参数就以微秒为单位记录 SQL 语句的运行时间,之前仅仅以秒为计数单位
 - 因为开启慢查询日志是有代价的(跟 bin log、optimizer-trace 一样)，所以它默认是关闭的
+
+有两种常见的语句不会被记录到慢查询语句:
+
+- 管理语句: ALTER TABLE, REPAIR TABLE , CHECK TABLE , CREATE TABLE, DROP INDEX, OPTIMIZE TABLE 和 REPAIR TABLE  (可以使用-- `log-slow-admin-statements`)(`log_slow_admin_statements`)
+- 不使用索引进行查询的语句(`log_queries_not_using_indexes`)
 
 ## 慢查询日志相关参数
 
