@@ -10,7 +10,7 @@ import java.util.concurrent.*;
  * @author qiang.chen04@hand-china.com 2021/2/16 20:43
  */
 public class CompletionServiceDemo {
-    static  Integer r = null;
+    static Integer r = null;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         // 创建线程池
@@ -34,6 +34,21 @@ public class CompletionServiceDemo {
         executor.shutdown();
     }
 
+
+    public static void testCompletionService() {
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        CompletionService<Integer> completionService = new ExecutorCompletionService<>(executor);
+        completionService.submit(CompletionServiceDemo::getPriceByS1);
+        completionService.submit(CompletionServiceDemo::getPriceByS2);
+        completionService.submit(CompletionServiceDemo::getPriceByS3);
+// 将询价结果异步保存到数据库
+        for (int i = 0; i < 3; i++) {
+            Integer r = completionService.take().get();
+            executor.execute(() -> save(r));
+        }
+
+    }
+
     private static Integer getPriceByS1() throws InterruptedException {
         System.out.println("获取价格1");
         Thread.sleep(4000);
@@ -41,7 +56,7 @@ public class CompletionServiceDemo {
     }
 
     public static void save(Integer integer) {
-        System.out.println("保存价格"+ integer);
+        System.out.println("保存价格" + integer);
     }
 
     private static Integer getPriceByS2() throws InterruptedException {
@@ -49,6 +64,7 @@ public class CompletionServiceDemo {
         Thread.sleep(2000);
         return 2;
     }
+
     private static Integer getPriceByS3() throws InterruptedException {
         System.out.println("获取价格3");
         Thread.sleep(3000);

@@ -33,15 +33,11 @@ executor.execute(()->save(r));
 
 ## **利用** **CompletionService** **实现询价系统**
 
-不过在实际项目中，并不建议你这样做，因为 Java SDK 并发包里已经提供了设计精良的CompletionService。
+不过在实际项目中，并不建议你这样做，因为 Java SDK 并发包里已经提供了设计精良的 CompletionService。
 
 利用 CompletionService 不但能帮你解决先获取到的报价先保存到数据库的问题，而且还能让代码更简练。
 
-CompletionService 的实现原理也是内部维护了一个阻塞队列，当任务执行结束就把任务
-
-的执行结果加入到阻塞队列中，不同的是 CompletionService 是把任务执行结果的 Future
-
-对象加入到阻塞队列中，而上面的示例代码是把任务最终的执行结果放入了阻塞队列中。
+CompletionService 的实现原理也是内部维护了一个阻塞队列，当任务执行结束就把任务的执行结果加入到阻塞队列中，不同的是 CompletionService 是把任务执行结果的 Future对象加入到阻塞队列中，而上面的示例代码是把任务最终的执行结果放入了阻塞队列中。
 
 ## **那到底该如何创建 CompletionService 呢？**
 
@@ -81,7 +77,10 @@ for (int i=0; i<3; i++) {
 
 下面我们详细地介绍一下 CompletionService 接口提供的方法，CompletionService 接口提供的方法有 5 个，这 5 个方法的方法签名如下所示。
 
-其中，submit() 相关的方法有两个。一个方法参数是`Callable<V> task`，前面利用 CompletionService 实现询价系统的示例代码中，我们提交任务就是用的它。另外一个方法有两个参数，分别是`Runnable task`和`V result`，这个方法类似于 ThreadPoolExecutor 的 `<T> Future<T> submit(Runnable task, T result)` ，这个方法在[《23 | Future：如何用多线程实现最优的“烧水泡茶”程序？》](https://time.geekbang.org/column/article/91292)中我们已详细介绍过，这里不再赘述。
+其中，submit() 相关的方法有两个。
+
+- 一个方法参数是`Callable<V> task`，前面利用 CompletionService 实现询价系统的示例代码中，我们提交任务就是用的它。
+- 另外一个方法有两个参数，分别是`Runnable task`和`V result`，这个方法类似于 ThreadPoolExecutor 的 `<T> Future<T> submit(Runnable task, T result)` ，这个方法在[《23 | Future：如何用多线程实现最优的“烧水泡茶”程序？》](https://time.geekbang.org/column/article/91292)中我们已详细介绍过，这里不再赘述。
 
 CompletionService 接口其余的 3 个方法，都是和阻塞队列相关的，take()、poll() 都是从阻塞队列中获取并移除一个元素；
 
@@ -90,10 +89,10 @@ CompletionService 接口其余的 3 个方法，都是和阻塞队列相关的�
 -  `poll(long timeout, TimeUnit unit)` 方法支持以超时的方式获取并移除阻塞队列头部的一个元素，如果等待了 timeout unit 时间，阻塞队列还是空的，那么该方法会返回 null 值。
 
 ```java
-Future<V> submit(Callable<V> task);
-Future<V> submit(Runnable task, V result);
-Future<V> take() throws InterruptedException;
-Future<V> poll();
+Future<V> submit(Callable<V> task);//提交任务
+Future<V> submit(Runnable task, V result);//提交任务
+Future<V> take() throws InterruptedException; //阻塞地获取完成队列
+Future<V> poll();//
 Future<V> poll(long timeout, TimeUnit unit) throws InterruptedException;
 ```
 
@@ -113,7 +112,9 @@ geocoder(addr) {
 }
 ```
 
-利用 CompletionService 可以快速实现 Forking 这种集群模式，比如下面的示例代码就展示了具体是如何实现的。首先我们创建了一个线程池 executor 、一个 CompletionService 对象 cs 和一个`Future<Integer>`类型的列表 futures，每次通过调用 CompletionService 的 submit() 方法提交一个异步任务，会返回一个 Future 对象，我们把这些 Future 对象保存在列表 futures 中。通过调用 `cs.take().get()`，我们能够拿到最快返回的任务执行结果，只要我们拿到一个正确返回的结果，就可以取消所有任务并且返回最终结果了。
+利用` CompletionService` 可以快速实现 Forking 这种集群模式，比如下面的示例代码就展示了具体是如何实现的。
+
+首先我们创建了一个线程池 executor 、一个 CompletionService 对象 cs 和一个`Future<Integer>`类型的列表 futures，每次通过调用 CompletionService 的 submit() 方法提交一个异步任务，会返回一个 Future 对象，我们把这些 Future 对象保存在列表 futures 中。通过调用 `cs.take().get()`，我们能够拿到最快返回的任务执行结果，只要我们拿到一个正确返回的结果，就可以取消所有任务并且返回最终结果了。
 
 <script src="https://gist.github.com/city-north/e72379630187d1ab538733ee852e0e31.js"></script>
 
