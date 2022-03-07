@@ -41,4 +41,3 @@ show status like 'innodb_rows_%'
 - Connections : 试图链接 MySQL 服务器的次数
 - Uptime: 服务器工作时间
 - Slow_queries: 慢查询的次数
-- 
