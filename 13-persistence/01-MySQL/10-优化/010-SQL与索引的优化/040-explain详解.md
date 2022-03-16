@@ -246,8 +246,7 @@ explain select * from film_actor where film_id = 2;
 - using where
 
   > 使用了 where 过滤，表示存储引擎返回的记录并不是所有的都满足查询条件，需要 在 server 层进行过滤(跟是否使用索引没有关系)。
-  > EXPLAIN select * from user_innodb where phone ='13866667777';
-
+  
 - using index condition(索引条件下推)
 
 - using filesort 需要优化
