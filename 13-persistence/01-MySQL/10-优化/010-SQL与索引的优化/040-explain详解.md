@@ -154,8 +154,6 @@ SELECT 的类型
 索引 idx_fk_c
 ```
 
-
-
 #### range
 
 ```sql
@@ -232,7 +230,10 @@ explain select * from film_actor where film_id = 2;
 
 ## ref列
 
-这一列显示了在key列记录的索引中，表查找值所用到的列或常量，常见的有：const（常量），字段名（例：film.id）
+这一列显示了在key列记录的索引中，表查找值所用到的列或常量，常见的有：
+
+- const（常量）
+- 字段名（例：film.id）
 
 ## Extra
 
@@ -246,6 +247,12 @@ explain select * from film_actor where film_id = 2;
 - using where
 
   > 使用了 where 过滤，表示存储引擎返回的记录并不是所有的都满足查询条件，需要 在 server 层进行过滤(跟是否使用索引没有关系)。
+  
+  一般MySQL能够使用如下三种方式应用WHERE条件，从好到坏依次为：
+  
+  - 在索引中使用WHERE条件来过滤不匹配的记录。这是在存储引擎层完成的。
+  - 使用索引覆盖扫描（在Extra列中出现了Using index）来返回记录，直接从索引中过滤不需要的记录并返回命中的结果。这是在MySQL服务器层完成的，但无须再回表查询记录。
+  - 从数据表中返回数据，然后过滤不满足条件的记录（在Extra列中出现Using Where）。这在MySQL服务器层完成，MySQL需要先从数据表读出记录然后过滤。
   
 - using index condition(索引条件下推)
 
