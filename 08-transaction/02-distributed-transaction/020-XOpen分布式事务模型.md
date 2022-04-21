@@ -21,7 +21,7 @@ X/Open DTP（X/Open Distributed Transaction Processing Reference Model）是X/Op
 
 <img src="../../assets/image-20200903104200379.png" alt="image-20200903104200379" style="zoom:50%;" />
 
-- 多个 资源管理器 RM 注册到事务管理器 TM 上
+- 多个资源管理器 RM 注册到事务管理器 TM 上
 
 - 应用通过 资源管理器 TM 获取到连接 , 如果 rm 是数据库则是 JDBC 数据库
 
