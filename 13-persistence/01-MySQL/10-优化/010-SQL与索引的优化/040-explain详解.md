@@ -235,6 +235,12 @@ explain select * from film_actor where film_id = 2;
 - const（常量）
 - 字段名（例：film.id）
 
+### filterd
+
+这个字段表示存储引擎返回的数据在 server 层过滤后，剩下多少满足查询的记录数量的比例，它是一个百分比。这个值越大越好
+
+或者说是存储引擎层返回数据的命中率. 例如, 存储引擎返回的30%的数据命中
+
 ## Extra
 
 执行计划给出的额外的信息说明。
