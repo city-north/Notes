@@ -1,5 +1,7 @@
 #  FactoryBean和BeanFactory的区别
 
+[TOC]
+
 ## 目录
 
 - [BeanFactory是什么](#BeanFactory是什么)
