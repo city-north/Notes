@@ -12,7 +12,7 @@ ByteBuf 是一个字节容器， 内部是一个字节数组， 从逻辑上来�
   - 第三部分 （可写）： 可写字节， 写入到ByteBuf 的数据都会写到这一部分
   - 第四部分 （可扩容）： 可扩容字节， 表示的是该ByteBuf最多还能扩容的大小
 
-![image-20210523120551204](C:\Users\efort-2394\AppData\Roaming\Typora\typora-user-images\image-20210523120551204.png)
+<img src="assets/image-20220805093243748.png" alt="image-20220805093243748" style="zoom:50%;" />
 
 ## ByteBuf的重要属性
 
@@ -22,7 +22,7 @@ ByteBuf通过三个整形的属性有效地区分可读数据和可写数据， 
 - writerIndex （写指针） ：写入的起始位置，与到 capacity()方法相同时， 不可写
 - maxCapacity （最大容量） ： 标识 ByteBuf可以扩容的最大容量， 超过会报错
 
-![image-20210523121207437](C:\Users\efort-2394\AppData\Roaming\Typora\typora-user-images\image-20210523121207437.png)
+<img src="assets/image-20220805093425575.png" alt="image-20220805093425575" style="zoom:50%;" />
 
 ## API方法
 
