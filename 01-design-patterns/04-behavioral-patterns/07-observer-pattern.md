@@ -1,5 +1,7 @@
 # 观察者模式（observer Pattern）
 
+[TOC]
+
 一种行为型模式,又称**发布订阅模式**
 
 >  定义对象之间的一种一对多依赖关系，使得每当一个对象状态发生变化时，其相关依赖的对象都能得到通知并自动更新。
@@ -233,8 +235,6 @@ public class Eric {
 ```
 
 ## 监听器模式
-
-
 
 ServletContextListener
 

@@ -46,7 +46,7 @@ private static void testYmlPropertiesFactoryBean() throws IntrospectionException
 
 输出结果
 
-```
+```java
 User{username='zhangsan', age=1}
 ```
 

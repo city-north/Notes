@@ -4,7 +4,7 @@
 
 ## 原理简介
 
-Spring 使用 EventListenerMethodProcessor 在BeanFactory初始化完成之后,获取到所有的BeanDefinition之后,获取到标记的@EventListener的方法封装成一个
+Spring 使用 EventListenerMethodProcessor 在 BeanFactory 初始化完成之后,获取到所有的BeanDefinition之后,获取到标记的@EventListener的方法封装成一个
 
 ApplicationListenerMethodAdapter,然后到了afterSingletonsInstantiated 后创建监听器加入到ApplicationContextMuticaster里 
 
