@@ -19,20 +19,3 @@ org.springframework.cloud.client.serviceregistry.ServiceRegistry
 
 ![image-20210128204606277](../../../assets/image-20210128204606277.png)
 
-## 接口定义
-
-```java
-public interface ServiceRegistry<R extends Registration> {
-	//基于实例信息将其注册到注册中心
-	void register(R registration);
-	//基于实例信息将其从注册中心注销
-	void deregister(R registration);
-	// 关闭ServiceRegistry
-	void close();
-	// 设置服务状态
-	void setStatus(R registration, String status);
-	//获取状态
-	<T> T getStatus(R registration);
-}
-```
-

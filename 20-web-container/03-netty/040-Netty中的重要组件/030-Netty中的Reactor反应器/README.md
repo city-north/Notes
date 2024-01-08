@@ -15,4 +15,3 @@ Netty的反应器有多种实现
 
 - 与Channel通道类有关系, 对于NioSocketChannel 通道, Netty的反应器类为: NioEventLoop
 
-## 
